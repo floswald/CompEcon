@@ -1,0 +1,8 @@
+---
+title: "CompEcon"
+---
+
+This is a Quarto website. work in progress!
+
+To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+

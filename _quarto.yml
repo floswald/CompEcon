@@ -1,0 +1,30 @@
+project:
+  type: website
+
+website:
+  title: "CompEcon"
+  body-footer: © Florian Oswald, 2024
+  sidebar:
+    style: "docked"
+    contents:
+      - section: "Lessons:"
+        contents:
+          - href: numerical-integration.qmd
+            text: Numerical Integration
+          - href: absorbing-mc.qmd
+            text: Absorbing Markov Chains
+
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - about.qmd
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+
+
+
