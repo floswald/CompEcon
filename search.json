@@ -1,0 +1,184 @@
+[
+  {
+    "objectID": "absorbing-mc.html",
+    "href": "absorbing-mc.html",
+    "title": "Absorbing Markov Chains",
+    "section": "",
+    "text": "This elaborates on Bogumił’s blog post about the problem of generating a sequence of coin tosses. We will add some theory to his simulation study.\n© Florian Oswald, 2024",
+    "crumbs": [
+      "Home",
+      "Lessons:",
+      "Absorbing Markov Chains"
+    ]
+  },
+  {
+    "objectID": "absorbing-mc.html#problem-statement",
+    "href": "absorbing-mc.html#problem-statement",
+    "title": "Absorbing Markov Chains",
+    "section": "Problem Statement",
+    "text": "Problem Statement\nTo recap, we have two players Alice (A) and Bob (B), and each is equipped with fair coin. Each plays a game whereby they toss the coin, and record the outcome as either heads (H) or tails (T). An example of a sequence after 9 coin tosses for each player could look like this:\ntoss: 123456789\nA:    TTHHHTHTH\nB:    THTTHTHHT\nAlice and Bob have different ways of winning this game. A wins if the sequence HT occurs, and B wins if the sequence HH occurs. Following the above example, A would have won after toss number 6. B had to wait until toss number 8 complete his winning sequence HH, hence he lost this particular contest.",
+    "crumbs": [
+      "Home",
+      "Lessons:",
+      "Absorbing Markov Chains"
+    ]
+  },
+  {
+    "objectID": "absorbing-mc.html#questions",
+    "href": "absorbing-mc.html#questions",
+    "title": "Absorbing Markov Chains",
+    "section": "Questions",
+    "text": "Questions\n\nIn expectation, who is more likely to win this game? Suppose we performed a very large number of contests like the one illustrated above.\nHow many coin tosses does Alice have to perform, on average, until her winning sequence shows up?\nHow many tosses does Bob have to perform until his winning sequence appears?",
+    "crumbs": [
+      "Home",
+      "Lessons:",
+      "Absorbing Markov Chains"
+    ]
+  },
+  {
+    "objectID": "absorbing-mc.html#simulations",
+    "href": "absorbing-mc.html#simulations",
+    "title": "Absorbing Markov Chains",
+    "section": "Simulations",
+    "text": "Simulations\nLet us follow in Bogumił’s foot steps and re-propose the simulation study he did on his blog.\nWho is more likely to win this game? We will later work out the probability that each will win, but we can easily to a simulation study following a frequentist approach: just count how many times each player wins!\nLet’s create a function which will simulate us tossing an imaginary coin until one of both players wins. The function should return the initial of the winning player.\n\nfunction whowins()\n    t1 = rand(('H', 'T'))  # toss number 1 \n    while true  # keep going until we get a valid sequence.\n        t2 = rand(('H', 'T'))  # toss number 2 \n        if t1 == 'T'  # invalid first toss for both.\n            t1 = t2   # reassign t2 to t1 and keep going\n        else  # t1 is 'H' ! t2 now decides the winner!\n            return t2 == 'H' ? \"B\" : \"A\"\n        end\n    end\nend\n\nwhowins (generic function with 1 method)\n\n\nYou should try it out a few times to convince yourself it’s working.\n\nSimulating the Expected Probability of Winning\nNow, lets see how often each of them wins if we repeat this contest many times over:\n\nusing Random, FreqTables\nRandom.seed!(10101)\n\nfreqtable( [whowins() for _ in 1:100_000_000] )\n\n2-element Named Vector{Int64}\nDim1  │ \n──────┼─────────\nA     │ 50003096\nB     │ 49996904\n\n\nOk, that would tell us that if we were to have them play a close to infinite number of times, each would win pretty much exactly half the games.\n\n\nSimulating expected number of steps till winning\nThis is fairly easy to simulate, given our above code.\n\nfunction count_alice()\n    t1 = rand(('H', 'T'))  # toss number 1 \n    tosses = 1  # counter\n    while true  # keep going until we get a winner: HT\n        t2 = rand(('H', 'T'))  # toss number 2 \n        tosses += 1 \n        # if sequence is correct, return, else re-do\n        t1 == 'H' && t2 == 'T' && return tosses\n\n        # if did not return above, keep going\n        t1 = t2\n    end\nend\n\ncount_alice (generic function with 1 method)\n\n\nYou should try to implement count_bob() yourself now.\n\n\nCode\nfunction count_bob()\n    t1 = rand(('H', 'T'))  # toss number 1 \n    tosses = 1  # counter\n    while true  # keep going until we get a winner: HH\n        t2 = rand(('H', 'T'))  # toss number 2 \n        tosses += 1 \n        # if sequence is correct, return, else re-do\n        t1 == 'H' && t2 == 'H' && return tosses\n\n        # if did not return above, keep going\n        t1 = t2\n    end\nend\n\n\ncount_bob (generic function with 1 method)\n\n\n\n\n\n\n\n\nNote\n\n\n\n\nDo you expect the count_* functions to return the same number each time you call them, or not?\nIf not, which function seems to return smaller numbers on average?\n\n\n\nThe last one is an easy question to answer with a simulation study again, isn’t it? This time it’s not about counting who wins how many times, however, but rather…🤔\n\n\nCode\nusing Statistics  # for mean()\n\n(\n    Alice = mean( [count_alice() for _ in 1:100_000_000] ),\n    Bob = mean( [count_bob() for _ in 1:100_000_000] )\n)\n\n\n(Alice = 3.99985247, Bob = 5.99986828)\n\n\n…wait, this is surprising, not? Alice has to toss 4 times on average, while Bob has to wait for 6 tosses until his winning sequence comes up? How come?",
+    "crumbs": [
+      "Home",
+      "Lessons:",
+      "Absorbing Markov Chains"
+    ]
+  },
+  {
+    "objectID": "absorbing-mc.html#the-absorbing-transition-matrix-p_a",
+    "href": "absorbing-mc.html#the-absorbing-transition-matrix-p_a",
+    "title": "Absorbing Markov Chains",
+    "section": "The Absorbing Transition Matrix \\(P_a\\)",
+    "text": "The Absorbing Transition Matrix \\(P_a\\)\nIn this setting we have \\(t\\) transient states (i.e. states from which you can escape), and \\(r\\) absorbing states - once you enter such a state, you stay there, in other words, the chain ends.\nWe have to re-write our transition matrix for this case. It will look as follows:\n\\[P_a = \\left[\\begin{array}{cc}\nQ & R \\\\\n\\mathbf{0} & \\mathbf{I}_r\n\\end{array}\\right] \\tag{2}\\]\nwhere\n\n\\(Q\\) is the \\((t,t)\\) transition matrix of transient states\n\\(R\\) is a \\((t,r)\\) matrix of transition probabilities from transient state \\(t\\) into absorbing state \\(r\\)\n\\(\\mathbf{0}\\) is an \\((r,t)\\) matrix of zeros, and\n\\(\\mathbf{I}_r\\) is the \\((r,r)\\) identity matrix.\n\nLet’s work this out for Alice now. Imagine that we want to fill out each of her 2 empty slots for strings with either H or T. Remember that her winning sequence was HT. It’s easiest to model Alice in three possible states:\n\nState e: She has an empty sequence, {}. She is waiting to fill this with two valid strings.\nState H: Her sequence has H in first position, i.e. looks like {H}. This is great, because if the next coin toss yields a T, she wins! If she gets another H, no problem, she stays at state {H} (we can just throw away the previous H in the sequence!).\nState HT: She wins the game.\n\nSo, we define the following transient states for her:\n\ne: empty sequence i.e {}\nH: the string sequence containing only H, i.e. {H}\n\nNext, we define the absorbing state for her:\n\nHT: upon tossing T after a H, i.e completing the sequence {HT}, the game ends.\n\n\n\n\n\n\n\nObservations\n\n\n\n\nIn this example we have t=2 transient states\nT in first position is not a valid sequence for Alice. Whilst we could think of {T} as a transient state, it is easier to think that we go back to e and start again if we hit T in the first toss.\nThere is a single absorbing state, {HT}, i.e. r=1.\n\n\n\nThe situation for Alice is as follows:\n\n\n\n\n\ngraph LR\n    e((e)) --&gt; |0.5| e\n    e((e)) --&gt; |0.5| H\n    H      --&gt; |0.5| H\n    H      --&gt; |0.5| HT\n\n\n Absorbing Markov Chain of Bob \n\n\n\nNotice how we assume that if your first toss is invalid (i.e. a T), you stay with your empty sequence. Next, here is the transition matrix \\(Q_a\\) for her transient states {e,H} (putting e in the first row/column), and the (2,1) matrix of transitions from transient into absorbing state, \\(R_a\\):\n\\[Q_a = \\left[\\begin{array}{cc}\n0.5 & 0.5 \\\\\n0   & 0.5\n\\end{array}\\right],\\quad\nR_a = \\left[\\begin{array}{c}\n0 \\\\\n0.5\n\\end{array}\\right]\n\\tag{3}\\]\nLet us assemble those into \\(P_a(\\text{Alice})\\) now, and observe that this maintains the properties of stochastic matrix \\(P\\):\n\\[P_a(\\text{Alice}) = \\left[\\begin{array}{ccc}\n0.5 & 0.5 & 0 \\\\\n0   & 0.5 & 0.5 \\\\\n0   &  0  &  1\n\\end{array}\\right]\n\\tag{4}\\]",
+    "crumbs": [
+      "Home",
+      "Lessons:",
+      "Absorbing Markov Chains"
+    ]
+  },
+  {
+    "objectID": "absorbing-mc.html#the-fundamental-matrix-n",
+    "href": "absorbing-mc.html#the-fundamental-matrix-n",
+    "title": "Absorbing Markov Chains",
+    "section": "The Fundamental Matrix \\(N\\)",
+    "text": "The Fundamental Matrix \\(N\\)\nThe first piece we need is called the fundamental matrix. It will give us the expected number of visits to transient state \\(j\\) before we reach an absorbing state. It is obtained by iterating \\(Q_a\\) forward until infinity. It can be shown that it looks like this, similar to the infinite sum of a geometric series:\n\\[\nN = \\sum_{k=0}^\\infty Q^k = (I - Q)^{-1}\n\\]\nSo, for Alice, it looks as follows:\n\\[\nN_a = (I - Q_a)^{-1} = \\left( \\left[\\begin{array}{cc}\n1 & 0 \\\\\n0 & 1\n\\end{array}\\right] - \\left[\\begin{array}{cc}\n0.5 & 0.5 \\\\\n0   & 0.5\n\\end{array}\\right] \\right)^{-1} = \\left(\\left[\\begin{array}{cc}\n0.5 & -0.5 \\\\\n0   & 0.5\n\\end{array}\\right] \\right)^{-1}\n\\]\nDo we all still remember how to compute the inverse of a 2x2 matrix? I dont’t, but here is a formula 🙈\n\n\n\n\n\n\nInverse of a 2x2 matrix\n\n\n\nFor \\(A = \\left[\\begin{array}{cc}\na & b \\\\\nc   & d\n\\end{array}\\right]\\) we have that the inverse matrix of \\(A\\) is\n\\[A^{-1} = \\frac{1}{ad - bc} \\left[\\begin{array}{cc}\nd & -b \\\\\n-c   & a\n\\end{array}\\right]\\]\n\n\nWith that out of the way, you can calculate that\n\\[\nN_a =  \\left[\\begin{array}{cc}\n2 & 2 \\\\\n0 & 2\n\\end{array}\\right]\n\\tag{5}\\]\nWe can immediately get the expected number of steps before being absorbed from this by summing across rows:\n\\[\nN_a \\mathbf{1}_t =  \\left[\\begin{array}{c}\n4 \\\\\n2\n\\end{array}\\right]\n\\tag{6}\\]\nSo, starting in state e, the expected number of steps before reaching absorbing state HT is \\(4\\) for Alice. Once in state H, she expects only two more steps. Here a step is a toss of a coin.",
+    "crumbs": [
+      "Home",
+      "Lessons:",
+      "Absorbing Markov Chains"
+    ]
+  },
+  {
+    "objectID": "absorbing-mc.html#states-and-transitions-for-bob",
+    "href": "absorbing-mc.html#states-and-transitions-for-bob",
+    "title": "Absorbing Markov Chains",
+    "section": "States and Transitions for Bob?",
+    "text": "States and Transitions for Bob?\nFor Bob, the situation is slightly different. Remember that Bob wins if HH comes up. For him, we have the following definition of states:\n\nState e: The empty sequence, {}. Waiting to fill this with two valid strings.\nState H: The sequence has H in first position, i.e. looks like {H}.\nState HH: He wins the game.\n\nNotice the one big difference here: If Bob is in state {H}, and hits a T in the next toss, he is not as fortunate as Alice, who can stay in the same state. Bob’s problem is that he does not have a winning sequence that could start with T (neither does Alice, but upon hitting T while in state {H}, she wins!)\nHere’s the graphs for Bob and Alice side by side:\n\n\n\n\n\n\n\ngraph LR\n    e((e)) --&gt; |0.5| e\n    e((e)) --&gt; |0.5| H\n    H      --&gt; |0.5| e\n    H      --&gt; |0.5| HH\n\n\n\n Markov Chain of Bob \n\n\n\n\n\n\n\n\n\ngraph LR\n    ea((e)) --&gt; |0.5| ea\n    ea((e)) --&gt; |0.5| Ha[H]\n    Ha[H]      --&gt; |0.5| Ha\n    Ha[H]      --&gt; |0.5| HT\n\n\n Markov Chain of Alice \n\n\n\n\n\nThe problem for Bob is the arrow going back to e if he hits a bad toss at state {H}. Let us quickly assemble the transition matrix for Bob, and compute his expected steps:\n\\[Q_b = \\left[\\begin{array}{cc}\n0.5 & 0.5 \\\\\n0.5 & 0\n\\end{array}\\right],\\quad\nR_b = \\left[\\begin{array}{c}\n0 \\\\\n0.5\n\\end{array}\\right]\n\\tag{7}\\]\n\\[P_a(\\text{Bob}) = \\left[\\begin{array}{ccc}\n0.5 & 0.5 & 0 \\\\\n0.5   & 0 & 0.5 \\\\\n0   &  0  &  1\n\\end{array}\\right]\n\\tag{8}\\]\nWith those in hand, you can easily verify that Bob will have\n\\[\nN_b =  \\left[\\begin{array}{cc}\n4 & 2 \\\\\n2 & 2\n\\end{array}\\right]\n\\tag{9}\\]\nwhich, in turn, means that his expected steps until absorbing state, starting from either {} or {H} are given by\n\\[\nN_b \\mathbf{1}_t =  \\left[\\begin{array}{c}\n6 \\\\\n4\n\\end{array}\\right]\n\\tag{10}\\]\n👉 exactly as in our (Bogumił’s!) simulation experiment from the start.",
+    "crumbs": [
+      "Home",
+      "Lessons:",
+      "Absorbing Markov Chains"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "CompEcon",
+    "section": "",
+    "text": "This is a Quarto website. work in progress!\nTo learn more about Quarto websites visit https://quarto.org/docs/websites.\n\n\n\n© Florian Oswald, 2024"
+  },
+  {
+    "objectID": "numerical-integration.html",
+    "href": "numerical-integration.html",
+    "title": "Numerical Integration",
+    "section": "",
+    "text": "We want to evaluate the potentially multidimensional definite integral\n\\[\\begin{equation}\nI = \\int_\\Omega f(x) dx\n\\end{equation}\\]\nwhere it’s important to keep track of the volume of the function domain, i.e. we say \\(\\Omega\\) is a subset of \\(\\mathbb{R}^m\\) with volume\n\\[\\begin{equation}\nV = \\int_\\Omega dx\n\\end{equation}\\]\nHere is an example of \\(f\\):\n\\[\nf(x) = \\sin(x)^2 + 0.1 x\n\\]\nLet’s make a plot of this, where \\(f\\) is a black line, and the red shaded area is \\(I\\).\n© Florian Oswald, 2024",
+    "crumbs": [
+      "Home",
+      "Lessons:",
+      "Numerical Integration"
+    ]
+  },
+  {
+    "objectID": "numerical-integration.html#problem-definition",
+    "href": "numerical-integration.html#problem-definition",
+    "title": "Numerical Integration",
+    "section": "",
+    "text": "We want to evaluate the potentially multidimensional definite integral\n\\[\\begin{equation}\nI = \\int_\\Omega f(x) dx\n\\end{equation}\\]\nwhere it’s important to keep track of the volume of the function domain, i.e. we say \\(\\Omega\\) is a subset of \\(\\mathbb{R}^m\\) with volume\n\\[\\begin{equation}\nV = \\int_\\Omega dx\n\\end{equation}\\]\nHere is an example of \\(f\\):\n\\[\nf(x) = \\sin(x)^2 + 0.1 x\n\\]\nLet’s make a plot of this, where \\(f\\) is a black line, and the red shaded area is \\(I\\).",
+    "crumbs": [
+      "Home",
+      "Lessons:",
+      "Numerical Integration"
+    ]
+  },
+  {
+    "objectID": "numerical-integration.html#code-setup",
+    "href": "numerical-integration.html#code-setup",
+    "title": "Numerical Integration",
+    "section": "Code Setup",
+    "text": "Code Setup\nTo run the code in this document you need have an environment where the following packages are installed:\n\n# you need to have those packages installed.\nusing CairoMakie\nusing Random\nusing LaTeXStrings\nusing OrderedCollections   # for OrderedDict\nusing FastGaussQuadrature  # for intergration rules\nusing DataFrames           # to display a table\nusing Sobol                # to get sobol sequences\nset_theme!()  # resetting all quarto default values for fig width etc\n\n\n\nShow Code\nx = 0:0.01:5\nf(x) = sin(x)^2 + 0.1x\ny = f.(x)\nfig = Figure(size = (800,600))\nax = Axis(fig[1,1], xlabel = L\"x\", ylabel = L\"\\sin(x)^2 + 0.1 x\")\nlines!(ax, x, y, label = L\"f\", color = :black, linewidth = 2)\nband!(ax, x, fill(0,length(x)), y, color = (:red, 0.5), label = \"Integral\")\naxislegend(; merge = true, position = :lt)\n\nfig\n\n\n\n\n\n\n\n\n\nAs with Riemann Integrals where we split the continuous domain of \\(f\\) into smaller and smaller chunks, which we then sum up (\\(\\int\\)), the numerical counterpart does the same: measure the value of f (the height of the black line) at different points, and sum over them. The main question is:\nAt which points?",
+    "crumbs": [
+      "Home",
+      "Lessons:",
+      "Numerical Integration"
+    ]
+  },
+  {
+    "objectID": "numerical-integration.html#monte-carlo-integration",
+    "href": "numerical-integration.html#monte-carlo-integration",
+    "title": "Numerical Integration",
+    "section": "Monte Carlo Integration",
+    "text": "Monte Carlo Integration\nA very intuitive first solution is to draw N random points from the domain of f, evalute the function there, and compute their average. We would approximate \\(I\\) as follows, where \\(x_i \\in \\Omega\\) is a randomly chosen point from the function’s domain:\n\\[\\begin{equation}\nI \\approx Q_N \\equiv V \\frac{1}{N} \\sum_{i=1}^N f(x_i) = V \\bar{f}\n\\end{equation}\\]\nThis works because the law of large numbers tells us that\n\\[\\begin{equation}\n\\lim_{N \\to \\infty} Q_N  = I.\n\\end{equation}\\]\nThe uncertainty from this method is easily quantifiable by the resulting variation in our estimate:\n\\[\\begin{equation}\nVar(f) = \\sigma_N^2 = \\frac{1}{N-1} \\sum_{i=1}^N (f(x_i) -  \\bar{f})^2\n\\end{equation}\\]\nfrom which we get the variance of \\(Q_N\\) as \\(Var(Q_N) = V^2 \\frac{\\sigma_N^2}{N}\\). Hence,clearly visible that this decreases as \\(N\\) increases. We usually report the standard error of the estimator, so we report\n\\[\\begin{equation}\n\\sigma_Q \\equiv \\sqrt{Var(Q_N)} = V \\frac{\\sigma_N}{\\sqrt{N}}\n\\end{equation}\\]\n👍\n\n\n\n\n\n\nCompute \\(\\sigma_Q\\)!\n\n\n\nWrite a function that takes \\(f\\) from above, and computes standard error \\(\\sigma_Q\\) for \\(N\\) points. Your function should take arguments sample_points, which is a vector of evaluation points, and fun, which is a function to evaluate.\n\n\n\n\nShow Code\nfunction σ(sample_points,fun)\n    N = length(sample_points)\n    ys = fun.(sample_points)\n    ybar = sum(ys) / N  # mean\n    var = 1 / (N-1) * sum( (ys .- ybar) .^ 2 )\n    sqrt(var)\nend\n\n\nσ (generic function with 1 method)\n\n\n\n\n\n\n\n\nCompute the monte carlo integral and it’s error!\n\n\n\nWrite a function mc_integrate that takes \\(f\\) from above, and computes both the monte carlo integration \\(Q_N\\) as well as its standard error \\(\\sigma_Q\\) for a set of \\(N\\) randomly chosen points. Your function should take arguments N, which is a vector of evaluation points, and fun, which is a function to evaluate. Set a random seed to ensure reproducibility. Then, call your function to compute \\(Q\\) for \\(N \\in \\{2,4,10,20,50,100,1000,10000\\}\\) and compare the outputs. Produce an OrderedDict where the keys are those values for \\(N\\).\n\n\n\n\nShow Code\nfunction mc_integrate(N,fun)\n    Random.seed!(0)   # any number works\n    V = 5 # integrate dx from 0 to 5\n    pts = rand(N) .* V  # N random numbers in [0,5]\n    mc_integral = V / N * sum( fun.(pts) )\n    mc_error = V * σ(pts,fun) / sqrt(N)\n    mc_integral, mc_error\nend\n\nns = [2,4,10,20,50,100,1000,10000]\n\nmc_results = OrderedDict(k =&gt;\n    mc_integrate(k,f) for k in ns);\n\n\n\n\n\n\n\n\nNow make a plot!\n\n\n\nTaking the dict from the above question, write a function that makes a line plot with \\(N\\) on the x axis and your estimate of the integral on the axis. Also add the error bars with band! function! Your function should take the output OrderedDict from above as argument. Scale the x-axis as log10.\n\n\n\n\nShow Code\nfunction plot_mc(od::OrderedDict; errors = true)\n    x = collect(keys(od))\n    v = collect(values(od))\n    Q = [i[1] for i in v]\n    E = [i[2] for i in v]\n\n    fig = Figure(size = (800,600))\n    ax = Axis(fig[1,1], xlabel = \"N\", ylabel = \"Qn\", xscale = log10)\n    lines!(ax, x, Q, label = L\"Q_n\", color = :black, linewidth = 1)\n    scatter!(ax, x, Q, label = L\"Q_n\", color = :black, markersize = 15)\n    if errors errorbars!(ax, x, Q, E; whiskerwidth = 1, color = (:red)) end\n    axislegend(; merge = true, position = :rb, unique = true)\n\n    return fig\nend\n\nplot_mc(mc_results)\n\n\n\n\n\n\n\n\n\nThe last point, for \\(N=10000\\) is what we’ll consider as the true value. You can see, it takes us quite long until the monte carlo method converges to that value. So, that’s the main drawback of this method.",
+    "crumbs": [
+      "Home",
+      "Lessons:",
+      "Numerical Integration"
+    ]
+  },
+  {
+    "objectID": "numerical-integration.html#quasi-monte-carlo",
+    "href": "numerical-integration.html#quasi-monte-carlo",
+    "title": "Numerical Integration",
+    "section": "Quasi-Monte carlo",
+    "text": "Quasi-Monte carlo\nThat’s a version where we do not choose random numbers as evaluation points, but sub-random sequences or low discrepancy sequences of random numbers, which aim at variance reduction. Everything else is the same.\n\n\n\n\n\n\nModify your mc_integrate for Quasi-MC\n\n\n\nModify your function from above so that instead of rand it chooses numbers from the Sobol sequences. Then make the plot again.\n\n\n\n\n\n\n\n\nUsing Sobol.jl\n\n\n\n\nmake a constructor: s = SobolSeq(lb,ub) where ub,lb are vectors of upper and lower bounds\nget n sobol-random numbers into a vector with reduce(vcat, next!(s) for i in 1:n)\n\n\n\n\n\nShow Code\nfunction qmc_integrate(N,fun)\n    Random.seed!(0)   # any number works\n    V = 5 # integrate dx from 0 to 5\n\n    s = SobolSeq([0], [5])\n    pts = reduce(vcat, next!(s) for i in 1:N)\n    mc_integral = V / N * sum( fun.(pts) )\n    mc_error = V * σ(pts,fun) / sqrt(N)\n    mc_integral, mc_error\nend\n\nqmc_results = OrderedDict(k =&gt;\n    qmc_integrate(k,f) for k in ns);\n\n\n\n\n\n\n\n\n\n\n\nOne of the merits of quasi monte carlo integration is that it’s rate of convergence is faster. You see that here various integrations stabilize at the “true” value (where \\(N=1000\\)) earlier than before. Notice I removed the error bars from the plot because I the previous formula is no longer correct. However it’s good to know that the relationship between QMC and MC errors is\n\\[\nO\\left(\\frac{(\\log N)^s}{N} \\right) \\quad vs \\quad O\\left( \\frac{1}{\\sqrt{N}} \\right)\n\\]\ntherefore, for QMC to do better than MC, we need \\(s\\) small and \\(N\\) large. In other words, in high-dimensional settings (high \\(s\\)), you might actually do better with straight MC.",
+    "crumbs": [
+      "Home",
+      "Lessons:",
+      "Numerical Integration"
+    ]
+  },
+  {
+    "objectID": "numerical-integration.html#gaussian-quadrature-integration",
+    "href": "numerical-integration.html#gaussian-quadrature-integration",
+    "title": "Numerical Integration",
+    "section": "Gaussian Quadrature integration",
+    "text": "Gaussian Quadrature integration\nBased on an early contribution of Carl Friedrich Gauss, we have that an \\(n\\)-point quadrature rule will yield an exact integration result to functions that look like polynomials of degree \\(2n -1\\), or less, by choosing \\(n\\) suitable nodes \\(x_i\\) and weights \\(w_i\\). That is quite the result. The wikipedia entry is very interesting. Basically, we will now concentrate on how to do better than in monte carlo integration, where each point gets the same weight \\(1/N\\), and where our only hope is to generate a very large set of sample points, which may be costly.\nWe continue in the above framework, i.e. in order to compute the expected value of a function \\(G\\), say, we do the following:\n\\[\nE[G(\\epsilon)] = \\int_{\\mathbb{R}^N} G(\\epsilon) p(\\epsilon) d\\epsilon \\approx \\sum_{j=1}^J w_j G(\\epsilon_j)\n\\]\nWe have some explanation to do:\n\n\\(N\\) is the dimensionality of the integration problem.\n\\(G:\\mathbb{R}^N \\mapsto \\mathbb{R}\\) is the function we want to integrate wrt \\(\\epsilon \\in \\mathbb{R}^N\\).\n\\(p\\) is a density function s.t. \\(\\int_{\\mathbb{R}^n} p(\\epsilon) d\\epsilon = 1\\).\n\\(w\\) are integration weights such that (most of the time) \\(\\sum_{j=1}^J w_j = 1\\).\n\\(\\epsilon_j\\) are integration nodes, i.e. the points where we choose to evaluate function \\(G\\). Notice that nodes and weights come in pairs.\nWe will look at normal shocks \\(\\epsilon \\sim N(0_N,I_N)\\)\nin that case, the weighting function becomes \\(w(\\epsilon) = (2\\pi)^{-N/2} \\exp \\left(-\\frac{1}{2}\\epsilon^T \\epsilon \\right)\\)\n\\(I_N\\) is the n by n identity matrix, i.e. there is no correlation among the shocks for now.\nOther random processes will require different weighting functions, but the principle is identical.\nFor now, let’s say that \\(N=1\\)\n\n\nDifferent Quadrature Rules\n\nWe focus exclusively on those and leave Simpson and Newton Cowtes formulas out.\n\nThis is because Quadrature is the method that in many situations gives highes accuracy with lowest computational cost.\n\nQuadrature provides a rule to compute weights \\(w_j\\) and nodes \\(\\epsilon_j\\).\nThere are many different quadrature rules.\nThey differ in their domain and weighting function.\nwikipedia again has a useful table for us.\nIn general, we can convert our function domain to a rule-specific domain with change of variables.\n\n\n\nGauss-Hermite: Expectation of a Normally Distributed Variable\n\nThere are many different rules, all specific to a certain random process.\nGauss-Hermite is designed for an integral of the form \\[ \\int_{-\\infty}^{+\\infty} e^{-x^2} G(x) dx \\] and where we would approximate \\[ \\int_{-\\infty}^{+\\infty} e^{-x^2} f(x) dx \\approx \\sum_{i=1}^n w_i G(x_i) \\]\nNow, let’s say we want to approximate the expected value of function \\(f\\) when it’s argument is \\(z\\sim N(\\mu,\\sigma^2)\\): \\[ E[f(z)] = \\int_{-\\infty}^{+\\infty} \\frac{1}{\\sigma \\sqrt{2\\pi}} \\exp \\left( -\\frac{(z-\\mu)^2}{2\\sigma^2} \\right) f(z) dz \\]\n\n\n\nGauss-Quadrature with \\(N&gt;1\\)?\nEasy: we just take the kronecker product of all univariate rules, i.e. the kronecker product amongst all weights and all nodes. Let’s look at an example.\n\nThis works well as long as \\(N\\) is not too large. The number of required function evaluations grows exponentially. \\[ E[G(\\epsilon)] = \\int_{\\mathbb{R}^N} G(\\epsilon) p(\\epsilon) d\\epsilon \\approx \\sum_{j_1=1}^{J_1} \\cdots \\sum_{j_N=1}^{J_N} w_{j_1}^1 \\cdots w_{j_N}^N G(\\epsilon_{j_1}^1,\\dots,\\epsilon_{j_N}^N) \\] where \\(\\omega_{j_1}^1\\) stands for weight index \\(j_1\\) in dimension 1, same for \\(\\epsilon\\).\nTotal number of nodes: \\(J=J_1 J_2 \\cdots J_N\\), and \\(J_i\\) can differ from \\(J_k\\).\nSuppose we have \\(\\epsilon^i \\sim N(0,1),i=1,2,3\\) as three uncorrelated random variables.\nLet’s take \\(J=3\\) points in all dimensions, so that in total we have \\(J^N=27\\) points.",
+    "crumbs": [
+      "Home",
+      "Lessons:",
+      "Numerical Integration"
+    ]
+  },
+  {
+    "objectID": "numerical-integration.html#quadrature-with-julia",
+    "href": "numerical-integration.html#quadrature-with-julia",
+    "title": "Numerical Integration",
+    "section": "Quadrature with julia",
+    "text": "Quadrature with julia\n\nnp = 3  # number of points\n\n# functions from FastGaussQuadrature.jl\nrules = Dict(\"hermite\" =&gt; gausshermite(np),\n             \"chebyshev\" =&gt; gausschebyshev(np),\n             \"legendre\" =&gt; gausslegendre(np),\n             \"lobatto\" =&gt; gausslobatto(np));\n\nHere are the respective nodes and weights for each of those four rules:\n\n\n4×3 DataFrame\n\n\n\nRow\nRule\nnodes\nweights\n\n\n\nSymbol\nArray…\nArray…\n\n\n\n\n1\nlobatto\n[-1.0, 0.0, 1.0]\n[0.333333, 1.33333, 0.333333]\n\n\n2\nhermite\n[-1.22474, -1.11022e-15, 1.22474]\n[0.295409, 1.18164, 0.295409]\n\n\n3\nlegendre\n[-0.774597, 0.0, 0.774597]\n[0.555556, 0.888889, 0.555556]\n\n\n4\nchebyshev\n[-0.866025, 6.12323e-17, 0.866025]\n[1.0472, 1.0472, 1.0472]\n\n\n\n\n\n\n\nApproximating an AR1 process\nhttp://karenkopecky.net/Rouwenhorst_WP.pdf",
+    "crumbs": [
+      "Home",
+      "Lessons:",
+      "Numerical Integration"
+    ]
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site\n\n\n\n© Florian Oswald, 2024"
+  }
+]
