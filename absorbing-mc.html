@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.57">
+<meta name="generator" content="quarto-1.6.24">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Florian Oswald">
-<meta name="dcterms.date" content="2024-09-26">
+<meta name="dcterms.date" content="2024-10-11">
 
 <title>Absorbing Markov Chains – CompEcon</title>
 <style>
@@ -71,10 +71,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-018089954d508eae8a473f0b7f0491f0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-2e2eda0a2634de370065cf022d1f7b2c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -260,7 +260,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">September 26, 2024</p>
+      <p class="date">October 11, 2024</p>
     </div>
   </div>
   
@@ -400,7 +400,7 @@ Note
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="1">
-<pre><code>(Alice = 3.99985247, Bob = 5.99986828)</code></pre>
+<pre><code>(Alice = 4.00016002, Bob = 6.00034786)</code></pre>
 </div>
 </div>
 <p>…wait, this is surprising, not? Alice has to toss 4 times on average, while Bob has to wait for 6 tosses until his winning sequence comes up? How come?</p>
@@ -518,7 +518,7 @@ Observations
     H      --&gt; |0.5| HT
 </pre>
 </div>
-<p></p><figcaption> Absorbing Markov Chain of Bob</figcaption> </figure><p></p>
+<p></p><figcaption> Absorbing Markov Chain of Alice</figcaption> </figure><p></p>
 </div>
 </div>
 </div>
@@ -542,7 +542,7 @@ R_a = \left[\begin{array}{c}
 </section>
 <section id="the-fundamental-matrix-n" class="level2">
 <h2 class="anchored" data-anchor-id="the-fundamental-matrix-n">The Fundamental Matrix <span class="math inline">\(N\)</span></h2>
-<p>The first piece we need is called the <em>fundamental matrix</em>. It will give us the <strong>expected number of visits to transient state <span class="math inline">\(j\)</span> before we reach an absorbing state</strong>. It is obtained by iterating <span class="math inline">\(Q_a\)</span> forward until infinity. <a href="https://en.wikipedia.org/wiki/Absorbing_Markov_chain#String_generation">It can be shown</a> that it looks like this, similar to the infinite sum of a geometric series:</p>
+<p>The next piece we need is called the <em>fundamental matrix</em>. It will give us the <strong>expected number of visits to transient state <span class="math inline">\(j\)</span> before we reach an absorbing state</strong>. It is obtained by iterating <span class="math inline">\(Q_a\)</span> forward until infinity. <a href="https://en.wikipedia.org/wiki/Absorbing_Markov_chain#String_generation">It can be shown</a> that it looks like this, similar to the infinite sum of a geometric series:</p>
 <p><span class="math display">\[
 N = \sum_{k=0}^\infty Q^k = (I - Q)^{-1}
 \]</span></p>

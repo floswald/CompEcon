@@ -1,94 +1,10 @@
 [
   {
-    "objectID": "absorbing-mc.html",
-    "href": "absorbing-mc.html",
-    "title": "Absorbing Markov Chains",
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
     "section": "",
-    "text": "This elaborates on Bogumił’s blog post about the problem of generating a sequence of coin tosses. We will add some theory to his simulation study.\n© Florian Oswald, 2024",
-    "crumbs": [
-      "Home",
-      "Lessons:",
-      "Absorbing Markov Chains"
-    ]
-  },
-  {
-    "objectID": "absorbing-mc.html#problem-statement",
-    "href": "absorbing-mc.html#problem-statement",
-    "title": "Absorbing Markov Chains",
-    "section": "Problem Statement",
-    "text": "Problem Statement\nTo recap, we have two players Alice (A) and Bob (B), and each is equipped with fair coin. Each plays a game whereby they toss the coin, and record the outcome as either heads (H) or tails (T). An example of a sequence after 9 coin tosses for each player could look like this:\ntoss: 123456789\nA:    TTHHHTHTH\nB:    THTTHTHHT\nAlice and Bob have different ways of winning this game. A wins if the sequence HT occurs, and B wins if the sequence HH occurs. Following the above example, A would have won after toss number 6. B had to wait until toss number 8 complete his winning sequence HH, hence he lost this particular contest.",
-    "crumbs": [
-      "Home",
-      "Lessons:",
-      "Absorbing Markov Chains"
-    ]
-  },
-  {
-    "objectID": "absorbing-mc.html#questions",
-    "href": "absorbing-mc.html#questions",
-    "title": "Absorbing Markov Chains",
-    "section": "Questions",
-    "text": "Questions\n\nIn expectation, who is more likely to win this game? Suppose we performed a very large number of contests like the one illustrated above.\nHow many coin tosses does Alice have to perform, on average, until her winning sequence shows up?\nHow many tosses does Bob have to perform until his winning sequence appears?",
-    "crumbs": [
-      "Home",
-      "Lessons:",
-      "Absorbing Markov Chains"
-    ]
-  },
-  {
-    "objectID": "absorbing-mc.html#simulations",
-    "href": "absorbing-mc.html#simulations",
-    "title": "Absorbing Markov Chains",
-    "section": "Simulations",
-    "text": "Simulations\nLet us follow in Bogumił’s foot steps and re-propose the simulation study he did on his blog.\nWho is more likely to win this game? We will later work out the probability that each will win, but we can easily to a simulation study following a frequentist approach: just count how many times each player wins!\nLet’s create a function which will simulate us tossing an imaginary coin until one of both players wins. The function should return the initial of the winning player.\n\nfunction whowins()\n    t1 = rand(('H', 'T'))  # toss number 1 \n    while true  # keep going until we get a valid sequence.\n        t2 = rand(('H', 'T'))  # toss number 2 \n        if t1 == 'T'  # invalid first toss for both.\n            t1 = t2   # reassign t2 to t1 and keep going\n        else  # t1 is 'H' ! t2 now decides the winner!\n            return t2 == 'H' ? \"B\" : \"A\"\n        end\n    end\nend\n\nwhowins (generic function with 1 method)\n\n\nYou should try it out a few times to convince yourself it’s working.\n\nSimulating the Expected Probability of Winning\nNow, lets see how often each of them wins if we repeat this contest many times over:\n\nusing Random, FreqTables\nRandom.seed!(10101)\n\nfreqtable( [whowins() for _ in 1:100_000_000] )\n\n2-element Named Vector{Int64}\nDim1  │ \n──────┼─────────\nA     │ 50003096\nB     │ 49996904\n\n\nOk, that would tell us that if we were to have them play a close to infinite number of times, each would win pretty much exactly half the games.\n\n\nSimulating expected number of steps till winning\nThis is fairly easy to simulate, given our above code.\n\nfunction count_alice()\n    t1 = rand(('H', 'T'))  # toss number 1 \n    tosses = 1  # counter\n    while true  # keep going until we get a winner: HT\n        t2 = rand(('H', 'T'))  # toss number 2 \n        tosses += 1 \n        # if sequence is correct, return, else re-do\n        t1 == 'H' && t2 == 'T' && return tosses\n\n        # if did not return above, keep going\n        t1 = t2\n    end\nend\n\ncount_alice (generic function with 1 method)\n\n\nYou should try to implement count_bob() yourself now.\n\n\nCode\nfunction count_bob()\n    t1 = rand(('H', 'T'))  # toss number 1 \n    tosses = 1  # counter\n    while true  # keep going until we get a winner: HH\n        t2 = rand(('H', 'T'))  # toss number 2 \n        tosses += 1 \n        # if sequence is correct, return, else re-do\n        t1 == 'H' && t2 == 'H' && return tosses\n\n        # if did not return above, keep going\n        t1 = t2\n    end\nend\n\n\ncount_bob (generic function with 1 method)\n\n\n\n\n\n\n\n\nNote\n\n\n\n\nDo you expect the count_* functions to return the same number each time you call them, or not?\nIf not, which function seems to return smaller numbers on average?\n\n\n\nThe last one is an easy question to answer with a simulation study again, isn’t it? This time it’s not about counting who wins how many times, however, but rather…🤔\n\n\nCode\nusing Statistics  # for mean()\n\n(\n    Alice = mean( [count_alice() for _ in 1:100_000_000] ),\n    Bob = mean( [count_bob() for _ in 1:100_000_000] )\n)\n\n\n(Alice = 3.99985247, Bob = 5.99986828)\n\n\n…wait, this is surprising, not? Alice has to toss 4 times on average, while Bob has to wait for 6 tosses until his winning sequence comes up? How come?",
-    "crumbs": [
-      "Home",
-      "Lessons:",
-      "Absorbing Markov Chains"
-    ]
-  },
-  {
-    "objectID": "absorbing-mc.html#the-absorbing-transition-matrix-p_a",
-    "href": "absorbing-mc.html#the-absorbing-transition-matrix-p_a",
-    "title": "Absorbing Markov Chains",
-    "section": "The Absorbing Transition Matrix \\(P_a\\)",
-    "text": "The Absorbing Transition Matrix \\(P_a\\)\nIn this setting we have \\(t\\) transient states (i.e. states from which you can escape), and \\(r\\) absorbing states - once you enter such a state, you stay there, in other words, the chain ends.\nWe have to re-write our transition matrix for this case. It will look as follows:\n\\[P_a = \\left[\\begin{array}{cc}\nQ & R \\\\\n\\mathbf{0} & \\mathbf{I}_r\n\\end{array}\\right] \\tag{2}\\]\nwhere\n\n\\(Q\\) is the \\((t,t)\\) transition matrix of transient states\n\\(R\\) is a \\((t,r)\\) matrix of transition probabilities from transient state \\(t\\) into absorbing state \\(r\\)\n\\(\\mathbf{0}\\) is an \\((r,t)\\) matrix of zeros, and\n\\(\\mathbf{I}_r\\) is the \\((r,r)\\) identity matrix.\n\nLet’s work this out for Alice now. Imagine that we want to fill out each of her 2 empty slots for strings with either H or T. Remember that her winning sequence was HT. It’s easiest to model Alice in three possible states:\n\nState e: She has an empty sequence, {}. She is waiting to fill this with two valid strings.\nState H: Her sequence has H in first position, i.e. looks like {H}. This is great, because if the next coin toss yields a T, she wins! If she gets another H, no problem, she stays at state {H} (we can just throw away the previous H in the sequence!).\nState HT: She wins the game.\n\nSo, we define the following transient states for her:\n\ne: empty sequence i.e {}\nH: the string sequence containing only H, i.e. {H}\n\nNext, we define the absorbing state for her:\n\nHT: upon tossing T after a H, i.e completing the sequence {HT}, the game ends.\n\n\n\n\n\n\n\nObservations\n\n\n\n\nIn this example we have t=2 transient states\nT in first position is not a valid sequence for Alice. Whilst we could think of {T} as a transient state, it is easier to think that we go back to e and start again if we hit T in the first toss.\nThere is a single absorbing state, {HT}, i.e. r=1.\n\n\n\nThe situation for Alice is as follows:\n\n\n\n\n\ngraph LR\n    e((e)) --&gt; |0.5| e\n    e((e)) --&gt; |0.5| H\n    H      --&gt; |0.5| H\n    H      --&gt; |0.5| HT\n\n\n Absorbing Markov Chain of Bob \n\n\n\nNotice how we assume that if your first toss is invalid (i.e. a T), you stay with your empty sequence. Next, here is the transition matrix \\(Q_a\\) for her transient states {e,H} (putting e in the first row/column), and the (2,1) matrix of transitions from transient into absorbing state, \\(R_a\\):\n\\[Q_a = \\left[\\begin{array}{cc}\n0.5 & 0.5 \\\\\n0   & 0.5\n\\end{array}\\right],\\quad\nR_a = \\left[\\begin{array}{c}\n0 \\\\\n0.5\n\\end{array}\\right]\n\\tag{3}\\]\nLet us assemble those into \\(P_a(\\text{Alice})\\) now, and observe that this maintains the properties of stochastic matrix \\(P\\):\n\\[P_a(\\text{Alice}) = \\left[\\begin{array}{ccc}\n0.5 & 0.5 & 0 \\\\\n0   & 0.5 & 0.5 \\\\\n0   &  0  &  1\n\\end{array}\\right]\n\\tag{4}\\]",
-    "crumbs": [
-      "Home",
-      "Lessons:",
-      "Absorbing Markov Chains"
-    ]
-  },
-  {
-    "objectID": "absorbing-mc.html#the-fundamental-matrix-n",
-    "href": "absorbing-mc.html#the-fundamental-matrix-n",
-    "title": "Absorbing Markov Chains",
-    "section": "The Fundamental Matrix \\(N\\)",
-    "text": "The Fundamental Matrix \\(N\\)\nThe first piece we need is called the fundamental matrix. It will give us the expected number of visits to transient state \\(j\\) before we reach an absorbing state. It is obtained by iterating \\(Q_a\\) forward until infinity. It can be shown that it looks like this, similar to the infinite sum of a geometric series:\n\\[\nN = \\sum_{k=0}^\\infty Q^k = (I - Q)^{-1}\n\\]\nSo, for Alice, it looks as follows:\n\\[\nN_a = (I - Q_a)^{-1} = \\left( \\left[\\begin{array}{cc}\n1 & 0 \\\\\n0 & 1\n\\end{array}\\right] - \\left[\\begin{array}{cc}\n0.5 & 0.5 \\\\\n0   & 0.5\n\\end{array}\\right] \\right)^{-1} = \\left(\\left[\\begin{array}{cc}\n0.5 & -0.5 \\\\\n0   & 0.5\n\\end{array}\\right] \\right)^{-1}\n\\]\nDo we all still remember how to compute the inverse of a 2x2 matrix? I dont’t, but here is a formula 🙈\n\n\n\n\n\n\nInverse of a 2x2 matrix\n\n\n\nFor \\(A = \\left[\\begin{array}{cc}\na & b \\\\\nc   & d\n\\end{array}\\right]\\) we have that the inverse matrix of \\(A\\) is\n\\[A^{-1} = \\frac{1}{ad - bc} \\left[\\begin{array}{cc}\nd & -b \\\\\n-c   & a\n\\end{array}\\right]\\]\n\n\nWith that out of the way, you can calculate that\n\\[\nN_a =  \\left[\\begin{array}{cc}\n2 & 2 \\\\\n0 & 2\n\\end{array}\\right]\n\\tag{5}\\]\nWe can immediately get the expected number of steps before being absorbed from this by summing across rows:\n\\[\nN_a \\mathbf{1}_t =  \\left[\\begin{array}{c}\n4 \\\\\n2\n\\end{array}\\right]\n\\tag{6}\\]\nSo, starting in state e, the expected number of steps before reaching absorbing state HT is \\(4\\) for Alice. Once in state H, she expects only two more steps. Here a step is a toss of a coin.",
-    "crumbs": [
-      "Home",
-      "Lessons:",
-      "Absorbing Markov Chains"
-    ]
-  },
-  {
-    "objectID": "absorbing-mc.html#states-and-transitions-for-bob",
-    "href": "absorbing-mc.html#states-and-transitions-for-bob",
-    "title": "Absorbing Markov Chains",
-    "section": "States and Transitions for Bob?",
-    "text": "States and Transitions for Bob?\nFor Bob, the situation is slightly different. Remember that Bob wins if HH comes up. For him, we have the following definition of states:\n\nState e: The empty sequence, {}. Waiting to fill this with two valid strings.\nState H: The sequence has H in first position, i.e. looks like {H}.\nState HH: He wins the game.\n\nNotice the one big difference here: If Bob is in state {H}, and hits a T in the next toss, he is not as fortunate as Alice, who can stay in the same state. Bob’s problem is that he does not have a winning sequence that could start with T (neither does Alice, but upon hitting T while in state {H}, she wins!)\nHere’s the graphs for Bob and Alice side by side:\n\n\n\n\n\n\n\ngraph LR\n    e((e)) --&gt; |0.5| e\n    e((e)) --&gt; |0.5| H\n    H      --&gt; |0.5| e\n    H      --&gt; |0.5| HH\n\n\n\n Markov Chain of Bob \n\n\n\n\n\n\n\n\n\ngraph LR\n    ea((e)) --&gt; |0.5| ea\n    ea((e)) --&gt; |0.5| Ha[H]\n    Ha[H]      --&gt; |0.5| Ha\n    Ha[H]      --&gt; |0.5| HT\n\n\n Markov Chain of Alice \n\n\n\n\n\nThe problem for Bob is the arrow going back to e if he hits a bad toss at state {H}. Let us quickly assemble the transition matrix for Bob, and compute his expected steps:\n\\[Q_b = \\left[\\begin{array}{cc}\n0.5 & 0.5 \\\\\n0.5 & 0\n\\end{array}\\right],\\quad\nR_b = \\left[\\begin{array}{c}\n0 \\\\\n0.5\n\\end{array}\\right]\n\\tag{7}\\]\n\\[P_a(\\text{Bob}) = \\left[\\begin{array}{ccc}\n0.5 & 0.5 & 0 \\\\\n0.5   & 0 & 0.5 \\\\\n0   &  0  &  1\n\\end{array}\\right]\n\\tag{8}\\]\nWith those in hand, you can easily verify that Bob will have\n\\[\nN_b =  \\left[\\begin{array}{cc}\n4 & 2 \\\\\n2 & 2\n\\end{array}\\right]\n\\tag{9}\\]\nwhich, in turn, means that his expected steps until absorbing state, starting from either {} or {H} are given by\n\\[\nN_b \\mathbf{1}_t =  \\left[\\begin{array}{c}\n6 \\\\\n4\n\\end{array}\\right]\n\\tag{10}\\]\n👉 exactly as in our (Bogumił’s!) simulation experiment from the start.",
-    "crumbs": [
-      "Home",
-      "Lessons:",
-      "Absorbing Markov Chains"
-    ]
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "CompEcon",
-    "section": "",
-    "text": "This is a Quarto website. work in progress!\nTo learn more about Quarto websites visit https://quarto.org/docs/websites.\n\n\n\n© Florian Oswald, 2024"
+    "text": "About this site\n\n\n\n© Florian Oswald, 2024"
   },
   {
     "objectID": "numerical-integration.html",
@@ -175,10 +91,94 @@
     ]
   },
   {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "CompEcon",
     "section": "",
-    "text": "About this site\n\n\n\n© Florian Oswald, 2024"
+    "text": "This is a Quarto website. work in progress!\nTo learn more about Quarto websites visit https://quarto.org/docs/websites.\n\n\n\n© Florian Oswald, 2024"
+  },
+  {
+    "objectID": "absorbing-mc.html",
+    "href": "absorbing-mc.html",
+    "title": "Absorbing Markov Chains",
+    "section": "",
+    "text": "This elaborates on Bogumił’s blog post about the problem of generating a sequence of coin tosses. We will add some theory to his simulation study.\n© Florian Oswald, 2024",
+    "crumbs": [
+      "Home",
+      "Lessons:",
+      "Absorbing Markov Chains"
+    ]
+  },
+  {
+    "objectID": "absorbing-mc.html#problem-statement",
+    "href": "absorbing-mc.html#problem-statement",
+    "title": "Absorbing Markov Chains",
+    "section": "Problem Statement",
+    "text": "Problem Statement\nTo recap, we have two players Alice (A) and Bob (B), and each is equipped with fair coin. Each plays a game whereby they toss the coin, and record the outcome as either heads (H) or tails (T). An example of a sequence after 9 coin tosses for each player could look like this:\ntoss: 123456789\nA:    TTHHHTHTH\nB:    THTTHTHHT\nAlice and Bob have different ways of winning this game. A wins if the sequence HT occurs, and B wins if the sequence HH occurs. Following the above example, A would have won after toss number 6. B had to wait until toss number 8 complete his winning sequence HH, hence he lost this particular contest.",
+    "crumbs": [
+      "Home",
+      "Lessons:",
+      "Absorbing Markov Chains"
+    ]
+  },
+  {
+    "objectID": "absorbing-mc.html#questions",
+    "href": "absorbing-mc.html#questions",
+    "title": "Absorbing Markov Chains",
+    "section": "Questions",
+    "text": "Questions\n\nIn expectation, who is more likely to win this game? Suppose we performed a very large number of contests like the one illustrated above.\nHow many coin tosses does Alice have to perform, on average, until her winning sequence shows up?\nHow many tosses does Bob have to perform until his winning sequence appears?",
+    "crumbs": [
+      "Home",
+      "Lessons:",
+      "Absorbing Markov Chains"
+    ]
+  },
+  {
+    "objectID": "absorbing-mc.html#simulations",
+    "href": "absorbing-mc.html#simulations",
+    "title": "Absorbing Markov Chains",
+    "section": "Simulations",
+    "text": "Simulations\nLet us follow in Bogumił’s foot steps and re-propose the simulation study he did on his blog.\nWho is more likely to win this game? We will later work out the probability that each will win, but we can easily to a simulation study following a frequentist approach: just count how many times each player wins!\nLet’s create a function which will simulate us tossing an imaginary coin until one of both players wins. The function should return the initial of the winning player.\n\nfunction whowins()\n    t1 = rand(('H', 'T'))  # toss number 1 \n    while true  # keep going until we get a valid sequence.\n        t2 = rand(('H', 'T'))  # toss number 2 \n        if t1 == 'T'  # invalid first toss for both.\n            t1 = t2   # reassign t2 to t1 and keep going\n        else  # t1 is 'H' ! t2 now decides the winner!\n            return t2 == 'H' ? \"B\" : \"A\"\n        end\n    end\nend\n\nwhowins (generic function with 1 method)\n\n\nYou should try it out a few times to convince yourself it’s working.\n\nSimulating the Expected Probability of Winning\nNow, lets see how often each of them wins if we repeat this contest many times over:\n\nusing Random, FreqTables\nRandom.seed!(10101)\n\nfreqtable( [whowins() for _ in 1:100_000_000] )\n\n2-element Named Vector{Int64}\nDim1  │ \n──────┼─────────\nA     │ 50003096\nB     │ 49996904\n\n\nOk, that would tell us that if we were to have them play a close to infinite number of times, each would win pretty much exactly half the games.\n\n\nSimulating expected number of steps till winning\nThis is fairly easy to simulate, given our above code.\n\nfunction count_alice()\n    t1 = rand(('H', 'T'))  # toss number 1 \n    tosses = 1  # counter\n    while true  # keep going until we get a winner: HT\n        t2 = rand(('H', 'T'))  # toss number 2 \n        tosses += 1 \n        # if sequence is correct, return, else re-do\n        t1 == 'H' && t2 == 'T' && return tosses\n\n        # if did not return above, keep going\n        t1 = t2\n    end\nend\n\ncount_alice (generic function with 1 method)\n\n\nYou should try to implement count_bob() yourself now.\n\n\nCode\nfunction count_bob()\n    t1 = rand(('H', 'T'))  # toss number 1 \n    tosses = 1  # counter\n    while true  # keep going until we get a winner: HH\n        t2 = rand(('H', 'T'))  # toss number 2 \n        tosses += 1 \n        # if sequence is correct, return, else re-do\n        t1 == 'H' && t2 == 'H' && return tosses\n\n        # if did not return above, keep going\n        t1 = t2\n    end\nend\n\n\ncount_bob (generic function with 1 method)\n\n\n\n\n\n\n\n\nNote\n\n\n\n\nDo you expect the count_* functions to return the same number each time you call them, or not?\nIf not, which function seems to return smaller numbers on average?\n\n\n\nThe last one is an easy question to answer with a simulation study again, isn’t it? This time it’s not about counting who wins how many times, however, but rather…🤔\n\n\nCode\nusing Statistics  # for mean()\n\n(\n    Alice = mean( [count_alice() for _ in 1:100_000_000] ),\n    Bob = mean( [count_bob() for _ in 1:100_000_000] )\n)\n\n\n(Alice = 4.00016002, Bob = 6.00034786)\n\n\n…wait, this is surprising, not? Alice has to toss 4 times on average, while Bob has to wait for 6 tosses until his winning sequence comes up? How come?",
+    "crumbs": [
+      "Home",
+      "Lessons:",
+      "Absorbing Markov Chains"
+    ]
+  },
+  {
+    "objectID": "absorbing-mc.html#the-absorbing-transition-matrix-p_a",
+    "href": "absorbing-mc.html#the-absorbing-transition-matrix-p_a",
+    "title": "Absorbing Markov Chains",
+    "section": "The Absorbing Transition Matrix \\(P_a\\)",
+    "text": "The Absorbing Transition Matrix \\(P_a\\)\nIn this setting we have \\(t\\) transient states (i.e. states from which you can escape), and \\(r\\) absorbing states - once you enter such a state, you stay there, in other words, the chain ends.\nWe have to re-write our transition matrix for this case. It will look as follows:\n\\[P_a = \\left[\\begin{array}{cc}\nQ & R \\\\\n\\mathbf{0} & \\mathbf{I}_r\n\\end{array}\\right] \\tag{2}\\]\nwhere\n\n\\(Q\\) is the \\((t,t)\\) transition matrix of transient states\n\\(R\\) is a \\((t,r)\\) matrix of transition probabilities from transient state \\(t\\) into absorbing state \\(r\\)\n\\(\\mathbf{0}\\) is an \\((r,t)\\) matrix of zeros, and\n\\(\\mathbf{I}_r\\) is the \\((r,r)\\) identity matrix.\n\nLet’s work this out for Alice now. Imagine that we want to fill out each of her 2 empty slots for strings with either H or T. Remember that her winning sequence was HT. It’s easiest to model Alice in three possible states:\n\nState e: She has an empty sequence, {}. She is waiting to fill this with two valid strings.\nState H: Her sequence has H in first position, i.e. looks like {H}. This is great, because if the next coin toss yields a T, she wins! If she gets another H, no problem, she stays at state {H} (we can just throw away the previous H in the sequence!).\nState HT: She wins the game.\n\nSo, we define the following transient states for her:\n\ne: empty sequence i.e {}\nH: the string sequence containing only H, i.e. {H}\n\nNext, we define the absorbing state for her:\n\nHT: upon tossing T after a H, i.e completing the sequence {HT}, the game ends.\n\n\n\n\n\n\n\nObservations\n\n\n\n\nIn this example we have t=2 transient states\nT in first position is not a valid sequence for Alice. Whilst we could think of {T} as a transient state, it is easier to think that we go back to e and start again if we hit T in the first toss.\nThere is a single absorbing state, {HT}, i.e. r=1.\n\n\n\nThe situation for Alice is as follows:\n\n\n\n\n\ngraph LR\n    e((e)) --&gt; |0.5| e\n    e((e)) --&gt; |0.5| H\n    H      --&gt; |0.5| H\n    H      --&gt; |0.5| HT\n\n\n Absorbing Markov Chain of Alice \n\n\n\nNotice how we assume that if your first toss is invalid (i.e. a T), you stay with your empty sequence. Next, here is the transition matrix \\(Q_a\\) for her transient states {e,H} (putting e in the first row/column), and the (2,1) matrix of transitions from transient into absorbing state, \\(R_a\\):\n\\[Q_a = \\left[\\begin{array}{cc}\n0.5 & 0.5 \\\\\n0   & 0.5\n\\end{array}\\right],\\quad\nR_a = \\left[\\begin{array}{c}\n0 \\\\\n0.5\n\\end{array}\\right]\n\\tag{3}\\]\nLet us assemble those into \\(P_a(\\text{Alice})\\) now, and observe that this maintains the properties of stochastic matrix \\(P\\):\n\\[P_a(\\text{Alice}) = \\left[\\begin{array}{ccc}\n0.5 & 0.5 & 0 \\\\\n0   & 0.5 & 0.5 \\\\\n0   &  0  &  1\n\\end{array}\\right]\n\\tag{4}\\]",
+    "crumbs": [
+      "Home",
+      "Lessons:",
+      "Absorbing Markov Chains"
+    ]
+  },
+  {
+    "objectID": "absorbing-mc.html#the-fundamental-matrix-n",
+    "href": "absorbing-mc.html#the-fundamental-matrix-n",
+    "title": "Absorbing Markov Chains",
+    "section": "The Fundamental Matrix \\(N\\)",
+    "text": "The Fundamental Matrix \\(N\\)\nThe next piece we need is called the fundamental matrix. It will give us the expected number of visits to transient state \\(j\\) before we reach an absorbing state. It is obtained by iterating \\(Q_a\\) forward until infinity. It can be shown that it looks like this, similar to the infinite sum of a geometric series:\n\\[\nN = \\sum_{k=0}^\\infty Q^k = (I - Q)^{-1}\n\\]\nSo, for Alice, it looks as follows:\n\\[\nN_a = (I - Q_a)^{-1} = \\left( \\left[\\begin{array}{cc}\n1 & 0 \\\\\n0 & 1\n\\end{array}\\right] - \\left[\\begin{array}{cc}\n0.5 & 0.5 \\\\\n0   & 0.5\n\\end{array}\\right] \\right)^{-1} = \\left(\\left[\\begin{array}{cc}\n0.5 & -0.5 \\\\\n0   & 0.5\n\\end{array}\\right] \\right)^{-1}\n\\]\nDo we all still remember how to compute the inverse of a 2x2 matrix? I dont’t, but here is a formula 🙈\n\n\n\n\n\n\nInverse of a 2x2 matrix\n\n\n\nFor \\(A = \\left[\\begin{array}{cc}\na & b \\\\\nc   & d\n\\end{array}\\right]\\) we have that the inverse matrix of \\(A\\) is\n\\[A^{-1} = \\frac{1}{ad - bc} \\left[\\begin{array}{cc}\nd & -b \\\\\n-c   & a\n\\end{array}\\right]\\]\n\n\nWith that out of the way, you can calculate that\n\\[\nN_a =  \\left[\\begin{array}{cc}\n2 & 2 \\\\\n0 & 2\n\\end{array}\\right]\n\\tag{5}\\]\nWe can immediately get the expected number of steps before being absorbed from this by summing across rows:\n\\[\nN_a \\mathbf{1}_t =  \\left[\\begin{array}{c}\n4 \\\\\n2\n\\end{array}\\right]\n\\tag{6}\\]\nSo, starting in state e, the expected number of steps before reaching absorbing state HT is \\(4\\) for Alice. Once in state H, she expects only two more steps. Here a step is a toss of a coin.",
+    "crumbs": [
+      "Home",
+      "Lessons:",
+      "Absorbing Markov Chains"
+    ]
+  },
+  {
+    "objectID": "absorbing-mc.html#states-and-transitions-for-bob",
+    "href": "absorbing-mc.html#states-and-transitions-for-bob",
+    "title": "Absorbing Markov Chains",
+    "section": "States and Transitions for Bob?",
+    "text": "States and Transitions for Bob?\nFor Bob, the situation is slightly different. Remember that Bob wins if HH comes up. For him, we have the following definition of states:\n\nState e: The empty sequence, {}. Waiting to fill this with two valid strings.\nState H: The sequence has H in first position, i.e. looks like {H}.\nState HH: He wins the game.\n\nNotice the one big difference here: If Bob is in state {H}, and hits a T in the next toss, he is not as fortunate as Alice, who can stay in the same state. Bob’s problem is that he does not have a winning sequence that could start with T (neither does Alice, but upon hitting T while in state {H}, she wins!)\nHere’s the graphs for Bob and Alice side by side:\n\n\n\n\n\n\n\ngraph LR\n    e((e)) --&gt; |0.5| e\n    e((e)) --&gt; |0.5| H\n    H      --&gt; |0.5| e\n    H      --&gt; |0.5| HH\n\n\n\n Markov Chain of Bob \n\n\n\n\n\n\n\n\n\ngraph LR\n    ea((e)) --&gt; |0.5| ea\n    ea((e)) --&gt; |0.5| Ha[H]\n    Ha[H]      --&gt; |0.5| Ha\n    Ha[H]      --&gt; |0.5| HT\n\n\n Markov Chain of Alice \n\n\n\n\n\nThe problem for Bob is the arrow going back to e if he hits a bad toss at state {H}. Let us quickly assemble the transition matrix for Bob, and compute his expected steps:\n\\[Q_b = \\left[\\begin{array}{cc}\n0.5 & 0.5 \\\\\n0.5 & 0\n\\end{array}\\right],\\quad\nR_b = \\left[\\begin{array}{c}\n0 \\\\\n0.5\n\\end{array}\\right]\n\\tag{7}\\]\n\\[P_a(\\text{Bob}) = \\left[\\begin{array}{ccc}\n0.5 & 0.5 & 0 \\\\\n0.5   & 0 & 0.5 \\\\\n0   &  0  &  1\n\\end{array}\\right]\n\\tag{8}\\]\nWith those in hand, you can easily verify that Bob will have\n\\[\nN_b =  \\left[\\begin{array}{cc}\n4 & 2 \\\\\n2 & 2\n\\end{array}\\right]\n\\tag{9}\\]\nwhich, in turn, means that his expected steps until absorbing state, starting from either {} or {H} are given by\n\\[\nN_b \\mathbf{1}_t =  \\left[\\begin{array}{c}\n6 \\\\\n4\n\\end{array}\\right]\n\\tag{10}\\]\n👉 exactly as in our (Bogumił’s!) simulation experiment from the start.",
+    "crumbs": [
+      "Home",
+      "Lessons:",
+      "Absorbing Markov Chains"
+    ]
   }
 ]
