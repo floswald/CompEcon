@@ -8,8 +8,11 @@ website:
   body-footer: © Florian Oswald, 2025
   favicon: /images/cca.png
   twitter-card: true
-  google-analytics: "G-TQGG8QBSRH"
+  google-analytics: 
+    tracking-id: "G-YG2MPSR1Q2"
+    storage: none
   sidebar:
+    collapse-level: 1
     contents:
     - section: Setup
       contents:
@@ -35,11 +38,18 @@ website:
 
   navbar:
     search: true
-    logo: /images/cca.png
+    tools: 
+      - icon: github
+        menu:
+          - text: Source Code
+            href:  https://github.com/floswald/CompEcon
+          - text: Report a Bug
+            href:  https://github.com/floswald/CompEcon/issues/new
+
+    logo: /images/cca-julia.png
     left:
       - href: index.qmd
         text: Home
-      - about.qmd
 
 format:
   html:
