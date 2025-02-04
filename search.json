@@ -44,7 +44,6 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "Lectures",
       "Absorbing Markov Chains"
     ]
   },
@@ -56,7 +55,6 @@
     "text": "Problem Statement\nTo recap, we have two players Alice (A) and Bob (B), and each is equipped with fair coin. Each plays a game whereby they toss the coin, and record the outcome as either heads (H) or tails (T). An example of a sequence after 9 coin tosses for each player could look like this:\ntoss: 123456789\nA:    TTHHHTHTH\nB:    THTTHTHHT\nAlice and Bob have different ways of winning this game. A wins if the sequence HT occurs, and B wins if the sequence HH occurs. Following the above example, A would have won after toss number 6. B had to wait until toss number 8 complete his winning sequence HH, hence he lost this particular contest.",
     "crumbs": [
       "Home",
-      "Lectures",
       "Lectures",
       "Absorbing Markov Chains"
     ]
@@ -70,7 +68,6 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "Lectures",
       "Absorbing Markov Chains"
     ]
   },
@@ -82,7 +79,6 @@
     "text": "Simulations\nLet us follow in Bogumił’s foot steps and re-propose the simulation study he did on his blog.\nWho is more likely to win this game? We will later work out the probability that each will win, but we can easily to a simulation study following a frequentist approach: just count how many times each player wins!\nLet’s create a function which will simulate us tossing an imaginary coin until one of both players wins. The function should return the initial of the winning player.\n\nfunction whowins()\n    t1 = rand(('H', 'T'))  # toss number 1 \n    while true  # keep going until we get a valid sequence.\n        t2 = rand(('H', 'T'))  # toss number 2 \n        if t1 == 'T'  # invalid first toss for both.\n            t1 = t2   # reassign t2 to t1 and keep going\n        else  # t1 is 'H' ! t2 now decides the winner!\n            return t2 == 'H' ? \"B\" : \"A\"\n        end\n    end\nend\n\nwhowins (generic function with 1 method)\n\n\nYou should try it out a few times to convince yourself it’s working.\n\nSimulating the Expected Probability of Winning\nNow, lets see how often each of them wins if we repeat this contest many times over:\n\nusing Random, FreqTables\nRandom.seed!(10101)\n\nfreqtable( [whowins() for _ in 1:100_000_000] )\n\n2-element Named Vector{Int64}\nDim1  │ \n──────┼─────────\nA     │ 50003096\nB     │ 49996904\n\n\nOk, that would tell us that if we were to have them play a close to infinite number of times, each would win pretty much exactly half the games.\n\n\nSimulating expected number of steps till winning\nThis is fairly easy to simulate, given our above code.\n\nfunction count_alice()\n    t1 = rand(('H', 'T'))  # toss number 1 \n    tosses = 1  # counter\n    while true  # keep going until we get a winner: HT\n        t2 = rand(('H', 'T'))  # toss number 2 \n        tosses += 1 \n        # if sequence is correct, return, else re-do\n        t1 == 'H' && t2 == 'T' && return tosses\n\n        # if did not return above, keep going\n        t1 = t2\n    end\nend\n\ncount_alice (generic function with 1 method)\n\n\nYou should try to implement count_bob() yourself now.\n\n\nCode\nfunction count_bob()\n    t1 = rand(('H', 'T'))  # toss number 1 \n    tosses = 1  # counter\n    while true  # keep going until we get a winner: HH\n        t2 = rand(('H', 'T'))  # toss number 2 \n        tosses += 1 \n        # if sequence is correct, return, else re-do\n        t1 == 'H' && t2 == 'H' && return tosses\n\n        # if did not return above, keep going\n        t1 = t2\n    end\nend\n\n\ncount_bob (generic function with 1 method)\n\n\n\n\n\n\n\n\nNote\n\n\n\n\nDo you expect the count_* functions to return the same number each time you call them, or not?\nIf not, which function seems to return smaller numbers on average?\n\n\n\nThe last one is an easy question to answer with a simulation study again, isn’t it? This time it’s not about counting who wins how many times, however, but rather…🤔\n\n\nCode\nusing Statistics  # for mean()\n\n(\n    Alice = mean( [count_alice() for _ in 1:100_000_000] ),\n    Bob = mean( [count_bob() for _ in 1:100_000_000] )\n)\n\n\n(Alice = 3.99997351, Bob = 5.99957595)\n\n\n…wait, this is surprising, not? Alice has to toss 4 times on average, while Bob has to wait for 6 tosses until his winning sequence comes up? How come?",
     "crumbs": [
       "Home",
-      "Lectures",
       "Lectures",
       "Absorbing Markov Chains"
     ]
@@ -96,7 +92,6 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "Lectures",
       "Absorbing Markov Chains"
     ]
   },
@@ -108,7 +103,6 @@
     "text": "The Fundamental Matrix \\(N\\)\nThe next piece we need is called the fundamental matrix. It will give us the expected number of visits to transient state \\(j\\) before we reach an absorbing state. It is obtained by iterating \\(Q_a\\) forward until infinity. It can be shown that it looks like this, similar to the infinite sum of a geometric series:\n\\[\nN = \\sum_{k=0}^\\infty Q^k = (I - Q)^{-1}\n\\]\nSo, for Alice, it looks as follows:\n\\[\nN_a = (I - Q_a)^{-1} = \\left( \\left[\\begin{array}{cc}\n1 & 0 \\\\\n0 & 1\n\\end{array}\\right] - \\left[\\begin{array}{cc}\n0.5 & 0.5 \\\\\n0   & 0.5\n\\end{array}\\right] \\right)^{-1} = \\left(\\left[\\begin{array}{cc}\n0.5 & -0.5 \\\\\n0   & 0.5\n\\end{array}\\right] \\right)^{-1}\n\\]\nDo we all still remember how to compute the inverse of a 2x2 matrix? I dont’t, but here is a formula 🙈\n\n\n\n\n\n\nInverse of a 2x2 matrix\n\n\n\nFor \\(A = \\left[\\begin{array}{cc}\na & b \\\\\nc   & d\n\\end{array}\\right]\\) we have that the inverse matrix of \\(A\\) is\n\\[A^{-1} = \\frac{1}{ad - bc} \\left[\\begin{array}{cc}\nd & -b \\\\\n-c   & a\n\\end{array}\\right]\\]\n\n\nWith that out of the way, you can calculate that\n\\[\nN_a =  \\left[\\begin{array}{cc}\n2 & 2 \\\\\n0 & 2\n\\end{array}\\right]\n\\tag{5}\\]\nWe can immediately get the expected number of steps before being absorbed from this by summing across rows:\n\\[\nN_a \\mathbf{1}_t =  \\left[\\begin{array}{c}\n4 \\\\\n2\n\\end{array}\\right]\n\\tag{6}\\]\nSo, starting in state e, the expected number of steps before reaching absorbing state HT is \\(4\\) for Alice. Once in state H, she expects only two more steps. Here a step is a toss of a coin.",
     "crumbs": [
       "Home",
-      "Lectures",
       "Lectures",
       "Absorbing Markov Chains"
     ]
@@ -122,7 +116,6 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "Lectures",
       "Absorbing Markov Chains"
     ]
   },
@@ -134,7 +127,6 @@
     "text": "We want to evaluate the potentially multidimensional definite integral\n\\[\\begin{equation}\nI = \\int_\\Omega f(x) dx\n\\end{equation}\\]\nwhere it’s important to keep track of the volume of the function domain, i.e. we say \\(\\Omega\\) is a subset of \\(\\mathbb{R}^m\\) with volume\n\\[\\begin{equation}\nV = \\int_\\Omega dx\n\\end{equation}\\]\nHere is an example of \\(f\\):\n\\[\nf(x) = \\sin(x)^2 + 0.1 x\n\\]\nLet’s make a plot of this, where \\(f\\) is a black line, and the red shaded area is \\(I\\).\n© Florian Oswald, 2025",
     "crumbs": [
       "Home",
-      "Lectures",
       "Lectures",
       "Numerical Integration"
     ]
@@ -148,7 +140,6 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "Lectures",
       "Numerical Integration"
     ]
   },
@@ -160,7 +151,6 @@
     "text": "Code Setup\nTo run the code in this document you need have an environment where the following packages are installed:\n\n# you need to have those packages installed.\nusing CairoMakie\nusing Random\nusing LaTeXStrings\nusing OrderedCollections   # for OrderedDict\nusing FastGaussQuadrature  # for intergration rules\nusing DataFrames           # to display a table\nusing Sobol                # to get sobol sequences\nset_theme!()  # resetting all quarto default values for fig width etc\n\n\n\nShow Code\nx = 0:0.01:5\nf(x) = sin(x)^2 + 0.1x\ny = f.(x)\nfig = Figure(size = (800,600))\nax = Axis(fig[1,1], xlabel = L\"x\", ylabel = L\"\\sin(x)^2 + 0.1 x\")\nlines!(ax, x, y, label = L\"f\", color = :black, linewidth = 2)\nband!(ax, x, fill(0,length(x)), y, color = (:red, 0.5), label = \"Integral\")\naxislegend(; merge = true, position = :lt)\n\nfig\n\n\n\n\n\n\n\n\n\nAs with Riemann Integrals where we split the continuous domain of \\(f\\) into smaller and smaller chunks, which we then sum up (\\(\\int\\)), the numerical counterpart does the same: measure the value of f (the height of the black line) at different points, and sum over them. The main question is:\nAt which points?",
     "crumbs": [
       "Home",
-      "Lectures",
       "Lectures",
       "Numerical Integration"
     ]
@@ -174,7 +164,6 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "Lectures",
       "Numerical Integration"
     ]
   },
@@ -186,7 +175,6 @@
     "text": "Quasi-Monte carlo\nThat’s a version where we do not choose random numbers as evaluation points, but sub-random sequences or low discrepancy sequences of random numbers, which aim at variance reduction. Everything else is the same.\n\n\n\n\n\n\nModify your mc_integrate for Quasi-MC\n\n\n\nModify your function from above so that instead of rand it chooses numbers from the Sobol sequences. Then make the plot again.\n\n\n\n\n\n\n\n\nUsing Sobol.jl\n\n\n\n\nmake a constructor: s = SobolSeq(lb,ub) where ub,lb are vectors of upper and lower bounds\nget n sobol-random numbers into a vector with reduce(vcat, next!(s) for i in 1:n)\n\n\n\n\n\nShow Code\nfunction qmc_integrate(N,fun)\n    Random.seed!(0)   # any number works\n    V = 5 # integrate dx from 0 to 5\n\n    s = SobolSeq([0], [5])\n    pts = reduce(vcat, next!(s) for i in 1:N)\n    mc_integral = V / N * sum( fun.(pts) )\n    mc_error = V * σ(pts,fun) / sqrt(N)\n    mc_integral, mc_error\nend\n\nqmc_results = OrderedDict(k =&gt;\n    qmc_integrate(k,f) for k in ns);\n\n\n\n\n\n\n\n\n\n\n\nOne of the merits of quasi monte carlo integration is that it’s rate of convergence is faster. You see that here various integrations stabilize at the “true” value (where \\(N=1000\\)) earlier than before. Notice I removed the error bars from the plot because I the previous formula is no longer correct. However it’s good to know that the relationship between QMC and MC errors is\n\\[\nO\\left(\\frac{(\\log N)^s}{N} \\right) \\quad vs \\quad O\\left( \\frac{1}{\\sqrt{N}} \\right)\n\\]\ntherefore, for QMC to do better than MC, we need \\(s\\) small and \\(N\\) large. In other words, in high-dimensional settings (high \\(s\\)), you might actually do better with straight MC.",
     "crumbs": [
       "Home",
-      "Lectures",
       "Lectures",
       "Numerical Integration"
     ]
@@ -200,7 +188,6 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "Lectures",
       "Numerical Integration"
     ]
   },
@@ -212,7 +199,6 @@
     "text": "Quadrature with julia\n\nnp = 3  # number of points\n\n# functions from FastGaussQuadrature.jl\nrules = Dict(\"hermite\" =&gt; gausshermite(np),\n             \"chebyshev\" =&gt; gausschebyshev(np),\n             \"legendre\" =&gt; gausslegendre(np),\n             \"lobatto\" =&gt; gausslobatto(np));\n\nHere are the respective nodes and weights for each of those four rules:\n\n\n4×3 DataFrame\n\n\n\nRow\nRule\nnodes\nweights\n\n\n\nSymbol\nArray…\nArray…\n\n\n\n\n1\nlobatto\n[-1.0, 0.0, 1.0]\n[0.333333, 1.33333, 0.333333]\n\n\n2\nhermite\n[-1.22474, -1.11022e-15, 1.22474]\n[0.295409, 1.18164, 0.295409]\n\n\n3\nlegendre\n[-0.774597, 0.0, 0.774597]\n[0.555556, 0.888889, 0.555556]\n\n\n4\nchebyshev\n[-0.866025, 6.12323e-17, 0.866025]\n[1.0472, 1.0472, 1.0472]\n\n\n\n\n\n\n\nApproximating an AR1 process\nhttp://karenkopecky.net/Rouwenhorst_WP.pdf",
     "crumbs": [
       "Home",
-      "Lectures",
       "Lectures",
       "Numerical Integration"
     ]
@@ -328,8 +314,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "Lectures",
-      "Programming Languages and - Why Julia?"
+      "Why `julia`?"
     ]
   },
   {
@@ -341,8 +326,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "Lectures",
-      "Programming Languages and - Why Julia?"
+      "Why `julia`?"
     ]
   },
   {
@@ -354,8 +338,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "Lectures",
-      "Programming Languages and - Why Julia?"
+      "Why `julia`?"
     ]
   },
   {
@@ -367,8 +350,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "Lectures",
-      "Programming Languages and - Why Julia?"
+      "Why `julia`?"
     ]
   },
   {
@@ -380,8 +362,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "Lectures",
-      "Programming Languages and - Why Julia?"
+      "Why `julia`?"
     ]
   },
   {
