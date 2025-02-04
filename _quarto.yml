@@ -1,20 +1,32 @@
 project:
   type: website
+  post-render:
+  - "cp -rv _external/. _site/"
 
 website:
-  title: "CompEcon"
-  body-footer: © Florian Oswald, 2024
+  title: "Computational Economics"
+  body-footer: © Florian Oswald, 2025
+  favicon: /images/cca.png
+  twitter-card: true
+  google-analytics: "G-TQGG8QBSRH"
   sidebar:
-    style: "docked"
     contents:
-      - section: "Lessons:"
-        contents:
-          - href: numerical-integration.qmd
-            text: Numerical Integration
-          - href: absorbing-mc.qmd
-            text: Absorbing Markov Chains
+    - section: Setup
+      contents:
+        - href: installation.qmd
+          text: Installation
+        - href: cheatsheets.qmd
+          text: Cheatsheets
+        - href: syllabus.qmd
+          text: Syllabus (pdf)
+    - section: Lectures
+      contents: lectures
+    - section: Homeworks
+      contents: homeworks
 
   navbar:
+    search: true
+    logo: /images/cca.png
     left:
       - href: index.qmd
         text: Home
