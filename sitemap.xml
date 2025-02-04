@@ -1,19 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://floswald.github.io/CompEcon/cheatsheets.html</loc>
+    <lastmod>2025-02-04T11:44:33.438Z</lastmod>
+  </url>
+  <url>
+    <loc>https://floswald.github.io/CompEcon/lectures/absorbing-mc.html</loc>
+    <lastmod>2024-10-11T13:44:17.248Z</lastmod>
+  </url>
+  <url>
+    <loc>https://floswald.github.io/CompEcon/lectures/numerical-integration.html</loc>
+    <lastmod>2024-09-26T15:37:55.451Z</lastmod>
+  </url>
+  <url>
+    <loc>https://floswald.github.io/CompEcon/homeworks/hw0.html</loc>
+    <lastmod>2025-02-04T11:49:02.395Z</lastmod>
+  </url>
+  <url>
+    <loc>https://floswald.github.io/CompEcon/index.html</loc>
+    <lastmod>2025-02-04T14:09:56.570Z</lastmod>
+  </url>
+  <url>
     <loc>https://floswald.github.io/CompEcon/about.html</loc>
     <lastmod>2024-09-26T15:37:55.450Z</lastmod>
   </url>
   <url>
-    <loc>https://floswald.github.io/CompEcon/numerical-integration.html</loc>
-    <lastmod>2024-09-26T15:37:55.451Z</lastmod>
+    <loc>https://floswald.github.io/CompEcon/lectures/why-julia.html</loc>
+    <lastmod>2025-02-04T14:07:19.394Z</lastmod>
   </url>
   <url>
-    <loc>https://floswald.github.io/CompEcon/index.html</loc>
-    <lastmod>2024-10-11T17:20:44.190Z</lastmod>
-  </url>
-  <url>
-    <loc>https://floswald.github.io/CompEcon/absorbing-mc.html</loc>
-    <lastmod>2024-10-11T13:44:17.248Z</lastmod>
+    <loc>https://floswald.github.io/CompEcon/installation.html</loc>
+    <lastmod>2025-02-04T11:42:35.886Z</lastmod>
   </url>
 </urlset>

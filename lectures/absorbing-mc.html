@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.40">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Florian Oswald">
+<meta name="dcterms.date" content="2025-02-04">
+
+<title>Absorbing Markov Chains – Computational Economics</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="..//images/cca.png" rel="icon" type="image/png">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-6bd9cfa162949bde0a231f530c97869d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-TQGG8QBSRH"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-TQGG8QBSRH', { 'anonymize_ip': true});
+</script>
+<script src="../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles.css">
+<meta name="twitter:title" content="Absorbing Markov Chains – Computational Economics">
+<meta name="twitter:description" content="Computational Economics">
+<meta name="twitter:card" content="summary">
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../images/cca.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Computational Economics</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Absorbing Markov Chains</li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Setup</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../installation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Installation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../cheatsheets.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cheatsheets</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Lectures</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="//lectures/why-julia.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Why Julia?</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="//lectures/numerical-integration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Numerical Integration</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="//lectures/absorbing-mc.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Absorbing Markov Chains</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Homeworks</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false">
+ <span class="menu-text">Homeworks</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../homeworks/hw0.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Homework Zero</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#problem-statement" id="toc-problem-statement" class="nav-link active" data-scroll-target="#problem-statement">Problem Statement</a></li>
+  <li><a href="#questions" id="toc-questions" class="nav-link" data-scroll-target="#questions">Questions</a></li>
+  <li><a href="#simulations" id="toc-simulations" class="nav-link" data-scroll-target="#simulations">Simulations</a>
+  <ul class="collapse">
+  <li><a href="#simulating-the-expected-probability-of-winning" id="toc-simulating-the-expected-probability-of-winning" class="nav-link" data-scroll-target="#simulating-the-expected-probability-of-winning">Simulating the Expected Probability of Winning</a></li>
+  <li><a href="#simulating-expected-number-of-steps-till-winning" id="toc-simulating-expected-number-of-steps-till-winning" class="nav-link" data-scroll-target="#simulating-expected-number-of-steps-till-winning">Simulating expected number of steps till winning</a></li>
+  </ul></li>
+  <li><a href="#markov-chains" id="toc-markov-chains" class="nav-link" data-scroll-target="#markov-chains">Markov Chains</a></li>
+  <li><a href="#absorbing-markov-chains" id="toc-absorbing-markov-chains" class="nav-link" data-scroll-target="#absorbing-markov-chains">Absorbing Markov Chains</a>
+  <ul class="collapse">
+  <li><a href="#the-absorbing-transition-matrix-p_a" id="toc-the-absorbing-transition-matrix-p_a" class="nav-link" data-scroll-target="#the-absorbing-transition-matrix-p_a">The Absorbing Transition Matrix <span class="math inline">\(P_a\)</span></a></li>
+  <li><a href="#the-fundamental-matrix-n" id="toc-the-fundamental-matrix-n" class="nav-link" data-scroll-target="#the-fundamental-matrix-n">The Fundamental Matrix <span class="math inline">\(N\)</span></a></li>
+  <li><a href="#states-and-transitions-for-bob" id="toc-states-and-transitions-for-bob" class="nav-link" data-scroll-target="#states-and-transitions-for-bob">States and Transitions for Bob?</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Absorbing Markov Chains</h1>
+<p class="subtitle lead">Computational Economics</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Florian Oswald </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">February 4, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>This elaborates on Bogumił’s <a href="https://bkamins.github.io/julialang/2024/05/24/probability.html">blog post</a> about the problem of generating a sequence of coin tosses. We will add some theory to his simulation study.</p>
+<section id="problem-statement" class="level2">
+<h2 class="anchored" data-anchor-id="problem-statement">Problem Statement</h2>
+<p>To recap, we have two players Alice (A) and Bob (B), and each is equipped with fair coin. Each plays a game whereby they toss the coin, and record the outcome as either heads (H) or tails (T). An example of a sequence after 9 coin tosses for each player could look like this:</p>
+<pre><code>toss: 123456789
+A:    TTHHHTHTH
+B:    THTTHTHHT</code></pre>
+<p>Alice and Bob have different ways of winning this game. <code>A</code> wins if the sequence <code>HT</code> occurs, and <code>B</code> wins if the sequence <code>HH</code> occurs. Following the above example, <code>A</code> would have won after toss number 6. <code>B</code> had to wait until toss number 8 complete his winning sequence <code>HH</code>, hence he lost this particular contest.</p>
+</section>
+<section id="questions" class="level2">
+<h2 class="anchored" data-anchor-id="questions">Questions</h2>
+<ol type="1">
+<li>In expectation, who is more likely to win this game? Suppose we performed a very large number of contests like the one illustrated above.</li>
+<li>How many coin tosses does Alice have to perform, on average, until her winning sequence shows up?</li>
+<li>How many tosses does Bob have to perform until his winning sequence appears?</li>
+</ol>
+</section>
+<section id="simulations" class="level2">
+<h2 class="anchored" data-anchor-id="simulations">Simulations</h2>
+<p>Let us follow in Bogumił’s foot steps and re-propose the simulation study he did on his blog.</p>
+<p>Who is more likely to win this game? We will later work out the <em>probability</em> that each will win, but we can easily to a simulation study following a frequentist approach: just count how many times each player wins!</p>
+<p>Let’s create a function which will simulate us tossing an imaginary coin until one of both players wins. The function should return the initial of the winning player.</p>
+<div id="2" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">whowins</span>()</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    t1 <span class="op">=</span> <span class="fu">rand</span>((<span class="ch">'H'</span>, <span class="ch">'T'</span>))  <span class="co"># toss number 1 </span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> <span class="cn">true</span>  <span class="co"># keep going until we get a valid sequence.</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>        t2 <span class="op">=</span> <span class="fu">rand</span>((<span class="ch">'H'</span>, <span class="ch">'T'</span>))  <span class="co"># toss number 2 </span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> t1 <span class="op">==</span> <span class="ch">'T'</span>  <span class="co"># invalid first toss for both.</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>            t1 <span class="op">=</span> t2   <span class="co"># reassign t2 to t1 and keep going</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>  <span class="co"># t1 is 'H' ! t2 now decides the winner!</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> t2 <span class="op">==</span> <span class="ch">'H'</span> ? <span class="st">"B"</span> <span class="op">:</span> <span class="st">"A"</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>whowins (generic function with 1 method)</code></pre>
+</div>
+</div>
+<p>You should try it out a few times to convince yourself it’s working.</p>
+<section id="simulating-the-expected-probability-of-winning" class="level3">
+<h3 class="anchored" data-anchor-id="simulating-the-expected-probability-of-winning">Simulating the Expected Probability of Winning</h3>
+<p>Now, lets see how often each of them wins if we repeat this contest many times over:</p>
+<div id="4" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Random</span>, <span class="bu">FreqTables</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">Random</span>.<span class="fu">seed!</span>(<span class="fl">10101</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">freqtable</span>( [<span class="fu">whowins</span>() for _ <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">100_000_000</span>] )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>2-element Named Vector{Int64}
+Dim1  │ 
+──────┼─────────
+A     │ 50003096
+B     │ 49996904</code></pre>
+</div>
+</div>
+<p>Ok, that would tell us that if we were to have them play a close to infinite number of times, each would win pretty much exactly half the games.</p>
+</section>
+<section id="simulating-expected-number-of-steps-till-winning" class="level3">
+<h3 class="anchored" data-anchor-id="simulating-expected-number-of-steps-till-winning">Simulating expected number of steps till winning</h3>
+<p>This is fairly easy to simulate, given our above code.</p>
+<div id="6" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">count_alice</span>()</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    t1 <span class="op">=</span> <span class="fu">rand</span>((<span class="ch">'H'</span>, <span class="ch">'T'</span>))  <span class="co"># toss number 1 </span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    tosses <span class="op">=</span> <span class="fl">1</span>  <span class="co"># counter</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> <span class="cn">true</span>  <span class="co"># keep going until we get a winner: HT</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>        t2 <span class="op">=</span> <span class="fu">rand</span>((<span class="ch">'H'</span>, <span class="ch">'T'</span>))  <span class="co"># toss number 2 </span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        tosses <span class="op">+=</span> <span class="fl">1</span> </span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>        <span class="co"># if sequence is correct, return, else re-do</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>        t1 <span class="op">==</span> <span class="ch">'H'</span> <span class="op">&amp;&amp;</span> t2 <span class="op">==</span> <span class="ch">'T'</span> <span class="op">&amp;&amp;</span> <span class="cf">return</span> tosses</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>        <span class="co"># if did not return above, keep going</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>        t1 <span class="op">=</span> t2</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>count_alice (generic function with 1 method)</code></pre>
+</div>
+</div>
+<p>You should try to implement <code>count_bob()</code> yourself now.</p>
+<div id="8" class="cell" data-execution_count="1">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">count_bob</span>()</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    t1 <span class="op">=</span> <span class="fu">rand</span>((<span class="ch">'H'</span>, <span class="ch">'T'</span>))  <span class="co"># toss number 1 </span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    tosses <span class="op">=</span> <span class="fl">1</span>  <span class="co"># counter</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> <span class="cn">true</span>  <span class="co"># keep going until we get a winner: HH</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>        t2 <span class="op">=</span> <span class="fu">rand</span>((<span class="ch">'H'</span>, <span class="ch">'T'</span>))  <span class="co"># toss number 2 </span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>        tosses <span class="op">+=</span> <span class="fl">1</span> </span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>        <span class="co"># if sequence is correct, return, else re-do</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>        t1 <span class="op">==</span> <span class="ch">'H'</span> <span class="op">&amp;&amp;</span> t2 <span class="op">==</span> <span class="ch">'H'</span> <span class="op">&amp;&amp;</span> <span class="cf">return</span> tosses</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>        <span class="co"># if did not return above, keep going</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>        t1 <span class="op">=</span> t2</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>count_bob (generic function with 1 method)</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Do you expect the <code>count_*</code> functions to return the same number each time you call them, or not?</li>
+<li>If not, which function seems to return smaller numbers on average?</li>
+</ul>
+</div>
+</div>
+<p>The last one is an easy question to answer with a simulation study again, isn’t it? This time it’s not about counting who wins how many times, however, but rather…🤔</p>
+<div id="10" class="cell" data-execution_count="1">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Statistics</span>  <span class="co"># for mean()</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    Alice <span class="op">=</span> <span class="fu">mean</span>( [<span class="fu">count_alice</span>() for _ <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">100_000_000</span>] ),</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    Bob <span class="op">=</span> <span class="fu">mean</span>( [<span class="fu">count_bob</span>() for _ <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">100_000_000</span>] )</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>(Alice = 3.99997351, Bob = 5.99957595)</code></pre>
+</div>
+</div>
+<p>…wait, this is surprising, not? Alice has to toss 4 times on average, while Bob has to wait for 6 tosses until his winning sequence comes up? How come?</p>
+</section>
+</section>
+<section id="markov-chains" class="level1">
+<h1>Markov Chains</h1>
+<p>Let us quickly remember some basics about finite state markov chains. The <a href="https://python.quantecon.org/finite_markov.html">quantecon</a> project has a great lecture about this topic, if you want to know more.</p>
+<ol type="1">
+<li>A stochastic (or markov) matrix is a matrix <span class="math inline">\(P\)</span> of size <span class="math inline">\((n,n)\)</span> with non-negative entries.</li>
+<li>All rows sum to one - we can think of each row as the probability mass function of <span class="math inline">\(n\)</span> potential outcomes.</li>
+</ol>
+<p>Here is an example of a valid markov matrix:</p>
+<p><span id="eq-P"><span class="math display">\[P = \left[\begin{array}{cc}
+0.2 &amp; 0.8 \\
+0.9 &amp; 0.1
+\end{array}\right] \tag{1}\]</span></span></p>
+<p>A <em>markov chain</em> adds a set <span class="math inline">\(S = {s_1, s_2, \dots, s_n}\)</span> of states to this setup, where <span class="math inline">\(S\)</span> is called the <em>state space</em>. The definition of a markov chain <span class="math inline">\({X_t}\)</span> on <span class="math inline">\(S\)</span> is then:</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Markov Chain Definition
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The sequence of random variables <span class="math inline">\(\{X_t\}\)</span> defined on space <span class="math inline">\(S\)</span> is called a <em>markov chain</em> if it possesses the <em>markov property</em>:</p>
+<p><span class="math display">\[
+\Pr \{X_{t+1} = s | X_t\} = \Pr \{X_{t+1} = s | X_t, X_{t-1}, \dots\}
+\]</span></p>
+<p>meaning that it is enough to condition on the previous realization in order to know the probability of the next value of the chain taking on value <span class="math inline">\(s\)</span>. All relevant information is contained in the last observed value, there is no extra information in conditioning on the entire history of the sequence <span class="math inline">\(\{X_t\}\)</span>.</p>
+</div>
+</div>
+<p>Going back to the above <span class="math inline">\(P\)</span> in <a href="#eq-P" class="quarto-xref">Equation&nbsp;1</a>, suppose we define the states <code>S = {Employed, Unemployed}</code>, and assuming that the first row and column of <span class="math inline">\(P\)</span> represents state <code>Employed</code>, let us draw a DAG to represent this setting:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">graph LR
+    Employed --&gt; |0.2| Employed
+    Employed --&gt; |0.8| Unemployed  
+    Unemployed --&gt; |0.9| Employed  
+    Unemployed --&gt; |0.1| Unemployed  
+</pre>
+</div>
+<p></p><figcaption> Transitions in a fictitious labor market. 👉 Can you describe in words how this market works?</figcaption> </figure><p></p>
+</div>
+</div>
+</div>
+</section>
+<section id="absorbing-markov-chains" class="level1">
+<h1>Absorbing Markov Chains</h1>
+<p>Now, back to Alice and Bob. Their game can be represented as a special type of a markov chain, that is <em>absorbing state</em> markov chain - there is at least one state, from which you can no longer transition away. For both of our players, this would be the state which represents their winning sequence of coin tosses (i.e.&nbsp;either <code>HH</code> or <code>HT</code>). In a different application, the absorbing state could model anything which represents that a player <em>leaves the system</em>.</p>
+<p>Let’s now calculate why the above simulation brought up that Bob has to wait for 6 tosses on average for his sequence <code>HH</code>, when Alice only needed to wait for 4 tosses for <code>HT</code>.</p>
+<section id="the-absorbing-transition-matrix-p_a" class="level2">
+<h2 class="anchored" data-anchor-id="the-absorbing-transition-matrix-p_a">The Absorbing Transition Matrix <span class="math inline">\(P_a\)</span></h2>
+<p>In this setting we have <span class="math inline">\(t\)</span> transient states (i.e.&nbsp;states from which you can escape), and <span class="math inline">\(r\)</span> absorbing states - once you enter such a state, you stay there, in other words, the chain ends.</p>
+<p>We have to re-write our transition matrix for this case. It will look as follows:</p>
+<p><span id="eq-Pa"><span class="math display">\[P_a = \left[\begin{array}{cc}
+Q &amp; R \\
+\mathbf{0} &amp; \mathbf{I}_r
+\end{array}\right] \tag{2}\]</span></span></p>
+<p>where</p>
+<ol type="1">
+<li><span class="math inline">\(Q\)</span> is the <span class="math inline">\((t,t)\)</span> transition matrix of transient states</li>
+<li><span class="math inline">\(R\)</span> is a <span class="math inline">\((t,r)\)</span> matrix of transition probabilities from transient state <span class="math inline">\(t\)</span> into absorbing state <span class="math inline">\(r\)</span></li>
+<li><span class="math inline">\(\mathbf{0}\)</span> is an <span class="math inline">\((r,t)\)</span> matrix of zeros, and</li>
+<li><span class="math inline">\(\mathbf{I}_r\)</span> is the <span class="math inline">\((r,r)\)</span> identity matrix.</li>
+</ol>
+<p>Let’s work this out for Alice now. Imagine that we want to fill out each of her 2 empty slots for strings with either <code>H</code> or <code>T</code>. Remember that her winning sequence was <code>HT</code>. It’s easiest to model Alice in <strong>three possible states</strong>:</p>
+<ol type="1">
+<li>State <code>e</code>: She has an empty sequence, <code>{}</code>. She is waiting to fill this with two valid strings.</li>
+<li>State <code>H</code>: Her sequence has <code>H</code> in first position, i.e.&nbsp;looks like <code>{H}</code>. This is great, because if the next coin toss yields a <code>T</code>, she wins! If she gets another <code>H</code>, no problem, she <em>stays at state <code>{H}</code></em> (we can just throw away the previous <code>H</code> in the sequence!).</li>
+<li>State <code>HT</code>: She wins the game.</li>
+</ol>
+<p>So, we define the following <em>transient</em> states for her:</p>
+<ol type="1">
+<li><code>e</code>: empty sequence i.e <code>{}</code></li>
+<li><code>H</code>: the string sequence containing only <code>H</code>, i.e.&nbsp;<code>{H}</code></li>
+</ol>
+<p>Next, we define the absorbing state for her:</p>
+<ol type="1">
+<li><code>HT</code>: upon tossing <code>T</code> after a <code>H</code>, i.e completing the sequence <code>{HT}</code>, the game ends.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Observations
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>In this example we have <code>t=2</code> transient states</li>
+<li><code>T</code> in first position is not a valid sequence for Alice. Whilst we could think of <code>{T}</code> as a transient state, it is easier to think that we go back to <code>e</code> and start again if we hit <code>T</code> in the first toss.</li>
+<li>There is a single absorbing state, <code>{HT}</code>, i.e.&nbsp;<code>r=1</code>.</li>
+</ul>
+</div>
+</div>
+<p>The situation for Alice is as follows:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">graph LR
+    e((e)) --&gt; |0.5| e
+    e((e)) --&gt; |0.5| H
+    H      --&gt; |0.5| H
+    H      --&gt; |0.5| HT
+</pre>
+</div>
+<p></p><figcaption> Absorbing Markov Chain of Alice</figcaption> </figure><p></p>
+</div>
+</div>
+</div>
+<p>Notice how we assume that <em>if your first toss is invalid (i.e.&nbsp;a <code>T</code>), you stay with your empty sequence</em>. Next, here is the transition matrix <span class="math inline">\(Q_a\)</span> for her transient states <code>{e,H}</code> (putting <code>e</code> in the first row/column), and the <code>(2,1)</code> matrix of transitions from transient into absorbing state, <span class="math inline">\(R_a\)</span>:</p>
+<p><span id="eq-QRa"><span class="math display">\[Q_a = \left[\begin{array}{cc}
+0.5 &amp; 0.5 \\
+0   &amp; 0.5
+\end{array}\right],\quad
+R_a = \left[\begin{array}{c}
+0 \\
+0.5
+\end{array}\right]
+\tag{3}\]</span></span></p>
+<p>Let us assemble those into <span class="math inline">\(P_a(\text{Alice})\)</span> now, and observe that this maintains the properties of stochastic matrix <span class="math inline">\(P\)</span>:</p>
+<p><span id="eq-Pa-alice"><span class="math display">\[P_a(\text{Alice}) = \left[\begin{array}{ccc}
+0.5 &amp; 0.5 &amp; 0 \\
+0   &amp; 0.5 &amp; 0.5 \\
+0   &amp;  0  &amp;  1
+\end{array}\right]
+\tag{4}\]</span></span></p>
+</section>
+<section id="the-fundamental-matrix-n" class="level2">
+<h2 class="anchored" data-anchor-id="the-fundamental-matrix-n">The Fundamental Matrix <span class="math inline">\(N\)</span></h2>
+<p>The next piece we need is called the <em>fundamental matrix</em>. It will give us the <strong>expected number of visits to transient state <span class="math inline">\(j\)</span> before we reach an absorbing state</strong>. It is obtained by iterating <span class="math inline">\(Q_a\)</span> forward until infinity. <a href="https://en.wikipedia.org/wiki/Absorbing_Markov_chain#String_generation">It can be shown</a> that it looks like this, similar to the infinite sum of a geometric series:</p>
+<p><span class="math display">\[
+N = \sum_{k=0}^\infty Q^k = (I - Q)^{-1}
+\]</span></p>
+<p>So, for Alice, it looks as follows:</p>
+<p><span class="math display">\[
+N_a = (I - Q_a)^{-1} = \left( \left[\begin{array}{cc}
+1 &amp; 0 \\
+0 &amp; 1
+\end{array}\right] - \left[\begin{array}{cc}
+0.5 &amp; 0.5 \\
+0   &amp; 0.5
+\end{array}\right] \right)^{-1} = \left(\left[\begin{array}{cc}
+0.5 &amp; -0.5 \\
+0   &amp; 0.5
+\end{array}\right] \right)^{-1}
+\]</span></p>
+<p>Do we all still remember how to compute the inverse of a 2x2 matrix? I dont’t, but here is a formula 🙈</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Inverse of a 2x2 matrix
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For <span class="math inline">\(A = \left[\begin{array}{cc}
+a &amp; b \\
+c   &amp; d
+\end{array}\right]\)</span> we have that the inverse matrix of <span class="math inline">\(A\)</span> is</p>
+<p><span class="math display">\[A^{-1} = \frac{1}{ad - bc} \left[\begin{array}{cc}
+d &amp; -b \\
+-c   &amp; a
+\end{array}\right]\]</span></p>
+</div>
+</div>
+<p>With that out of the way, you can calculate that</p>
+<p><span id="eq-Na"><span class="math display">\[
+N_a =  \left[\begin{array}{cc}
+2 &amp; 2 \\
+0 &amp; 2
+\end{array}\right]
+\tag{5}\]</span></span></p>
+<p>We can immediately get the expected number of steps before being absorbed from this by summing across rows:</p>
+<p><span id="eq-Ba"><span class="math display">\[
+N_a \mathbf{1}_t =  \left[\begin{array}{c}
+4 \\
+2
+\end{array}\right]
+\tag{6}\]</span></span></p>
+<p>So, starting in state <code>e</code>, the expected number of steps before reaching absorbing state <code>HT</code> is <span class="math inline">\(4\)</span> for Alice. Once in state <code>H</code>, she expects only two more steps. Here a <em>step</em> is a toss of a coin.</p>
+</section>
+<section id="states-and-transitions-for-bob" class="level2">
+<h2 class="anchored" data-anchor-id="states-and-transitions-for-bob">States and Transitions for Bob?</h2>
+<p>For Bob, the situation is slightly different. Remember that Bob wins if <code>HH</code> comes up. For him, we have the following definition of states:</p>
+<ol type="1">
+<li>State <code>e</code>: The empty sequence, <code>{}</code>. Waiting to fill this with two valid strings.</li>
+<li>State <code>H</code>: The sequence has <code>H</code> in first position, i.e.&nbsp;looks like <code>{H}</code>.</li>
+<li>State <code>HH</code>: He wins the game.</li>
+</ol>
+<p>Notice the one big difference here: If Bob is in state <code>{H}</code>, and hits a <code>T</code> in the next toss, he is not as fortunate as Alice, who <em>can stay in the same state</em>. Bob’s problem is that he does not have a winning sequence that could start with <code>T</code> (neither does Alice, but upon hitting <code>T</code> while in state <code>{H}</code>, she wins!)</p>
+<p>Here’s the graphs for Bob and Alice side by side:</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">graph LR
+    e((e)) --&gt; |0.5| e
+    e((e)) --&gt; |0.5| H
+    H      --&gt; |0.5| e
+    H      --&gt; |0.5| HH
+
+</pre>
+</div>
+<p></p><figcaption> Markov Chain of Bob</figcaption> </figure><p></p>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">graph LR
+    ea((e)) --&gt; |0.5| ea
+    ea((e)) --&gt; |0.5| Ha[H]
+    Ha[H]      --&gt; |0.5| Ha
+    Ha[H]      --&gt; |0.5| HT
+</pre>
+</div>
+<p></p><figcaption> Markov Chain of Alice</figcaption> </figure><p></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>The problem for Bob is the arrow going back to <code>e</code> if he hits a bad toss at state <code>{H}</code>. Let us quickly assemble the transition matrix for Bob, and compute his expected steps:</p>
+<p><span id="eq-QRb"><span class="math display">\[Q_b = \left[\begin{array}{cc}
+0.5 &amp; 0.5 \\
+0.5 &amp; 0
+\end{array}\right],\quad
+R_b = \left[\begin{array}{c}
+0 \\
+0.5
+\end{array}\right]
+\tag{7}\]</span></span></p>
+<p><span id="eq-Pa-bob"><span class="math display">\[P_a(\text{Bob}) = \left[\begin{array}{ccc}
+0.5 &amp; 0.5 &amp; 0 \\
+0.5   &amp; 0 &amp; 0.5 \\
+0   &amp;  0  &amp;  1
+\end{array}\right]
+\tag{8}\]</span></span></p>
+<p>With those in hand, you can easily verify that Bob will have</p>
+<p><span id="eq-Na"><span class="math display">\[
+N_b =  \left[\begin{array}{cc}
+4 &amp; 2 \\
+2 &amp; 2
+\end{array}\right]
+\tag{9}\]</span></span></p>
+<p>which, in turn, means that his expected steps until absorbing state, starting from either <code>{}</code> or <code>{H}</code> are given by</p>
+<p><span id="eq-Ba"><span class="math display">\[
+N_b \mathbf{1}_t =  \left[\begin{array}{c}
+6 \\
+4
+\end{array}\right]
+\tag{10}\]</span></span></p>
+<p>👉 <em>exactly</em> as in our (Bogumił’s!) simulation experiment from the start.</p>
+
+
+</section>
+</section>
+
+<p>© Florian Oswald, 2025</p></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/floswald\.github\.io\/CompEcon\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
