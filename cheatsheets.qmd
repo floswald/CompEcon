@@ -4,6 +4,7 @@ title: Cheatsheets and Resources to Learn Julia
 
 ## Learning Julia
 
+- [My Julia Bootcamp](https://floswald.github.io/julia-bootcamp/)
 - [Official Julia Manual](https://docs.julialang.org/en/v1/manual/getting-started/) is a great place to start.
 - [The *learning* section of `julialang.org`](https://julialang.org/learning/) introduces the *Julia Academy*, which are expert-led videos on diverse topics, all as self-contained courses and very accessible - outstanding material.
 - [Fastrack to Julia](https://juliadocs.github.io/Julia-Cheat-Sheet/) cheatsheet.

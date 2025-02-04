@@ -20,7 +20,13 @@ website:
         - href: syllabus.qmd
           text: Syllabus (pdf)
     - section: Lectures
-      contents: lectures
+      contents: 
+        - href: lectures/why-julia.qmd
+          text: Why `julia`?
+        - href: lectures/numerical-integration.qmd
+          text: Numerical Integration
+        - href: lectures/absorbing-mc.qmd
+          text: Absorbing Markov Chains
     - section: Homeworks
       contents: homeworks
 
