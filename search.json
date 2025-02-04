@@ -4,7 +4,7 @@
     "href": "cheatsheets.html",
     "title": "Cheatsheets and Resources to Learn Julia",
     "section": "",
-    "text": "Official Julia Manual is a great place to start.\nThe learning section of julialang.org introduces the Julia Academy, which are expert-led videos on diverse topics, all as self-contained courses and very accessible - outstanding material.\nFastrack to Julia cheatsheet.\nMATLAB-Julia-Python comparative cheatsheet by QuantEcon group Quantitative Economics with Julia by Perla, Sargent and Stachurski, in particular the initial sections.\n© Florian Oswald, 2025",
+    "text": "My Julia Bootcamp\nOfficial Julia Manual is a great place to start.\nThe learning section of julialang.org introduces the Julia Academy, which are expert-led videos on diverse topics, all as self-contained courses and very accessible - outstanding material.\nFastrack to Julia cheatsheet.\nMATLAB-Julia-Python comparative cheatsheet by QuantEcon group Quantitative Economics with Julia by Perla, Sargent and Stachurski, in particular the initial sections.\n© Florian Oswald, 2025",
     "crumbs": [
       "Home",
       "Setup",
@@ -16,7 +16,7 @@
     "href": "cheatsheets.html#learning-julia",
     "title": "Cheatsheets and Resources to Learn Julia",
     "section": "",
-    "text": "Official Julia Manual is a great place to start.\nThe learning section of julialang.org introduces the Julia Academy, which are expert-led videos on diverse topics, all as self-contained courses and very accessible - outstanding material.\nFastrack to Julia cheatsheet.\nMATLAB-Julia-Python comparative cheatsheet by QuantEcon group Quantitative Economics with Julia by Perla, Sargent and Stachurski, in particular the initial sections.",
+    "text": "My Julia Bootcamp\nOfficial Julia Manual is a great place to start.\nThe learning section of julialang.org introduces the Julia Academy, which are expert-led videos on diverse topics, all as self-contained courses and very accessible - outstanding material.\nFastrack to Julia cheatsheet.\nMATLAB-Julia-Python comparative cheatsheet by QuantEcon group Quantitative Economics with Julia by Perla, Sargent and Stachurski, in particular the initial sections.",
     "crumbs": [
       "Home",
       "Setup",
@@ -346,7 +346,7 @@
     "href": "lectures/why-julia.html#rendered-notebooks",
     "title": "Programming Languages and - Why Julia?",
     "section": "(Rendered) Notebooks",
-    "text": "(Rendered) Notebooks\nWe used several Pluto.jl notebooks in this lecture. Here are four rendered ones:\n\n\n\nTopic\nNotebook\n\n\n\n\nVariables\nclick for notebook (done in Intro to Programming)\n\n\nFunctions\nclick for notebook (done in Intro to Programming)\n\n\n\nPlease run the 01-fast.jl notebook on your own computer for the benchmarks! 🏎️",
+    "text": "(Rendered) Notebooks\nWe used several Pluto.jl notebooks in this lecture. Here are four rendered ones:\n\n\n\nTopic\nNotebook\n\n\n\n\nVariables\nclick for notebook (done in Intro to Programming)\n\n\nFunctions\nclick for notebook (done in Intro to Programming)\n\n\n\nPlease download and run the 01-fast.jl notebook on your own computer for the benchmarks! (Right click and copy link, then insert into a Pluto browser!)🏎️",
     "crumbs": [
       "Home",
       "Lectures",
