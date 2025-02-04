@@ -30,7 +30,8 @@ website:
         - href: lectures/absorbing-mc.qmd
           text: Absorbing Markov Chains
     - section: Homeworks
-      contents: homeworks
+      contents: 
+        - href: homeworks/hw0.qmd
 
   navbar:
     search: true
