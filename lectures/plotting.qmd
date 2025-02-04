@@ -1,0 +1,198 @@
+---
+title: Plotting
+subtitle: CCA Computational Economics 2025
+author: Florian Oswald
+date: today
+engine: julia
+execute:
+    freeze: auto  # re-render only when source changes
+    echo: true
+    cache: false
+---
+
+Good plotting is one of the main requirements we have for a fully fledged computing language. We want to be able to quickly make good looking plots of data objects (like for instance the `R` library `ggplot2` allows us to do), and we want to have the ability to build up plots step by step as for instance the `python` library `matplotlib` allows us to do. There are several solutions available in julia:
+
+1. Plots.jl: this is a mature and solid solution. I give you an overview [here](https://floswald.github.io/julia-bootcamp/06-plotting.html)
+2. Makie.jl: this is the future of julia plotting. I want to give you an overview today. Please have a look at the [Makie.jl documentation](https://docs.makie.org/dev/index).
+
+
+## Backends
+
+* You can choose different *engines* which will draw your plot, each with strengths and weaknesses. Find out more [here](https://docs.makie.org/dev/explanations/backends/backends#What-is-a-backend)
+* We will be using `CairoMakie` which is good for static output (like `pdf` or `png` pictures).
+
+
+## Getting Started: Install the `CairoMakie` package
+
+> this is following closely [the makie.jl getting started page](https://docs.makie.org/dev/tutorials/getting-started)
+
+1. Create a folder `makie_tutorial` on your computer somewhere. Maybe `~/makie_tutorial` ?
+2. Start `julia` by typing `julia` on your terminal and hitting enter (or double click the icon in _Applications_)
+3. in the REPL, we need to move into the `makie_tutorial` folder now. do this:
+
+    ```julia
+    cd("/path/to/your/makie_tutorial")
+    ```
+4. _Activate_ the current folder to be our _project_:
+
+    ```julia
+    using Pkg
+    Pkg.activate(".")  # "." is the name of the current directory ;-)
+    ```
+5. _Add_ the CairoMakie package:
+
+    ```julia
+    Pkg.add("CairoMakie")  # this will take a while!
+    ```
+6. After this has finished, check the `makie_tutorial` folder: there are 2 new files now: `Project.toml` and `Manifest.toml`
+7. We can now use the `CairoMakie` package! 🎉
+
+## First Plot
+
+```{julia}
+#| echo: true
+#| code-fold: false
+#| output: false
+# this only works after completing the above steps!
+using CairoMakie
+```
+
+If executing `using CairoMakie` worked for you, it means you are good to go. Let's get some data...
+
+```{julia}
+#| echo: true
+# hover top right to copy this
+seconds = 0:0.1:2
+measurements = [8.2, 8.4, 6.3, 9.5, 9.1, 10.5, 8.6, 8.2, 10.5, 8.5, 7.2,
+        8.8, 9.7, 10.8, 12.5, 11.6, 12.1, 12.1, 15.1, 14.7, 13.1];
+```
+
+
+...and make a lineplot from it:
+
+```{julia}
+lines(seconds, measurements)
+```
+
+::: {.callout-note}
+Depending on your system, `lines(seconds, measurements)` should have triggered a viewer of some sort. In VSCode, the plotting pane should have opened
+:::
+
+Let's do a scatter plot now:
+
+```{julia}
+scatter(seconds, measurements)
+```
+
+Great. Now let's an exponential fit line to this. Suppose we know the formula to be `f(x) = exp(x) + 7`. That's just another line plot:
+
+```{julia}
+scatter(seconds, exp.(seconds) .+ 7)
+```
+
+Finally, we want to have those all in the same plot. We will use the `!` version of the plotting functions!
+
+```{julia}
+scatter(seconds, measurements)
+lines!(seconds, exp.(seconds) .+ 7)
+current_figure()
+```
+
+## Figures and Axis
+
+There is another way to compose this plot, more useful if you want more fine-grained control. We need a 
+
+1. Figure
+2. Axis
+
+A plot is part of an `Axis` object, which itself is part of a `Figure`. 
+
+```{julia}
+f = Figure()
+ax = Axis(f[1,1]) # ax sits at [1,1] of f
+scatter!(ax, seconds, measurements)  # plot *into* ax
+lines!(ax, seconds, exp.(seconds) .+ 7) # again
+f  # look at f
+```
+
+This is useful if we have many (sub) plots which we want to collect in a single figure, or for precise labelling. Let's label that figure now:
+
+```{julia}
+f = Figure()
+ax = Axis(f[1, 1],
+    title = "Experimental data and exponential fit",
+    xlabel = "Time (seconds)",
+    ylabel = "Value",
+)
+scatter!(ax, seconds, measurements)
+lines!(ax, seconds, exp.(seconds) .+ 7)
+f
+```
+
+
+## Styling our Plot
+
+Let's change a few aestetic aspects of our plot, like color or linestyle:
+
+```{julia}
+f = Figure()
+ax = Axis(f[1, 1],
+    title = "Experimental data and exponential fit",
+    xlabel = "Time (seconds)",
+    ylabel = "Value",
+)
+scatter!(ax, seconds, measurements, color = :tomato)
+lines!(ax, seconds, exp.(seconds) .+ 7, color = :tomato, linestyle = :dash)
+f
+```
+
+There are many aspects of any plotting type that you can style. Checkout the reference for the `scatter` function [here](https://docs.makie.org/dev/reference/plots/scatter). For example, we could change the marker symbol from the default (`:circle:`) to something funnier:
+
+```{julia}
+# notice: overplots the `ax` in `f` from above!
+scatter!(ax, seconds, measurements, marker = '😉', 
+    markersize = 20)
+f
+```
+
+Finally, let us add a legend _in a certain position_:
+
+
+```{julia}
+f = Figure()
+ax = Axis(f[1, 1],
+    title = "Experimental data and exponential fit",
+    xlabel = "Time (seconds)",
+    ylabel = "Value",
+)
+scatter!(
+    ax,
+    seconds,
+    measurements,
+    color = :tomato,
+    label = "Measurements"
+)
+lines!(
+    ax,
+    seconds,
+    exp.(seconds) .+ 7,
+    color = :tomato,
+    linestyle = :dash,
+    label = L"f(x) = \exp(x) + 7",
+)
+axislegend(position = :rb)
+f
+```
+
+## Saving Plot to Disk
+
+Finally, it's straightforward to save our plot to disk in a variety of formats:
+
+```{julia}
+#| eval: false
+save("first_figure.png", f)
+save("first_figure.svg", f)
+save("first_figure.pdf", f)
+```
+
+Those files are now in your `makie_tutorial` folder!

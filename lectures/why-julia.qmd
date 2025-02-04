@@ -3,49 +3,51 @@
 title: Programming Languages and - Why Julia?
 ---
 
-## Prerequisites: Installing the software environment
+::: {.callout-tip}
+# Installation
 
-Check out the [installation](/installation/) page on this website.
+Make sure to check out the [installation](/installation.qmd) page on this website before you come to class.
+
+:::
 
 ## Basics: REPL, VSCode, Notebooks
 
-We will repeat the basics of julia in a very condensed manner by going through steps 1-7 of [MoJuWo](https://modernjuliaworkflows.github.io/pages/writing/writing/) live in class.
+We will repeat the basics of julia in a very condensed manner by going through steps 1-7 of [MoJuWo](https://modernjuliaworkflows.org) live in class.
 
 julia REPL:
+
 ![This is the julia REPL](/assets/REPL.png)
 
 
 VScode:
+
 ![This is VSCode](/assets/VSCode.png)
 
 Notice how there is a julia REPL running _as part of_ the VSCode editor. This is called an _integrated development environment_ (IDE). Very similar to an `R` session connected to `RStudio`, or the `python` interpreter being run through `PyCharm` etc.
-
-
-
-
-## (Rendered) Notebooks
-
-We used several Pluto.jl notebooks in this lecture. Here are four rendered ones:
-
-Topic | Notebook
-:-----: | :--------:
-Variables | [click for notebook (done in Intro to Programming)](https://floswald.github.io/julia-bootcamp/01-variables.html)
-Functions | [click for notebook (done in Intro to Programming)](https://floswald.github.io/julia-bootcamp/02-functions.html)
-
-
-Please download and run the [01-fast.jl](https://github.com/floswald/CompEcon/raw/refs/heads/main/notebooks/week1/01-fast.jl) notebook on your own computer for the benchmarks! (Right click and copy link, then insert into a Pluto browser!)🏎️
-
 
 
 ## Introduction and: Why Julia?
 
 In this section we want to understand why julia is a good choice for computational tasks - for Economists and others.
 
-[Slides for intro:](/why-julia/dist/why-julia.html) Why Julia? **(does not run in my safari browser! 🤷🏻‍♂️)**
+[Slides for intro:](/why-julia/dist/why-julia.html) Why Julia? *(does not run in my safari browser! 🤷🏻‍♂️)*
+
+
+## Notebooks
+
+We use several Pluto.jl notebooks in this lecture. Here are four rendered ones:
+
+Topic | rendered Notebook | source of notebook
+:-----: | :--------: | :-------:
+Variables | [click](https://floswald.github.io/julia-bootcamp/01-variables.html) | [click](https://github.com/floswald/CompEcon/raw/refs/heads/main/notebooks/week1/01-variables.jl)
+Functions | [click](https://floswald.github.io/julia-bootcamp/02-functions.html) | [click](https://github.com/floswald/CompEcon/raw/refs/heads/main/notebooks/week1/02-functions.jl)
+
+Please download and run the [00-fast.jl](https://github.com/floswald/CompEcon/raw/refs/heads/main/notebooks/week1/00-fast.jl) notebook on your own computer for the benchmarks! (Right click and copy link, then insert into a Pluto browser!)🏎️
+
 
 ### Resources
 
-* [Modern Julia Workflow](https://modernjuliaworkflows.github.io)
+* [Modern Julia Workflow](https://modernjuliaworkflows.org)
 * [StartHere.jl](https://github.com/JuliaCommunity/StartHere.jl)
 * [Aruoba and Fernandez-Villaverde](https://www.sas.upenn.edu/~jesusfv/comparison_languages.pdf)
 * [Jesus' Julia Tutorial](https://www.sas.upenn.edu/~jesusfv/Chapter_HPC_8_Julia.pdf)
