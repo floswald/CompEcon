@@ -182,11 +182,18 @@
     "text": "Course Overview\nThis is a course for PhD and Allievi students at Collegio Carlo Alberto in Computational Economics. You will learn about some commonly used methods in Computational Economics and Structural Econometrics. These methods are being used in all fields of Economics. The course has a clear focus on applying what you learn. We will cover the theoretical concepts that underlie each topic, but you should expect a fair amount of hands on action required on your behalf. In the words of the great Che-Lin Su:\n\nDoing Computation is the only way to learn Computation. Doing Computation is the only way to learn Computation. Doing Computation is the only way to learn Computation.\n\nTrue to that motto, there will be homeworks for you to try out what you learned in class. There will also be a term project."
   },
   {
+    "objectID": "index.html#outline-of-topics",
+    "href": "index.html#outline-of-topics",
+    "title": "Computational Economics for PhDs",
+    "section": "Outline of Topics",
+    "text": "Outline of Topics\n\n\n\nSection\nTopic\n\n\n\n\n1\nIntroduction, Why Julia\n\n\n2\njulia crash course 1\n\n\n3\njulia crash course 2\n\n\n4\nOptimization 1: Recap of theory, Automatic Differentiation, setting up an optimizer\n\n\n5\nOptimization 2: Algorithms\n\n\n6\nOptimization 3: Constraints\n\n\n7\nParallel Computing\n\n\n8\nData and Machine Learning\n\n\n9\nDynamic Programming 1: Basics\n\n\n9\nDynamic Programming 2: Aiyagari and Shimer+Smith Models\n\n\n10\nDiscrete and Continous Choice Problems\n\n\n11\nDynamic Discrete Choice Models"
+  },
+  {
     "objectID": "index.html#prerequisites",
     "href": "index.html#prerequisites",
     "title": "Computational Economics for PhDs",
     "section": "Prerequisites",
-    "text": "Prerequisites\n\nYou need a laptop.\nYou should be familiar with the material from Introduction to Programming.\nYou must sign up for a free account at github.com. Choose a reasonable user name and upload a profile picture.\nBefore you come the first class, please do this:\n\nDownload the latest stable julia release for your OS.\nDownload the VSCode Editor\n\n\n\nGetting Programming Skills\n\nCheck out what is being taught in the Introduction to Programming course. You must know this level.\nWe will be using Julia for this course.\n\nNoteworthy Differences from Other Languages\nMATLAB, Python, Julia Syntax Comparison"
+    "text": "Prerequisites\n\nYou need a laptop.\nYou should be familiar with the material from Introduction to Programming.\nYou must sign up for a free account at github.com. Choose a reasonable user name and upload a profile picture.\nBefore you come the first class, please do this:\n\nDownload the latest stable julia release for your OS.\nDownload the VSCode Editor\n\n\n\nGetting Programming Skills\n\nCheck out what is being taught in the Introduction to Programming course. You should know this level.\nWe will be using Julia for this course.\n\nNoteworthy Differences from Other Languages\nMATLAB, Python, Julia Syntax Comparison"
   },
   {
     "objectID": "index.html#term-project",

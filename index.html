@@ -247,6 +247,7 @@ gtag('config', 'G-YG2MPSR1Q2', { 'anonymize_ip': true});
    
   <ul>
   <li><a href="#course-overview" id="toc-course-overview" class="nav-link active" data-scroll-target="#course-overview">Course Overview</a></li>
+  <li><a href="#outline-of-topics" id="toc-outline-of-topics" class="nav-link" data-scroll-target="#outline-of-topics">Outline of Topics</a></li>
   <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites">Prerequisites</a>
   <ul class="collapse">
   <li><a href="#getting-programming-skills" id="toc-getting-programming-skills" class="nav-link" data-scroll-target="#getting-programming-skills">Getting Programming Skills</a></li>
@@ -318,6 +319,67 @@ gtag('config', 'G-YG2MPSR1Q2', { 'anonymize_ip': true});
 </blockquote>
 <p>True to that motto, there will be homeworks for you to try out what you learned in class. There will also be a term project.</p>
 </section>
+<section id="outline-of-topics" class="level2">
+<h2 class="anchored" data-anchor-id="outline-of-topics">Outline of Topics</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Section</th>
+<th>Topic</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Introduction, <em>Why Julia</em></td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td><code>julia</code> <a href="https://floswald.github.io/julia-bootcamp/">crash course 1</a></td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td><code>julia</code> <a href="https://floswald.github.io/julia-bootcamp/">crash course 2</a></td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Optimization 1: Recap of theory, Automatic Differentiation, setting up an optimizer</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Optimization 2: Algorithms</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>Optimization 3: Constraints</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>Parallel Computing</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>Data and Machine Learning</td>
+</tr>
+<tr class="odd">
+<td>9</td>
+<td>Dynamic Programming 1: Basics</td>
+</tr>
+<tr class="even">
+<td>9</td>
+<td>Dynamic Programming 2: Aiyagari and Shimer+Smith Models</td>
+</tr>
+<tr class="odd">
+<td>10</td>
+<td>Discrete and Continous Choice Problems</td>
+</tr>
+<tr class="even">
+<td>11</td>
+<td>Dynamic Discrete Choice Models</td>
+</tr>
+</tbody>
+</table>
+</section>
 <section id="prerequisites" class="level2">
 <h2 class="anchored" data-anchor-id="prerequisites">Prerequisites</h2>
 <ol type="1">
@@ -333,7 +395,7 @@ gtag('config', 'G-YG2MPSR1Q2', { 'anonymize_ip': true});
 <section id="getting-programming-skills" class="level3">
 <h3 class="anchored" data-anchor-id="getting-programming-skills">Getting Programming Skills</h3>
 <ol type="1">
-<li>Check out what is being taught in the <a href="https://floswald.github.io/ScPoProgramming">Introduction to Programming</a> course. You must know this level.</li>
+<li>Check out what is being taught in the <a href="https://floswald.github.io/ScPoProgramming">Introduction to Programming</a> course. You should know this level.</li>
 <li>We will be using <a href="http://julialang.org/">Julia</a> for this course.
 <ul>
 <li><a href="https://docs.julialang.org/en/v1/manual/noteworthy-differences/">Noteworthy Differences from Other Languages</a></li>
@@ -356,7 +418,7 @@ gtag('config', 'G-YG2MPSR1Q2', { 'anonymize_ip': true});
 <li>It’s an economics paper.</li>
 <li>Published version and replication kit is available online.</li>
 <li>The paper to replicate must not use julia.</li>
-<li>You must use julia for your replication.
+<li><em>You</em> must use julia for your replication.
 <ul>
 <li>Ideally your choice will involve at least some level of computational interest (i.e.&nbsp;more than an IV regression)</li>
 <li>However, you can replicate a paper with an IV regression, but you have to go all the way to get the exact same results as in the paper. I.e. if the author typed the stata command <code>ivreg2 lw s expr tenure rns smsa _I* (iq=med kww age), cluster(year)</code> you will have to write (or find) julia code which will match all output from this, including standard errors.</li>
