@@ -36,6 +36,25 @@ This is a course for PhD and Allievi students at Collegio Carlo Alberto in Compu
 
 True to that motto, there will be homeworks for you to try out what you learned in class. There will also be a term project.
 
+## Outline of Topics
+
+Section | Topic
+------- | ------
+1       | Introduction, *Why Julia*
+2       | `julia` [crash course 1](https://floswald.github.io/julia-bootcamp/)
+3       | `julia` [crash course 2](https://floswald.github.io/julia-bootcamp/)
+4       | Optimization 1: Recap of theory, Automatic Differentiation, setting up an optimizer
+5       | Optimization 2: Algorithms
+6       | Optimization 3: Constraints
+7       | Parallel Computing
+8       | Data and Machine Learning
+9       | Dynamic Programming 1: Basics
+9       | Dynamic Programming 2: Aiyagari and Shimer+Smith Models
+10      | Discrete and Continous Choice Problems
+11      | Dynamic Discrete Choice Models
+
+
+
 ## Prerequisites
 
 1. You need a laptop. 
@@ -47,7 +66,7 @@ True to that motto, there will be homeworks for you to try out what you learned 
 
 ### Getting Programming Skills
 
-1. Check out what is being taught in the [Introduction to Programming](https://floswald.github.io/ScPoProgramming) course. You must know this level.
+1. Check out what is being taught in the [Introduction to Programming](https://floswald.github.io/ScPoProgramming) course. You should know this level.
 1. We will be using [Julia](http://julialang.org/) for this course. 
     - [Noteworthy Differences from Other Languages](https://docs.julialang.org/en/v1/manual/noteworthy-differences/)
     - [MATLAB, Python, Julia Syntax Comparison](http://cheatsheets.quantecon.org/)
@@ -67,7 +86,7 @@ The requirements for choice of paper to replicate are:
 1. It's an economics paper.
 1. Published version and replication kit is available online.
 2. The paper to replicate must not use julia.
-3. You must use julia for your replication.
+3. *You* must use julia for your replication.
     * Ideally your choice will involve at least some level of computational interest (i.e. more than an IV regression)
     * However, you can replicate a paper with an IV regression, but you have to go all the way to get the exact same results as in the paper. I.e. if the author typed the stata command `ivreg2 lw s expr tenure rns smsa _I* (iq=med kww age), cluster(year)` you will have to write (or find) julia code which will match all output from this, including standard errors.
 4. You need to set up a public github repository where you will build a documentation website of your implementation. You'll learn how to do this in the course.

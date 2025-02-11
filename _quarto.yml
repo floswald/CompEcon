@@ -25,7 +25,9 @@ website:
     - section: Lectures
       contents: 
         - href: lectures/why-julia.qmd
-          text: Why `julia`?
+          text: Week 1 - Why `julia`?
+        - href: lectures/examples.qmd
+          text: Week 2 - Examples
         - href: lectures/plotting.qmd
           text: Makie.jl Plotting
         - href: lectures/numerical-integration.qmd

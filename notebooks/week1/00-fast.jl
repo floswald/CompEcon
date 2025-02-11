@@ -341,7 +341,7 @@ RCall = "~0.14.0"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.11.2"
+julia_version = "1.11.3"
 manifest_format = "2.0"
 project_hash = "8d90cc8641b684537d100ba9939387ff2486caa2"
 

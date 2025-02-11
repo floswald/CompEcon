@@ -1,0 +1,12 @@
+---
+title: Week 2 - Examples
+---
+
+In this section we present some simple usage examples of julia in the wild. We will again have a few notebooks to go through.
+
+## Notebooks
+
+Topic | rendered Notebook | source of notebook
+:-----: | :--------: | :-------:
+Defining Types | [click](https://floswald.github.io/julia-bootcamp/03-defining-types.html) | [click](https://github.com/floswald/CompEcon/raw/refs/heads/main/notebooks/week2/03-defining-types.jl)
+Differential Equations | [click](https://floswald.github.io/julia-bootcamp/05-diffeq.html) | [click](https://github.com/floswald/CompEcon/raw/refs/heads/main/notebooks/week2/05-diffeq.jl)
