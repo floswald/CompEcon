@@ -6,10 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Florian Oswald">
-<meta name="dcterms.date" content="2025-02-11">
 
-<title>Plotting – Computational Economics</title>
+<title>Week 2 - Examples – Computational Economics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,40 +19,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -120,10 +84,9 @@ gtag('config', 'G-YG2MPSR1Q2', { 'anonymize_ip': true});
 
 
 <link rel="stylesheet" href="../styles.css">
-<meta name="twitter:title" content="Plotting – Computational Economics">
-<meta name="twitter:description" content="CCA Computational Economics 2025">
-<meta name="twitter:image" content="https://floswald.github.io/CompEcon/lectures/plotting_files/figure-html/cell-4-output-1.svg">
-<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Week 2 - Examples – Computational Economics">
+<meta name="twitter:description" content="">
+<meta name="twitter:card" content="summary">
 </head>
 
 <body class="nav-sidebar floating nav-fixed">
@@ -176,7 +139,7 @@ gtag('config', 'G-YG2MPSR1Q2', { 'anonymize_ip': true});
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../lectures/why-julia.html">Lectures</a></li><li class="breadcrumb-item"><a href="../lectures/plotting.html">Makie.jl Plotting</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../lectures/why-julia.html">Lectures</a></li><li class="breadcrumb-item"><a href="../lectures/examples.html">Week 2 - Examples</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -234,13 +197,13 @@ gtag('config', 'G-YG2MPSR1Q2', { 'anonymize_ip': true});
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../lectures/examples.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/examples.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Week 2 - Examples</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../lectures/plotting.html" class="sidebar-item-text sidebar-link active">
+  <a href="../lectures/plotting.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Makie.jl Plotting</span></a>
   </div>
 </li>
@@ -285,41 +248,23 @@ gtag('config', 'G-YG2MPSR1Q2', { 'anonymize_ip': true});
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#backends" id="toc-backends" class="nav-link active" data-scroll-target="#backends">Backends</a></li>
-  <li><a href="#getting-started-install-the-cairomakie-package" id="toc-getting-started-install-the-cairomakie-package" class="nav-link" data-scroll-target="#getting-started-install-the-cairomakie-package">Getting Started: Install the <code>CairoMakie</code> package</a></li>
-  <li><a href="#first-plot" id="toc-first-plot" class="nav-link" data-scroll-target="#first-plot">First Plot</a></li>
-  <li><a href="#figures-and-axis" id="toc-figures-and-axis" class="nav-link" data-scroll-target="#figures-and-axis">Figures and Axis</a></li>
-  <li><a href="#styling-our-plot" id="toc-styling-our-plot" class="nav-link" data-scroll-target="#styling-our-plot">Styling our Plot</a></li>
-  <li><a href="#saving-plot-to-disk" id="toc-saving-plot-to-disk" class="nav-link" data-scroll-target="#saving-plot-to-disk">Saving Plot to Disk</a></li>
+  <li><a href="#notebooks" id="toc-notebooks" class="nav-link active" data-scroll-target="#notebooks">Notebooks</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../lectures/why-julia.html">Lectures</a></li><li class="breadcrumb-item"><a href="../lectures/plotting.html">Makie.jl Plotting</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../lectures/why-julia.html">Lectures</a></li><li class="breadcrumb-item"><a href="../lectures/examples.html">Week 2 - Examples</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Plotting</h1>
-<p class="subtitle lead">CCA Computational Economics 2025</p>
+<h1 class="title">Week 2 - Examples</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Florian Oswald </p>
-          </div>
-  </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">February 11, 2025</p>
-    </div>
-  </div>
   
     
   </div>
@@ -329,230 +274,30 @@ gtag('config', 'G-YG2MPSR1Q2', { 'anonymize_ip': true});
 </header>
 
 
-<p>Good plotting is one of the main requirements we have for a fully fledged computing language. We want to be able to quickly make good looking plots of data objects (like for instance the <code>R</code> library <code>ggplot2</code> allows us to do), and we want to have the ability to build up plots step by step as for instance the <code>python</code> library <code>matplotlib</code> allows us to do. There are several solutions available in julia:</p>
-<ol type="1">
-<li>Plots.jl: this is a mature and solid solution. I give you an overview <a href="https://floswald.github.io/julia-bootcamp/06-plotting.html">here</a></li>
-<li>Makie.jl: this is the future of julia plotting. I want to give you an overview today. Please have a look at the <a href="https://docs.makie.org/dev/index">Makie.jl documentation</a>.</li>
-</ol>
-<section id="backends" class="level2">
-<h2 class="anchored" data-anchor-id="backends">Backends</h2>
-<ul>
-<li>You can choose different <em>engines</em> which will draw your plot, each with strengths and weaknesses. Find out more <a href="https://docs.makie.org/dev/explanations/backends/backends#What-is-a-backend">here</a></li>
-<li>We will be using <code>CairoMakie</code> which is good for static output (like <code>pdf</code> or <code>png</code> pictures).</li>
-</ul>
-</section>
-<section id="getting-started-install-the-cairomakie-package" class="level2">
-<h2 class="anchored" data-anchor-id="getting-started-install-the-cairomakie-package">Getting Started: Install the <code>CairoMakie</code> package</h2>
-<blockquote class="blockquote">
-<p>this is following closely <a href="https://docs.makie.org/dev/tutorials/getting-started">the makie.jl getting started page</a></p>
-</blockquote>
-<ol type="1">
-<li><p>Create a folder <code>makie_tutorial</code> on your computer somewhere. Maybe <code>~/makie_tutorial</code> ?</p></li>
-<li><p>Start <code>julia</code> by typing <code>julia</code> on your terminal and hitting enter (or double click the icon in <em>Applications</em>)</p></li>
-<li><p>in the REPL, we need to move into the <code>makie_tutorial</code> folder now. do this:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cd</span>(<span class="st">"/path/to/your/makie_tutorial"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
-<li><p><em>Activate</em> the current folder to be our <em>project</em>:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Pkg</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">Pkg</span>.<span class="fu">activate</span>(<span class="st">"."</span>)  <span class="co"># "." is the name of the current directory ;-)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
-<li><p><em>Add</em> the CairoMakie package:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">Pkg</span>.<span class="fu">add</span>(<span class="st">"CairoMakie"</span>)  <span class="co"># this will take a while!</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
-<li><p>After this has finished, check the <code>makie_tutorial</code> folder: there are 2 new files now: <code>Project.toml</code> and <code>Manifest.toml</code></p></li>
-<li><p>We can now use the <code>CairoMakie</code> package! 🎉</p></li>
-</ol>
-</section>
-<section id="first-plot" class="level2">
-<h2 class="anchored" data-anchor-id="first-plot">First Plot</h2>
-<div id="2" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># this only works after completing the above steps!</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">CairoMakie</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>If executing <code>using CairoMakie</code> worked for you, it means you are good to go. Let’s get some data…</p>
-<div id="4" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># hover top right to copy this</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>seconds <span class="op">=</span> <span class="fl">0</span><span class="op">:</span><span class="fl">0.1</span><span class="op">:</span><span class="fl">2</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>measurements <span class="op">=</span> [<span class="fl">8.2</span>, <span class="fl">8.4</span>, <span class="fl">6.3</span>, <span class="fl">9.5</span>, <span class="fl">9.1</span>, <span class="fl">10.5</span>, <span class="fl">8.6</span>, <span class="fl">8.2</span>, <span class="fl">10.5</span>, <span class="fl">8.5</span>, <span class="fl">7.2</span>,</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>        <span class="fl">8.8</span>, <span class="fl">9.7</span>, <span class="fl">10.8</span>, <span class="fl">12.5</span>, <span class="fl">11.6</span>, <span class="fl">12.1</span>, <span class="fl">12.1</span>, <span class="fl">15.1</span>, <span class="fl">14.7</span>, <span class="fl">13.1</span>];</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>…and make a lineplot from it:</p>
-<div id="6" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(seconds, measurements)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="1">
-<div>
-<figure class="figure">
-<p><img src="plotting_files/figure-html/cell-4-output-1.svg" class="img-fluid figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Depending on your system, <code>lines(seconds, measurements)</code> should have triggered a viewer of some sort. In VSCode, the plotting pane should have opened</p>
-</div>
-</div>
-<p>Let’s do a scatter plot now:</p>
-<div id="8" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">scatter</span>(seconds, measurements)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="1">
-<div>
-<figure class="figure">
-<p><img src="plotting_files/figure-html/cell-5-output-1.svg" class="img-fluid figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>Great. Now let’s an exponential fit line to this. Suppose we know the formula to be <code>f(x) = exp(x) + 7</code>. That’s just another line plot:</p>
-<div id="10" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">scatter</span>(seconds, <span class="fu">exp</span>.(seconds) <span class="op">.+</span> <span class="fl">7</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="1">
-<div>
-<figure class="figure">
-<p><img src="plotting_files/figure-html/cell-6-output-1.svg" class="img-fluid figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>Finally, we want to have those all in the same plot. We will use the <code>!</code> version of the plotting functions!</p>
-<div id="12" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">scatter</span>(seconds, measurements)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lines!</span>(seconds, <span class="fu">exp</span>.(seconds) <span class="op">.+</span> <span class="fl">7</span>)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">current_figure</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="1">
-<div>
-<figure class="figure">
-<p><img src="plotting_files/figure-html/cell-7-output-1.svg" class="img-fluid figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="figures-and-axis" class="level2">
-<h2 class="anchored" data-anchor-id="figures-and-axis">Figures and Axis</h2>
-<p>There is another way to compose this plot, more useful if you want more fine-grained control. We need a</p>
-<ol type="1">
-<li>Figure</li>
-<li>Axis</li>
-</ol>
-<p>A plot is part of an <code>Axis</code> object, which itself is part of a <code>Figure</code>.</p>
-<div id="14" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>f <span class="op">=</span> <span class="fu">Figure</span>()</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> <span class="fu">Axis</span>(f[<span class="fl">1</span>,<span class="fl">1</span>]) <span class="co"># ax sits at [1,1] of f</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">scatter!</span>(ax, seconds, measurements)  <span class="co"># plot *into* ax</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">lines!</span>(ax, seconds, <span class="fu">exp</span>.(seconds) <span class="op">.+</span> <span class="fl">7</span>) <span class="co"># again</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>f  <span class="co"># look at f</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="1">
-<div>
-<figure class="figure">
-<p><img src="plotting_files/figure-html/cell-8-output-1.svg" class="img-fluid figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>This is useful if we have many (sub) plots which we want to collect in a single figure, or for precise labelling. Let’s label that figure now:</p>
-<div id="16" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>f <span class="op">=</span> <span class="fu">Figure</span>()</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> <span class="fu">Axis</span>(f[<span class="fl">1</span>, <span class="fl">1</span>],</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    title <span class="op">=</span> <span class="st">"Experimental data and exponential fit"</span>,</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    xlabel <span class="op">=</span> <span class="st">"Time (seconds)"</span>,</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    ylabel <span class="op">=</span> <span class="st">"Value"</span>,</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="fu">scatter!</span>(ax, seconds, measurements)</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="fu">lines!</span>(ax, seconds, <span class="fu">exp</span>.(seconds) <span class="op">.+</span> <span class="fl">7</span>)</span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>f</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="1">
-<div>
-<figure class="figure">
-<p><img src="plotting_files/figure-html/cell-9-output-1.svg" class="img-fluid figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="styling-our-plot" class="level2">
-<h2 class="anchored" data-anchor-id="styling-our-plot">Styling our Plot</h2>
-<p>Let’s change a few aestetic aspects of our plot, like color or linestyle:</p>
-<div id="18" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>f <span class="op">=</span> <span class="fu">Figure</span>()</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> <span class="fu">Axis</span>(f[<span class="fl">1</span>, <span class="fl">1</span>],</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    title <span class="op">=</span> <span class="st">"Experimental data and exponential fit"</span>,</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    xlabel <span class="op">=</span> <span class="st">"Time (seconds)"</span>,</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    ylabel <span class="op">=</span> <span class="st">"Value"</span>,</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="fu">scatter!</span>(ax, seconds, measurements, color <span class="op">=</span> <span class="op">:</span>tomato)</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="fu">lines!</span>(ax, seconds, <span class="fu">exp</span>.(seconds) <span class="op">.+</span> <span class="fl">7</span>, color <span class="op">=</span> <span class="op">:</span>tomato, linestyle <span class="op">=</span> <span class="op">:</span>dash)</span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>f</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="1">
-<div>
-<figure class="figure">
-<p><img src="plotting_files/figure-html/cell-10-output-1.svg" class="img-fluid figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>There are many aspects of any plotting type that you can style. Checkout the reference for the <code>scatter</code> function <a href="https://docs.makie.org/dev/reference/plots/scatter">here</a>. For example, we could change the marker symbol from the default (<code>:circle:</code>) to something funnier:</p>
-<div id="20" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># notice: overplots the `ax` in `f` from above!</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">scatter!</span>(ax, seconds, measurements, marker <span class="op">=</span> <span class="ch">'😉'</span>, </span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    markersize <span class="op">=</span> <span class="fl">20</span>)</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>f</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="1">
-<div>
-<figure class="figure">
-<p><img src="plotting_files/figure-html/cell-11-output-1.svg" class="img-fluid figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>Finally, let us add a legend <em>in a certain position</em>:</p>
-<div id="22" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>f <span class="op">=</span> <span class="fu">Figure</span>()</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> <span class="fu">Axis</span>(f[<span class="fl">1</span>, <span class="fl">1</span>],</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    title <span class="op">=</span> <span class="st">"Experimental data and exponential fit"</span>,</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    xlabel <span class="op">=</span> <span class="st">"Time (seconds)"</span>,</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    ylabel <span class="op">=</span> <span class="st">"Value"</span>,</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="fu">scatter!</span>(</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    ax,</span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    seconds,</span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    measurements,</span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    color <span class="op">=</span> <span class="op">:</span>tomato,</span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>    label <span class="op">=</span> <span class="st">"Measurements"</span></span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="fu">lines!</span>(</span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>    ax,</span>
-<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>    seconds,</span>
-<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">exp</span>.(seconds) <span class="op">.+</span> <span class="fl">7</span>,</span>
-<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>    color <span class="op">=</span> <span class="op">:</span>tomato,</span>
-<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>    linestyle <span class="op">=</span> <span class="op">:</span>dash,</span>
-<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>    label <span class="op">=</span> L<span class="st">"f(x) = </span><span class="sc">\e</span><span class="st">xp(x) + 7"</span>,</span>
-<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a><span class="fu">axislegend</span>(position <span class="op">=</span> <span class="op">:</span>rb)</span>
-<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>f</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="1">
-<div>
-<figure class="figure">
-<p><img src="plotting_files/figure-html/cell-12-output-1.svg" class="img-fluid figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="saving-plot-to-disk" class="level2">
-<h2 class="anchored" data-anchor-id="saving-plot-to-disk">Saving Plot to Disk</h2>
-<p>Finally, it’s straightforward to save our plot to disk in a variety of formats:</p>
-<div id="24" class="cell" data-execution_count="0">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(<span class="st">"first_figure.png"</span>, f)</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(<span class="st">"first_figure.svg"</span>, f)</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(<span class="st">"first_figure.pdf"</span>, f)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Those files are now in your <code>makie_tutorial</code> folder!</p>
+<p>In this section we present some simple usage examples of julia in the wild. We will again have a few notebooks to go through.</p>
+<section id="notebooks" class="level2">
+<h2 class="anchored" data-anchor-id="notebooks">Notebooks</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">Topic</th>
+<th style="text-align: center;">rendered Notebook</th>
+<th style="text-align: center;">source of notebook</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">Defining Types</td>
+<td style="text-align: center;"><a href="https://floswald.github.io/julia-bootcamp/03-defining-types.html">click</a></td>
+<td style="text-align: center;"><a href="https://github.com/floswald/CompEcon/raw/refs/heads/main/notebooks/week2/03-defining-types.jl">click</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Differential Equations</td>
+<td style="text-align: center;"><a href="https://floswald.github.io/julia-bootcamp/05-diffeq.html">click</a></td>
+<td style="text-align: center;"><a href="https://github.com/floswald/CompEcon/raw/refs/heads/main/notebooks/week2/05-diffeq.jl">click</a></td>
+</tr>
+</tbody>
+</table>
 
 
 </section>

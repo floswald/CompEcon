@@ -128,7 +128,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "Why `julia`?"
+      "Week 1 - Why `julia`?"
     ]
   },
   {
@@ -140,7 +140,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "Why `julia`?"
+      "Week 1 - Why `julia`?"
     ]
   },
   {
@@ -152,7 +152,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "Why `julia`?"
+      "Week 1 - Why `julia`?"
     ]
   },
   {
@@ -164,106 +164,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "Why `julia`?"
-    ]
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Computational Economics for PhDs",
-    "section": "",
-    "text": "Teacher: Florian Oswald, florian.oswald@unito.it\nClass Times: Weekly Monday and Tuesday 11:00-13:00\nClass Location: Collegio Carlo Alberto\nSlack: There will be a slack channel for all communication\n© Florian Oswald, 2025"
-  },
-  {
-    "objectID": "index.html#course-overview",
-    "href": "index.html#course-overview",
-    "title": "Computational Economics for PhDs",
-    "section": "Course Overview",
-    "text": "Course Overview\nThis is a course for PhD and Allievi students at Collegio Carlo Alberto in Computational Economics. You will learn about some commonly used methods in Computational Economics and Structural Econometrics. These methods are being used in all fields of Economics. The course has a clear focus on applying what you learn. We will cover the theoretical concepts that underlie each topic, but you should expect a fair amount of hands on action required on your behalf. In the words of the great Che-Lin Su:\n\nDoing Computation is the only way to learn Computation. Doing Computation is the only way to learn Computation. Doing Computation is the only way to learn Computation.\n\nTrue to that motto, there will be homeworks for you to try out what you learned in class. There will also be a term project."
-  },
-  {
-    "objectID": "index.html#outline-of-topics",
-    "href": "index.html#outline-of-topics",
-    "title": "Computational Economics for PhDs",
-    "section": "Outline of Topics",
-    "text": "Outline of Topics\n\n\n\nSection\nTopic\n\n\n\n\n1\nIntroduction, Why Julia\n\n\n2\njulia crash course 1\n\n\n3\njulia crash course 2\n\n\n4\nOptimization 1: Recap of theory, Automatic Differentiation, setting up an optimizer\n\n\n5\nOptimization 2: Algorithms\n\n\n6\nOptimization 3: Constraints\n\n\n7\nParallel Computing\n\n\n8\nData and Machine Learning\n\n\n9\nDynamic Programming 1: Basics\n\n\n9\nDynamic Programming 2: Aiyagari and Shimer+Smith Models\n\n\n10\nDiscrete and Continous Choice Problems\n\n\n11\nDynamic Discrete Choice Models"
-  },
-  {
-    "objectID": "index.html#prerequisites",
-    "href": "index.html#prerequisites",
-    "title": "Computational Economics for PhDs",
-    "section": "Prerequisites",
-    "text": "Prerequisites\n\nYou need a laptop.\nYou should be familiar with the material from Introduction to Programming.\nYou must sign up for a free account at github.com. Choose a reasonable user name and upload a profile picture.\nBefore you come the first class, please do this:\n\nDownload the latest stable julia release for your OS.\nDownload the VSCode Editor\n\n\n\nGetting Programming Skills\n\nCheck out what is being taught in the Introduction to Programming course. You should know this level.\nWe will be using Julia for this course.\n\nNoteworthy Differences from Other Languages\nMATLAB, Python, Julia Syntax Comparison"
-  },
-  {
-    "objectID": "index.html#term-project",
-    "href": "index.html#term-project",
-    "title": "Computational Economics for PhDs",
-    "section": "Term Project",
-    "text": "Term Project\nThere are two options:\n\nReplicate a published paper.\nDevelop the computational aspects of your own work.\n\n\nReplication\nThe requirements for choice of paper to replicate are:\n\nIt’s an economics paper.\nPublished version and replication kit is available online.\nThe paper to replicate must not use julia.\nYou must use julia for your replication.\n\nIdeally your choice will involve at least some level of computational interest (i.e. more than an IV regression)\nHowever, you can replicate a paper with an IV regression, but you have to go all the way to get the exact same results as in the paper. I.e. if the author typed the stata command ivreg2 lw s expr tenure rns smsa _I* (iq=med kww age), cluster(year) you will have to write (or find) julia code which will match all output from this, including standard errors.\n\nYou need to set up a public github repository where you will build a documentation website of your implementation. You’ll learn how to do this in the course.\nI encourage you to let the world know about your replication effort via social media and/or email to the authors directly. This is independent of whether you were able or not to replicate the results. Replication is not about finding errors in other peoples’ work. If you are able to replicate some result in julia, this may be very interesting for others.\n\n\nReplication Resources\n\nhere is a great list by the AEA\nECTA code and data\nRevEconDynamics codes\nEach issue of RevEconDynamics , e.g. https://www.economicdynamics.org/volume-39-2021/\nThe AEA Data Editor’s website\nThe Restud Data Editor and their zenodo repo of replication kits\nThe Social Science Data Editor’s joint website\n\n\n\n\nDevelop Your Own Work\nYou can develop your own work as well. Requirements:\n\nsetup a github repository which contains the code (your decision whether public or private, in any case you have to share it with me)\nproduce a short document (max 10 pages, ideally much less) which describes\n\nthe aim of the project\nthe computational problem\nyour computational strategy to solve that problem\n\nThe main focus for me will lie on\n\nHow easy is it to use your code?\nHow easy is it to understand your code (code readability and provided documentation)?\nDid you provide unit tests? Can I be convinced that your code does what it is supposed to do?"
-  },
-  {
-    "objectID": "index.html#grade",
-    "href": "index.html#grade",
-    "title": "Computational Economics for PhDs",
-    "section": "Grade",
-    "text": "Grade\nYour grade will be 60% homeworks, 40% term project."
-  },
-  {
-    "objectID": "index.html#textbooks",
-    "href": "index.html#textbooks",
-    "title": "Computational Economics for PhDs",
-    "section": "Textbooks",
-    "text": "Textbooks\nThere are some excellent references for computational methods out there. This course will use material from\n\nThe Classics\n\nFackler and Miranda (2002), Applied Computational Economics and Finance, MIT Press\nKenneth Judd (1998), Numerical Methods in Economics, MIT Press\nNocedal, Jorge, and Stephen J. Wright (2006): Numerical Optimization, Springer-Verlag\n\n\n\nNewcomers\n\nJulia for Data Analysis (2023), Bogumił Kamiński, Manning Publications.\nAlgorithms for Optimization (2019), Mykel J. Kochenderfer and Tim A. Wheeler, Algorithms for Optimization, MIT Press.\nA Gentle Introduction to Effective Computing in Quantitative Research - What Every Research Assistant Should Know, Harry J. Paarsch and Konstantin Golyaev\nStatistics with Julia (2021), Yoni Nazarathy and Hayden Klok, Springer.\nQuantitative Economics with Julia by Perla, Sargent and Stachurski is a wonderful resource and we use it a lot in this course."
-  },
-  {
-    "objectID": "index.html#code-of-conduct",
-    "href": "index.html#code-of-conduct",
-    "title": "Computational Economics for PhDs",
-    "section": "Code of Conduct",
-    "text": "Code of Conduct\nIf you decide to participate in this course, I expect you to abide by the following minimal code of conduct.\n\nBe polite to the other class participants.\nWhile in class, do not spend time on messaging apps, chat rooms, computer games, or similar content.\n\nYou can expect your instructor to abide by the same code of conduct, so this is a matter of mutual respect. If you are found in breach of the above you will be given a single warning, and I will ask you to no longer join the course after a second time. Your grade will be “fail”."
-  },
-  {
-    "objectID": "index.html#license",
-    "href": "index.html#license",
-    "title": "Computational Economics for PhDs",
-    "section": "License",
-    "text": "License\nThe copyright notice to be included in any copies and other derivative work of this material is:\nCopyright 2025 Florian Oswald, florian.oswald@gmail.com\nThank you.\n This is licensed under Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License"
-  },
-  {
-    "objectID": "homeworks/hw0.html",
-    "href": "homeworks/hw0.html",
-    "title": "Homework Zero",
-    "section": "",
-    "text": "The first week’s homework is to make you familiar with the Pluto environment. Given it’s homework number 0, it won’t count towards your grade!\nYou can do the homework in teams of max 2 people (try not to do it alone!)\n© Florian Oswald, 2025",
-    "crumbs": [
-      "Home",
-      "Homeworks",
-      "Homework Zero"
-    ]
-  },
-  {
-    "objectID": "homeworks/hw0.html#you-have-3-tasks",
-    "href": "homeworks/hw0.html#you-have-3-tasks",
-    "title": "Homework Zero",
-    "section": "You have 3 Tasks",
-    "text": "You have 3 Tasks\nI want you to go through the first 3 Pluto “featured notebooks”: “Getting Startet”, “Markdown” and “Basic Mathematics”. You can see those upon doing\nusing Pluto\nPluto.run()\nand scrolling down a bit.\nOnce the notebook is loaded, click top right on “edit” this notebook. Complete all tasks.",
-    "crumbs": [
-      "Home",
-      "Homeworks",
-      "Homework Zero"
-    ]
-  },
-  {
-    "objectID": "homeworks/hw0.html#homework-submission",
-    "href": "homeworks/hw0.html#homework-submission",
-    "title": "Homework Zero",
-    "section": "Homework Submission",
-    "text": "Homework Submission\nsubmit by next class.\nHow and What to Submit?\n\nWhat? three static html files of each of your notebooks (click top right on “sharing” symbol) and select “Static HTML”. The first cell in your notebook must contain the names of students who worked on it.\nHow? Upload your .html files in format HW01-name1-name2.html, HW02-name1-name2.html and HW03-name1-name2.html the dropbox file request link which will be shared with you via slack.",
-    "crumbs": [
-      "Home",
-      "Homeworks",
-      "Homework Zero"
+      "Week 1 - Why `julia`?"
     ]
   },
   {
@@ -348,6 +249,129 @@
       "Home",
       "Lectures",
       "Numerical Integration"
+    ]
+  },
+  {
+    "objectID": "homeworks/hw0.html",
+    "href": "homeworks/hw0.html",
+    "title": "Homework Zero",
+    "section": "",
+    "text": "The first week’s homework is to make you familiar with the Pluto environment. Given it’s homework number 0, it won’t count towards your grade!\nYou can do the homework in teams of max 2 people (try not to do it alone!)\n© Florian Oswald, 2025",
+    "crumbs": [
+      "Home",
+      "Homeworks",
+      "Homework Zero"
+    ]
+  },
+  {
+    "objectID": "homeworks/hw0.html#you-have-3-tasks",
+    "href": "homeworks/hw0.html#you-have-3-tasks",
+    "title": "Homework Zero",
+    "section": "You have 3 Tasks",
+    "text": "You have 3 Tasks\nI want you to go through the first 3 Pluto “featured notebooks”: “Getting Startet”, “Markdown” and “Basic Mathematics”. You can see those upon doing\nusing Pluto\nPluto.run()\nand scrolling down a bit.\nOnce the notebook is loaded, click top right on “edit” this notebook. Complete all tasks.",
+    "crumbs": [
+      "Home",
+      "Homeworks",
+      "Homework Zero"
+    ]
+  },
+  {
+    "objectID": "homeworks/hw0.html#homework-submission",
+    "href": "homeworks/hw0.html#homework-submission",
+    "title": "Homework Zero",
+    "section": "Homework Submission",
+    "text": "Homework Submission\nsubmit by next class.\nHow and What to Submit?\n\nWhat? three static html files of each of your notebooks (click top right on “sharing” symbol) and select “Static HTML”. The first cell in your notebook must contain the names of students who worked on it.\nHow? Upload your .html files in format HW01-name1-name2.html, HW02-name1-name2.html and HW03-name1-name2.html the dropbox file request link which will be shared with you via slack.",
+    "crumbs": [
+      "Home",
+      "Homeworks",
+      "Homework Zero"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Computational Economics for PhDs",
+    "section": "",
+    "text": "Teacher: Florian Oswald, florian.oswald@unito.it\nClass Times: Weekly Monday and Tuesday 11:00-13:00\nClass Location: Collegio Carlo Alberto\nSlack: There will be a slack channel for all communication\n© Florian Oswald, 2025"
+  },
+  {
+    "objectID": "index.html#course-overview",
+    "href": "index.html#course-overview",
+    "title": "Computational Economics for PhDs",
+    "section": "Course Overview",
+    "text": "Course Overview\nThis is a course for PhD and Allievi students at Collegio Carlo Alberto in Computational Economics. You will learn about some commonly used methods in Computational Economics and Structural Econometrics. These methods are being used in all fields of Economics. The course has a clear focus on applying what you learn. We will cover the theoretical concepts that underlie each topic, but you should expect a fair amount of hands on action required on your behalf. In the words of the great Che-Lin Su:\n\nDoing Computation is the only way to learn Computation. Doing Computation is the only way to learn Computation. Doing Computation is the only way to learn Computation.\n\nTrue to that motto, there will be homeworks for you to try out what you learned in class. There will also be a term project."
+  },
+  {
+    "objectID": "index.html#outline-of-topics",
+    "href": "index.html#outline-of-topics",
+    "title": "Computational Economics for PhDs",
+    "section": "Outline of Topics",
+    "text": "Outline of Topics\n\n\n\nSection\nTopic\n\n\n\n\n1\nIntroduction, Why Julia\n\n\n2\njulia crash course 1\n\n\n3\njulia crash course 2\n\n\n4\nOptimization 1: Recap of theory, Automatic Differentiation, setting up an optimizer\n\n\n5\nOptimization 2: Algorithms\n\n\n6\nOptimization 3: Constraints\n\n\n7\nParallel Computing\n\n\n8\nData and Machine Learning\n\n\n9\nDynamic Programming 1: Basics\n\n\n9\nDynamic Programming 2: Aiyagari and Shimer+Smith Models\n\n\n10\nDiscrete and Continous Choice Problems\n\n\n11\nDynamic Discrete Choice Models"
+  },
+  {
+    "objectID": "index.html#prerequisites",
+    "href": "index.html#prerequisites",
+    "title": "Computational Economics for PhDs",
+    "section": "Prerequisites",
+    "text": "Prerequisites\n\nYou need a laptop.\nYou should be familiar with the material from Introduction to Programming.\nYou must sign up for a free account at github.com. Choose a reasonable user name and upload a profile picture.\nBefore you come the first class, please do this:\n\nDownload the latest stable julia release for your OS.\nDownload the VSCode Editor\n\n\n\nGetting Programming Skills\n\nCheck out what is being taught in the Introduction to Programming course. You should know this level.\nWe will be using Julia for this course.\n\nNoteworthy Differences from Other Languages\nMATLAB, Python, Julia Syntax Comparison"
+  },
+  {
+    "objectID": "index.html#term-project",
+    "href": "index.html#term-project",
+    "title": "Computational Economics for PhDs",
+    "section": "Term Project",
+    "text": "Term Project\nThere are two options:\n\nReplicate a published paper.\nDevelop the computational aspects of your own work.\n\n\nReplication\nThe requirements for choice of paper to replicate are:\n\nIt’s an economics paper.\nPublished version and replication kit is available online.\nThe paper to replicate must not use julia.\nYou must use julia for your replication.\n\nIdeally your choice will involve at least some level of computational interest (i.e. more than an IV regression)\nHowever, you can replicate a paper with an IV regression, but you have to go all the way to get the exact same results as in the paper. I.e. if the author typed the stata command ivreg2 lw s expr tenure rns smsa _I* (iq=med kww age), cluster(year) you will have to write (or find) julia code which will match all output from this, including standard errors.\n\nYou need to set up a public github repository where you will build a documentation website of your implementation. You’ll learn how to do this in the course.\nI encourage you to let the world know about your replication effort via social media and/or email to the authors directly. This is independent of whether you were able or not to replicate the results. Replication is not about finding errors in other peoples’ work. If you are able to replicate some result in julia, this may be very interesting for others.\n\n\nReplication Resources\n\nhere is a great list by the AEA\nECTA code and data\nRevEconDynamics codes\nEach issue of RevEconDynamics , e.g. https://www.economicdynamics.org/volume-39-2021/\nThe AEA Data Editor’s website\nThe Restud Data Editor and their zenodo repo of replication kits\nThe Social Science Data Editor’s joint website\n\n\n\n\nDevelop Your Own Work\nYou can develop your own work as well. Requirements:\n\nsetup a github repository which contains the code (your decision whether public or private, in any case you have to share it with me)\nproduce a short document (max 10 pages, ideally much less) which describes\n\nthe aim of the project\nthe computational problem\nyour computational strategy to solve that problem\n\nThe main focus for me will lie on\n\nHow easy is it to use your code?\nHow easy is it to understand your code (code readability and provided documentation)?\nDid you provide unit tests? Can I be convinced that your code does what it is supposed to do?"
+  },
+  {
+    "objectID": "index.html#grade",
+    "href": "index.html#grade",
+    "title": "Computational Economics for PhDs",
+    "section": "Grade",
+    "text": "Grade\nYour grade will be 60% homeworks, 40% term project."
+  },
+  {
+    "objectID": "index.html#textbooks",
+    "href": "index.html#textbooks",
+    "title": "Computational Economics for PhDs",
+    "section": "Textbooks",
+    "text": "Textbooks\nThere are some excellent references for computational methods out there. This course will use material from\n\nThe Classics\n\nFackler and Miranda (2002), Applied Computational Economics and Finance, MIT Press\nKenneth Judd (1998), Numerical Methods in Economics, MIT Press\nNocedal, Jorge, and Stephen J. Wright (2006): Numerical Optimization, Springer-Verlag\n\n\n\nNewcomers\n\nJulia for Data Analysis (2023), Bogumił Kamiński, Manning Publications.\nAlgorithms for Optimization (2019), Mykel J. Kochenderfer and Tim A. Wheeler, Algorithms for Optimization, MIT Press.\nA Gentle Introduction to Effective Computing in Quantitative Research - What Every Research Assistant Should Know, Harry J. Paarsch and Konstantin Golyaev\nStatistics with Julia (2021), Yoni Nazarathy and Hayden Klok, Springer.\nQuantitative Economics with Julia by Perla, Sargent and Stachurski is a wonderful resource and we use it a lot in this course."
+  },
+  {
+    "objectID": "index.html#code-of-conduct",
+    "href": "index.html#code-of-conduct",
+    "title": "Computational Economics for PhDs",
+    "section": "Code of Conduct",
+    "text": "Code of Conduct\nIf you decide to participate in this course, I expect you to abide by the following minimal code of conduct.\n\nBe polite to the other class participants.\nWhile in class, do not spend time on messaging apps, chat rooms, computer games, or similar content.\n\nYou can expect your instructor to abide by the same code of conduct, so this is a matter of mutual respect. If you are found in breach of the above you will be given a single warning, and I will ask you to no longer join the course after a second time. Your grade will be “fail”."
+  },
+  {
+    "objectID": "index.html#license",
+    "href": "index.html#license",
+    "title": "Computational Economics for PhDs",
+    "section": "License",
+    "text": "License\nThe copyright notice to be included in any copies and other derivative work of this material is:\nCopyright 2025 Florian Oswald, florian.oswald@gmail.com\nThank you.\n This is licensed under Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License"
+  },
+  {
+    "objectID": "lectures/examples.html",
+    "href": "lectures/examples.html",
+    "title": "Week 2 - Examples",
+    "section": "",
+    "text": "In this section we present some simple usage examples of julia in the wild. We will again have a few notebooks to go through.\n© Florian Oswald, 2025",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "Week 2 - Examples"
+    ]
+  },
+  {
+    "objectID": "lectures/examples.html#notebooks",
+    "href": "lectures/examples.html#notebooks",
+    "title": "Week 2 - Examples",
+    "section": "Notebooks",
+    "text": "Notebooks\n\n\n\nTopic\nrendered Notebook\nsource of notebook\n\n\n\n\nDefining Types\nclick\nclick\n\n\nDifferential Equations\nclick\nclick",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "Week 2 - Examples"
     ]
   },
   {
