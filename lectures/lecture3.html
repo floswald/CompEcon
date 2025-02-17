@@ -6,9 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Florian Oswald">
 
-<title>Computational Economics for PhDs – Computational Economics</title>
+<title>Lecture 3: Optimization 1 – Computational Economics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,26 +20,60 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<link href=".//images/cca.png" rel="icon" type="image/png">
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-6bd9cfa162949bde0a231f530c97869d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="..//images/cca.png" rel="icon" type="image/png">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-6bd9cfa162949bde0a231f530c97869d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -84,13 +117,10 @@ gtag('config', 'G-YG2MPSR1Q2', { 'anonymize_ip': true});
 </script>
 
 
-<link rel="stylesheet" href="styles.css">
-<meta name="twitter:title" content="Computational Economics for PhDs – Computational Economics">
-<meta name="twitter:description" content="Collegio Carlo Alberto, 2025">
-<meta name="twitter:image" content="https://floswald.github.io/CompEcon/images/cca-julia.png">
-<meta name="twitter:image-height" content="1404">
-<meta name="twitter:image-width" content="2876">
-<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="../styles.css">
+<meta name="twitter:title" content="Lecture 3: Optimization 1 – Computational Economics">
+<meta name="twitter:description" content="">
+<meta name="twitter:card" content="summary">
 </head>
 
 <body class="nav-sidebar floating nav-fixed">
@@ -100,10 +130,10 @@ gtag('config', 'G-YG2MPSR1Q2', { 'anonymize_ip': true});
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a href="./index.html" class="navbar-brand navbar-brand-logo">
-    <img src="./images/cca-julia.png" alt="" class="navbar-logo">
+    <a href="../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../images/cca-julia.png" alt="" class="navbar-logo">
     </a>
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">Computational Economics</span>
     </a>
   </div>
@@ -114,7 +144,7 @@ gtag('config', 'G-YG2MPSR1Q2', { 'anonymize_ip': true});
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> 
+    <a class="nav-link" href="../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
 </ul>
@@ -143,7 +173,7 @@ gtag('config', 'G-YG2MPSR1Q2', { 'anonymize_ip': true});
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Computational Economics for PhDs</li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../lectures/lecture1.html">Lectures</a></li><li class="breadcrumb-item"><a href="../lectures/lecture3.html">Lecture 3 - Optimization</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -166,19 +196,19 @@ gtag('config', 'G-YG2MPSR1Q2', { 'anonymize_ip': true});
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./installation.html" class="sidebar-item-text sidebar-link">
+  <a href="../installation.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Installation</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./cheatsheets.html" class="sidebar-item-text sidebar-link">
+  <a href="../cheatsheets.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Cheatsheets</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./syllabus.pdf" class="sidebar-item-text sidebar-link">
+  <a href="../syllabus.pdf" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Syllabus (pdf)</span></a>
   </div>
 </li>
@@ -186,46 +216,46 @@ gtag('config', 'G-YG2MPSR1Q2', { 'anonymize_ip': true});
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
  <span class="menu-text">Lectures</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/lecture1.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/lecture1.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Lecture 1 - Why <code>julia</code>?</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/lecture1.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/lecture1.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Lecture 2 - Examples</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/lecture3.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/lecture3.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Lecture 3 - Optimization</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/plotting.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/plotting.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Makie.jl Plotting</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/numerical-integration.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/numerical-integration.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Numerical Integration</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/absorbing-mc.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/absorbing-mc.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Absorbing Markov Chains</span></a>
   </div>
 </li>
@@ -242,7 +272,7 @@ gtag('config', 'G-YG2MPSR1Q2', { 'anonymize_ip': true});
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./homeworks/hw0.html" class="sidebar-item-text sidebar-link">
+  <a href="../homeworks/hw0.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Homework Zero</span></a>
   </div>
 </li>
@@ -258,47 +288,27 @@ gtag('config', 'G-YG2MPSR1Q2', { 'anonymize_ip': true});
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#course-overview" id="toc-course-overview" class="nav-link active" data-scroll-target="#course-overview">Course Overview</a></li>
-  <li><a href="#outline-of-topics" id="toc-outline-of-topics" class="nav-link" data-scroll-target="#outline-of-topics">Outline of Topics</a></li>
-  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites">Prerequisites</a>
+  <li><a href="#some-julia-package-stuff" id="toc-some-julia-package-stuff" class="nav-link active" data-scroll-target="#some-julia-package-stuff">Some Julia Package Stuff</a>
   <ul class="collapse">
-  <li><a href="#getting-programming-skills" id="toc-getting-programming-skills" class="nav-link" data-scroll-target="#getting-programming-skills">Getting Programming Skills</a></li>
+  <li><a href="#debugging-a-package" id="toc-debugging-a-package" class="nav-link" data-scroll-target="#debugging-a-package">Debugging A Package</a></li>
   </ul></li>
-  <li><a href="#term-project" id="toc-term-project" class="nav-link" data-scroll-target="#term-project">Term Project</a>
-  <ul class="collapse">
-  <li><a href="#replication" id="toc-replication" class="nav-link" data-scroll-target="#replication">Replication</a></li>
-  <li><a href="#develop-your-own-work" id="toc-develop-your-own-work" class="nav-link" data-scroll-target="#develop-your-own-work">Develop Your Own Work</a></li>
-  </ul></li>
-  <li><a href="#grade" id="toc-grade" class="nav-link" data-scroll-target="#grade">Grade</a></li>
-  <li><a href="#textbooks" id="toc-textbooks" class="nav-link" data-scroll-target="#textbooks">Textbooks</a>
-  <ul class="collapse">
-  <li><a href="#the-classics" id="toc-the-classics" class="nav-link" data-scroll-target="#the-classics">The Classics</a></li>
-  <li><a href="#newcomers" id="toc-newcomers" class="nav-link" data-scroll-target="#newcomers">Newcomers</a></li>
-  </ul></li>
-  <li><a href="#code-of-conduct" id="toc-code-of-conduct" class="nav-link" data-scroll-target="#code-of-conduct">Code of Conduct</a></li>
-  <li><a href="#license" id="toc-license" class="nav-link" data-scroll-target="#license">License</a></li>
+  <li><a href="#some-julia-bootcamp-stuff" id="toc-some-julia-bootcamp-stuff" class="nav-link" data-scroll-target="#some-julia-bootcamp-stuff">Some Julia-Bootcamp stuff</a></li>
+  <li><a href="#optimization-finally" id="toc-optimization-finally" class="nav-link" data-scroll-target="#optimization-finally">Optimization, Finally!</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../lectures/lecture1.html">Lectures</a></li><li class="breadcrumb-item"><a href="../lectures/lecture3.html">Lecture 3 - Optimization</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Computational Economics for PhDs</h1>
-<p class="subtitle lead">Collegio Carlo Alberto, 2025</p>
+<h1 class="title">Lecture 3: Optimization 1</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p><a href="https://floswald.github.io">Florian Oswald</a> </p>
-          </div>
-  </div>
     
   
     
@@ -309,209 +319,183 @@ gtag('config', 'G-YG2MPSR1Q2', { 'anonymize_ip': true});
 </header>
 
 
-<div class="columns">
-<div class="column" style="width:70%;">
-<ul>
-<li><strong>Teacher:</strong> Florian Oswald, <a href="mailto:florian.oswald@unito.it">florian.oswald@unito.it</a></li>
-<li><strong>Class Times:</strong> Weekly Monday and Tuesday 11:00-13:00</li>
-<li><strong>Class Location:</strong> Collegio Carlo Alberto</li>
-<li><strong>Slack</strong>: There will be a slack channel for all communication</li>
-</ul>
-</div><div class="column" style="width:5%;">
-<!-- empty column to create gap -->
-</div><div class="column" style="width:25%;">
-<p><a href="https://www.carloalberto.org"><img src="images/cca-julia.png" class="img-fluid"></a></p>
-</div>
-</div>
-<section id="course-overview" class="level2">
-<h2 class="anchored" data-anchor-id="course-overview">Course Overview</h2>
-<p>This is a course for PhD and Allievi students at Collegio Carlo Alberto in Computational Economics. You will learn about some commonly used methods in Computational Economics and Structural Econometrics. These methods are being used in <em>all</em> fields of Economics. The course has a clear focus on applying what you learn. We will cover the theoretical concepts that underlie each topic, but you should expect a fair amount of <em>hands on</em> action required on your behalf. In the words of the great <a href="https://scholar.google.com/citations?user=6AZSMiwAAAAJ&amp;hl=en">Che-Lin Su</a>:</p>
+<section id="some-julia-package-stuff" class="level2">
+<h2 class="anchored" data-anchor-id="some-julia-package-stuff">Some Julia Package Stuff</h2>
 <blockquote class="blockquote">
-<p>Doing Computation is the only way to learn Computation. Doing Computation is the only way to learn Computation. Doing Computation is the only way to learn Computation.</p>
+<p>Let’s create a julia package!</p>
 </blockquote>
-<p>True to that motto, there will be homeworks for you to try out what you learned in class. There will also be a term project.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>(<span class="pp">@v1</span><span class="fl">.8</span>) pkg<span class="op">&gt;</span> add PkgTemplates</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>julia<span class="op">&gt;</span> <span class="im">using</span> <span class="bu">PkgTemplates</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>help?<span class="op">&gt;</span> Template</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>julia<span class="op">&gt;</span> t <span class="op">=</span> <span class="fu">Template</span>(user <span class="op">=</span> <span class="st">"floswald"</span>, interactive <span class="op">=</span> <span class="cn">true</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>Template keywords to customize<span class="op">:</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>[press<span class="op">:</span> d<span class="op">=</span>done, a<span class="op">=</span>all, n<span class="op">=</span>none]</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>   [ ] authors</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>   [ ] dir</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>   [ ] host</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>   [ ] julia</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a> <span class="op">&gt;</span> [ ] plugins</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>julia<span class="op">&gt;</span> <span class="fu">t</span>(<span class="st">"MyNewPackage"</span>)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>[ Info<span class="op">:</span> Running prehooks</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>[ Info<span class="op">:</span> Running hooks</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="op">...</span>suppressed output<span class="op">...</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>[ Info<span class="op">:</span> New package is at <span class="op">/</span>Users<span class="op">/</span><span class="fl">74097</span><span class="op">/</span>.julia<span class="op">/</span>dev<span class="op">/</span>MyNewPackage</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Great! Now let’s open VSCode in that location and make some changes.</li>
+</ul>
+<div class="sourceCode" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> MyNewPackage</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">mutable struct</span> MPoint</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    x<span class="op">::</span><span class="dt">Number</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    y<span class="op">::</span><span class="dt">Number</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> <span class="bu">Base.</span>:+</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="fu">+</span>(a<span class="op">::</span><span class="dt">MPoint</span>,b<span class="op">::</span><span class="dt">MPoint</span>) <span class="op">=</span> <span class="fu">MPoint</span>(a.x <span class="op">+</span> b.x, a.y <span class="op">+</span> b.y)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span>   <span class="co"># module</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Now, we could just <code>execute active file in REPL</code> in VSCode, or indeed, type in the REPL <code>include("src/MyNewPackage.jl")</code>:</li>
+</ul>
+<div class="sourceCode" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>julia<span class="op">&gt;</span> <span class="fu">include</span>(<span class="st">"src/MyNewPackage.jl"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">Main</span>.MyNewPackage</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Now we can test the code in the REPL.</li>
+<li>Notice, <strong>importantly</strong>, each time you want to see the effects of changing your code, you have to <strong>replace the module</strong> via <code>include("src/MyNewPackage.jl")</code>.</li>
+</ul>
+<div class="sourceCode" id="cb4"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>julia<span class="op">&gt;</span> <span class="fu">include</span>(<span class="st">"src/MyNewPackage.jl"</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>WARNING<span class="op">:</span> replacing <span class="kw">module</span> MyNewPackage.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Let’s add a test for our <code>+</code> method in the <code>test</code> folder:</li>
+</ul>
+<div class="sourceCode" id="cb5"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="pp">@testset</span> <span class="st">"MyNewPackage.jl"</span> <span class="cf">begin</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    a <span class="op">=</span> MyNewPackage.<span class="fu">MPoint</span>(<span class="fl">3</span>,<span class="fl">5</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    b <span class="op">=</span> MyNewPackage.<span class="fu">MPoint</span>(<span class="fl">1</span>,<span class="fl">2</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="pp">@test</span> a <span class="op">+</span> b isa MyNewPackage.MPoint</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    p <span class="op">=</span> a <span class="op">+</span> b</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="pp">@test</span> p.x <span class="op">==</span> a.x <span class="op">+</span> b.x</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="pp">@test</span> p.y <span class="op">==</span> a.y <span class="op">+</span> b.y</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Run the tests from REPL in Pkg mode: <code>]; test</code></li>
+<li>This <em>works</em>, but it involves one extra step that we need to do manually. Small steps add up! So let’s try to improve on that.</li>
+<li>Let’s tell the package to add <code>Revise.jl</code>: <code>]; add Revise</code>.</li>
+<li>Shut down and restart VScode in same folder.</li>
+<li><strong>Before</strong> anything else, type <code>using Revise</code>. Then type <code>using MyNewPackage</code>.</li>
+<li>Let’s add a new function now.</li>
+</ul>
+<div class="sourceCode" id="cb6"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">-</span>(a<span class="op">::</span><span class="dt">MPoint</span>,b<span class="op">::</span><span class="dt">MPoint</span>) <span class="op">=</span> <span class="fu">MPoint</span>(a.x <span class="op">-</span> b.x, a.y <span class="op">-</span> b.y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li><em>Don’t</em> replace the module via <code>include("src/MyNewPackage.jl")</code>. Instead, just save the file and go back to REPL.</li>
+</ul>
+<div class="sourceCode" id="cb7"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>julia<span class="op">&gt;</span> a <span class="op">=</span> MyNewPackage.<span class="fu">MPoint</span>(<span class="fl">3</span>,<span class="fl">4</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>MyNewPackage.<span class="fu">MPoint</span>(<span class="fl">3</span>, <span class="fl">4</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>julia<span class="op">&gt;</span> b <span class="op">=</span> MyNewPackage.<span class="fu">MPoint</span>(<span class="fl">99</span>,<span class="fl">100</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>MyNewPackage.<span class="fu">MPoint</span>(<span class="fl">99</span>, <span class="fl">100</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>julia<span class="op">&gt;</span> a <span class="op">-</span> b</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>MyNewPackage.<span class="fu">MPoint</span>(<span class="op">-</span><span class="fl">96</span>, <span class="op">-</span><span class="fl">96</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>🎉</li>
+</ul>
+<section id="debugging-a-package" class="level3">
+<h3 class="anchored" data-anchor-id="debugging-a-package">Debugging A Package</h3>
+<ul>
+<li>Debugging simple scripts or packages is the same workflow.</li>
+<li>Let’s add another function. An <em>economic model</em> of sorts:</li>
+</ul>
+<div class="sourceCode" id="cb8"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">econ_model</span>(; startval <span class="op">=</span> <span class="fl">1.0</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># make an Mpoint</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> <span class="fu">MPoint</span>(startval, startval<span class="op">-</span><span class="fl">0.5</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ... and evaluate a utility function</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">MPoint</span>(<span class="fu">log</span>(x.x),<span class="fu">log</span>(x.y))</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Make sure to try out that it works.</li>
+</ul>
+<div class="sourceCode" id="cb9"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>julia<span class="op">&gt;</span> MyNewPackage.<span class="fu">econ_model</span>()</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>MyNewPackage.<span class="fu">MPoint</span>(<span class="fl">0.0</span>, <span class="op">-</span><span class="fl">0.6931471805599453</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Ok great. Now what about that? Try it out!</li>
+</ul>
+<div class="sourceCode" id="cb10"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>julia<span class="op">&gt;</span> MyNewPackage.<span class="fu">econ_model</span>(startval <span class="op">=</span> <span class="fl">0.3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Good. Let’s pretend we don’t know what’s going on and we need to investigate this function.</li>
+</ul>
+<ol type="1">
+<li>Add <code>println</code> statements.</li>
+<li>Add <code>@debug</code> statements. then attaching a logger with</li>
+</ol>
+<div class="sourceCode" id="cb11"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Logging</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>debug_logger <span class="op">=</span> <span class="fu">ConsoleLogger</span>(<span class="cn">stdout</span>, <span class="bu">Logging</span>.Debug)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">global_logger</span>(debug_logger)  <span class="co"># turns on logging of @debug messages</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="3" type="1">
+<li>Use an actual debugger to step through our code.
+<ol type="1">
+<li><code>VSCode</code> exports by default the <code>@enter</code> macro. type: <code>@enter MyNewPackage.econ_model(startval = -0.3)</code></li>
+<li>click on teh play symbol. program hits an error.</li>
+<li>set a break point just before</li>
+<li>click on <code>replay</code>.</li>
+</ol></li>
+</ol>
 </section>
-<section id="outline-of-topics" class="level2">
-<h2 class="anchored" data-anchor-id="outline-of-topics">Outline of Topics</h2>
+</section>
+<section id="some-julia-bootcamp-stuff" class="level2">
+<h2 class="anchored" data-anchor-id="some-julia-bootcamp-stuff">Some Julia-Bootcamp stuff</h2>
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>Section</th>
-<th>Topic</th>
+<th style="text-align: center;">Topic</th>
+<th style="text-align: center;">Notebook</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>1</td>
-<td>Introduction, <em>Why Julia</em></td>
+<td style="text-align: center;">Intro to Macros</td>
+<td style="text-align: center;"><a href="https://floswald.github.io/julia-bootcamp/10-intro-to-macros.html">click for notebook</a></td>
 </tr>
 <tr class="even">
-<td>2</td>
-<td><code>julia</code> <a href="https://floswald.github.io/julia-bootcamp/">crash course 1</a></td>
+<td style="text-align: center;">Intro to Differential Equations</td>
+<td style="text-align: center;"><a href="https://floswald.github.io/julia-bootcamp/08-popgrowth.html">click for notebook</a></td>
 </tr>
 <tr class="odd">
-<td>3</td>
-<td><code>julia</code> <a href="https://floswald.github.io/julia-bootcamp/">crash course 2</a></td>
+<td style="text-align: center;">Plotting with Plots.jl</td>
+<td style="text-align: center;"><a href="https://floswald.github.io/julia-bootcamp/06-plotting.html">click for notebook</a></td>
 </tr>
 <tr class="even">
-<td>4</td>
-<td>Optimization 1: Recap of theory, Automatic Differentiation, setting up an optimizer</td>
+<td style="text-align: center;">Plotting with Makie.jl</td>
+<td style="text-align: center;"><a href="../lectures/plotting.html">click for website</a></td>
 </tr>
 <tr class="odd">
-<td>5</td>
-<td>Optimization 2: Algorithms</td>
-</tr>
-<tr class="even">
-<td>6</td>
-<td>Optimization 3: Constraints</td>
-</tr>
-<tr class="odd">
-<td>7</td>
-<td>Parallel Computing</td>
-</tr>
-<tr class="even">
-<td>8</td>
-<td>Data and Machine Learning</td>
-</tr>
-<tr class="odd">
-<td>9</td>
-<td>Dynamic Programming 1: Basics</td>
-</tr>
-<tr class="even">
-<td>9</td>
-<td>Dynamic Programming 2: Aiyagari and Shimer+Smith Models</td>
-</tr>
-<tr class="odd">
-<td>10</td>
-<td>Discrete and Continous Choice Problems</td>
-</tr>
-<tr class="even">
-<td>11</td>
-<td>Dynamic Discrete Choice Models</td>
+<td style="text-align: center;">Interactive</td>
+<td style="text-align: center;"><a href="https://floswald.github.io/julia-bootcamp/07-interactive.html">click for notebook</a></td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="prerequisites" class="level2">
-<h2 class="anchored" data-anchor-id="prerequisites">Prerequisites</h2>
-<ol type="1">
-<li>You need a laptop.</li>
-<li>You should be familiar with the material from <a href="https://floswald.github.io/ScPoProgramming">Introduction to Programming</a>.</li>
-<li>You must sign up for a free account at github.com. Choose a reasonable user name and upload a profile picture.</li>
-<li><strong>Before</strong> you come the first class, please do this:
-<ol type="1">
-<li>Download the latest <a href="https://julialang.org/downloads/">stable <code>julia</code> release</a> for your OS.</li>
-<li>Download the <a href="https://code.visualstudio.com"><code>VSCode Editor</code></a></li>
-</ol></li>
-</ol>
-<section id="getting-programming-skills" class="level3">
-<h3 class="anchored" data-anchor-id="getting-programming-skills">Getting Programming Skills</h3>
-<ol type="1">
-<li>Check out what is being taught in the <a href="https://floswald.github.io/ScPoProgramming">Introduction to Programming</a> course. You should know this level.</li>
-<li>We will be using <a href="http://julialang.org/">Julia</a> for this course.
-<ul>
-<li><a href="https://docs.julialang.org/en/v1/manual/noteworthy-differences/">Noteworthy Differences from Other Languages</a></li>
-<li><a href="http://cheatsheets.quantecon.org/">MATLAB, Python, Julia Syntax Comparison</a></li>
-</ul></li>
-</ol>
-</section>
-</section>
-<section id="term-project" class="level2">
-<h2 class="anchored" data-anchor-id="term-project">Term Project</h2>
-<p>There are two options:</p>
-<ol type="1">
-<li>Replicate a published paper.</li>
-<li>Develop the computational aspects of your own work.</li>
-</ol>
-<section id="replication" class="level3">
-<h3 class="anchored" data-anchor-id="replication">Replication</h3>
-<p>The requirements for choice of paper to replicate are:</p>
-<ol type="1">
-<li>It’s an economics paper.</li>
-<li>Published version and replication kit is available online.</li>
-<li>The paper to replicate must not use julia.</li>
-<li><em>You</em> must use julia for your replication.
-<ul>
-<li>Ideally your choice will involve at least some level of computational interest (i.e.&nbsp;more than an IV regression)</li>
-<li>However, you can replicate a paper with an IV regression, but you have to go all the way to get the exact same results as in the paper. I.e. if the author typed the stata command <code>ivreg2 lw s expr tenure rns smsa _I* (iq=med kww age), cluster(year)</code> you will have to write (or find) julia code which will match all output from this, including standard errors.</li>
-</ul></li>
-<li>You need to set up a public github repository where you will build a documentation website of your implementation. You’ll learn how to do this in the course.</li>
-<li>I encourage you to let the world know about your replication effort via social media and/or email to the authors directly. This is independent of whether you were able or not to replicate the results. Replication is not about finding errors in other peoples’ work. If you are able to replicate some result in julia, this may be very interesting for others.</li>
-</ol>
-<section id="replication-resources" class="level4">
-<h4 class="anchored" data-anchor-id="replication-resources">Replication Resources</h4>
-<ul>
-<li><a href="https://www.aeaweb.org/rfe/showCat.php?cat_id=9">here is a great list by the AEA</a></li>
-<li><a href="https://www.econometricsociety.org/publications/econometrica/journal-materials/supplemental-materials">ECTA code and data</a></li>
-<li><a href="https://ideas.repec.org/s/red/ccodes.html">RevEconDynamics codes</a></li>
-<li>Each issue of RevEconDynamics , e.g.&nbsp;<a href="https://www.economicdynamics.org/volume-39-2021/">https://www.economicdynamics.org/volume-39-2021/</a></li>
-<li><a href="https://aeadataeditor.github.io/talks/">The AEA Data Editor’s website</a></li>
-<li><a href="https://restud.github.io/data-editor/replicate/#replicate-a-paper">The Restud Data Editor</a> and their <a href="https://zenodo.org/communities/restud-replication/?page=1&amp;size=20">zenodo repo of replication kits</a></li>
-<li><a href="https://social-science-data-editors.github.io/guidance/">The Social Science Data Editor’s joint website</a></li>
-</ul>
-</section>
-</section>
-<section id="develop-your-own-work" class="level3">
-<h3 class="anchored" data-anchor-id="develop-your-own-work">Develop Your Own Work</h3>
-<p>You can develop your own work as well. Requirements:</p>
-<ol type="1">
-<li>setup a github repository which contains the code (your decision whether public or private, in any case you have to share it with me)</li>
-<li>produce a short document (max 10 pages, ideally much less) which describes
-<ol type="1">
-<li>the aim of the project</li>
-<li>the computational problem</li>
-<li>your computational strategy to solve that problem</li>
-</ol></li>
-<li>The main focus for me will lie on
-<ol type="1">
-<li>How easy is it to use your code?</li>
-<li>How easy is it to understand your code (code readability and provided documentation)?</li>
-<li>Did you provide unit tests? Can I be convinced that your code does what it is supposed to do?</li>
-</ol></li>
-</ol>
-</section>
-</section>
-<section id="grade" class="level2">
-<h2 class="anchored" data-anchor-id="grade">Grade</h2>
-<p>Your grade will be 60% homeworks, 40% term project.</p>
-</section>
-<section id="textbooks" class="level2">
-<h2 class="anchored" data-anchor-id="textbooks">Textbooks</h2>
-<p>There are some excellent references for computational methods out there. This course will use material from</p>
-<section id="the-classics" class="level3">
-<h3 class="anchored" data-anchor-id="the-classics">The Classics</h3>
-<ul>
-<li><strong>Fackler and Miranda</strong> (2002), Applied Computational Economics and Finance, MIT Press</li>
-<li><strong>Kenneth Judd</strong> (1998), Numerical Methods in Economics, MIT Press</li>
-<li><strong>Nocedal, Jorge, and Stephen J. Wright</strong> (2006): Numerical Optimization, Springer-Verlag</li>
-</ul>
-</section>
-<section id="newcomers" class="level3">
-<h3 class="anchored" data-anchor-id="newcomers">Newcomers</h3>
-<ul>
-<li><a href="https://www.manning.com/books/julia-for-data-analysis"><strong>Julia for Data Analysis</strong></a> (2023), Bogumił Kamiński, Manning Publications.</li>
-<li><a href="https://mitpress.mit.edu/books/algorithms-optimization"><strong>Algorithms for Optimization</strong></a> (2019), Mykel J. Kochenderfer and Tim A. Wheeler, Algorithms for Optimization, MIT Press.</li>
-<li><a href="https://mitpress.mit.edu/books/gentle-introduction-effective-computing-quantitative-research"><strong>A Gentle Introduction to Effective Computing in Quantitative Research</strong></a> - What Every Research Assistant Should Know, Harry J. Paarsch and Konstantin Golyaev</li>
-<li><a href="https://statisticswithjulia.org"><strong>Statistics with Julia</strong></a> (2021), Yoni Nazarathy and Hayden Klok, Springer.</li>
-<li><a href="https://julia.quantecon.org/intro.html"><strong>Quantitative Economics with Julia</strong></a> by Perla, Sargent and Stachurski is a wonderful resource and we use it a lot in this course.</li>
-</ul>
-</section>
-</section>
-<section id="code-of-conduct" class="level2">
-<h2 class="anchored" data-anchor-id="code-of-conduct">Code of Conduct</h2>
-<p>If you decide to participate in this course, I expect you to abide by the following minimal code of conduct.</p>
-<ol type="1">
-<li>Be polite to the other class participants.</li>
-<li>While in class, do not spend time on messaging apps, chat rooms, computer games, or similar content.</li>
-</ol>
-<p>You can expect your instructor to abide by the same code of conduct, so this is a matter of mutual respect. If you are found in breach of the above you will be given a single warning, and I will ask you to no longer join the course after a second time. Your grade will be “fail”.</p>
-</section>
-<section id="license" class="level2">
-<h2 class="anchored" data-anchor-id="license">License</h2>
-<p>The copyright notice to be included in any copies and other derivative work of this material is:</p>
-<pre><code>Copyright 2025 Florian Oswald, florian.oswald@gmail.com</code></pre>
-<p>Thank you.</p>
-<p><img src="https://licensebuttons.net/l/by-nc-sa/4.0/80x15.png" class="img-fluid"> This is licensed under <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a></p>
+<section id="optimization-finally" class="level2">
+<h2 class="anchored" data-anchor-id="optimization-finally">Optimization, Finally!</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">Topic</th>
+<th style="text-align: center;">Notebook</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">Review of Optimization Algorithms</td>
+<td style="text-align: center;"><a href="https://raw.githubusercontent.com/floswald/CompEcon/refs/heads/main/notebooks/week3/optimization1.jl">download notebook</a></td>
+</tr>
+</tbody>
+</table>
 
 
 </section>

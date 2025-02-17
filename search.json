@@ -36,135 +36,255 @@
     ]
   },
   {
-    "objectID": "lectures/plotting.html",
-    "href": "lectures/plotting.html",
-    "title": "Plotting",
+    "objectID": "installation.html",
+    "href": "installation.html",
+    "title": "Installation Instructions",
     "section": "",
-    "text": "Good plotting is one of the main requirements we have for a fully fledged computing language. We want to be able to quickly make good looking plots of data objects (like for instance the R library ggplot2 allows us to do), and we want to have the ability to build up plots step by step as for instance the python library matplotlib allows us to do. There are several solutions available in julia:\n© Florian Oswald, 2025",
+    "text": "The best way to install julia (allows for multiple installed versions and will always alert to new releases) is via the instructions at juliaup - please follow those for your OS.\n\n\n\nyou can equally well download the current release for your OS from here\n© Florian Oswald, 2025",
     "crumbs": [
       "Home",
-      "Lectures",
-      "Makie.jl Plotting"
+      "Setup",
+      "Installation"
     ]
   },
   {
-    "objectID": "lectures/plotting.html#backends",
-    "href": "lectures/plotting.html#backends",
-    "title": "Plotting",
-    "section": "Backends",
-    "text": "Backends\n\nYou can choose different engines which will draw your plot, each with strengths and weaknesses. Find out more here\nWe will be using CairoMakie which is good for static output (like pdf or png pictures).",
-    "crumbs": [
-      "Home",
-      "Lectures",
-      "Makie.jl Plotting"
-    ]
-  },
-  {
-    "objectID": "lectures/plotting.html#getting-started-install-the-cairomakie-package",
-    "href": "lectures/plotting.html#getting-started-install-the-cairomakie-package",
-    "title": "Plotting",
-    "section": "Getting Started: Install the CairoMakie package",
-    "text": "Getting Started: Install the CairoMakie package\n\nthis is following closely the makie.jl getting started page\n\n\nCreate a folder makie_tutorial on your computer somewhere. Maybe ~/makie_tutorial ?\nStart julia by typing julia on your terminal and hitting enter (or double click the icon in Applications)\nin the REPL, we need to move into the makie_tutorial folder now. do this:\ncd(\"/path/to/your/makie_tutorial\")\nActivate the current folder to be our project:\nusing Pkg\nPkg.activate(\".\")  # \".\" is the name of the current directory ;-)\nAdd the CairoMakie package:\nPkg.add(\"CairoMakie\")  # this will take a while!\nAfter this has finished, check the makie_tutorial folder: there are 2 new files now: Project.toml and Manifest.toml\nWe can now use the CairoMakie package! 🎉",
-    "crumbs": [
-      "Home",
-      "Lectures",
-      "Makie.jl Plotting"
-    ]
-  },
-  {
-    "objectID": "lectures/plotting.html#first-plot",
-    "href": "lectures/plotting.html#first-plot",
-    "title": "Plotting",
-    "section": "First Plot",
-    "text": "First Plot\n\n# this only works after completing the above steps!\nusing CairoMakie\n\nIf executing using CairoMakie worked for you, it means you are good to go. Let’s get some data…\n\n# hover top right to copy this\nseconds = 0:0.1:2\nmeasurements = [8.2, 8.4, 6.3, 9.5, 9.1, 10.5, 8.6, 8.2, 10.5, 8.5, 7.2,\n        8.8, 9.7, 10.8, 12.5, 11.6, 12.1, 12.1, 15.1, 14.7, 13.1];\n\n…and make a lineplot from it:\n\nlines(seconds, measurements)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNote\n\n\n\nDepending on your system, lines(seconds, measurements) should have triggered a viewer of some sort. In VSCode, the plotting pane should have opened\n\n\nLet’s do a scatter plot now:\n\nscatter(seconds, measurements)\n\n\n\n\n\n\n\n\nGreat. Now let’s an exponential fit line to this. Suppose we know the formula to be f(x) = exp(x) + 7. That’s just another line plot:\n\nscatter(seconds, exp.(seconds) .+ 7)\n\n\n\n\n\n\n\n\nFinally, we want to have those all in the same plot. We will use the ! version of the plotting functions!\n\nscatter(seconds, measurements)\nlines!(seconds, exp.(seconds) .+ 7)\ncurrent_figure()",
-    "crumbs": [
-      "Home",
-      "Lectures",
-      "Makie.jl Plotting"
-    ]
-  },
-  {
-    "objectID": "lectures/plotting.html#figures-and-axis",
-    "href": "lectures/plotting.html#figures-and-axis",
-    "title": "Plotting",
-    "section": "Figures and Axis",
-    "text": "Figures and Axis\nThere is another way to compose this plot, more useful if you want more fine-grained control. We need a\n\nFigure\nAxis\n\nA plot is part of an Axis object, which itself is part of a Figure.\n\nf = Figure()\nax = Axis(f[1,1]) # ax sits at [1,1] of f\nscatter!(ax, seconds, measurements)  # plot *into* ax\nlines!(ax, seconds, exp.(seconds) .+ 7) # again\nf  # look at f\n\n\n\n\n\n\n\n\nThis is useful if we have many (sub) plots which we want to collect in a single figure, or for precise labelling. Let’s label that figure now:\n\nf = Figure()\nax = Axis(f[1, 1],\n    title = \"Experimental data and exponential fit\",\n    xlabel = \"Time (seconds)\",\n    ylabel = \"Value\",\n)\nscatter!(ax, seconds, measurements)\nlines!(ax, seconds, exp.(seconds) .+ 7)\nf",
-    "crumbs": [
-      "Home",
-      "Lectures",
-      "Makie.jl Plotting"
-    ]
-  },
-  {
-    "objectID": "lectures/plotting.html#styling-our-plot",
-    "href": "lectures/plotting.html#styling-our-plot",
-    "title": "Plotting",
-    "section": "Styling our Plot",
-    "text": "Styling our Plot\nLet’s change a few aestetic aspects of our plot, like color or linestyle:\n\nf = Figure()\nax = Axis(f[1, 1],\n    title = \"Experimental data and exponential fit\",\n    xlabel = \"Time (seconds)\",\n    ylabel = \"Value\",\n)\nscatter!(ax, seconds, measurements, color = :tomato)\nlines!(ax, seconds, exp.(seconds) .+ 7, color = :tomato, linestyle = :dash)\nf\n\n\n\n\n\n\n\n\nThere are many aspects of any plotting type that you can style. Checkout the reference for the scatter function here. For example, we could change the marker symbol from the default (:circle:) to something funnier:\n\n# notice: overplots the `ax` in `f` from above!\nscatter!(ax, seconds, measurements, marker = '😉', \n    markersize = 20)\nf\n\n\n\n\n\n\n\n\nFinally, let us add a legend in a certain position:\n\nf = Figure()\nax = Axis(f[1, 1],\n    title = \"Experimental data and exponential fit\",\n    xlabel = \"Time (seconds)\",\n    ylabel = \"Value\",\n)\nscatter!(\n    ax,\n    seconds,\n    measurements,\n    color = :tomato,\n    label = \"Measurements\"\n)\nlines!(\n    ax,\n    seconds,\n    exp.(seconds) .+ 7,\n    color = :tomato,\n    linestyle = :dash,\n    label = L\"f(x) = \\exp(x) + 7\",\n)\naxislegend(position = :rb)\nf",
-    "crumbs": [
-      "Home",
-      "Lectures",
-      "Makie.jl Plotting"
-    ]
-  },
-  {
-    "objectID": "lectures/plotting.html#saving-plot-to-disk",
-    "href": "lectures/plotting.html#saving-plot-to-disk",
-    "title": "Plotting",
-    "section": "Saving Plot to Disk",
-    "text": "Saving Plot to Disk\nFinally, it’s straightforward to save our plot to disk in a variety of formats:\n\nsave(\"first_figure.png\", f)\nsave(\"first_figure.svg\", f)\nsave(\"first_figure.pdf\", f)\n\nThose files are now in your makie_tutorial folder!",
-    "crumbs": [
-      "Home",
-      "Lectures",
-      "Makie.jl Plotting"
-    ]
-  },
-  {
-    "objectID": "lectures/why-julia.html",
-    "href": "lectures/why-julia.html",
-    "title": "Programming Languages and - Why Julia?",
+    "objectID": "installation.html#step-1-install-julia",
+    "href": "installation.html#step-1-install-julia",
+    "title": "Installation Instructions",
     "section": "",
-    "text": "Installation\n\n\n\nMake sure to check out the installation page on this website before you come to class.\n© Florian Oswald, 2025",
+    "text": "The best way to install julia (allows for multiple installed versions and will always alert to new releases) is via the instructions at juliaup - please follow those for your OS.\n\n\n\nyou can equally well download the current release for your OS from here",
     "crumbs": [
       "Home",
-      "Lectures",
-      "Week 1 - Why `julia`?"
+      "Setup",
+      "Installation"
     ]
   },
   {
-    "objectID": "lectures/why-julia.html#basics-repl-vscode-notebooks",
-    "href": "lectures/why-julia.html#basics-repl-vscode-notebooks",
-    "title": "Programming Languages and - Why Julia?",
-    "section": "Basics: REPL, VSCode, Notebooks",
-    "text": "Basics: REPL, VSCode, Notebooks\nWe will repeat the basics of julia in a very condensed manner by going through steps 1-7 of MoJuWo live in class.\njulia REPL:\n\n\n\nThis is the julia REPL\n\n\nVScode:\n\n\n\nThis is VSCode\n\n\nNotice how there is a julia REPL running as part of the VSCode editor. This is called an integrated development environment (IDE). Very similar to an R session connected to RStudio, or the python interpreter being run through PyCharm etc.",
+    "objectID": "installation.html#step-2-run-julia",
+    "href": "installation.html#step-2-run-julia",
+    "title": "Installation Instructions",
+    "section": "Step 2: Run Julia",
+    "text": "Step 2: Run Julia\nAfter installing, make sure that you can run Julia. If you installed via juliaup, you should be able to start julia from your command line now by typing julia and hitting enter. Otherwise just launch the julia app from your Applications folder.\nMake sure that you are able to launch Julia and calculate 1+1 before proceeding!",
     "crumbs": [
       "Home",
-      "Lectures",
-      "Week 1 - Why `julia`?"
+      "Setup",
+      "Installation"
     ]
   },
   {
-    "objectID": "lectures/why-julia.html#introduction-and-why-julia",
-    "href": "lectures/why-julia.html#introduction-and-why-julia",
-    "title": "Programming Languages and - Why Julia?",
-    "section": "Introduction and: Why Julia?",
-    "text": "Introduction and: Why Julia?\nIn this section we want to understand why julia is a good choice for computational tasks - for Economists and others.\nSlides for intro: Why Julia? (does not run in my safari browser! 🤷🏻‍♂️)",
+    "objectID": "installation.html#step-3-install-pluto",
+    "href": "installation.html#step-3-install-pluto",
+    "title": "Installation Instructions",
+    "section": "Step 3: Install Pluto",
+    "text": "Step 3: Install Pluto\nNext we will install the Pluto notebook that we will be using during the course. Pluto is a Julia programming environment designed for interactivity and quick experiments.\nOpen the Julia REPL. This is the command-line interface to Julia, similar to the previous screenshot.\nHere you type Julia commands, and when you press ENTER, it runs, and you see the result.\nTo install Pluto, we want to run a package manager command. To switch from Julia mode to Pkg mode, type ] (closing square bracket) at the julia&gt; prompt:\njulia&gt; ]\n\n(@v1.10) pkg&gt;\nThe line turns blue and the prompt changes to pkg&gt;, telling you that you are now in package manager mode. This mode allows you to do operations on packages (also called libraries).\nTo install Pluto, run the following (case sensitive) command to add (install) the package to your system by downloading it from the internet. You should only need to do this once for each installation of Julia:\n(@v1.10) pkg&gt; add Pluto\nThis might take a couple of minutes, so you can go get yourself a cup of tea!\n\n\n\nimage\n\n\nYou can now close the terminal.",
     "crumbs": [
       "Home",
-      "Lectures",
-      "Week 1 - Why `julia`?"
+      "Setup",
+      "Installation"
     ]
   },
   {
-    "objectID": "lectures/why-julia.html#notebooks",
-    "href": "lectures/why-julia.html#notebooks",
-    "title": "Programming Languages and - Why Julia?",
-    "section": "Notebooks",
-    "text": "Notebooks\nWe use several Pluto.jl notebooks in this lecture. Here are four rendered ones:\n\n\n\nTopic\nrendered Notebook\nsource of notebook\n\n\n\n\nVariables\nclick\nclick\n\n\nFunctions\nclick\nclick\n\n\n\nPlease download and run the 00-fast.jl notebook on your own computer for the benchmarks! (Right click and copy link, then insert into a Pluto browser!)🏎️\n\nResources\n\nModern Julia Workflow\nStartHere.jl\nAruoba and Fernandez-Villaverde\nJesus’ Julia Tutorial\nChapter 1 of Julia for Data Analysis",
+    "objectID": "installation.html#step-4-use-a-modern-browser-mozilla-firefox-or-google-chrome",
+    "href": "installation.html#step-4-use-a-modern-browser-mozilla-firefox-or-google-chrome",
+    "title": "Installation Instructions",
+    "section": "Step 4: Use a modern browser: Mozilla Firefox or Google Chrome",
+    "text": "Step 4: Use a modern browser: Mozilla Firefox or Google Chrome\nWe need a modern browser to view Pluto notebooks with. Firefox and Chrome work best.",
+    "crumbs": [
+      "Home",
+      "Setup",
+      "Installation"
+    ]
+  },
+  {
+    "objectID": "installation.html#step-1-start-pluto",
+    "href": "installation.html#step-1-start-pluto",
+    "title": "Installation Instructions",
+    "section": "Step 1: Start Pluto",
+    "text": "Step 1: Start Pluto\nStart the Julia REPL, like you did during the setup. In the REPL, type:\njulia&gt; using Pluto\n\njulia&gt; Pluto.run()\n\n\n\nimage\n\n\nThe terminal tells us to go to http://localhost:1234/ (or a similar URL). Let’s open Firefox or Chrome and type that into the address bar.\n\n\n\nimage\n\n\n\nIf you’re curious about what a Pluto notebook looks like, have a look at the sample notebooks. Samples 1, 2 and 6 may be useful for learning some basics of Julia programming.\nIf you want to hear the story behind Pluto, have a look a the JuliaCon presentation.\n\nIf nothing happens in the browser the first time, close Julia and try again. And please let us know!",
+    "crumbs": [
+      "Home",
+      "Setup",
+      "Installation"
+    ]
+  },
+  {
+    "objectID": "installation.html#step-2a-opening-a-notebook-from-the-web",
+    "href": "installation.html#step-2a-opening-a-notebook-from-the-web",
+    "title": "Installation Instructions",
+    "section": "Step 2a: Opening a notebook from the web",
+    "text": "Step 2a: Opening a notebook from the web\nThis is the main menu - here you can create new notebooks, or open existing ones. Our homework assignments will always be based on a template notebook, available in this GitHub repository. To start from a template notebook on the web, you can paste the URL into the blue box and press ENTER.\nFor example, homework 0 is available here. Copy this link (right click -&gt; Copy Link), and paste it into the box. Press ENTER, and select OK in the confirmation box.\n\n\n\nimage\n\n\nThe first thing we will want to do is to save the notebook somewhere on our own computer; see below.",
+    "crumbs": [
+      "Home",
+      "Setup",
+      "Installation"
+    ]
+  },
+  {
+    "objectID": "installation.html#step-2b-opening-an-existing-notebook-file",
+    "href": "installation.html#step-2b-opening-an-existing-notebook-file",
+    "title": "Installation Instructions",
+    "section": "Step 2b: Opening an existing notebook file",
+    "text": "Step 2b: Opening an existing notebook file\nWhen you launch Pluto for the second time, your recent notebooks will appear in the main menu. You can click on them to continue where you left off.\nIf you want to run a local notebook file that you have not opened before, then you need to enter its full path into the blue box in the main menu. More on finding full paths in step 3.",
+    "crumbs": [
+      "Home",
+      "Setup",
+      "Installation"
+    ]
+  },
+  {
+    "objectID": "installation.html#step-3-saving-a-notebook",
+    "href": "installation.html#step-3-saving-a-notebook",
+    "title": "Installation Instructions",
+    "section": "Step 3: Saving a notebook",
+    "text": "Step 3: Saving a notebook\nWe first need a folder to save our homework in. Open your file explorer and create one.\nNext, we need to know the absolute path of that folder. Here’s how you do that in Windows, MacOS and Ubuntu.\nFor example, you might have:\n\nC:\\\\Users\\\\fonsi\\\\Documents\\\\18S191_assignments\\\\ on Windows\n/Users/fonsi/Documents/18S191_assignments/ on MacOS\n/home/fonsi/Documents/18S191_assignments/ on Ubuntu\n\nNow that we know the absolute path, go back to your Pluto notebook, and at the top of the page, click on “Save notebook…”.\n\n\n\nimage\n\n\nThis is where you type the new path+filename for your notebook:\n\n\n\nimage\n\n\nClick Choose.",
+    "crumbs": [
+      "Home",
+      "Setup",
+      "Installation"
+    ]
+  },
+  {
+    "objectID": "installation.html#step-4-sharing-a-notebook",
+    "href": "installation.html#step-4-sharing-a-notebook",
+    "title": "Installation Instructions",
+    "section": "Step 4: Sharing a notebook",
+    "text": "Step 4: Sharing a notebook\nAfter working on your notebook (your code is autosaved when you run it), you will find your notebook file in the folder we created in step 3. This the file that you can share with others, or submit as your homework assignment to Canvas.",
+    "crumbs": [
+      "Home",
+      "Setup",
+      "Installation"
+    ]
+  },
+  {
+    "objectID": "lectures/absorbing-mc.html",
+    "href": "lectures/absorbing-mc.html",
+    "title": "Absorbing Markov Chains",
+    "section": "",
+    "text": "This elaborates on Bogumił’s blog post about the problem of generating a sequence of coin tosses. We will add some theory to his simulation study.\n© Florian Oswald, 2025",
     "crumbs": [
       "Home",
       "Lectures",
-      "Week 1 - Why `julia`?"
+      "Absorbing Markov Chains"
+    ]
+  },
+  {
+    "objectID": "lectures/absorbing-mc.html#problem-statement",
+    "href": "lectures/absorbing-mc.html#problem-statement",
+    "title": "Absorbing Markov Chains",
+    "section": "Problem Statement",
+    "text": "Problem Statement\nTo recap, we have two players Alice (A) and Bob (B), and each is equipped with fair coin. Each plays a game whereby they toss the coin, and record the outcome as either heads (H) or tails (T). An example of a sequence after 9 coin tosses for each player could look like this:\ntoss: 123456789\nA:    TTHHHTHTH\nB:    THTTHTHHT\nAlice and Bob have different ways of winning this game. A wins if the sequence HT occurs, and B wins if the sequence HH occurs. Following the above example, A would have won after toss number 6. B had to wait until toss number 8 complete his winning sequence HH, hence he lost this particular contest.",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "Absorbing Markov Chains"
+    ]
+  },
+  {
+    "objectID": "lectures/absorbing-mc.html#questions",
+    "href": "lectures/absorbing-mc.html#questions",
+    "title": "Absorbing Markov Chains",
+    "section": "Questions",
+    "text": "Questions\n\nIn expectation, who is more likely to win this game? Suppose we performed a very large number of contests like the one illustrated above.\nHow many coin tosses does Alice have to perform, on average, until her winning sequence shows up?\nHow many tosses does Bob have to perform until his winning sequence appears?",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "Absorbing Markov Chains"
+    ]
+  },
+  {
+    "objectID": "lectures/absorbing-mc.html#simulations",
+    "href": "lectures/absorbing-mc.html#simulations",
+    "title": "Absorbing Markov Chains",
+    "section": "Simulations",
+    "text": "Simulations\nLet us follow in Bogumił’s foot steps and re-propose the simulation study he did on his blog.\nWho is more likely to win this game? We will later work out the probability that each will win, but we can easily to a simulation study following a frequentist approach: just count how many times each player wins!\nLet’s create a function which will simulate us tossing an imaginary coin until one of both players wins. The function should return the initial of the winning player.\n\nfunction whowins()\n    t1 = rand(('H', 'T'))  # toss number 1 \n    while true  # keep going until we get a valid sequence.\n        t2 = rand(('H', 'T'))  # toss number 2 \n        if t1 == 'T'  # invalid first toss for both.\n            t1 = t2   # reassign t2 to t1 and keep going\n        else  # t1 is 'H' ! t2 now decides the winner!\n            return t2 == 'H' ? \"B\" : \"A\"\n        end\n    end\nend\n\nwhowins (generic function with 1 method)\n\n\nYou should try it out a few times to convince yourself it’s working.\n\nSimulating the Expected Probability of Winning\nNow, lets see how often each of them wins if we repeat this contest many times over:\n\nusing Random, FreqTables\nRandom.seed!(10101)\n\nfreqtable( [whowins() for _ in 1:100_000_000] )\n\n2-element Named Vector{Int64}\nDim1  │ \n──────┼─────────\nA     │ 50003096\nB     │ 49996904\n\n\nOk, that would tell us that if we were to have them play a close to infinite number of times, each would win pretty much exactly half the games.\n\n\nSimulating expected number of steps till winning\nThis is fairly easy to simulate, given our above code.\n\nfunction count_alice()\n    t1 = rand(('H', 'T'))  # toss number 1 \n    tosses = 1  # counter\n    while true  # keep going until we get a winner: HT\n        t2 = rand(('H', 'T'))  # toss number 2 \n        tosses += 1 \n        # if sequence is correct, return, else re-do\n        t1 == 'H' && t2 == 'T' && return tosses\n\n        # if did not return above, keep going\n        t1 = t2\n    end\nend\n\ncount_alice (generic function with 1 method)\n\n\nYou should try to implement count_bob() yourself now.\n\n\nCode\nfunction count_bob()\n    t1 = rand(('H', 'T'))  # toss number 1 \n    tosses = 1  # counter\n    while true  # keep going until we get a winner: HH\n        t2 = rand(('H', 'T'))  # toss number 2 \n        tosses += 1 \n        # if sequence is correct, return, else re-do\n        t1 == 'H' && t2 == 'H' && return tosses\n\n        # if did not return above, keep going\n        t1 = t2\n    end\nend\n\n\ncount_bob (generic function with 1 method)\n\n\n\n\n\n\n\n\nNote\n\n\n\n\nDo you expect the count_* functions to return the same number each time you call them, or not?\nIf not, which function seems to return smaller numbers on average?\n\n\n\nThe last one is an easy question to answer with a simulation study again, isn’t it? This time it’s not about counting who wins how many times, however, but rather…🤔\n\n\nCode\nusing Statistics  # for mean()\n\n(\n    Alice = mean( [count_alice() for _ in 1:100_000_000] ),\n    Bob = mean( [count_bob() for _ in 1:100_000_000] )\n)\n\n\n(Alice = 3.99997351, Bob = 5.99957595)\n\n\n…wait, this is surprising, not? Alice has to toss 4 times on average, while Bob has to wait for 6 tosses until his winning sequence comes up? How come?",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "Absorbing Markov Chains"
+    ]
+  },
+  {
+    "objectID": "lectures/absorbing-mc.html#the-absorbing-transition-matrix-p_a",
+    "href": "lectures/absorbing-mc.html#the-absorbing-transition-matrix-p_a",
+    "title": "Absorbing Markov Chains",
+    "section": "The Absorbing Transition Matrix \\(P_a\\)",
+    "text": "The Absorbing Transition Matrix \\(P_a\\)\nIn this setting we have \\(t\\) transient states (i.e. states from which you can escape), and \\(r\\) absorbing states - once you enter such a state, you stay there, in other words, the chain ends.\nWe have to re-write our transition matrix for this case. It will look as follows:\n\\[P_a = \\left[\\begin{array}{cc}\nQ & R \\\\\n\\mathbf{0} & \\mathbf{I}_r\n\\end{array}\\right] \\tag{2}\\]\nwhere\n\n\\(Q\\) is the \\((t,t)\\) transition matrix of transient states\n\\(R\\) is a \\((t,r)\\) matrix of transition probabilities from transient state \\(t\\) into absorbing state \\(r\\)\n\\(\\mathbf{0}\\) is an \\((r,t)\\) matrix of zeros, and\n\\(\\mathbf{I}_r\\) is the \\((r,r)\\) identity matrix.\n\nLet’s work this out for Alice now. Imagine that we want to fill out each of her 2 empty slots for strings with either H or T. Remember that her winning sequence was HT. It’s easiest to model Alice in three possible states:\n\nState e: She has an empty sequence, {}. She is waiting to fill this with two valid strings.\nState H: Her sequence has H in first position, i.e. looks like {H}. This is great, because if the next coin toss yields a T, she wins! If she gets another H, no problem, she stays at state {H} (we can just throw away the previous H in the sequence!).\nState HT: She wins the game.\n\nSo, we define the following transient states for her:\n\ne: empty sequence i.e {}\nH: the string sequence containing only H, i.e. {H}\n\nNext, we define the absorbing state for her:\n\nHT: upon tossing T after a H, i.e completing the sequence {HT}, the game ends.\n\n\n\n\n\n\n\nObservations\n\n\n\n\nIn this example we have t=2 transient states\nT in first position is not a valid sequence for Alice. Whilst we could think of {T} as a transient state, it is easier to think that we go back to e and start again if we hit T in the first toss.\nThere is a single absorbing state, {HT}, i.e. r=1.\n\n\n\nThe situation for Alice is as follows:\n\n\n\n\n\ngraph LR\n    e((e)) --&gt; |0.5| e\n    e((e)) --&gt; |0.5| H\n    H      --&gt; |0.5| H\n    H      --&gt; |0.5| HT\n\n\n Absorbing Markov Chain of Alice \n\n\n\nNotice how we assume that if your first toss is invalid (i.e. a T), you stay with your empty sequence. Next, here is the transition matrix \\(Q_a\\) for her transient states {e,H} (putting e in the first row/column), and the (2,1) matrix of transitions from transient into absorbing state, \\(R_a\\):\n\\[Q_a = \\left[\\begin{array}{cc}\n0.5 & 0.5 \\\\\n0   & 0.5\n\\end{array}\\right],\\quad\nR_a = \\left[\\begin{array}{c}\n0 \\\\\n0.5\n\\end{array}\\right]\n\\tag{3}\\]\nLet us assemble those into \\(P_a(\\text{Alice})\\) now, and observe that this maintains the properties of stochastic matrix \\(P\\):\n\\[P_a(\\text{Alice}) = \\left[\\begin{array}{ccc}\n0.5 & 0.5 & 0 \\\\\n0   & 0.5 & 0.5 \\\\\n0   &  0  &  1\n\\end{array}\\right]\n\\tag{4}\\]",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "Absorbing Markov Chains"
+    ]
+  },
+  {
+    "objectID": "lectures/absorbing-mc.html#the-fundamental-matrix-n",
+    "href": "lectures/absorbing-mc.html#the-fundamental-matrix-n",
+    "title": "Absorbing Markov Chains",
+    "section": "The Fundamental Matrix \\(N\\)",
+    "text": "The Fundamental Matrix \\(N\\)\nThe next piece we need is called the fundamental matrix. It will give us the expected number of visits to transient state \\(j\\) before we reach an absorbing state. It is obtained by iterating \\(Q_a\\) forward until infinity. It can be shown that it looks like this, similar to the infinite sum of a geometric series:\n\\[\nN = \\sum_{k=0}^\\infty Q^k = (I - Q)^{-1}\n\\]\nSo, for Alice, it looks as follows:\n\\[\nN_a = (I - Q_a)^{-1} = \\left( \\left[\\begin{array}{cc}\n1 & 0 \\\\\n0 & 1\n\\end{array}\\right] - \\left[\\begin{array}{cc}\n0.5 & 0.5 \\\\\n0   & 0.5\n\\end{array}\\right] \\right)^{-1} = \\left(\\left[\\begin{array}{cc}\n0.5 & -0.5 \\\\\n0   & 0.5\n\\end{array}\\right] \\right)^{-1}\n\\]\nDo we all still remember how to compute the inverse of a 2x2 matrix? I dont’t, but here is a formula 🙈\n\n\n\n\n\n\nInverse of a 2x2 matrix\n\n\n\nFor \\(A = \\left[\\begin{array}{cc}\na & b \\\\\nc   & d\n\\end{array}\\right]\\) we have that the inverse matrix of \\(A\\) is\n\\[A^{-1} = \\frac{1}{ad - bc} \\left[\\begin{array}{cc}\nd & -b \\\\\n-c   & a\n\\end{array}\\right]\\]\n\n\nWith that out of the way, you can calculate that\n\\[\nN_a =  \\left[\\begin{array}{cc}\n2 & 2 \\\\\n0 & 2\n\\end{array}\\right]\n\\tag{5}\\]\nWe can immediately get the expected number of steps before being absorbed from this by summing across rows:\n\\[\nN_a \\mathbf{1}_t =  \\left[\\begin{array}{c}\n4 \\\\\n2\n\\end{array}\\right]\n\\tag{6}\\]\nSo, starting in state e, the expected number of steps before reaching absorbing state HT is \\(4\\) for Alice. Once in state H, she expects only two more steps. Here a step is a toss of a coin.",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "Absorbing Markov Chains"
+    ]
+  },
+  {
+    "objectID": "lectures/absorbing-mc.html#states-and-transitions-for-bob",
+    "href": "lectures/absorbing-mc.html#states-and-transitions-for-bob",
+    "title": "Absorbing Markov Chains",
+    "section": "States and Transitions for Bob?",
+    "text": "States and Transitions for Bob?\nFor Bob, the situation is slightly different. Remember that Bob wins if HH comes up. For him, we have the following definition of states:\n\nState e: The empty sequence, {}. Waiting to fill this with two valid strings.\nState H: The sequence has H in first position, i.e. looks like {H}.\nState HH: He wins the game.\n\nNotice the one big difference here: If Bob is in state {H}, and hits a T in the next toss, he is not as fortunate as Alice, who can stay in the same state. Bob’s problem is that he does not have a winning sequence that could start with T (neither does Alice, but upon hitting T while in state {H}, she wins!)\nHere’s the graphs for Bob and Alice side by side:\n\n\n\n\n\n\n\ngraph LR\n    e((e)) --&gt; |0.5| e\n    e((e)) --&gt; |0.5| H\n    H      --&gt; |0.5| e\n    H      --&gt; |0.5| HH\n\n\n\n Markov Chain of Bob \n\n\n\n\n\n\n\n\n\ngraph LR\n    ea((e)) --&gt; |0.5| ea\n    ea((e)) --&gt; |0.5| Ha[H]\n    Ha[H]      --&gt; |0.5| Ha\n    Ha[H]      --&gt; |0.5| HT\n\n\n Markov Chain of Alice \n\n\n\n\n\nThe problem for Bob is the arrow going back to e if he hits a bad toss at state {H}. Let us quickly assemble the transition matrix for Bob, and compute his expected steps:\n\\[Q_b = \\left[\\begin{array}{cc}\n0.5 & 0.5 \\\\\n0.5 & 0\n\\end{array}\\right],\\quad\nR_b = \\left[\\begin{array}{c}\n0 \\\\\n0.5\n\\end{array}\\right]\n\\tag{7}\\]\n\\[P_a(\\text{Bob}) = \\left[\\begin{array}{ccc}\n0.5 & 0.5 & 0 \\\\\n0.5   & 0 & 0.5 \\\\\n0   &  0  &  1\n\\end{array}\\right]\n\\tag{8}\\]\nWith those in hand, you can easily verify that Bob will have\n\\[\nN_b =  \\left[\\begin{array}{cc}\n4 & 2 \\\\\n2 & 2\n\\end{array}\\right]\n\\tag{9}\\]\nwhich, in turn, means that his expected steps until absorbing state, starting from either {} or {H} are given by\n\\[\nN_b \\mathbf{1}_t =  \\left[\\begin{array}{c}\n6 \\\\\n4\n\\end{array}\\right]\n\\tag{10}\\]\n👉 exactly as in our (Bogumił’s!) simulation experiment from the start.",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "Absorbing Markov Chains"
+    ]
+  },
+  {
+    "objectID": "lectures/lecture3.html",
+    "href": "lectures/lecture3.html",
+    "title": "Lecture 3: Optimization 1",
+    "section": "",
+    "text": "Let’s create a julia package!\n\n]\n(@v1.8) pkg&gt; add PkgTemplates\n\njulia&gt; using PkgTemplates\n\nhelp?&gt; Template\n\njulia&gt; t = Template(user = \"floswald\", interactive = true)\nTemplate keywords to customize:\n[press: d=done, a=all, n=none]\n   [ ] authors\n   [ ] dir\n   [ ] host\n   [ ] julia\n &gt; [ ] plugins\n\njulia&gt; t(\"MyNewPackage\")\n[ Info: Running prehooks\n[ Info: Running hooks\n...suppressed output...\n[ Info: New package is at /Users/74097/.julia/dev/MyNewPackage\n\nGreat! Now let’s open VSCode in that location and make some changes.\n\nmodule MyNewPackage\n\nmutable struct MPoint\n    x::Number\n    y::Number\nend\n\nimport Base.:+\n\n+(a::MPoint,b::MPoint) = MPoint(a.x + b.x, a.y + b.y)\n\nend   # module\n\nNow, we could just execute active file in REPL in VSCode, or indeed, type in the REPL include(\"src/MyNewPackage.jl\"):\n\njulia&gt; include(\"src/MyNewPackage.jl\")\nMain.MyNewPackage\n\nNow we can test the code in the REPL.\nNotice, importantly, each time you want to see the effects of changing your code, you have to replace the module via include(\"src/MyNewPackage.jl\").\n\njulia&gt; include(\"src/MyNewPackage.jl\")\nWARNING: replacing module MyNewPackage.\n\nLet’s add a test for our + method in the test folder:\n\n@testset \"MyNewPackage.jl\" begin\n    a = MyNewPackage.MPoint(3,5)\n    b = MyNewPackage.MPoint(1,2)\n    @test a + b isa MyNewPackage.MPoint\n    p = a + b\n    @test p.x == a.x + b.x\n    @test p.y == a.y + b.y\nend\n\nRun the tests from REPL in Pkg mode: ]; test\nThis works, but it involves one extra step that we need to do manually. Small steps add up! So let’s try to improve on that.\nLet’s tell the package to add Revise.jl: ]; add Revise.\nShut down and restart VScode in same folder.\nBefore anything else, type using Revise. Then type using MyNewPackage.\nLet’s add a new function now.\n\n-(a::MPoint,b::MPoint) = MPoint(a.x - b.x, a.y - b.y)\n\nDon’t replace the module via include(\"src/MyNewPackage.jl\"). Instead, just save the file and go back to REPL.\n\njulia&gt; a = MyNewPackage.MPoint(3,4)\nMyNewPackage.MPoint(3, 4)\n\njulia&gt; b = MyNewPackage.MPoint(99,100)\nMyNewPackage.MPoint(99, 100)\n\njulia&gt; a - b\nMyNewPackage.MPoint(-96, -96)\n\n🎉\n\n\n\n\nDebugging simple scripts or packages is the same workflow.\nLet’s add another function. An economic model of sorts:\n\nfunction econ_model(; startval = 1.0)\n    # make an Mpoint\n    x = MPoint(startval, startval-0.5)\n    # ... and evaluate a utility function\n    MPoint(log(x.x),log(x.y))\nend\n\nMake sure to try out that it works.\n\njulia&gt; MyNewPackage.econ_model()\nMyNewPackage.MPoint(0.0, -0.6931471805599453)\n\nOk great. Now what about that? Try it out!\n\njulia&gt; MyNewPackage.econ_model(startval = 0.3)\n\nGood. Let’s pretend we don’t know what’s going on and we need to investigate this function.\n\n\nAdd println statements.\nAdd @debug statements. then attaching a logger with\n\nusing Logging\ndebug_logger = ConsoleLogger(stdout, Logging.Debug)\nglobal_logger(debug_logger)  # turns on logging of @debug messages\n\nUse an actual debugger to step through our code.\n\nVSCode exports by default the @enter macro. type: @enter MyNewPackage.econ_model(startval = -0.3)\nclick on teh play symbol. program hits an error.\nset a break point just before\nclick on replay.\n© Florian Oswald, 2025",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "Lecture 3 - Optimization"
+    ]
+  },
+  {
+    "objectID": "lectures/lecture3.html#some-julia-package-stuff",
+    "href": "lectures/lecture3.html#some-julia-package-stuff",
+    "title": "Lecture 3: Optimization 1",
+    "section": "",
+    "text": "Let’s create a julia package!\n\n]\n(@v1.8) pkg&gt; add PkgTemplates\n\njulia&gt; using PkgTemplates\n\nhelp?&gt; Template\n\njulia&gt; t = Template(user = \"floswald\", interactive = true)\nTemplate keywords to customize:\n[press: d=done, a=all, n=none]\n   [ ] authors\n   [ ] dir\n   [ ] host\n   [ ] julia\n &gt; [ ] plugins\n\njulia&gt; t(\"MyNewPackage\")\n[ Info: Running prehooks\n[ Info: Running hooks\n...suppressed output...\n[ Info: New package is at /Users/74097/.julia/dev/MyNewPackage\n\nGreat! Now let’s open VSCode in that location and make some changes.\n\nmodule MyNewPackage\n\nmutable struct MPoint\n    x::Number\n    y::Number\nend\n\nimport Base.:+\n\n+(a::MPoint,b::MPoint) = MPoint(a.x + b.x, a.y + b.y)\n\nend   # module\n\nNow, we could just execute active file in REPL in VSCode, or indeed, type in the REPL include(\"src/MyNewPackage.jl\"):\n\njulia&gt; include(\"src/MyNewPackage.jl\")\nMain.MyNewPackage\n\nNow we can test the code in the REPL.\nNotice, importantly, each time you want to see the effects of changing your code, you have to replace the module via include(\"src/MyNewPackage.jl\").\n\njulia&gt; include(\"src/MyNewPackage.jl\")\nWARNING: replacing module MyNewPackage.\n\nLet’s add a test for our + method in the test folder:\n\n@testset \"MyNewPackage.jl\" begin\n    a = MyNewPackage.MPoint(3,5)\n    b = MyNewPackage.MPoint(1,2)\n    @test a + b isa MyNewPackage.MPoint\n    p = a + b\n    @test p.x == a.x + b.x\n    @test p.y == a.y + b.y\nend\n\nRun the tests from REPL in Pkg mode: ]; test\nThis works, but it involves one extra step that we need to do manually. Small steps add up! So let’s try to improve on that.\nLet’s tell the package to add Revise.jl: ]; add Revise.\nShut down and restart VScode in same folder.\nBefore anything else, type using Revise. Then type using MyNewPackage.\nLet’s add a new function now.\n\n-(a::MPoint,b::MPoint) = MPoint(a.x - b.x, a.y - b.y)\n\nDon’t replace the module via include(\"src/MyNewPackage.jl\"). Instead, just save the file and go back to REPL.\n\njulia&gt; a = MyNewPackage.MPoint(3,4)\nMyNewPackage.MPoint(3, 4)\n\njulia&gt; b = MyNewPackage.MPoint(99,100)\nMyNewPackage.MPoint(99, 100)\n\njulia&gt; a - b\nMyNewPackage.MPoint(-96, -96)\n\n🎉\n\n\n\n\nDebugging simple scripts or packages is the same workflow.\nLet’s add another function. An economic model of sorts:\n\nfunction econ_model(; startval = 1.0)\n    # make an Mpoint\n    x = MPoint(startval, startval-0.5)\n    # ... and evaluate a utility function\n    MPoint(log(x.x),log(x.y))\nend\n\nMake sure to try out that it works.\n\njulia&gt; MyNewPackage.econ_model()\nMyNewPackage.MPoint(0.0, -0.6931471805599453)\n\nOk great. Now what about that? Try it out!\n\njulia&gt; MyNewPackage.econ_model(startval = 0.3)\n\nGood. Let’s pretend we don’t know what’s going on and we need to investigate this function.\n\n\nAdd println statements.\nAdd @debug statements. then attaching a logger with\n\nusing Logging\ndebug_logger = ConsoleLogger(stdout, Logging.Debug)\nglobal_logger(debug_logger)  # turns on logging of @debug messages\n\nUse an actual debugger to step through our code.\n\nVSCode exports by default the @enter macro. type: @enter MyNewPackage.econ_model(startval = -0.3)\nclick on teh play symbol. program hits an error.\nset a break point just before\nclick on replay.",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "Lecture 3 - Optimization"
+    ]
+  },
+  {
+    "objectID": "lectures/lecture3.html#some-julia-bootcamp-stuff",
+    "href": "lectures/lecture3.html#some-julia-bootcamp-stuff",
+    "title": "Lecture 3: Optimization 1",
+    "section": "Some Julia-Bootcamp stuff",
+    "text": "Some Julia-Bootcamp stuff\n\n\n\nTopic\nNotebook\n\n\n\n\nIntro to Macros\nclick for notebook\n\n\nIntro to Differential Equations\nclick for notebook\n\n\nPlotting with Plots.jl\nclick for notebook\n\n\nPlotting with Makie.jl\nclick for website\n\n\nInteractive\nclick for notebook",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "Lecture 3 - Optimization"
+    ]
+  },
+  {
+    "objectID": "lectures/lecture3.html#optimization-finally",
+    "href": "lectures/lecture3.html#optimization-finally",
+    "title": "Lecture 3: Optimization 1",
+    "section": "Optimization, Finally!",
+    "text": "Optimization, Finally!\n\n\n\nTopic\nNotebook\n\n\n\n\nReview of Optimization Algorithms\ndownload notebook",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "Lecture 3 - Optimization"
     ]
   },
   {
@@ -351,231 +471,156 @@
     "text": "License\nThe copyright notice to be included in any copies and other derivative work of this material is:\nCopyright 2025 Florian Oswald, florian.oswald@gmail.com\nThank you.\n This is licensed under Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License"
   },
   {
-    "objectID": "lectures/examples.html",
-    "href": "lectures/examples.html",
-    "title": "Week 2 - Examples",
+    "objectID": "lectures/lecture1.html",
+    "href": "lectures/lecture1.html",
+    "title": "Programming Languages and - Why Julia?",
     "section": "",
-    "text": "In this section we present some simple usage examples of julia in the wild. We will again have a few notebooks to go through.\n© Florian Oswald, 2025",
+    "text": "Installation\n\n\n\nMake sure to check out the installation page on this website before you come to class.\n© Florian Oswald, 2025",
     "crumbs": [
       "Home",
       "Lectures",
-      "Week 2 - Examples"
+      "Lecture 1 - Why `julia`?"
     ]
   },
   {
-    "objectID": "lectures/examples.html#notebooks",
-    "href": "lectures/examples.html#notebooks",
+    "objectID": "lectures/lecture1.html#basics-repl-vscode-notebooks",
+    "href": "lectures/lecture1.html#basics-repl-vscode-notebooks",
+    "title": "Programming Languages and - Why Julia?",
+    "section": "Basics: REPL, VSCode, Notebooks",
+    "text": "Basics: REPL, VSCode, Notebooks\nWe will repeat the basics of julia in a very condensed manner by going through steps 1-7 of MoJuWo live in class.\njulia REPL:\n\n\n\nThis is the julia REPL\n\n\nVScode:\n\n\n\nThis is VSCode\n\n\nNotice how there is a julia REPL running as part of the VSCode editor. This is called an integrated development environment (IDE). Very similar to an R session connected to RStudio, or the python interpreter being run through PyCharm etc.",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "Lecture 1 - Why `julia`?"
+    ]
+  },
+  {
+    "objectID": "lectures/lecture1.html#introduction-and-why-julia",
+    "href": "lectures/lecture1.html#introduction-and-why-julia",
+    "title": "Programming Languages and - Why Julia?",
+    "section": "Introduction and: Why Julia?",
+    "text": "Introduction and: Why Julia?\nIn this section we want to understand why julia is a good choice for computational tasks - for Economists and others.\nSlides for intro: Why Julia? (does not run in my safari browser! 🤷🏻‍♂️)",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "Lecture 1 - Why `julia`?"
+    ]
+  },
+  {
+    "objectID": "lectures/lecture1.html#notebooks",
+    "href": "lectures/lecture1.html#notebooks",
+    "title": "Programming Languages and - Why Julia?",
+    "section": "Notebooks",
+    "text": "Notebooks\nWe use several Pluto.jl notebooks in this lecture. Here are four rendered ones:\n\n\n\nTopic\nrendered Notebook\nsource of notebook\n\n\n\n\nVariables\nclick\nclick\n\n\nFunctions\nclick\nclick\n\n\n\nPlease download and run the 00-fast.jl notebook on your own computer for the benchmarks! (Right click and copy link, then insert into a Pluto browser!)🏎️\n\nResources\n\nModern Julia Workflow\nStartHere.jl\nAruoba and Fernandez-Villaverde\nJesus’ Julia Tutorial\nChapter 1 of Julia for Data Analysis",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "Lecture 1 - Why `julia`?"
+    ]
+  },
+  {
+    "objectID": "lectures/lecture2.html",
+    "href": "lectures/lecture2.html",
+    "title": "Week 2 - Examples",
+    "section": "",
+    "text": "In this section we present some simple usage examples of julia in the wild. We will again have a few notebooks to go through.\n© Florian Oswald, 2025"
+  },
+  {
+    "objectID": "lectures/lecture2.html#notebooks",
+    "href": "lectures/lecture2.html#notebooks",
     "title": "Week 2 - Examples",
     "section": "Notebooks",
-    "text": "Notebooks\n\n\n\nTopic\nrendered Notebook\nsource of notebook\n\n\n\n\nDefining Types\nclick\nclick\n\n\nDifferential Equations\nclick\nclick",
-    "crumbs": [
-      "Home",
-      "Lectures",
-      "Week 2 - Examples"
-    ]
+    "text": "Notebooks\n\n\n\nTopic\nrendered Notebook\nsource of notebook\n\n\n\n\nDefining Types\nclick\nclick\n\n\nDifferential Equations\nclick\nclick"
   },
   {
-    "objectID": "lectures/absorbing-mc.html",
-    "href": "lectures/absorbing-mc.html",
-    "title": "Absorbing Markov Chains",
+    "objectID": "lectures/plotting.html",
+    "href": "lectures/plotting.html",
+    "title": "Plotting",
     "section": "",
-    "text": "This elaborates on Bogumił’s blog post about the problem of generating a sequence of coin tosses. We will add some theory to his simulation study.\n© Florian Oswald, 2025",
+    "text": "Good plotting is one of the main requirements we have for a fully fledged computing language. We want to be able to quickly make good looking plots of data objects (like for instance the R library ggplot2 allows us to do), and we want to have the ability to build up plots step by step as for instance the python library matplotlib allows us to do. There are several solutions available in julia:\n© Florian Oswald, 2025",
     "crumbs": [
       "Home",
       "Lectures",
-      "Absorbing Markov Chains"
+      "Makie.jl Plotting"
     ]
   },
   {
-    "objectID": "lectures/absorbing-mc.html#problem-statement",
-    "href": "lectures/absorbing-mc.html#problem-statement",
-    "title": "Absorbing Markov Chains",
-    "section": "Problem Statement",
-    "text": "Problem Statement\nTo recap, we have two players Alice (A) and Bob (B), and each is equipped with fair coin. Each plays a game whereby they toss the coin, and record the outcome as either heads (H) or tails (T). An example of a sequence after 9 coin tosses for each player could look like this:\ntoss: 123456789\nA:    TTHHHTHTH\nB:    THTTHTHHT\nAlice and Bob have different ways of winning this game. A wins if the sequence HT occurs, and B wins if the sequence HH occurs. Following the above example, A would have won after toss number 6. B had to wait until toss number 8 complete his winning sequence HH, hence he lost this particular contest.",
+    "objectID": "lectures/plotting.html#backends",
+    "href": "lectures/plotting.html#backends",
+    "title": "Plotting",
+    "section": "Backends",
+    "text": "Backends\n\nYou can choose different engines which will draw your plot, each with strengths and weaknesses. Find out more here\nWe will be using CairoMakie which is good for static output (like pdf or png pictures).",
     "crumbs": [
       "Home",
       "Lectures",
-      "Absorbing Markov Chains"
+      "Makie.jl Plotting"
     ]
   },
   {
-    "objectID": "lectures/absorbing-mc.html#questions",
-    "href": "lectures/absorbing-mc.html#questions",
-    "title": "Absorbing Markov Chains",
-    "section": "Questions",
-    "text": "Questions\n\nIn expectation, who is more likely to win this game? Suppose we performed a very large number of contests like the one illustrated above.\nHow many coin tosses does Alice have to perform, on average, until her winning sequence shows up?\nHow many tosses does Bob have to perform until his winning sequence appears?",
+    "objectID": "lectures/plotting.html#getting-started-install-the-cairomakie-package",
+    "href": "lectures/plotting.html#getting-started-install-the-cairomakie-package",
+    "title": "Plotting",
+    "section": "Getting Started: Install the CairoMakie package",
+    "text": "Getting Started: Install the CairoMakie package\n\nthis is following closely the makie.jl getting started page\n\n\nCreate a folder makie_tutorial on your computer somewhere. Maybe ~/makie_tutorial ?\nStart julia by typing julia on your terminal and hitting enter (or double click the icon in Applications)\nin the REPL, we need to move into the makie_tutorial folder now. do this:\ncd(\"/path/to/your/makie_tutorial\")\nActivate the current folder to be our project:\nusing Pkg\nPkg.activate(\".\")  # \".\" is the name of the current directory ;-)\nAdd the CairoMakie package:\nPkg.add(\"CairoMakie\")  # this will take a while!\nAfter this has finished, check the makie_tutorial folder: there are 2 new files now: Project.toml and Manifest.toml\nWe can now use the CairoMakie package! 🎉",
     "crumbs": [
       "Home",
       "Lectures",
-      "Absorbing Markov Chains"
+      "Makie.jl Plotting"
     ]
   },
   {
-    "objectID": "lectures/absorbing-mc.html#simulations",
-    "href": "lectures/absorbing-mc.html#simulations",
-    "title": "Absorbing Markov Chains",
-    "section": "Simulations",
-    "text": "Simulations\nLet us follow in Bogumił’s foot steps and re-propose the simulation study he did on his blog.\nWho is more likely to win this game? We will later work out the probability that each will win, but we can easily to a simulation study following a frequentist approach: just count how many times each player wins!\nLet’s create a function which will simulate us tossing an imaginary coin until one of both players wins. The function should return the initial of the winning player.\n\nfunction whowins()\n    t1 = rand(('H', 'T'))  # toss number 1 \n    while true  # keep going until we get a valid sequence.\n        t2 = rand(('H', 'T'))  # toss number 2 \n        if t1 == 'T'  # invalid first toss for both.\n            t1 = t2   # reassign t2 to t1 and keep going\n        else  # t1 is 'H' ! t2 now decides the winner!\n            return t2 == 'H' ? \"B\" : \"A\"\n        end\n    end\nend\n\nwhowins (generic function with 1 method)\n\n\nYou should try it out a few times to convince yourself it’s working.\n\nSimulating the Expected Probability of Winning\nNow, lets see how often each of them wins if we repeat this contest many times over:\n\nusing Random, FreqTables\nRandom.seed!(10101)\n\nfreqtable( [whowins() for _ in 1:100_000_000] )\n\n2-element Named Vector{Int64}\nDim1  │ \n──────┼─────────\nA     │ 50003096\nB     │ 49996904\n\n\nOk, that would tell us that if we were to have them play a close to infinite number of times, each would win pretty much exactly half the games.\n\n\nSimulating expected number of steps till winning\nThis is fairly easy to simulate, given our above code.\n\nfunction count_alice()\n    t1 = rand(('H', 'T'))  # toss number 1 \n    tosses = 1  # counter\n    while true  # keep going until we get a winner: HT\n        t2 = rand(('H', 'T'))  # toss number 2 \n        tosses += 1 \n        # if sequence is correct, return, else re-do\n        t1 == 'H' && t2 == 'T' && return tosses\n\n        # if did not return above, keep going\n        t1 = t2\n    end\nend\n\ncount_alice (generic function with 1 method)\n\n\nYou should try to implement count_bob() yourself now.\n\n\nCode\nfunction count_bob()\n    t1 = rand(('H', 'T'))  # toss number 1 \n    tosses = 1  # counter\n    while true  # keep going until we get a winner: HH\n        t2 = rand(('H', 'T'))  # toss number 2 \n        tosses += 1 \n        # if sequence is correct, return, else re-do\n        t1 == 'H' && t2 == 'H' && return tosses\n\n        # if did not return above, keep going\n        t1 = t2\n    end\nend\n\n\ncount_bob (generic function with 1 method)\n\n\n\n\n\n\n\n\nNote\n\n\n\n\nDo you expect the count_* functions to return the same number each time you call them, or not?\nIf not, which function seems to return smaller numbers on average?\n\n\n\nThe last one is an easy question to answer with a simulation study again, isn’t it? This time it’s not about counting who wins how many times, however, but rather…🤔\n\n\nCode\nusing Statistics  # for mean()\n\n(\n    Alice = mean( [count_alice() for _ in 1:100_000_000] ),\n    Bob = mean( [count_bob() for _ in 1:100_000_000] )\n)\n\n\n(Alice = 3.99997351, Bob = 5.99957595)\n\n\n…wait, this is surprising, not? Alice has to toss 4 times on average, while Bob has to wait for 6 tosses until his winning sequence comes up? How come?",
+    "objectID": "lectures/plotting.html#first-plot",
+    "href": "lectures/plotting.html#first-plot",
+    "title": "Plotting",
+    "section": "First Plot",
+    "text": "First Plot\n\n# this only works after completing the above steps!\nusing CairoMakie\n\nIf executing using CairoMakie worked for you, it means you are good to go. Let’s get some data…\n\n# hover top right to copy this\nseconds = 0:0.1:2\nmeasurements = [8.2, 8.4, 6.3, 9.5, 9.1, 10.5, 8.6, 8.2, 10.5, 8.5, 7.2,\n        8.8, 9.7, 10.8, 12.5, 11.6, 12.1, 12.1, 15.1, 14.7, 13.1];\n\n…and make a lineplot from it:\n\nlines(seconds, measurements)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNote\n\n\n\nDepending on your system, lines(seconds, measurements) should have triggered a viewer of some sort. In VSCode, the plotting pane should have opened\n\n\nLet’s do a scatter plot now:\n\nscatter(seconds, measurements)\n\n\n\n\n\n\n\n\nGreat. Now let’s an exponential fit line to this. Suppose we know the formula to be f(x) = exp(x) + 7. That’s just another line plot:\n\nscatter(seconds, exp.(seconds) .+ 7)\n\n\n\n\n\n\n\n\nFinally, we want to have those all in the same plot. We will use the ! version of the plotting functions!\n\nscatter(seconds, measurements)\nlines!(seconds, exp.(seconds) .+ 7)\ncurrent_figure()",
     "crumbs": [
       "Home",
       "Lectures",
-      "Absorbing Markov Chains"
+      "Makie.jl Plotting"
     ]
   },
   {
-    "objectID": "lectures/absorbing-mc.html#the-absorbing-transition-matrix-p_a",
-    "href": "lectures/absorbing-mc.html#the-absorbing-transition-matrix-p_a",
-    "title": "Absorbing Markov Chains",
-    "section": "The Absorbing Transition Matrix \\(P_a\\)",
-    "text": "The Absorbing Transition Matrix \\(P_a\\)\nIn this setting we have \\(t\\) transient states (i.e. states from which you can escape), and \\(r\\) absorbing states - once you enter such a state, you stay there, in other words, the chain ends.\nWe have to re-write our transition matrix for this case. It will look as follows:\n\\[P_a = \\left[\\begin{array}{cc}\nQ & R \\\\\n\\mathbf{0} & \\mathbf{I}_r\n\\end{array}\\right] \\tag{2}\\]\nwhere\n\n\\(Q\\) is the \\((t,t)\\) transition matrix of transient states\n\\(R\\) is a \\((t,r)\\) matrix of transition probabilities from transient state \\(t\\) into absorbing state \\(r\\)\n\\(\\mathbf{0}\\) is an \\((r,t)\\) matrix of zeros, and\n\\(\\mathbf{I}_r\\) is the \\((r,r)\\) identity matrix.\n\nLet’s work this out for Alice now. Imagine that we want to fill out each of her 2 empty slots for strings with either H or T. Remember that her winning sequence was HT. It’s easiest to model Alice in three possible states:\n\nState e: She has an empty sequence, {}. She is waiting to fill this with two valid strings.\nState H: Her sequence has H in first position, i.e. looks like {H}. This is great, because if the next coin toss yields a T, she wins! If she gets another H, no problem, she stays at state {H} (we can just throw away the previous H in the sequence!).\nState HT: She wins the game.\n\nSo, we define the following transient states for her:\n\ne: empty sequence i.e {}\nH: the string sequence containing only H, i.e. {H}\n\nNext, we define the absorbing state for her:\n\nHT: upon tossing T after a H, i.e completing the sequence {HT}, the game ends.\n\n\n\n\n\n\n\nObservations\n\n\n\n\nIn this example we have t=2 transient states\nT in first position is not a valid sequence for Alice. Whilst we could think of {T} as a transient state, it is easier to think that we go back to e and start again if we hit T in the first toss.\nThere is a single absorbing state, {HT}, i.e. r=1.\n\n\n\nThe situation for Alice is as follows:\n\n\n\n\n\ngraph LR\n    e((e)) --&gt; |0.5| e\n    e((e)) --&gt; |0.5| H\n    H      --&gt; |0.5| H\n    H      --&gt; |0.5| HT\n\n\n Absorbing Markov Chain of Alice \n\n\n\nNotice how we assume that if your first toss is invalid (i.e. a T), you stay with your empty sequence. Next, here is the transition matrix \\(Q_a\\) for her transient states {e,H} (putting e in the first row/column), and the (2,1) matrix of transitions from transient into absorbing state, \\(R_a\\):\n\\[Q_a = \\left[\\begin{array}{cc}\n0.5 & 0.5 \\\\\n0   & 0.5\n\\end{array}\\right],\\quad\nR_a = \\left[\\begin{array}{c}\n0 \\\\\n0.5\n\\end{array}\\right]\n\\tag{3}\\]\nLet us assemble those into \\(P_a(\\text{Alice})\\) now, and observe that this maintains the properties of stochastic matrix \\(P\\):\n\\[P_a(\\text{Alice}) = \\left[\\begin{array}{ccc}\n0.5 & 0.5 & 0 \\\\\n0   & 0.5 & 0.5 \\\\\n0   &  0  &  1\n\\end{array}\\right]\n\\tag{4}\\]",
+    "objectID": "lectures/plotting.html#figures-and-axis",
+    "href": "lectures/plotting.html#figures-and-axis",
+    "title": "Plotting",
+    "section": "Figures and Axis",
+    "text": "Figures and Axis\nThere is another way to compose this plot, more useful if you want more fine-grained control. We need a\n\nFigure\nAxis\n\nA plot is part of an Axis object, which itself is part of a Figure.\n\nf = Figure()\nax = Axis(f[1,1]) # ax sits at [1,1] of f\nscatter!(ax, seconds, measurements)  # plot *into* ax\nlines!(ax, seconds, exp.(seconds) .+ 7) # again\nf  # look at f\n\n\n\n\n\n\n\n\nThis is useful if we have many (sub) plots which we want to collect in a single figure, or for precise labelling. Let’s label that figure now:\n\nf = Figure()\nax = Axis(f[1, 1],\n    title = \"Experimental data and exponential fit\",\n    xlabel = \"Time (seconds)\",\n    ylabel = \"Value\",\n)\nscatter!(ax, seconds, measurements)\nlines!(ax, seconds, exp.(seconds) .+ 7)\nf",
     "crumbs": [
       "Home",
       "Lectures",
-      "Absorbing Markov Chains"
+      "Makie.jl Plotting"
     ]
   },
   {
-    "objectID": "lectures/absorbing-mc.html#the-fundamental-matrix-n",
-    "href": "lectures/absorbing-mc.html#the-fundamental-matrix-n",
-    "title": "Absorbing Markov Chains",
-    "section": "The Fundamental Matrix \\(N\\)",
-    "text": "The Fundamental Matrix \\(N\\)\nThe next piece we need is called the fundamental matrix. It will give us the expected number of visits to transient state \\(j\\) before we reach an absorbing state. It is obtained by iterating \\(Q_a\\) forward until infinity. It can be shown that it looks like this, similar to the infinite sum of a geometric series:\n\\[\nN = \\sum_{k=0}^\\infty Q^k = (I - Q)^{-1}\n\\]\nSo, for Alice, it looks as follows:\n\\[\nN_a = (I - Q_a)^{-1} = \\left( \\left[\\begin{array}{cc}\n1 & 0 \\\\\n0 & 1\n\\end{array}\\right] - \\left[\\begin{array}{cc}\n0.5 & 0.5 \\\\\n0   & 0.5\n\\end{array}\\right] \\right)^{-1} = \\left(\\left[\\begin{array}{cc}\n0.5 & -0.5 \\\\\n0   & 0.5\n\\end{array}\\right] \\right)^{-1}\n\\]\nDo we all still remember how to compute the inverse of a 2x2 matrix? I dont’t, but here is a formula 🙈\n\n\n\n\n\n\nInverse of a 2x2 matrix\n\n\n\nFor \\(A = \\left[\\begin{array}{cc}\na & b \\\\\nc   & d\n\\end{array}\\right]\\) we have that the inverse matrix of \\(A\\) is\n\\[A^{-1} = \\frac{1}{ad - bc} \\left[\\begin{array}{cc}\nd & -b \\\\\n-c   & a\n\\end{array}\\right]\\]\n\n\nWith that out of the way, you can calculate that\n\\[\nN_a =  \\left[\\begin{array}{cc}\n2 & 2 \\\\\n0 & 2\n\\end{array}\\right]\n\\tag{5}\\]\nWe can immediately get the expected number of steps before being absorbed from this by summing across rows:\n\\[\nN_a \\mathbf{1}_t =  \\left[\\begin{array}{c}\n4 \\\\\n2\n\\end{array}\\right]\n\\tag{6}\\]\nSo, starting in state e, the expected number of steps before reaching absorbing state HT is \\(4\\) for Alice. Once in state H, she expects only two more steps. Here a step is a toss of a coin.",
+    "objectID": "lectures/plotting.html#styling-our-plot",
+    "href": "lectures/plotting.html#styling-our-plot",
+    "title": "Plotting",
+    "section": "Styling our Plot",
+    "text": "Styling our Plot\nLet’s change a few aestetic aspects of our plot, like color or linestyle:\n\nf = Figure()\nax = Axis(f[1, 1],\n    title = \"Experimental data and exponential fit\",\n    xlabel = \"Time (seconds)\",\n    ylabel = \"Value\",\n)\nscatter!(ax, seconds, measurements, color = :tomato)\nlines!(ax, seconds, exp.(seconds) .+ 7, color = :tomato, linestyle = :dash)\nf\n\n\n\n\n\n\n\n\nThere are many aspects of any plotting type that you can style. Checkout the reference for the scatter function here. For example, we could change the marker symbol from the default (:circle:) to something funnier:\n\n# notice: overplots the `ax` in `f` from above!\nscatter!(ax, seconds, measurements, marker = '😉', \n    markersize = 20)\nf\n\n\n\n\n\n\n\n\nFinally, let us add a legend in a certain position:\n\nf = Figure()\nax = Axis(f[1, 1],\n    title = \"Experimental data and exponential fit\",\n    xlabel = \"Time (seconds)\",\n    ylabel = \"Value\",\n)\nscatter!(\n    ax,\n    seconds,\n    measurements,\n    color = :tomato,\n    label = \"Measurements\"\n)\nlines!(\n    ax,\n    seconds,\n    exp.(seconds) .+ 7,\n    color = :tomato,\n    linestyle = :dash,\n    label = L\"f(x) = \\exp(x) + 7\",\n)\naxislegend(position = :rb)\nf",
     "crumbs": [
       "Home",
       "Lectures",
-      "Absorbing Markov Chains"
+      "Makie.jl Plotting"
     ]
   },
   {
-    "objectID": "lectures/absorbing-mc.html#states-and-transitions-for-bob",
-    "href": "lectures/absorbing-mc.html#states-and-transitions-for-bob",
-    "title": "Absorbing Markov Chains",
-    "section": "States and Transitions for Bob?",
-    "text": "States and Transitions for Bob?\nFor Bob, the situation is slightly different. Remember that Bob wins if HH comes up. For him, we have the following definition of states:\n\nState e: The empty sequence, {}. Waiting to fill this with two valid strings.\nState H: The sequence has H in first position, i.e. looks like {H}.\nState HH: He wins the game.\n\nNotice the one big difference here: If Bob is in state {H}, and hits a T in the next toss, he is not as fortunate as Alice, who can stay in the same state. Bob’s problem is that he does not have a winning sequence that could start with T (neither does Alice, but upon hitting T while in state {H}, she wins!)\nHere’s the graphs for Bob and Alice side by side:\n\n\n\n\n\n\n\ngraph LR\n    e((e)) --&gt; |0.5| e\n    e((e)) --&gt; |0.5| H\n    H      --&gt; |0.5| e\n    H      --&gt; |0.5| HH\n\n\n\n Markov Chain of Bob \n\n\n\n\n\n\n\n\n\ngraph LR\n    ea((e)) --&gt; |0.5| ea\n    ea((e)) --&gt; |0.5| Ha[H]\n    Ha[H]      --&gt; |0.5| Ha\n    Ha[H]      --&gt; |0.5| HT\n\n\n Markov Chain of Alice \n\n\n\n\n\nThe problem for Bob is the arrow going back to e if he hits a bad toss at state {H}. Let us quickly assemble the transition matrix for Bob, and compute his expected steps:\n\\[Q_b = \\left[\\begin{array}{cc}\n0.5 & 0.5 \\\\\n0.5 & 0\n\\end{array}\\right],\\quad\nR_b = \\left[\\begin{array}{c}\n0 \\\\\n0.5\n\\end{array}\\right]\n\\tag{7}\\]\n\\[P_a(\\text{Bob}) = \\left[\\begin{array}{ccc}\n0.5 & 0.5 & 0 \\\\\n0.5   & 0 & 0.5 \\\\\n0   &  0  &  1\n\\end{array}\\right]\n\\tag{8}\\]\nWith those in hand, you can easily verify that Bob will have\n\\[\nN_b =  \\left[\\begin{array}{cc}\n4 & 2 \\\\\n2 & 2\n\\end{array}\\right]\n\\tag{9}\\]\nwhich, in turn, means that his expected steps until absorbing state, starting from either {} or {H} are given by\n\\[\nN_b \\mathbf{1}_t =  \\left[\\begin{array}{c}\n6 \\\\\n4\n\\end{array}\\right]\n\\tag{10}\\]\n👉 exactly as in our (Bogumił’s!) simulation experiment from the start.",
+    "objectID": "lectures/plotting.html#saving-plot-to-disk",
+    "href": "lectures/plotting.html#saving-plot-to-disk",
+    "title": "Plotting",
+    "section": "Saving Plot to Disk",
+    "text": "Saving Plot to Disk\nFinally, it’s straightforward to save our plot to disk in a variety of formats:\n\nsave(\"first_figure.png\", f)\nsave(\"first_figure.svg\", f)\nsave(\"first_figure.pdf\", f)\n\nThose files are now in your makie_tutorial folder!",
     "crumbs": [
       "Home",
       "Lectures",
-      "Absorbing Markov Chains"
+      "Makie.jl Plotting"
     ]
   },
   {
-    "objectID": "installation.html",
-    "href": "installation.html",
-    "title": "Installation Instructions",
+    "objectID": "notebooks/week4/Figures.html",
+    "href": "notebooks/week4/Figures.html",
+    "title": "BFGS and GradientDescent",
     "section": "",
-    "text": "The best way to install julia (allows for multiple installed versions and will always alert to new releases) is via the instructions at juliaup - please follow those for your OS.\n\n\n\nyou can equally well download the current release for your OS from here\n© Florian Oswald, 2025",
-    "crumbs": [
-      "Home",
-      "Setup",
-      "Installation"
-    ]
-  },
-  {
-    "objectID": "installation.html#step-1-install-julia",
-    "href": "installation.html#step-1-install-julia",
-    "title": "Installation Instructions",
-    "section": "",
-    "text": "The best way to install julia (allows for multiple installed versions and will always alert to new releases) is via the instructions at juliaup - please follow those for your OS.\n\n\n\nyou can equally well download the current release for your OS from here",
-    "crumbs": [
-      "Home",
-      "Setup",
-      "Installation"
-    ]
-  },
-  {
-    "objectID": "installation.html#step-2-run-julia",
-    "href": "installation.html#step-2-run-julia",
-    "title": "Installation Instructions",
-    "section": "Step 2: Run Julia",
-    "text": "Step 2: Run Julia\nAfter installing, make sure that you can run Julia. If you installed via juliaup, you should be able to start julia from your command line now by typing julia and hitting enter. Otherwise just launch the julia app from your Applications folder.\nMake sure that you are able to launch Julia and calculate 1+1 before proceeding!",
-    "crumbs": [
-      "Home",
-      "Setup",
-      "Installation"
-    ]
-  },
-  {
-    "objectID": "installation.html#step-3-install-pluto",
-    "href": "installation.html#step-3-install-pluto",
-    "title": "Installation Instructions",
-    "section": "Step 3: Install Pluto",
-    "text": "Step 3: Install Pluto\nNext we will install the Pluto notebook that we will be using during the course. Pluto is a Julia programming environment designed for interactivity and quick experiments.\nOpen the Julia REPL. This is the command-line interface to Julia, similar to the previous screenshot.\nHere you type Julia commands, and when you press ENTER, it runs, and you see the result.\nTo install Pluto, we want to run a package manager command. To switch from Julia mode to Pkg mode, type ] (closing square bracket) at the julia&gt; prompt:\njulia&gt; ]\n\n(@v1.10) pkg&gt;\nThe line turns blue and the prompt changes to pkg&gt;, telling you that you are now in package manager mode. This mode allows you to do operations on packages (also called libraries).\nTo install Pluto, run the following (case sensitive) command to add (install) the package to your system by downloading it from the internet. You should only need to do this once for each installation of Julia:\n(@v1.10) pkg&gt; add Pluto\nThis might take a couple of minutes, so you can go get yourself a cup of tea!\n\n\n\nimage\n\n\nYou can now close the terminal.",
-    "crumbs": [
-      "Home",
-      "Setup",
-      "Installation"
-    ]
-  },
-  {
-    "objectID": "installation.html#step-4-use-a-modern-browser-mozilla-firefox-or-google-chrome",
-    "href": "installation.html#step-4-use-a-modern-browser-mozilla-firefox-or-google-chrome",
-    "title": "Installation Instructions",
-    "section": "Step 4: Use a modern browser: Mozilla Firefox or Google Chrome",
-    "text": "Step 4: Use a modern browser: Mozilla Firefox or Google Chrome\nWe need a modern browser to view Pluto notebooks with. Firefox and Chrome work best.",
-    "crumbs": [
-      "Home",
-      "Setup",
-      "Installation"
-    ]
-  },
-  {
-    "objectID": "installation.html#step-1-start-pluto",
-    "href": "installation.html#step-1-start-pluto",
-    "title": "Installation Instructions",
-    "section": "Step 1: Start Pluto",
-    "text": "Step 1: Start Pluto\nStart the Julia REPL, like you did during the setup. In the REPL, type:\njulia&gt; using Pluto\n\njulia&gt; Pluto.run()\n\n\n\nimage\n\n\nThe terminal tells us to go to http://localhost:1234/ (or a similar URL). Let’s open Firefox or Chrome and type that into the address bar.\n\n\n\nimage\n\n\n\nIf you’re curious about what a Pluto notebook looks like, have a look at the sample notebooks. Samples 1, 2 and 6 may be useful for learning some basics of Julia programming.\nIf you want to hear the story behind Pluto, have a look a the JuliaCon presentation.\n\nIf nothing happens in the browser the first time, close Julia and try again. And please let us know!",
-    "crumbs": [
-      "Home",
-      "Setup",
-      "Installation"
-    ]
-  },
-  {
-    "objectID": "installation.html#step-2a-opening-a-notebook-from-the-web",
-    "href": "installation.html#step-2a-opening-a-notebook-from-the-web",
-    "title": "Installation Instructions",
-    "section": "Step 2a: Opening a notebook from the web",
-    "text": "Step 2a: Opening a notebook from the web\nThis is the main menu - here you can create new notebooks, or open existing ones. Our homework assignments will always be based on a template notebook, available in this GitHub repository. To start from a template notebook on the web, you can paste the URL into the blue box and press ENTER.\nFor example, homework 0 is available here. Copy this link (right click -&gt; Copy Link), and paste it into the box. Press ENTER, and select OK in the confirmation box.\n\n\n\nimage\n\n\nThe first thing we will want to do is to save the notebook somewhere on our own computer; see below.",
-    "crumbs": [
-      "Home",
-      "Setup",
-      "Installation"
-    ]
-  },
-  {
-    "objectID": "installation.html#step-2b-opening-an-existing-notebook-file",
-    "href": "installation.html#step-2b-opening-an-existing-notebook-file",
-    "title": "Installation Instructions",
-    "section": "Step 2b: Opening an existing notebook file",
-    "text": "Step 2b: Opening an existing notebook file\nWhen you launch Pluto for the second time, your recent notebooks will appear in the main menu. You can click on them to continue where you left off.\nIf you want to run a local notebook file that you have not opened before, then you need to enter its full path into the blue box in the main menu. More on finding full paths in step 3.",
-    "crumbs": [
-      "Home",
-      "Setup",
-      "Installation"
-    ]
-  },
-  {
-    "objectID": "installation.html#step-3-saving-a-notebook",
-    "href": "installation.html#step-3-saving-a-notebook",
-    "title": "Installation Instructions",
-    "section": "Step 3: Saving a notebook",
-    "text": "Step 3: Saving a notebook\nWe first need a folder to save our homework in. Open your file explorer and create one.\nNext, we need to know the absolute path of that folder. Here’s how you do that in Windows, MacOS and Ubuntu.\nFor example, you might have:\n\nC:\\\\Users\\\\fonsi\\\\Documents\\\\18S191_assignments\\\\ on Windows\n/Users/fonsi/Documents/18S191_assignments/ on MacOS\n/home/fonsi/Documents/18S191_assignments/ on Ubuntu\n\nNow that we know the absolute path, go back to your Pluto notebook, and at the top of the page, click on “Save notebook…”.\n\n\n\nimage\n\n\nThis is where you type the new path+filename for your notebook:\n\n\n\nimage\n\n\nClick Choose.",
-    "crumbs": [
-      "Home",
-      "Setup",
-      "Installation"
-    ]
-  },
-  {
-    "objectID": "installation.html#step-4-sharing-a-notebook",
-    "href": "installation.html#step-4-sharing-a-notebook",
-    "title": "Installation Instructions",
-    "section": "Step 4: Sharing a notebook",
-    "text": "Step 4: Sharing a notebook\nAfter working on your notebook (your code is autosaved when you run it), you will find your notebook file in the folder we created in step 3. This the file that you can share with others, or submit as your homework assignment to Canvas.",
-    "crumbs": [
-      "Home",
-      "Setup",
-      "Installation"
-    ]
+    "text": "using Interact, Optim, Plots, OptimTestProblems, LineSearches, LinearAlgebra\n\n\n\n    Unable to load WebIO. Please make sure WebIO works for your Jupyter client.\n    For troubleshooting, please see \n    the WebIO/IJulia documentation.\n    \n\n\n\n\nprob = UnconstrainedProblems.examples[\"Rosenbrock\"]\nf = prob.f\ng! = prob.g!\nh! = prob.h!\n\nrosenbrock_hessian! (generic function with 1 method)\n\n\n\nx = [-1,1.]\nres = optimize(f, x, GradientDescent(), Optim.Options(store_trace=true, extended_trace=true))\n@manipulate for ix = slider(1:Optim.iterations(res), value = 1)\n    contour(-2.5:0.01:2, -1.5:0.01:2, (x,y)-&gt;sqrt(f([x, y])), fill=true, color=:deep, legend=false)\n    xtracemat = hcat(Optim.x_trace(res)...)\n    plot!(xtracemat[1, 1:ix], xtracemat[2, 1:ix], mc = :white, lab=\"\")\n    scatter!(xtracemat[1:1,ix], xtracemat[2:2,ix], mc=:black, msc=:red, lab=\"\")\n    scatter!([1.], [1.], mc=:red, msc=:red, lab=\"\")\n    scatter!(x[1:1], x[2:2], mc=:yellow, msc=:black, label=\"start\", legend=true)\nend\n\n\n    \n\n\n\n\nx = [-4, -3.]\n@manipulate for ix = slider(120:160, value = 120)\n    c = contour(-.85:0.01:-0.60, 0:0.01:1.2, (x,y)-&gt;sqrt(f([x, y])), fill=true, color=:deep, legend=false)\n    res = optimize(f, x, GradientDescent(), Optim.Options(store_trace=true, extended_trace=true))\n    xtracemat = hcat(Optim.x_trace(res)...)\n    \n    plot!(xtracemat[1, 120:ix], xtracemat[2, 120:ix], mc = :white, legend=true, label=\"Gradient Descent\")\n    scatter!(xtracemat[1:1,ix], xtracemat[2:2,ix], mc=:black, msc=:red, label = \"\")\n    scatter!(xtracemat[1:1,120], xtracemat[2:2,120], mc=:blue, msc=:blue, label=\"start\")\n    p = plot(1:ix, [Optim.trace(res)[i].metadata[\"Current step size\"] for i  = 1:ix], \"alpha\")\n    plot(c, p, layout=(2,1))\nend\n\n\nx = [-1., -1.]\nres = optimize(f, x, GradientDescent(), Optim.Options(store_trace=true, extended_trace=true))\nres2 = optimize(f, x, Newton(), Optim.Options(store_trace=true, extended_trace=true))\n@manipulate for ix = slider(1:Optim.iterations(res2), value = 1)\n    p = contour(-2.5:0.01:2, -1.5:0.01:2, (x,y)-&gt;sqrt(f([x, y])), fill=true, color=:deep, legend=false)\n    xtracemat = hcat(Optim.x_trace(res)...)\n    plot!(xtracemat[1, 1:ix], xtracemat[2, 1:ix], mc = :white,  label=\"Gradient Descent\", legend=true)\n    scatter!(xtracemat[1:1,ix], xtracemat[2:2,ix], mc=:black, msc=:red, label=\"\")\n    \n    xtracemat2 = hcat(Optim.x_trace(res2)...)\n    plot!(xtracemat2[1, 1:ix], xtracemat2[2, 1:ix], c=:blue, label=\"Newton\")\n    scatter!(xtracemat2[1:1,ix], xtracemat2[2:2,ix], mc=:black, msc=:blue, label=\"\")\n    scatter!([1.], [1.], mc=:red, msc=:red, label=\"\")\n    scatter!(x[1:1], x[2:2], mc=:yellow, msc=:yellow, label=\"start\")\nend\n\n\n## Linesearch\n# say we're at x = [-0.5,-0.5]\n# What is the gradient descent step?\nx_ls = [1.5,1.01]\nstor = similar(x_ls)\nh_stor = zeros(2,2)\ng!(stor, x_ls)\nh!(h_stor, x_ls)\nprintln(\"Gradient descent search direction: \", stor)\nprintln(\"Newton's method search direction: \", h_stor\\stor)\n\n\nf_ls=f(x_ls)\nxs = (0:0.0001:0.0051)\nplot(plot(xs,t-&gt; f(x_ls-t*stor),label=\"Gradient Descent\"),\nplot(xs,t-&gt;f(x_ls-t*(h_stor\\stor)), label=\"Newton's method\"))\n\n\n@manipulate for xx = slider(-2.:0.5:2., value = -2., label=\"x₁\"), yy = slider(-2.:0.5:2., value = -2., label=\"x₂\"), solver = Dict(\"GradientDescent()\" =&gt; GradientDescent, \"Newton()\" =&gt; Newton, \"BFGS()\" =&gt; BFGS), linesearch = Dict(\"HagerZhang()\" =&gt; LineSearches.HagerZhang(), \"MoreThuente()\" =&gt; LineSearches.MoreThuente(), \"BackTracking(order=3)\" =&gt; LineSearches.BackTracking(order=3), \"BackTracking(order=2)\" =&gt; LineSearches.BackTracking(order=2))\n    x = [xx, yy]\n    contour(-2.5:0.01:2.5, -2.5:0.01:4.0, (x,y)-&gt;sqrt(f([x, y])), fill=true, color=:deep, legend=false)\n    res = optimize(f, g!, h!, x, solver(linesearch=linesearch), Optim.Options(store_trace=true, extended_trace=true))\n    xtracemat = hcat(Optim.x_trace(res)...)\n    plot!(xtracemat[1, :], xtracemat[2, :], mc = :white, lab=\"\")\n    scatter!(xtracemat[1, 1:10:end], xtracemat[2, 1:10:end], mc = :white, lab=\"\")\n    scatter!([1.], [1.], mc=:red, msc=:red, lab=\"\")\n    scatter!(x[1:1], x[2:2], mc=:yellow, msc=:black, label=\"start\", legend=true)\nend\n\n\n# g(x, y) = dot([x, y]'*diagm([1.0, 1.0]),[x,y])\ng(x, y, v) = dot([x, y]'*diagm([1.0, v]),[x,y])\n\n\n@manipulate for xx = slider(-2.:.1:2., value = -2., label=\"x2\"), val = slider(1.0:0.5:150.0, label=\"v\", value = 1.0)\n    _x = [5., xx]\n    contour(-6.5:0.1:5.5, -3.5:0.1:3.5, (x,y)-&gt;g(x,y,val), fill=false, color=:deep, legend=false)\n    res = optimize(x-&gt;g(x[1],x[2],val), _x, GradientDescent(), Optim.Options(store_trace=true, extended_trace=true))\n    xtracemat = hcat(Optim.x_trace(res)...)\n    plot!(xtracemat[1, :], xtracemat[2, :], mc = :white)\n    scatter!(xtracemat[1, :], xtracemat[2, :], mc = :white)\n   #\n    scatter!([0.], [0.], mc=:red, msc=:red)\nend\n\n\nfh(x, y, v) = dot([x, y]'*[1.0 v/10;0.0 v],[x,y])\n\n\n@manipulate for xx = slider(-2.:.1:2., value = -2., label=\"x2\"), val = slider(10.0:0.5:150.0, value = 1.0, label=\"v\"), solver = Dict(:GradientDescent =&gt; GradientDescent(), :Newton =&gt; Newton(), :BFGS =&gt; BFGS())\n    _x = [5., xx]\n    contour(-6.5:0.1:5.5, -3.5:0.1:3.5, (x,y)-&gt;fh(x,y,val), fill=false, color=:deep, legend=false)\n    res = optimize(x-&gt;fh(x[1],x[2],val), _x, solver, Optim.Options(store_trace=true, extended_trace=true))\n    xtracemat = hcat(Optim.x_trace(res)...)\n    plot!(xtracemat[1, :], xtracemat[2, :], mc = :white)\n    scatter!(xtracemat[1, :], xtracemat[2, :], mc = :white)\n   #\n    scatter!([0.], [0.], mc=:red, msc=:red)\nend\n\n\n@manipulate for xx = slider(-2.:.1:2., value = -2., label=\"x2\"), val = slider(1.0:0.5:150.0, value = 1.0, label=\"v\")\n    _x = [5., xx]\n    contour(-6.5:0.1:5.5, -3.5:0.1:3.5, (x,y)-&gt;fh(x,y,val), fill=false, color=:deep, legend=false)\n    res = optimize(x-&gt;fh(x[1],x[2],val), _x, GradientDescent(), Optim.Options(store_trace=true, extended_trace=true))\n    res2 = optimize(x-&gt;fh(x[1],x[2],val), _x, BFGS(), Optim.Options(store_trace=true, extended_trace=true))\n    xtracemat = hcat(Optim.x_trace(res)...)\n    plot!(xtracemat[1, :], xtracemat[2, :], mc = :white, label=\"GradientDescent\", legend=true)\n    scatter!(xtracemat[1, :], xtracemat[2, :], mc = :white, label=\"\")\n    xtracemat2 = hcat(Optim.x_trace(res2)...)\n    plot!(xtracemat2[1, :], xtracemat2[2, :], c = :black, mc = :blue, label=\"BFGS\")\n    scatter!(xtracemat2[1, :], xtracemat2[2, :], mc = :blue, label=\"\")\n\n   #\n    scatter!([0.], [0.], mc=:red, msc=:red)\nend\n\n\n\n\n© Florian Oswald, 2025"
   }
 ]
