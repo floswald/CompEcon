@@ -144,7 +144,7 @@ function discrete_lockdown(β, γ, s0, i0, r0, c, T=1000)
 end
 
 # ╔═╡ 845c1ad4-6178-11eb-149a-4d73019356d0
-if ismissing(discrete_lockdown(β,γ, 0.1,0.3,0.1,1))
+if ismissing(discrete_lockdown(β,γ, 0.1,0.3,0.1,0.1,1))
 md"""
 !!! warning
     you need to fix the body of the `discrete_lockdown` function first.
