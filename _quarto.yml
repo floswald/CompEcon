@@ -39,6 +39,7 @@ website:
     - section: Homeworks
       contents: 
         - href: homeworks/hw0.qmd
+        - href: homeworks/hw1.qmd
 
   navbar:
     search: true

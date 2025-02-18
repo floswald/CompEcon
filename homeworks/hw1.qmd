@@ -3,7 +3,7 @@ title: Homework One
 sidebar: homeworks
 ---
 
-This homework will refer to something we have not done in class, but which you can easily read up on by yourself. Here is a notebook that [introduces the SIR model](https://floswald.github.io/julia-bootcamp/09-introsir.html). In the homework, I ask you to copy sections of code from there into your homework notebook, which will then submit. 
+This homework will refer to something we have not done in class, but which you can easily read up on by yourself. Here is a notebook that [introduces the SIR model](https://floswald.github.io/julia-bootcamp/09-introsir.html). In the homework, I ask you to copy sections of code from there into your homework notebook, which you will then submit. 
 
 Get the homework notebook here. [right click and save this notebook, or copy the link directly into a running Pluto session to open!](https://github.com/floswald/CompEcon/raw/refs/heads/main/notebooks/homework1/discrete_lockdown.jl)
 
