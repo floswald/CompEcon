@@ -487,14 +487,24 @@
     "href": "homeworks/hw1.html",
     "title": "Homework One",
     "section": "",
-    "text": "This homework will refer to something we have not done in class, but which you can easily read up on by yourself. Here is a notebook that introduces the SIR model. In the homework, I ask you to copy sections of code from there into your homework notebook, which will then submit.\nGet the homework notebook here. right click and save this notebook, or copy the link directly into a running Pluto session to open!\n© Florian Oswald, 2025"
+    "text": "This homework will refer to something we have not done in class, but which you can easily read up on by yourself. Here is a notebook that introduces the SIR model. In the homework, I ask you to copy sections of code from there into your homework notebook, which you will then submit.\nGet the homework notebook here. right click and save this notebook, or copy the link directly into a running Pluto session to open!\n© Florian Oswald, 2025",
+    "crumbs": [
+      "Home",
+      "Homeworks",
+      "Homework One"
+    ]
   },
   {
     "objectID": "homeworks/hw1.html#homework-submission",
     "href": "homeworks/hw1.html#homework-submission",
     "title": "Homework One",
     "section": "Homework Submission",
-    "text": "Homework Submission\n\nWhen: You have until next monday.\nWho: teams of max 2/3\nWhat: one rendered HTML output of your notebook. make sure all cells (code?) that you want me to see are visible in your notebook, or they won’t be visible in the HTML either.\nHow: dropbox link via slack."
+    "text": "Homework Submission\n\nWhen: You have until next monday.\nWho: teams of max 2/3\nWhat: one rendered HTML output of your notebook. make sure all cells (code?) that you want me to see are visible in your notebook, or they won’t be visible in the HTML either.\nHow: dropbox link via slack.",
+    "crumbs": [
+      "Home",
+      "Homeworks",
+      "Homework One"
+    ]
   },
   {
     "objectID": "lectures/lecture1.html",
