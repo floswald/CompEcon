@@ -25,21 +25,33 @@ end
 # ╔═╡ 57005404-6170-11eb-3ffc-f57feda21784
 # edit the code below to set your name and email
 
-student = (name = "Jazzy Jeff", email = "jazzy.jeff@yahoo.com")
+student = [
+	(name = "Jazzy Jeff", email = "jazzy.jeff@yahoo.com"),
+	(name = "Grandmaster Flash", email = "grandmaster.flash@aol.com")
+	# add another row (and a comma) in this array if your team has 3 students:
+	# (name = "Michael Jackson", email = "michael.jackson@gmail.com")
+]
+
 
 # press the ▶ button in the bottom right of this cell to run your edits
 # or use Shift+Enter
 
 # ╔═╡ 14d5c6aa-670a-11eb-3cd3-9dd24111525b
-md"Homework 1 submitted by $(student.name)"
+md"""Homework 1 submitted by: $(join([s.name for s in student]," and "))"""
 
 # ╔═╡ 6239ebaa-6170-11eb-2217-c1937ab254bc
 begin
-	if (student.name == "Jazzy Jeff") 
+	if (student[1].name == "Jazzy Jeff") 
 		Markdown.MD(Markdown.Admonition("danger", "Oops!", [md"You are not *really* called **Jazzy Jeff**. Please fill out name!"]))
-	elseif !(contains(student.email, "@"))
+	elseif (student[2].name == "Grandmaster Flash") 
+		Markdown.MD(Markdown.Admonition("danger", "Oops!", [md"You are not *really* called **Grandmaster Flash**. Please fill out name!"]))
+	elseif !(contains(student[1].email, "@"))
 		Markdown.MD(Markdown.Admonition("danger", "Oops!", [md"Please enter a valid email address.  "]))
-	elseif (student.email == "jazzy.jeff@yahoo.com")
+	elseif !(contains(student[2].email, "@"))
+		Markdown.MD(Markdown.Admonition("danger", "Oops!", [md"Please enter a valid email address.  "]))
+	elseif (student[1].email == "jazzy.jeff@yahoo.com")
+		Markdown.MD(Markdown.Admonition("danger", "Oops!", [md"Please enter a valid email in the `student` tuple above.  "]))
+	elseif (student[2].email == "grandmaster.flash@aol.com")
 		Markdown.MD(Markdown.Admonition("danger", "Oops!", [md"Please enter a valid email in the `student` tuple above.  "]))
 	end
 end
@@ -1227,10 +1239,10 @@ version = "1.4.1+0"
 """
 
 # ╔═╡ Cell order:
-# ╠═d3241b7a-6a43-11eb-13b0-5d35d22508f1
-# ╟─14d5c6aa-670a-11eb-3cd3-9dd24111525b
 # ╠═57005404-6170-11eb-3ffc-f57feda21784
+# ╟─14d5c6aa-670a-11eb-3cd3-9dd24111525b
 # ╟─6239ebaa-6170-11eb-2217-c1937ab254bc
+# ╠═d3241b7a-6a43-11eb-13b0-5d35d22508f1
 # ╟─362d2fba-5bce-11eb-14da-ef225485facb
 # ╟─1d791a08-6171-11eb-3857-8da3d47c397e
 # ╠═8fe81ca2-5bc1-11eb-31a5-b39641ed1225
