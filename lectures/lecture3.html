@@ -120,7 +120,8 @@ gtag('config', 'G-YG2MPSR1Q2', { 'anonymize_ip': true});
 <link rel="stylesheet" href="../styles.css">
 <meta name="twitter:title" content="Lecture 3: Optimization 1 – Computational Economics">
 <meta name="twitter:description" content="">
-<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://floswald.github.io/CompEcon/lectures/images/cca-package.png">
+<meta name="twitter:card" content="summary_large_image">
 </head>
 
 <body class="nav-sidebar floating nav-fixed">
@@ -231,7 +232,7 @@ gtag('config', 'G-YG2MPSR1Q2', { 'anonymize_ip': true});
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../lectures/lecture1.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/lecture2.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Lecture 2 - Examples</span></a>
   </div>
 </li>
@@ -288,7 +289,8 @@ gtag('config', 'G-YG2MPSR1Q2', { 'anonymize_ip': true});
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#some-julia-package-stuff" id="toc-some-julia-package-stuff" class="nav-link active" data-scroll-target="#some-julia-package-stuff">Some Julia Package Stuff</a>
+  <li><a href="#creating-a-julia-package-for-your-work" id="toc-creating-a-julia-package-for-your-work" class="nav-link active" data-scroll-target="#creating-a-julia-package-for-your-work">Creating a Julia Package for your work</a></li>
+  <li><a href="#cookbook" id="toc-cookbook" class="nav-link" data-scroll-target="#cookbook">Cookbook</a>
   <ul class="collapse">
   <li><a href="#debugging-a-package" id="toc-debugging-a-package" class="nav-link" data-scroll-target="#debugging-a-package">Debugging A Package</a></li>
   </ul></li>
@@ -319,69 +321,121 @@ gtag('config', 'G-YG2MPSR1Q2', { 'anonymize_ip': true});
 </header>
 
 
-<section id="some-julia-package-stuff" class="level2">
-<h2 class="anchored" data-anchor-id="some-julia-package-stuff">Some Julia Package Stuff</h2>
-<blockquote class="blockquote">
-<p>Let’s create a julia package!</p>
-</blockquote>
-<div class="sourceCode" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>(<span class="pp">@v1</span><span class="fl">.8</span>) pkg<span class="op">&gt;</span> add PkgTemplates</span>
+<section id="creating-a-julia-package-for-your-work" class="level2">
+<h2 class="anchored" data-anchor-id="creating-a-julia-package-for-your-work">Creating a Julia Package for your work</h2>
+<ul>
+<li>Creating a package is a great way to ensure reproducibility of your work.</li>
+<li>It helps to make your work shareable.</li>
+<li>It helps to test the code which makes up your work.</li>
+<li>👉 Let’s do it!</li>
+</ul>
+</section>
+<section id="cookbook" class="level2">
+<h2 class="anchored" data-anchor-id="cookbook">Cookbook</h2>
+<ol type="1">
+<li>Start <code>julia</code></li>
+<li>two equivalent options:
+<ol type="1">
+<li>enter <code>Pkg</code> mode (hit <code>]</code>), then <code>generate path/to/new/package</code>, or</li>
+<li>say <code>using Pkg</code>, then <code>Pkg.generate("path/to/new/package")</code></li>
+</ol></li>
+</ol>
+<p>Here is an example:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>]    <span class="co"># this jumps into Pkg mode</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>julia<span class="op">&gt;</span> <span class="im">using</span> <span class="bu">PkgTemplates</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>help?<span class="op">&gt;</span> Template</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>julia<span class="op">&gt;</span> t <span class="op">=</span> <span class="fu">Template</span>(user <span class="op">=</span> <span class="st">"floswald"</span>, interactive <span class="op">=</span> <span class="cn">true</span>)</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>Template keywords to customize<span class="op">:</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>[press<span class="op">:</span> d<span class="op">=</span>done, a<span class="op">=</span>all, n<span class="op">=</span>none]</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>   [ ] authors</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>   [ ] dir</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>   [ ] host</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>   [ ] julia</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a> <span class="op">&gt;</span> [ ] plugins</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>julia<span class="op">&gt;</span> <span class="fu">t</span>(<span class="st">"MyNewPackage"</span>)</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>[ Info<span class="op">:</span> Running prehooks</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>[ Info<span class="op">:</span> Running hooks</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="op">...</span>suppressed output<span class="op">...</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>[ Info<span class="op">:</span> New package is at <span class="op">/</span>Users<span class="op">/</span><span class="fl">74097</span><span class="op">/</span>.julia<span class="op">/</span>dev<span class="op">/</span>MyNewPackage</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>(<span class="pp">@v1</span><span class="fl">.11</span>) pkg<span class="op">&gt;</span> generate CCApackage</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  Generating  project CCApackage<span class="op">:</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    CCApackage<span class="op">/</span>Project.toml</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    CCApackage<span class="op">/</span>src<span class="op">/</span>CCApackage.jl</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>(<span class="pp">@v1</span><span class="fl">.11</span>) pkg<span class="op">&gt;</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Depending on where you started your julia session, there is now a new folder <code>CCApackage</code>:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>shell<span class="op">&gt;</span> ls CCApackage<span class="op">/</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>Project.toml  src<span class="op">/</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>It’s a good idea to start a new VSCode window at that folder location. Doing so, you would see this:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/cca-package.png" class="img-fluid figure-img"></p>
+<figcaption>Our julia package</figcaption>
+</figure>
+</div>
+<ul>
+<li>great. Start a julia repl in the usual way.</li>
+<li>Notice how the bottom bar in VSCode keeps indicating the <em>global</em> julia environment (<code>v1.11</code> for me currently). Given that we have <em>not</em> installed this package via <code>add</code> into the global env, we cannot use it. To see this, just try to load our package like this:</li>
+</ul>
+<div class="sourceCode" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>julia<span class="op">&gt;</span> <span class="im">using</span> <span class="bu">CCApackage</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>ERROR<span class="op">:</span> <span class="dt">ArgumentError</span><span class="op">:</span> Package CCApackage not found <span class="kw">in</span> current path.</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> Run <span class="ss">`import Pkg; Pkg.add("CCApackage")`</span> to install the CCApackage package.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>We need to switch into the <em>environment</em> of this package before we can load it locally. This is called <em>activate</em> an environment:</li>
+</ul>
+<div class="sourceCode" id="cb4"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>]  <span class="co"># in Pkg mode</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>(<span class="pp">@v1</span><span class="fl">.11</span>) pkg<span class="op">&gt;</span> activate .  <span class="co"># `.` for current directory</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  Activating project at <span class="ss">`~/CCApackage`</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>(CCApackage) pkg<span class="op">&gt;</span>  <span class="co"># hit backspace</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>julia<span class="op">&gt;</span> <span class="im">using</span> <span class="bu">CCApackage</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>[ Info<span class="op">:</span> Precompiling CCApackage [c4d85591<span class="op">-</span>a952<span class="op">-</span><span class="fl">48</span>fb<span class="op">-</span>b3d1<span class="op">-</span><span class="fl">49</span>a9454516b2] </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>OK! That worked! Great, now we can use the functions contained in the package. Let’s see:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>julia<span class="op">&gt;</span> CCApackage.<span class="fu">greet</span>()</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>Hello World!</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Code Loading
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Notice how we did not have to say <em>run current file in REPL</em> or similar commands. Saying <code>using CCApackage</code> immediately made our code available in the current session.</p>
+</div>
+</div>
+<p>Next question: How can we now work on the code and investigate it’s changes in the REPL?</p>
+<ol type="1">
+<li>We can obviously execute the current file in the REPL (basically copy and paste the code into the REPL). But that’s cumbersome.</li>
+<li>There is a great alternative - <code>Revise.jl</code>.</li>
+</ol>
 <ul>
 <li>Great! Now let’s open VSCode in that location and make some changes.</li>
 </ul>
-<div class="sourceCode" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> MyNewPackage</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">mutable struct</span> MPoint</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    x<span class="op">::</span><span class="dt">Number</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    y<span class="op">::</span><span class="dt">Number</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> <span class="bu">Base.</span>:+</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="fu">+</span>(a<span class="op">::</span><span class="dt">MPoint</span>,b<span class="op">::</span><span class="dt">MPoint</span>) <span class="op">=</span> <span class="fu">MPoint</span>(a.x <span class="op">+</span> b.x, a.y <span class="op">+</span> b.y)</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span>   <span class="co"># module</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> MyNewPackage</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">mutable struct</span> MPoint</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    x<span class="op">::</span><span class="dt">Number</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    y<span class="op">::</span><span class="dt">Number</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> <span class="bu">Base.</span>:+</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="fu">+</span>(a<span class="op">::</span><span class="dt">MPoint</span>,b<span class="op">::</span><span class="dt">MPoint</span>) <span class="op">=</span> <span class="fu">MPoint</span>(a.x <span class="op">+</span> b.x, a.y <span class="op">+</span> b.y)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span>   <span class="co"># module</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ul>
 <li>Now, we could just <code>execute active file in REPL</code> in VSCode, or indeed, type in the REPL <code>include("src/MyNewPackage.jl")</code>:</li>
 </ul>
-<div class="sourceCode" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>julia<span class="op">&gt;</span> <span class="fu">include</span>(<span class="st">"src/MyNewPackage.jl"</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">Main</span>.MyNewPackage</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>julia<span class="op">&gt;</span> <span class="fu">include</span>(<span class="st">"src/MyNewPackage.jl"</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="bu">Main</span>.MyNewPackage</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ul>
 <li>Now we can test the code in the REPL.</li>
 <li>Notice, <strong>importantly</strong>, each time you want to see the effects of changing your code, you have to <strong>replace the module</strong> via <code>include("src/MyNewPackage.jl")</code>.</li>
 </ul>
-<div class="sourceCode" id="cb4"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>julia<span class="op">&gt;</span> <span class="fu">include</span>(<span class="st">"src/MyNewPackage.jl"</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>WARNING<span class="op">:</span> replacing <span class="kw">module</span> MyNewPackage.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>julia<span class="op">&gt;</span> <span class="fu">include</span>(<span class="st">"src/MyNewPackage.jl"</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>WARNING<span class="op">:</span> replacing <span class="kw">module</span> MyNewPackage.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ul>
 <li>Let’s add a test for our <code>+</code> method in the <code>test</code> folder:</li>
 </ul>
-<div class="sourceCode" id="cb5"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="pp">@testset</span> <span class="st">"MyNewPackage.jl"</span> <span class="cf">begin</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    a <span class="op">=</span> MyNewPackage.<span class="fu">MPoint</span>(<span class="fl">3</span>,<span class="fl">5</span>)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    b <span class="op">=</span> MyNewPackage.<span class="fu">MPoint</span>(<span class="fl">1</span>,<span class="fl">2</span>)</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="pp">@test</span> a <span class="op">+</span> b isa MyNewPackage.MPoint</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    p <span class="op">=</span> a <span class="op">+</span> b</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="pp">@test</span> p.x <span class="op">==</span> a.x <span class="op">+</span> b.x</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="pp">@test</span> p.y <span class="op">==</span> a.y <span class="op">+</span> b.y</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="pp">@testset</span> <span class="st">"MyNewPackage.jl"</span> <span class="cf">begin</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    a <span class="op">=</span> MyNewPackage.<span class="fu">MPoint</span>(<span class="fl">3</span>,<span class="fl">5</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    b <span class="op">=</span> MyNewPackage.<span class="fu">MPoint</span>(<span class="fl">1</span>,<span class="fl">2</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="pp">@test</span> a <span class="op">+</span> b isa MyNewPackage.MPoint</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    p <span class="op">=</span> a <span class="op">+</span> b</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="pp">@test</span> p.x <span class="op">==</span> a.x <span class="op">+</span> b.x</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="pp">@test</span> p.y <span class="op">==</span> a.y <span class="op">+</span> b.y</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ul>
 <li>Run the tests from REPL in Pkg mode: <code>]; test</code></li>
 <li>This <em>works</em>, but it involves one extra step that we need to do manually. Small steps add up! So let’s try to improve on that.</li>
@@ -390,18 +444,18 @@ gtag('config', 'G-YG2MPSR1Q2', { 'anonymize_ip': true});
 <li><strong>Before</strong> anything else, type <code>using Revise</code>. Then type <code>using MyNewPackage</code>.</li>
 <li>Let’s add a new function now.</li>
 </ul>
-<div class="sourceCode" id="cb6"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">-</span>(a<span class="op">::</span><span class="dt">MPoint</span>,b<span class="op">::</span><span class="dt">MPoint</span>) <span class="op">=</span> <span class="fu">MPoint</span>(a.x <span class="op">-</span> b.x, a.y <span class="op">-</span> b.y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">-</span>(a<span class="op">::</span><span class="dt">MPoint</span>,b<span class="op">::</span><span class="dt">MPoint</span>) <span class="op">=</span> <span class="fu">MPoint</span>(a.x <span class="op">-</span> b.x, a.y <span class="op">-</span> b.y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ul>
 <li><em>Don’t</em> replace the module via <code>include("src/MyNewPackage.jl")</code>. Instead, just save the file and go back to REPL.</li>
 </ul>
-<div class="sourceCode" id="cb7"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>julia<span class="op">&gt;</span> a <span class="op">=</span> MyNewPackage.<span class="fu">MPoint</span>(<span class="fl">3</span>,<span class="fl">4</span>)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>MyNewPackage.<span class="fu">MPoint</span>(<span class="fl">3</span>, <span class="fl">4</span>)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>julia<span class="op">&gt;</span> b <span class="op">=</span> MyNewPackage.<span class="fu">MPoint</span>(<span class="fl">99</span>,<span class="fl">100</span>)</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>MyNewPackage.<span class="fu">MPoint</span>(<span class="fl">99</span>, <span class="fl">100</span>)</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>julia<span class="op">&gt;</span> a <span class="op">-</span> b</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>MyNewPackage.<span class="fu">MPoint</span>(<span class="op">-</span><span class="fl">96</span>, <span class="op">-</span><span class="fl">96</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>julia<span class="op">&gt;</span> a <span class="op">=</span> MyNewPackage.<span class="fu">MPoint</span>(<span class="fl">3</span>,<span class="fl">4</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>MyNewPackage.<span class="fu">MPoint</span>(<span class="fl">3</span>, <span class="fl">4</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>julia<span class="op">&gt;</span> b <span class="op">=</span> MyNewPackage.<span class="fu">MPoint</span>(<span class="fl">99</span>,<span class="fl">100</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>MyNewPackage.<span class="fu">MPoint</span>(<span class="fl">99</span>, <span class="fl">100</span>)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>julia<span class="op">&gt;</span> a <span class="op">-</span> b</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>MyNewPackage.<span class="fu">MPoint</span>(<span class="op">-</span><span class="fl">96</span>, <span class="op">-</span><span class="fl">96</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ul>
 <li>🎉</li>
 </ul>
@@ -411,21 +465,21 @@ gtag('config', 'G-YG2MPSR1Q2', { 'anonymize_ip': true});
 <li>Debugging simple scripts or packages is the same workflow.</li>
 <li>Let’s add another function. An <em>economic model</em> of sorts:</li>
 </ul>
-<div class="sourceCode" id="cb8"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">econ_model</span>(; startval <span class="op">=</span> <span class="fl">1.0</span>)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># make an Mpoint</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> <span class="fu">MPoint</span>(startval, startval<span class="op">-</span><span class="fl">0.5</span>)</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ... and evaluate a utility function</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">MPoint</span>(<span class="fu">log</span>(x.x),<span class="fu">log</span>(x.y))</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">econ_model</span>(; startval <span class="op">=</span> <span class="fl">1.0</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># make an Mpoint</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> <span class="fu">MPoint</span>(startval, startval<span class="op">-</span><span class="fl">0.5</span>)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ... and evaluate a utility function</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">MPoint</span>(<span class="fu">log</span>(x.x),<span class="fu">log</span>(x.y))</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ul>
 <li>Make sure to try out that it works.</li>
 </ul>
-<div class="sourceCode" id="cb9"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>julia<span class="op">&gt;</span> MyNewPackage.<span class="fu">econ_model</span>()</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>MyNewPackage.<span class="fu">MPoint</span>(<span class="fl">0.0</span>, <span class="op">-</span><span class="fl">0.6931471805599453</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>julia<span class="op">&gt;</span> MyNewPackage.<span class="fu">econ_model</span>()</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>MyNewPackage.<span class="fu">MPoint</span>(<span class="fl">0.0</span>, <span class="op">-</span><span class="fl">0.6931471805599453</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ul>
 <li>Ok great. Now what about that? Try it out!</li>
 </ul>
-<div class="sourceCode" id="cb10"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>julia<span class="op">&gt;</span> MyNewPackage.<span class="fu">econ_model</span>(startval <span class="op">=</span> <span class="fl">0.3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>julia<span class="op">&gt;</span> MyNewPackage.<span class="fu">econ_model</span>(startval <span class="op">=</span> <span class="fl">0.3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ul>
 <li>Good. Let’s pretend we don’t know what’s going on and we need to investigate this function.</li>
 </ul>
@@ -433,9 +487,9 @@ gtag('config', 'G-YG2MPSR1Q2', { 'anonymize_ip': true});
 <li>Add <code>println</code> statements.</li>
 <li>Add <code>@debug</code> statements. then attaching a logger with</li>
 </ol>
-<div class="sourceCode" id="cb11"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Logging</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>debug_logger <span class="op">=</span> <span class="fu">ConsoleLogger</span>(<span class="cn">stdout</span>, <span class="bu">Logging</span>.Debug)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">global_logger</span>(debug_logger)  <span class="co"># turns on logging of @debug messages</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Logging</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>debug_logger <span class="op">=</span> <span class="fu">ConsoleLogger</span>(<span class="cn">stdout</span>, <span class="bu">Logging</span>.Debug)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">global_logger</span>(debug_logger)  <span class="co"># turns on logging of @debug messages</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ol start="3" type="1">
 <li>Use an actual debugger to step through our code.
 <ol type="1">
