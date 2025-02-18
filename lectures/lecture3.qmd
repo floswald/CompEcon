@@ -1,0 +1,223 @@
+---
+title: "Lecture 3: Optimization 1"
+---
+
+
+## Creating a Julia Package for your work
+
+* Creating a package is a great way to ensure reproducibility of your work.
+* It helps to make your work shareable.
+* It helps to test the code which makes up your work.
+* 👉 Let's do it!
+
+## Cookbook
+
+1. Start `julia`
+2. two equivalent options:
+   1. enter `Pkg` mode (hit `]`), then `generate path/to/new/package`, or
+   2. say `using Pkg`, then `Pkg.generate("path/to/new/package")`
+
+Here is an example:
+
+```julia
+
+]    # this jumps into Pkg mode
+
+(@v1.11) pkg> generate CCApackage
+  Generating  project CCApackage:
+    CCApackage/Project.toml
+    CCApackage/src/CCApackage.jl
+
+(@v1.11) pkg> 
+
+```
+
+Depending on where you started your julia session, there is now a new folder `CCApackage`:
+
+```julia
+shell> ls CCApackage/
+Project.toml  src/
+```
+
+It's a good idea to start a new VSCode window at that folder location. Doing so, you would see this:
+
+![Our julia package](images/cca-package.png)
+
+* great. Start a julia repl in the usual way. 
+* Notice how the bottom bar in VSCode keeps indicating the *global* julia environment (`v1.11` for me currently). Given that we have *not* installed this package via `add` into the global env, we cannot use it. To see this, just try to load our package like this:
+
+```julia
+julia> using CCApackage
+ERROR: ArgumentError: Package CCApackage not found in current path.
+- Run `import Pkg; Pkg.add("CCApackage")` to install the CCApackage package.
+```
+
+* We need to switch into the *environment* of this package before we can load it locally. This is called *activate* an environment:
+
+```julia
+]  # in Pkg mode
+(@v1.11) pkg> activate .  # `.` for current directory
+  Activating project at `~/CCApackage`
+
+(CCApackage) pkg>  # hit backspace
+
+julia> using CCApackage
+[ Info: Precompiling CCApackage [c4d85591-a952-48fb-b3d1-49a9454516b2] 
+
+```
+
+OK! That worked! Great, now we can use the functions contained in the package. Let's see:
+
+```julia
+julia> CCApackage.greet()
+Hello World!
+```
+
+::: {.callout-note}
+# Code Loading
+
+Notice how we did not have to say *run current file in REPL* or similar commands. Saying `using CCApackage` immediately made our code available in the current session.
+:::
+
+Next question: How can we now work on the code and investigate it's changes in the REPL? 
+
+1. We can obviously execute the current file in the REPL (basically copy and paste the code into the REPL). But that's cumbersome.
+2. There is a great alternative - `Revise.jl`.
+
+
+
+* Great! Now let's open VSCode in that location and make some changes.
+
+```julia
+module MyNewPackage
+
+mutable struct MPoint
+    x::Number
+    y::Number
+end
+
+import Base.:+
+
++(a::MPoint,b::MPoint) = MPoint(a.x + b.x, a.y + b.y)
+
+end   # module
+```
+
+* Now, we could just `execute active file in REPL` in VSCode, or indeed, type in the REPL `include("src/MyNewPackage.jl")`:
+
+```julia
+julia> include("src/MyNewPackage.jl")
+Main.MyNewPackage
+```
+
+* Now we can test the code in the REPL. 
+* Notice, **importantly**, each time you want to see the effects of changing your code, you have to **replace the module** via `include("src/MyNewPackage.jl")`.
+
+```julia
+julia> include("src/MyNewPackage.jl")
+WARNING: replacing module MyNewPackage.
+```
+
+* Let's add a test for our `+` method in the `test` folder:
+
+```julia
+@testset "MyNewPackage.jl" begin
+    a = MyNewPackage.MPoint(3,5)
+    b = MyNewPackage.MPoint(1,2)
+    @test a + b isa MyNewPackage.MPoint
+    p = a + b
+    @test p.x == a.x + b.x
+    @test p.y == a.y + b.y
+end
+```
+
+* Run the tests from REPL in Pkg mode: `]; test`
+* This *works*, but it involves one extra step that we need to do manually. Small steps add up! So let's try to improve on that.
+* Let's tell the package to add `Revise.jl`: `]; add Revise`. 
+* Shut down and restart VScode in same folder.
+* **Before** anything else, type `using Revise`. Then type `using MyNewPackage`.
+* Let's add a new function now. 
+
+```julia
+-(a::MPoint,b::MPoint) = MPoint(a.x - b.x, a.y - b.y)
+```
+
+* *Don't* replace the module via `include("src/MyNewPackage.jl")`. Instead, just save the file and go back to REPL.
+  
+```julia
+julia> a = MyNewPackage.MPoint(3,4)
+MyNewPackage.MPoint(3, 4)
+
+julia> b = MyNewPackage.MPoint(99,100)
+MyNewPackage.MPoint(99, 100)
+
+julia> a - b
+MyNewPackage.MPoint(-96, -96)
+```
+
+* 🎉
+
+### Debugging A Package
+
+* Debugging simple scripts or packages is the same workflow. 
+* Let's add another function. An _economic model_ of sorts:
+
+```julia
+function econ_model(; startval = 1.0)
+    # make an Mpoint
+    x = MPoint(startval, startval-0.5)
+    # ... and evaluate a utility function
+    MPoint(log(x.x),log(x.y))
+end
+```
+
+* Make sure to try out that it works.
+
+```julia
+julia> MyNewPackage.econ_model()
+MyNewPackage.MPoint(0.0, -0.6931471805599453)
+```
+
+* Ok great. Now what about that? Try it out!
+
+```julia
+julia> MyNewPackage.econ_model(startval = 0.3)
+```
+
+* Good. Let's pretend we don't know what's going on and we need to investigate this function.
+
+1. Add `println` statements.
+2. Add `@debug` statements. then attaching a logger with 
+
+```julia
+using Logging
+debug_logger = ConsoleLogger(stdout, Logging.Debug)
+global_logger(debug_logger)  # turns on logging of @debug messages
+```
+
+3. Use an actual debugger to step through our code.
+   1. `VSCode` exports by default the `@enter` macro. type: `@enter MyNewPackage.econ_model(startval = -0.3)`
+   2. click on teh play symbol. program hits an error. 
+   3. set a break point just before
+   4. click on `replay`.
+
+
+
+
+## Some Julia-Bootcamp stuff
+
+Topic | Notebook
+:-----: | :--------:
+Intro to Macros | [click for notebook](https://floswald.github.io/julia-bootcamp/10-intro-to-macros.html)
+Intro to Differential Equations | [click for notebook](https://floswald.github.io/julia-bootcamp/08-popgrowth.html)
+Plotting with Plots.jl | [click for notebook](https://floswald.github.io/julia-bootcamp/06-plotting.html)
+Plotting with Makie.jl | [click for website](plotting.qmd)
+Interactive | [click for notebook](https://floswald.github.io/julia-bootcamp/07-interactive.html)
+
+
+
+## Optimization, Finally!
+
+Topic | Notebook
+:-----: | :--------:
+Review of Optimization Algorithms | [download notebook](https://raw.githubusercontent.com/floswald/CompEcon/refs/heads/main/notebooks/week3/optimization1.jl)

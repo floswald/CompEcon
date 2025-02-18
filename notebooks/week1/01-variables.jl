@@ -52,7 +52,7 @@ y = x ^ 2
 α + β == 1
 
 # ╔═╡ 4ca5b69a-545b-4713-88f0-592182ee439d
-😄, 💃, 🍕 = (3, 1, 5)  # \:pizza: and TAB
+😄, 💃, 🍕 = (3, 1, 4)  # \:pizza: and TAB
 
 # ╔═╡ 6bf1f569-c6f8-43d0-9ea6-e77f3db4c7c4
 ifelse(😄 + 💃 == 🍕, md"🎉 this is the correct, OMG", md"🤮 Oh no, totally wrong")
@@ -197,6 +197,9 @@ typeof(1+3im)
 
 # ╔═╡ 7a9e0bbe-5e5c-49d9-9f03-c4b75348007c
 one(1+3im)  # multiplicative identity element of imaginary numbers
+
+# ╔═╡ be63e503-76cf-4bed-b68b-ba1123215e16
+π
 
 # ╔═╡ 2751b1b6-cc43-4331-a0ec-6a3b6ed34f1d
 floor(π), ceil(π), round(π, digits =3)
@@ -476,7 +479,7 @@ md"""
  = "anything"
 
 # ╔═╡ ffe63034-c0c9-482b-be17-553beaa429d7
-7.9 => "anyting"
+7.9 => "anything"
 
 
 # ╔═╡ 08fb3ea6-06f3-462d-8bdf-8359b6ed085b
@@ -643,7 +646,7 @@ PlutoUI = "~0.7.34"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.11.2"
+julia_version = "1.11.3"
 manifest_format = "2.0"
 project_hash = "b4f8492afe1a0a2fd1bde81ada41c9319b67eafb"
 
@@ -973,6 +976,7 @@ version = "17.4.0+2"
 # ╠═63d4b74a-c51c-4876-af20-af35a61931a3
 # ╠═4abdd77f-7155-4fcd-b130-0c45c49dae81
 # ╠═7a9e0bbe-5e5c-49d9-9f03-c4b75348007c
+# ╠═be63e503-76cf-4bed-b68b-ba1123215e16
 # ╠═2751b1b6-cc43-4331-a0ec-6a3b6ed34f1d
 # ╠═ba168312-dd09-446e-82c0-e59c888a5b42
 # ╠═894dc9f8-72af-4e12-963c-f848699fd4f2

@@ -24,10 +24,12 @@ website:
           text: Syllabus (pdf)
     - section: Lectures
       contents: 
-        - href: lectures/why-julia.qmd
-          text: Week 1 - Why `julia`?
-        - href: lectures/examples.qmd
-          text: Week 2 - Examples
+        - href: lectures/lecture1.qmd
+          text: Lecture 1 - Why `julia`?
+        - href: lectures/lecture2.qmd
+          text: Lecture 2 - Examples
+        - href: lectures/lecture3.qmd
+          text: Lecture 3 - Optimization
         - href: lectures/plotting.qmd
           text: Makie.jl Plotting
         - href: lectures/numerical-integration.qmd
