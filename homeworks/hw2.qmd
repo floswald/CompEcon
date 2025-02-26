@@ -1,0 +1,16 @@
+---
+title: Homework 2
+sidebar: homeworks
+---
+
+Let's continue with some epidemic stuff! This time we'll add a spatial dimension to our simulation.
+
+Get the homework notebook here. [right click and save this notebook, or copy the link directly into a running Pluto session to open!](https://github.com/floswald/CompEcon/raw/refs/heads/main/notebooks/homework2/epidemic.jl)
+
+
+## Homework Submission
+
+1. When: You have until next *wednesday*.
+2. Who: teams of max 2/3
+3. What: one rendered HTML output of your notebook. make sure all cells (code?) that you want me to see are *visible* in your notebook, or they won't  be visible in the HTML either.
+4. How: dropbox link via slack.

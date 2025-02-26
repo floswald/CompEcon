@@ -10,7 +10,7 @@ title: "Lecture 3: Optimization 1"
 * It helps to test the code which makes up your work.
 * 👉 Let's do it!
 
-## Cookbook
+### Cookbook
 
 1. Start `julia`
 2. two equivalent options:
@@ -23,33 +23,33 @@ Here is an example:
 
 ]    # this jumps into Pkg mode
 
-(@v1.11) pkg> generate CCApackage
-  Generating  project CCApackage:
-    CCApackage/Project.toml
-    CCApackage/src/CCApackage.jl
+(@v1.11) pkg> generate Mypkg
+  Generating  project Mypkg:
+    Mypkg/Project.toml
+    Mypkg/src/Mypkg.jl
 
 (@v1.11) pkg> 
 
 ```
 
-Depending on where you started your julia session, there is now a new folder `CCApackage`:
+Depending on where you started your julia session, there is now a new folder `Mypkg`:
 
 ```julia
-shell> ls CCApackage/
+shell> ls Mypkg/
 Project.toml  src/
 ```
 
 It's a good idea to start a new VSCode window at that folder location. Doing so, you would see this:
 
-![Our julia package](images/cca-package.png)
+![Our julia package](/images/my-pkg.png)
 
 * great. Start a julia repl in the usual way. 
-* Notice how the bottom bar in VSCode keeps indicating the *global* julia environment (`v1.11` for me currently). Given that we have *not* installed this package via `add` into the global env, we cannot use it. To see this, just try to load our package like this:
+* Notice how the bottom bar in VSCode indicates that we are in `Mypkg` env - VScode asked me whether I wanted to change into this. If this is not the case, you won't be able to load our package:
 
 ```julia
-julia> using CCApackage
-ERROR: ArgumentError: Package CCApackage not found in current path.
-- Run `import Pkg; Pkg.add("CCApackage")` to install the CCApackage package.
+julia> using Mypkg
+ERROR: ArgumentError: Package Mypkg not found in current path.
+- Run `import Pkg; Pkg.add("Mypkg")` to install the Mypkg package.
 ```
 
 * We need to switch into the *environment* of this package before we can load it locally. This is called *activate* an environment:
@@ -57,39 +57,190 @@ ERROR: ArgumentError: Package CCApackage not found in current path.
 ```julia
 ]  # in Pkg mode
 (@v1.11) pkg> activate .  # `.` for current directory
-  Activating project at `~/CCApackage`
+  Activating project at `~/Mypkg`
 
-(CCApackage) pkg>  # hit backspace
+(Mypkg) pkg>  # hit backspace
 
-julia> using CCApackage
-[ Info: Precompiling CCApackage [c4d85591-a952-48fb-b3d1-49a9454516b2] 
+julia> using Mypkg
+[ Info: Precompiling Mypkg [c4d85591-a952-48fb-b3d1-49a9454516b2] 
 
 ```
 
-OK! That worked! Great, now we can use the functions contained in the package. Let's see:
+Alternatively, just click on the env indicator in VSCode and choose the current folder.
+
+Great, now we can use the functions contained in the package. Let's see:
 
 ```julia
-julia> CCApackage.greet()
+julia> Mypkg.greet()
 Hello World!
 ```
 
 ::: {.callout-note}
 # Code Loading
 
-Notice how we did not have to say *run current file in REPL* or similar commands. Saying `using CCApackage` immediately made our code available in the current session.
+There are two ways in which we can load code into a running julia session:
+
+1. By `include`ing code - equivalent to copy and pasting code into the REPL, and what happens when we say _execute active file in REPL_ in VSCode. In practice, those mechanisms execute the function `include("some_file.jl")`.
+2. Via _package loading_: We import a set of functions contained in a package, via the `using` or `import` statements.
+
+Notice how we did not have to say *run current file in REPL* or similar commands. Saying `using Mypkg` immediately made our code available in the current session.
 :::
+
+### `Revise.jl`
 
 Next question: How can we now work on the code and investigate it's changes in the REPL? 
 
-1. We can obviously execute the current file in the REPL (basically copy and paste the code into the REPL). But that's cumbersome.
-2. There is a great alternative - `Revise.jl`.
+1. We can obviously execute the current file in the REPL (basically copy and paste the code into the REPL). Again, copy and paste, or `include("file.jl")`. But that's cumbersome.
+2. There is a great alternative - `Revise.jl`. Loading this package *before* you import your package means that `Revise` will track changes in your source code and expose them _immediately_ in what you see in the REPL. `Revise` tracks all changes in our code. Let's go and look the [package documentation](https://timholy.github.io/Revise.jl/stable/).
 
-
-
-* Great! Now let's open VSCode in that location and make some changes.
+Good, let's try this out. Restart the REPL in the `Mypkg` project. First, we add `Revise` to our package's environment, so we can always load it.
 
 ```julia
-module MyNewPackage
+] # for pkg mode
+(Mypkg) pkg> add Revise
+```
+
+Next, let's load `Revise` **before** we import any other code we want to work on:
+
+```julia
+using Revise
+using Mypkg
+```
+
+see again if that works now:
+
+```julia
+julia> Mypkg.greet()
+Hello World!
+```
+
+* Great! Now let's open VSCode in that location and make some changes. Like, let's just change the `greet` function slightly and save the `Mypkg.jl` file:
+
+
+```julia
+greet() = print("Hello Earthlings!")
+```
+
+* Execute again in the REPL (**notice** no code loading action necessary on our behalf!)
+
+```julia
+julia> Mypkg.greet()
+Hello Earthlings!
+```
+
+* Awesome! So we can change our code and immediately try out it's effects. Notice that a limitation of `Revise` tracking are changes to type definitions and removal of `export`s. In early stages of development, when you change the content of your types frequently, that can be an issue. Either restart the REPL after each change of types, or rename them, as illustrated [here](https://timholy.github.io/Revise.jl/stable/limitations/#Limitations).
+* Let us add some more functionality to our package now.
+
+
+```julia
+module Mypkg
+
+greet() = print("Hello Earthlings!")
+
+mutable struct MPoint
+    x::Number
+    y::Number
+end
+# want to add a `+` method: must import all known `+` first
+import Base.:+
++(a::MPoint,b::MPoint) = MPoint(a.x + b.x, a.y + b.y)
+
+end # module Mypkg
+```
+
+* We added a custom data type `MPoint`, and our version of the `+` function for it. Let's try it out in the REPL!
+
+```julia
+julia> a = Mypkg.MPoint(2,3)
+Mypkg.MPoint(2, 3)
+
+julia> b = Mypkg.MPoint(3,1)
+Mypkg.MPoint(3, 1)
+
+julia> a + b
+Mypkg.MPoint(5, 4)
+```
+
+* Ok, seems to work. Isn't it a bit annoying that we always have to type `Mypkg` in front of our functions, though? Does it even work without typing this? What's the deal here?
+
+::: {.callout-tip}
+
+# Module Namespace and `Export`
+
+* By default, _none_ of the objects (functions, variables, etc) contained in a `Module` are visible from outside of it.
+* The keyword `export xyz` will export the name `xyz` from your package into the scope where it was loaded, hence, make it visible to the outside.
+
+:::
+
+* Let's add `export MPoint` in our module definition and try again:
+
+```julia
+julia> a = MPoint(2,3)
+MPoint(2, 3)
+
+julia> b = MPoint(3,1)
+MPoint(3, 1)
+
+julia> a + b
+MPoint(5, 4)
+```
+
+🎉
+
+## Unit Testing
+
+Let's take a quick moment to appreciate what we have done just now: 
+
+1. We added a new feature to our package (added `MPoint` and `+`).
+2. We (or rather, `Revise.jl`) updated the loaded code in our REPL.
+3. We checked that _it works_ (by typing a series of commands, see above).
+
+With some imagination, we could call this process _unit testing_: We added one new aspect (a _feature_, a _unit_, a _piece_,...) to our project, and we **tested** whether it works as we intended it to work.
+
+::: {.callout-warning}
+
+# Automate Testing!
+
+In a more complex environment, we will forget how to establish our check of _this works_. There will be interdepencies between different parts of our code, which we fail to see, and other reasons. We may simple not remember what the setting was when we test this piece of code when we wrote it. 
+
+👉 We should write the test itself down as a piece of code which we regularly execute. Better still: which _someone else executes for us_.
+
+:::
+
+### Testing
+
+* Julia has extensive testing capabilities built in. We need to load the built-in `Test` library to access the tools. See [here in the manual](https://docs.julialang.org/en/v1/stdlib/Test/#Unit-Testing).
+* There is a variety of addon packages which smooth the experience somewhat. I recommend the `TestItemRunner.jl` package, which nicely integrates with the VSCode environment:
+
+```julia
+]  # pkg
+add Test  
+add TestItemRunner
+```
+
+* you have now access to a basic macro called `@test` which checks a boolean outcome:
+
+```julia
+julia> using Test
+
+julia> @test true
+Test Passed
+
+julia> @test false
+Test Failed at REPL[19]:1
+  Expression: false
+
+ERROR: There was an error during testing
+```
+
+* Ok, let's import the `TestItemRunner` into our package (*not* `Test`!), and let's write our first `TestItem`!
+
+```julia
+module Mypkg
+
+greet() = print("Hello Earthlings!")
+
+using TestItemRunner  # allows using @testitem
 
 mutable struct MPoint
     x::Number
@@ -97,70 +248,39 @@ mutable struct MPoint
 end
 
 import Base.:+
-
 +(a::MPoint,b::MPoint) = MPoint(a.x + b.x, a.y + b.y)
 
-end   # module
-```
-
-* Now, we could just `execute active file in REPL` in VSCode, or indeed, type in the REPL `include("src/MyNewPackage.jl")`:
-
-```julia
-julia> include("src/MyNewPackage.jl")
-Main.MyNewPackage
-```
-
-* Now we can test the code in the REPL. 
-* Notice, **importantly**, each time you want to see the effects of changing your code, you have to **replace the module** via `include("src/MyNewPackage.jl")`.
-
-```julia
-julia> include("src/MyNewPackage.jl")
-WARNING: replacing module MyNewPackage.
-```
-
-* Let's add a test for our `+` method in the `test` folder:
-
-```julia
-@testset "MyNewPackage.jl" begin
-    a = MyNewPackage.MPoint(3,5)
-    b = MyNewPackage.MPoint(1,2)
-    @test a + b isa MyNewPackage.MPoint
-    p = a + b
-    @test p.x == a.x + b.x
-    @test p.y == a.y + b.y
+@testitem "Test MPoint +" begin
+	x = [rand(1:10) for i in 1:4]
+	A = MPoint(x[1],x[2])
+	B = MPoint(x[3],x[4])
+	C = A + B 
+	@test C isa MPoint
+	@test C.x == A.x + B.x
+	@test C.y == A.y + B.y
+	@test C.x == x[1] + x[3]
+	@test C.y == x[2] + x[4]
 end
+
+export MPoint
+end # module Mypkg
 ```
 
-* Run the tests from REPL in Pkg mode: `]; test`
-* This *works*, but it involves one extra step that we need to do manually. Small steps add up! So let's try to improve on that.
-* Let's tell the package to add `Revise.jl`: `]; add Revise`. 
-* Shut down and restart VScode in same folder.
-* **Before** anything else, type `using Revise`. Then type `using MyNewPackage`.
-* Let's add a new function now. 
+* Notice the green _play_ symbol which appears in our VSCode next to the line where the `testitem` starts. Click it! 😉
 
-```julia
--(a::MPoint,b::MPoint) = MPoint(a.x - b.x, a.y - b.y)
-```
+### Organizing Files
 
-* *Don't* replace the module via `include("src/MyNewPackage.jl")`. Instead, just save the file and go back to REPL.
-  
-```julia
-julia> a = MyNewPackage.MPoint(3,4)
-MyNewPackage.MPoint(3, 4)
+* Our package is starting to look a bit cluttered by now. 
+* You can freely arrange your code over multiple files, which you then `include("file1.jl")` into your module. Also, let's move the tests to a dedicated directory. Let's try to arrange everything into this view in VSCode:
 
-julia> b = MyNewPackage.MPoint(99,100)
-MyNewPackage.MPoint(99, 100)
+![Growing our package: Here we see the main `Module` definition including the code for `MPoint`, we see in the left file browser the structure of the package, and we illustrate how the `Project.toml` file has evolved so far, keeping track of our dependencies.](/images/my-pkg2.png)
 
-julia> a - b
-MyNewPackage.MPoint(-96, -96)
-```
 
-* 🎉
+## Debugging
 
-### Debugging A Package
-
+* With _debugging_ we generally mean the ability to step through our code in an interactive fashion to repair bugs 🐛 as they appear in our code. General concepts to know are _a debugger_ (a program which knows how to attach to our actual program), _a breakpoint_ (a location in our code where the program will stop - ideally before an error occurs), and _stepping_ in various forms.
 * Debugging simple scripts or packages is the same workflow. 
-* Let's add another function. An _economic model_ of sorts:
+* Let's add another function to our package now at the bottom of `mpoint.jl` maybe? An _economic model_ of sorts:
 
 ```julia
 function econ_model(; startval = 1.0)
@@ -174,30 +294,56 @@ end
 * Make sure to try out that it works.
 
 ```julia
-julia> MyNewPackage.econ_model()
-MyNewPackage.MPoint(0.0, -0.6931471805599453)
+julia> Mypkg.econ_model()
+Mypkg.MPoint(0.0, -0.6931471805599453)
 ```
 
 * Ok great. Now what about that? Try it out!
 
 ```julia
-julia> MyNewPackage.econ_model(startval = 0.3)
+julia> Mypkg.econ_model(startval = 0.3)
 ```
 
-* Good. Let's pretend we don't know what's going on and we need to investigate this function.
+* Error. Good. 😜 Let's pretend we don't know what's going on and we need to investigate this function more in detail.
 
-1. Add `println` statements.
-2. Add `@debug` statements. then attaching a logger with 
+### Debugging Strategies
 
-```julia
-using Logging
-debug_logger = ConsoleLogger(stdout, Logging.Debug)
-global_logger(debug_logger)  # turns on logging of @debug messages
-```
+1. Add `println` statements: simplest is to just print output along the way, before an error occurs.
+2. Use the `Logging` [module](https://docs.julialang.org/en/v1/stdlib/Logging/). Add `@debug` statements. This is preferable, because you can leave the `@debug` statements in your code without any performance implication. Logging works as follows:
+
+   	1. insert debug statements in your code: `@info, @warn, @debug` etc
+   	2. create a logger at a certain logging level
+   	3. run code
+
+   ```julia
+   julia> using Logging  # loads the standard logger at Info level
+
+   julia> @info "just for info"
+   [ Info: just for info
+
+   julia> @debug "whoaa, this looks suspicious! 😬"
+   ```
+
+   Notice that this prints nothing! Let's use debug logger instead for this one:
+
+   ```julia
+   julia> with_logger(ConsoleLogger(stdout, Logging.Debug)) do
+              @debug "whoaa, this looks suspicious! 😬"
+          end
+   ┌ Debug: whoaa, this looks suspicious! 😬
+   └ @ Main REPL[30]:2
+   ```
+
+   We can set the `global_logger` to capture all messages like this:
+
+   ```julia
+   global_logger(ConsoleLogger(stdout, Logging.Debug)) # Logging.Debug sets level to `Debug`
+   old_log = global_logger(debug_logger)  # returns previous logger, so can set back later.
+   ```
 
 3. Use an actual debugger to step through our code.
-   1. `VSCode` exports by default the `@enter` macro. type: `@enter MyNewPackage.econ_model(startval = -0.3)`
-   2. click on teh play symbol. program hits an error. 
+   1. `VSCode` exports by default the `@enter` macro. type: `@enter Mypkg.econ_model(startval = -0.3)`
+   2. click on the play symbol. program hits an error. 
    3. set a break point just before
    4. click on `replay`.
 
