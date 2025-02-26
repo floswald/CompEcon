@@ -400,14 +400,24 @@
     "href": "homeworks/hw2.html",
     "title": "Homework 2",
     "section": "",
-    "text": "Let’s continue with some epidemic stuff! This time we’ll add a spatial dimension to our simulation.\nGet the homework notebook here. right click and save this notebook, or copy the link directly into a running Pluto session to open!\n© Florian Oswald, 2025"
+    "text": "Let’s continue with some epidemic stuff! This time we’ll add a spatial dimension to our simulation.\nGet the homework notebook here. right click and save this notebook, or copy the link directly into a running Pluto session to open!\n© Florian Oswald, 2025",
+    "crumbs": [
+      "Home",
+      "Homeworks",
+      "Homework 2"
+    ]
   },
   {
     "objectID": "homeworks/hw2.html#homework-submission",
     "href": "homeworks/hw2.html#homework-submission",
     "title": "Homework 2",
     "section": "Homework Submission",
-    "text": "Homework Submission\n\nWhen: You have until next wednesday.\nWho: teams of max 2/3\nWhat: one rendered HTML output of your notebook. make sure all cells (code?) that you want me to see are visible in your notebook, or they won’t be visible in the HTML either.\nHow: dropbox link via slack."
+    "text": "Homework Submission\n\nWhen: You have until next wednesday.\nWho: teams of max 2/3\nWhat: one rendered HTML output of your notebook. make sure all cells (code?) that you want me to see are visible in your notebook, or they won’t be visible in the HTML either.\nHow: dropbox link via slack.",
+    "crumbs": [
+      "Home",
+      "Homeworks",
+      "Homework 2"
+    ]
   },
   {
     "objectID": "homeworks/hw1.html",
