@@ -1,5 +1,5 @@
 ---
-title: Homework Zero
+title: Homework 0 (zero)
 sidebar: homeworks
 ---
 

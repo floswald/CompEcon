@@ -1,5 +1,5 @@
 ---
-title: Homework One
+title: Homework 1
 sidebar: homeworks
 ---
 

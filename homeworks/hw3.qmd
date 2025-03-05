@@ -6,7 +6,7 @@ sidebar: homeworks
 Time for some optimization around here! Let me introduce you to the well known _probit model_! 😁
 
 
-Get the homework notebook here. [right click and save this notebook, or copy the link directly into a running Pluto session to open!](https://github.com/floswald/CompEcon/raw/refs/heads/main/notebooks/homework3/probit.jl)
+Get the homework notebook here. [right click and save this notebook, or copy the link directly into a running Pluto session to open!](https://github.com/floswald/CompEcon/raw/refs/heads/main/notebooks/homework3/Probit.jl)
 
 
 ## Homework Submission
