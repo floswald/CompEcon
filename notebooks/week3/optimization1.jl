@@ -1,17 +1,19 @@
 ### A Pluto.jl notebook ###
-# v0.19.46
+# v0.20.4
 
 using Markdown
 using InteractiveUtils
 
 # This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
 macro bind(def, element)
+    #! format: off
     quote
         local iv = try Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value catch; b -> missing; end
         local el = $(esc(element))
         global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : iv(el)
         el
     end
+    #! format: on
 end
 
 # ╔═╡ b1a45f30-beec-4089-904c-488b86b56a9e
@@ -277,18 +279,15 @@ md"""
 #
 """
 
-# ╔═╡ 3729833f-80d4-4948-8d81-750008c8f16d
-begin
-	# long form taking an x and a y
-	function rosen₃(x,y)
-		(1-x)^2 + 5*(y - x^2)^2
-	end
-	# short form taking a vector x
-	rosen₄(x,y) = (1-x[1])^2 + 5*(x[2] - x[1]^2)^2
+# ╔═╡ b77cce38-66b2-46a0-b5d3-bba2558d1645
+# long form taking an x and a y
+function rosen₃(x,y)
+	(1-x)^2 + 5*(y - x^2)^2
 end
 
-# ╔═╡ 2eae1d35-df83-415f-87a5-1a5e0d1d649e
-rosen₄([1,1])
+# ╔═╡ ea031d13-dbc5-4936-97b0-f4e7100de612
+# short form taking a vector x
+rosen₄(x,y) = (1-x)^2 + 5*(y - x^2)^2
 
 # ╔═╡ 7172d082-e6d2-419b-8bb6-75e30f1b4dfe
 md"""
@@ -400,7 +399,7 @@ $$f'(x) \equiv \lim_{h\to0}\frac{f(x+h)-f(x)}{h}$$
 u(c; σ = 2) = ((c)^(1-σ)) / (1-σ)
 
 # ╔═╡ 986fcae1-138c-42f6-810e-e3c193f669bb
-u(2.2)
+u(1.2)
 
 # ╔═╡ b901c4aa-38f8-476a-8c9e-7eb523f59438
 eps()
@@ -418,7 +417,7 @@ let
 	c = 2.2
 	∂u∂c = (u(c + h) - u(c)) / h  # definition from above!
 
-	Dict(:finite_diff => ∂u∂c, :truth_Paolo => c^-2)
+	Dict(:finite_diff => ∂u∂c, :truth_Enzo => c^-2)
 end
 
 # ╔═╡ 645ef857-aff9-4dee-bfd6-72fe9d542375
@@ -453,6 +452,79 @@ $$H_f(x) = \left( \begin{array}{cccc}
 * or you just imagine the gradien from above, and then differentiate each element *again* wrt to all components of $x$.
     
 """
+
+# ╔═╡ 7fea8a22-d9c8-4b26-b3fc-9dc6c46a78e3
+md"""
+## Visualizing Gradients
+
+* We have already seen that a contour plot is very useful. Let's look at another function which which has an interesting shape in a domain of interest $[-3,3] \times [-4,1]$
+
+$$f₂(x) = \sin(x_1 + x_2) + \cos(x_1)^2$$
+
+"""
+
+# ╔═╡ 4c8029f3-8668-4cbf-8d1b-2994d2d6d432
+begin
+	f2(x) = sin(x[1] + x[2]) + cos(x[1])^2
+	g2(x) = [cos(x[1] + x[2]) - 2*cos(x[1])*sin(x[1]); cos(x[1] + x[2])]
+	f2(x1,x2) = f2([x1;x2])
+end
+
+# ╔═╡ 8139c6e0-619d-4c64-921c-d118ba6fd6be
+g2([0 , -3])
+
+# ╔═╡ d3ac10f6-8c68-4c46-a423-6937e66ff228
+let
+	xs = range(-3, 3, length = 40)
+	ys = range(-4, 1, length = 40)
+
+	contourf(xs, ys, f2, color = :jet,size = (700,450))
+end
+
+# ╔═╡ 38986736-f586-41ac-9799-f87fdb6f2d4f
+md"""
+* What is the *gradient* of this function? Let's call it $g_2(x)$ and work it out!
+* Reminder about differentiation rules for sines: $$\frac{\partial \sin x}{\partial x} = \cos(x)$$
+* Reminder about differentiation rules for cosines: $$\frac{\partial \cos x}{\partial x} = -\sin(x)$$
+"""
+
+# ╔═╡ eca34c92-611f-44c2-b5db-3d2fba1e3933
+md"""
+## Gradients as a Vector Field
+
+* The derivative (the gradient) is the direction of the steepest ascent of a function.
+* The next figure shows you size and direction of the derivative at different points.
+* Because along a contour line, the function has the same value, and because the derivative points into the steepest direction, the arrows are perpendicular to the contour lines.
+* You can also see that local optima have a zero sized deriative.
+"""
+
+# ╔═╡ 9f3445fd-1655-4dd5-a423-3471f9ef835f
+let
+	xs = range(-3, 3, length = 40)
+	ys = range(-4, 1, length = 40)
+	axs = range(-3, 3, length = 20)
+	ays = range(-4, 1, length = 20)
+
+	plt = contourf(xs, ys, f2;
+	    xlims = (minimum(xs), maximum(xs)),
+	    ylims = (minimum(ys), maximum(ys)),
+	    color = :jet,size = (700,450)
+	)
+
+	# make vector field
+	α = 0.25 # length of arrow
+	for x1 in axs, x2 in ays
+	    x = [x1; x2]
+	    x_grad = [x x.+α.*g2(x)]
+	
+	    plot!(x_grad[1, :], x_grad[2, :];
+	        line = (:arrow, 1.5, :black),
+	        label = "",
+	    )
+	end
+	plt
+
+end
 
 # ╔═╡ 06ca10a8-c922-4252-91d2-e025ab306f02
 md"""
@@ -702,6 +774,9 @@ ForwardDiff.gradient(rosen₁, [1.0,1.0])  # notice: EXACTLY zero.
 
 # ╔═╡ b4ade3a3-668e-495b-9b7b-ad45fdf2655b
 ForwardDiff.hessian(rosen₁, [1.0,1.0])  # again, no rounding error.
+
+# ╔═╡ 362d0b2f-be8c-4b6c-a3d6-712af603530e
+
 
 # ╔═╡ 9431caba-619d-4104-a267-914a9bcc78ef
 md"""
@@ -2341,8 +2416,8 @@ version = "1.4.1+2"
 # ╠═2dbb5b13-790a-4ab7-95b1-b833c4cb027a
 # ╟─f51233c4-ec66-4517-9109-5309601d1d87
 # ╟─1d698018-8b77-490d-ad3a-6c7001aa99ab
-# ╠═3729833f-80d4-4948-8d81-750008c8f16d
-# ╠═2eae1d35-df83-415f-87a5-1a5e0d1d649e
+# ╠═b77cce38-66b2-46a0-b5d3-bba2558d1645
+# ╠═ea031d13-dbc5-4936-97b0-f4e7100de612
 # ╟─7172d082-e6d2-419b-8bb6-75e30f1b4dfe
 # ╠═e7841458-f641-48cf-8667-1e5b38cbd9f6
 # ╠═abbc5a52-a02c-4f5b-bd1e-af5596455762
@@ -2374,6 +2449,13 @@ version = "1.4.1+2"
 # ╠═3fd2f03a-fc52-4009-b284-0def00be601f
 # ╠═27d955de-8d97-43e4-9176-aad5456eb797
 # ╟─645ef857-aff9-4dee-bfd6-72fe9d542375
+# ╠═7fea8a22-d9c8-4b26-b3fc-9dc6c46a78e3
+# ╠═8139c6e0-619d-4c64-921c-d118ba6fd6be
+# ╟─4c8029f3-8668-4cbf-8d1b-2994d2d6d432
+# ╟─d3ac10f6-8c68-4c46-a423-6937e66ff228
+# ╟─38986736-f586-41ac-9799-f87fdb6f2d4f
+# ╟─eca34c92-611f-44c2-b5db-3d2fba1e3933
+# ╟─9f3445fd-1655-4dd5-a423-3471f9ef835f
 # ╟─06ca10a8-c922-4252-91d2-e025ab306f02
 # ╟─ab589e93-a4ca-45be-882c-bc3da47e4d1c
 # ╠═d4bb171d-3c1c-463a-9360-c78bdfc83363
@@ -2415,6 +2497,7 @@ version = "1.4.1+2"
 # ╟─4c60c221-545c-4050-bfea-211048a36bce
 # ╠═2d1f128c-bcfa-4017-9690-01f3f75c3efa
 # ╠═b4ade3a3-668e-495b-9b7b-ad45fdf2655b
+# ╠═362d0b2f-be8c-4b6c-a3d6-712af603530e
 # ╟─9431caba-619d-4104-a267-914a9bcc78ef
 # ╟─58f32a65-1ef8-4d9a-a874-00f7df563b3c
 # ╠═4d2a5726-2704-4b63-b334-df5175278b18
