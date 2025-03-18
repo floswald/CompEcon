@@ -1,0 +1,1923 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.40">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Function Approximation – Computational Economics</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../..//images/cca.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-6bd9cfa162949bde0a231f530c97869d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-YG2MPSR1Q2"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+ 
+  gtag('consent', 'default', {
+    'ad_storage': 'denied',
+    'analytics_storage': 'denied'
+  });
+gtag('config', 'G-YG2MPSR1Q2', { 'anonymize_ip': true});
+</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../styles.css">
+<meta name="twitter:title" content="Function Approximation – Computational Economics">
+<meta name="twitter:description" content="">
+<meta name="twitter:image" content="https://floswald.github.io/CompEcon/notebooks/week7/smolyak-tensortab.png">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../images/cca-julia.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Computational Economics</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+    <div class="dropdown">
+      <a href="" title="" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label=""><i class="bi bi-github"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item quarto-navbar-tools-item" href="https://github.com/floswald/CompEcon">
+            Source Code
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item quarto-navbar-tools-item" href="https://github.com/floswald/CompEcon/issues/new">
+            Report a Bug
+            </a>
+          </li>
+      </ul>
+    </div>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Function Approximation</li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
+ <span class="menu-text">Setup</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../installation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Installation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../cheatsheets.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cheatsheets</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../syllabus.pdf" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Syllabus (pdf)</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+ <span class="menu-text">Lectures</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../lectures/lecture1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1 - Why <code>julia</code>?</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../lectures/lecture2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2 - Examples</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../lectures/lecture3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3 - Optimization</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../lectures/lecture4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4 - Optimization 2</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../lectures/lecture5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">5 - Dynamic Programming</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../lectures/plotting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Makie.jl Plotting</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../lectures/numerical-integration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Numerical Integration</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../lectures/absorbing-mc.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Absorbing Markov Chains</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
+ <span class="menu-text">Homeworks</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../homeworks/hw0.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Homework 0 (zero)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../homeworks/hw1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Homework 1</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../homeworks/hw2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Homework 2</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../homeworks/hw3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Homework 3</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#outline" id="toc-outline" class="nav-link active" data-scroll-target="#outline">Outline</a></li>
+  <li><a href="#approximation-methods" id="toc-approximation-methods" class="nav-link" data-scroll-target="#approximation-methods">Approximation Methods</a></li>
+  <li><a href="#isnt-this-machine-learning" id="toc-isnt-this-machine-learning" class="nav-link" data-scroll-target="#isnt-this-machine-learning">Isn’t this Machine Learning?</a></li>
+  <li><a href="#some-taxonomy" id="toc-some-taxonomy" class="nav-link" data-scroll-target="#some-taxonomy">Some Taxonomy</a></li>
+  <li><a href="#doing-interpolation-in-julia" id="toc-doing-interpolation-in-julia" class="nav-link" data-scroll-target="#doing-interpolation-in-julia">Doing Interpolation in Julia</a>
+  <ul class="collapse">
+  <li><a href="#what-is-a-vector-space" id="toc-what-is-a-vector-space" class="nav-link" data-scroll-target="#what-is-a-vector-space">What is a Vector Space?</a></li>
+  </ul></li>
+  <li><a href="#examples-of-vector-spaces" id="toc-examples-of-vector-spaces" class="nav-link" data-scroll-target="#examples-of-vector-spaces">Examples of Vector Spaces</a></li>
+  <li><a href="#a-linear-basis" id="toc-a-linear-basis" class="nav-link" data-scroll-target="#a-linear-basis">A Linear Basis</a></li>
+  <li><a href="#linear-combinations" id="toc-linear-combinations" class="nav-link" data-scroll-target="#linear-combinations">Linear Combinations</a></li>
+  <li><a href="#linear-independence" id="toc-linear-independence" class="nav-link" data-scroll-target="#linear-independence">Linear Independence</a>
+  <ul class="collapse">
+  <li><a href="#basis-definition" id="toc-basis-definition" class="nav-link" data-scroll-target="#basis-definition"><em>Basis</em> Definition</a></li>
+  <li><a href="#basis-example-in-r2" id="toc-basis-example-in-r2" class="nav-link" data-scroll-target="#basis-example-in-r2">Basis Example in R2</a></li>
+  </ul></li>
+  <li><a href="#what-is-a-basis-function" id="toc-what-is-a-basis-function" class="nav-link" data-scroll-target="#what-is-a-basis-function">What is a Basis <em>function</em>?</a></li>
+  <li><a href="#approximating-functions" id="toc-approximating-functions" class="nav-link" data-scroll-target="#approximating-functions">Approximating Functions</a></li>
+  <li><a href="#regression-basics" id="toc-regression-basics" class="nav-link" data-scroll-target="#regression-basics">Regression Basics</a></li>
+  <li><a href="#spectral-and-finite-element-methods" id="toc-spectral-and-finite-element-methods" class="nav-link" data-scroll-target="#spectral-and-finite-element-methods">Spectral and Finite Element Methods</a></li>
+  <li><a href="#what-makes-a-good-approximation" id="toc-what-makes-a-good-approximation" class="nav-link" data-scroll-target="#what-makes-a-good-approximation">What makes a <strong>good</strong> Approximation?</a></li>
+  <li><a href="#what-polynomial-to-use-what-form-for-phi" id="toc-what-polynomial-to-use-what-form-for-phi" class="nav-link" data-scroll-target="#what-polynomial-to-use-what-form-for-phi">What Polynomial to use? What form for <span class="math inline">\(\Phi\)</span>?</a>
+  <ul class="collapse">
+  <li><a href="#choosing-basis-matrices" id="toc-choosing-basis-matrices" class="nav-link" data-scroll-target="#choosing-basis-matrices">Choosing Basis Matrices</a></li>
+  <li><a href="#choosing-basis-matrices-1" id="toc-choosing-basis-matrices-1" class="nav-link" data-scroll-target="#choosing-basis-matrices-1">Choosing Basis Matrices</a></li>
+  <li><a href="#chebyshev-polynomials-of-the-first-kind" id="toc-chebyshev-polynomials-of-the-first-kind" class="nav-link" data-scroll-target="#chebyshev-polynomials-of-the-first-kind">Chebyshev Polynomials <em>of the first kind</em></a></li>
+  </ul></li>
+  <li><a href="#chebyshev-nodes" id="toc-chebyshev-nodes" class="nav-link" data-scroll-target="#chebyshev-nodes">Chebyshev Nodes</a>
+  <ul class="collapse">
+  <li><a href="#constructing-phi-as-t-evaluated-at-the-chebyshev-nodes" id="toc-constructing-phi-as-t-evaluated-at-the-chebyshev-nodes" class="nav-link" data-scroll-target="#constructing-phi-as-t-evaluated-at-the-chebyshev-nodes">Constructing <span class="math inline">\(\Phi\)</span> as <span class="math inline">\(T\)</span> evaluated <em>at</em> the Chebyshev Nodes</a></li>
+  </ul></li>
+  <li><a href="#chebyshev-interpolation-proceedure" id="toc-chebyshev-interpolation-proceedure" class="nav-link" data-scroll-target="#chebyshev-interpolation-proceedure">(Chebyshev) Interpolation Proceedure</a></li>
+  <li><a href="#polynomial-interpolation-with-julia-approxfun.jl" id="toc-polynomial-interpolation-with-julia-approxfun.jl" class="nav-link" data-scroll-target="#polynomial-interpolation-with-julia-approxfun.jl">Polynomial Interpolation with <code>Julia</code>: <code>ApproxFun.jl</code></a></li>
+  <li><a href="#splines-piecewise-polynomial-approximation" id="toc-splines-piecewise-polynomial-approximation" class="nav-link" data-scroll-target="#splines-piecewise-polynomial-approximation">Splines: Piecewise Polynomial Approximation</a>
+  <ul class="collapse">
+  <li><a href="#splines-basic-setup" id="toc-splines-basic-setup" class="nav-link" data-scroll-target="#splines-basic-setup">Splines: Basic Setup</a></li>
+  <li><a href="#splines-characterization" id="toc-splines-characterization" class="nav-link" data-scroll-target="#splines-characterization">Splines: Characterization</a></li>
+  </ul></li>
+  <li><a href="#b-splines-definition" id="toc-b-splines-definition" class="nav-link" data-scroll-target="#b-splines-definition">B-Splines: Definition</a></li>
+  <li><a href="#b-splines-derivatives-and-integrals" id="toc-b-splines-derivatives-and-integrals" class="nav-link" data-scroll-target="#b-splines-derivatives-and-integrals">B-Splines: Derivatives and Integrals</a></li>
+  <li><a href="#linear-b-spline-a-useful-special-case" id="toc-linear-b-spline-a-useful-special-case" class="nav-link" data-scroll-target="#linear-b-spline-a-useful-special-case">Linear B-Spline: A useful special case</a></li>
+  <li><a href="#linear-b-spline-evaluation" id="toc-linear-b-spline-evaluation" class="nav-link" data-scroll-target="#linear-b-spline-evaluation">Linear B-Spline: Evaluation</a></li>
+  <li><a href="#the-importance-of-knot-placement" id="toc-the-importance-of-knot-placement" class="nav-link" data-scroll-target="#the-importance-of-knot-placement">The Importance of Knot Placement</a></li>
+  <li><a href="#interpolation-with-interpolations.jl" id="toc-interpolation-with-interpolations.jl" class="nav-link" data-scroll-target="#interpolation-with-interpolations.jl">Interpolation with <code>Interpolations.jl</code></a></li>
+  <li><a href="#the-compecon-toolbox-of-miranda-and-fackler" id="toc-the-compecon-toolbox-of-miranda-and-fackler" class="nav-link" data-scroll-target="#the-compecon-toolbox-of-miranda-and-fackler">The CompEcon Toolbox of Miranda and Fackler</a></li>
+  <li><a href="#multidimensional-approximation" id="toc-multidimensional-approximation" class="nav-link" data-scroll-target="#multidimensional-approximation">Multidimensional Approximation</a></li>
+  <li><a href="#tensor-product-of-univariate-basis-functions-product-rule" id="toc-tensor-product-of-univariate-basis-functions-product-rule" class="nav-link" data-scroll-target="#tensor-product-of-univariate-basis-functions-product-rule">Tensor Product of univariate Basis Functions: Product Rule</a></li>
+  <li><a href="#computing-coefficients-from-tensor-product-spaces" id="toc-computing-coefficients-from-tensor-product-spaces" class="nav-link" data-scroll-target="#computing-coefficients-from-tensor-product-spaces">Computing Coefficients from Tensor Product Spaces</a>
+  <ul class="collapse">
+  <li><a href="#the-problem-with-tensor-product-of-univariate-basis-functions" id="toc-the-problem-with-tensor-product-of-univariate-basis-functions" class="nav-link" data-scroll-target="#the-problem-with-tensor-product-of-univariate-basis-functions">The Problem with Tensor Product of univariate Basis Functions</a></li>
+  </ul></li>
+  <li><a href="#using-sparsity-of-splines" id="toc-using-sparsity-of-splines" class="nav-link" data-scroll-target="#using-sparsity-of-splines">Using Sparsity of Splines</a></li>
+  <li><a href="#high-dimensional-functions-introducing-the-smolyak-grid" id="toc-high-dimensional-functions-introducing-the-smolyak-grid" class="nav-link" data-scroll-target="#high-dimensional-functions-introducing-the-smolyak-grid">High Dimensional Functions: Introducing the Smolyak Grid</a></li>
+  <li><a href="#the-smolyak-grid-in-2-dimensions" id="toc-the-smolyak-grid-in-2-dimensions" class="nav-link" data-scroll-target="#the-smolyak-grid-in-2-dimensions">The Smolyak Grid in 2 Dimensions</a></li>
+  <li><a href="#the-smolyak-grid-in-2d-tensor-table" id="toc-the-smolyak-grid-in-2d-tensor-table" class="nav-link" data-scroll-target="#the-smolyak-grid-in-2d-tensor-table">The Smolyak Grid in 2D: Tensor Table</a>
+  <ul class="collapse">
+  <li><a href="#selecting-elements" id="toc-selecting-elements" class="nav-link" data-scroll-target="#selecting-elements">Selecting Elements</a></li>
+  <li><a href="#size-of-smolyak-grids" id="toc-size-of-smolyak-grids" class="nav-link" data-scroll-target="#size-of-smolyak-grids">Size of Smolyak Grids</a></li>
+  <li><a href="#smolyak-polynomials" id="toc-smolyak-polynomials" class="nav-link" data-scroll-target="#smolyak-polynomials">Smolyak Polynomials</a></li>
+  <li><a href="#smolyak-interpolation" id="toc-smolyak-interpolation" class="nav-link" data-scroll-target="#smolyak-interpolation">Smolyak Interpolation</a></li>
+  <li><a href="#extensions" id="toc-extensions" class="nav-link" data-scroll-target="#extensions">Extensions</a></li>
+  <li><a href="#smolyak-grids-in-julia" id="toc-smolyak-grids-in-julia" class="nav-link" data-scroll-target="#smolyak-grids-in-julia">Smolyak Grids in Julia</a></li>
+  </ul></li>
+  <li><a href="#using-smolyak-from-basismatrices" id="toc-using-smolyak-from-basismatrices" class="nav-link" data-scroll-target="#using-smolyak-from-basismatrices">Using (Smolyak from) <code>BasisMatrices</code></a>
+  <ul class="collapse">
+  <li><a href="#outline-1" id="toc-outline-1" class="nav-link" data-scroll-target="#outline-1">Outline</a></li>
+  <li><a href="#more-on-sparse-grids" id="toc-more-on-sparse-grids" class="nav-link" data-scroll-target="#more-on-sparse-grids">More on Sparse Grids</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Function Approximation</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Collegio Carlo Alberto, Spring 2025</p>
+<section id="outline" class="level2">
+<h2 class="anchored" data-anchor-id="outline">Outline</h2>
+<ol type="1">
+<li>Overview of Approximation Methods
+<ol type="1">
+<li>Interpolation</li>
+<li>Regression</li>
+</ol></li>
+<li>Polynomial Interpolation</li>
+<li>Spline Interpolation</li>
+<li>Multidimensional Approximation</li>
+</ol>
+</section>
+<section id="approximation-methods" class="level2">
+<h2 class="anchored" data-anchor-id="approximation-methods">Approximation Methods</h2>
+<ul>
+<li>Confronted with a non-analytic function <span class="math inline">\(f\)</span> (i.e.&nbsp;something not like <span class="math inline">\(log(x)\)</span>), we need a way to numerically represent <span class="math inline">\(f\)</span> in a computer.
+<ul>
+<li>If your problem is to compute a value function in a dynamic problem, you often don’t have an <em>analytic representation</em> of <span class="math inline">\(V\)</span>.</li>
+<li>If you need to compute an equilibrium distribution for your model, you probably can’t tell it’s from one parametric family or another. Hence you need to <em>approximate</em> it.</li>
+</ul></li>
+<li>Approximations use <em>data</em> of some kind which informs us about <span class="math inline">\(f\)</span>. Most commonly, we know the function values <span class="math inline">\(f(x_i)\)</span> at a corresponding finite set of points <span class="math inline">\(X = \{x_i\}_{i=1}^N\)</span>.</li>
+<li>The task of approximation is to take that data and tell us what the function value is at <span class="math inline">\(f(y),y\not \in X\)</span>.</li>
+<li>To an economist this should sound very familiar: take a dataset, learn it’s structure, and make predictions.</li>
+<li>The only difference is that we can do much better here, because we have more degree’s of freedom (we can choose our <span class="math inline">\(X\)</span> in <span class="math inline">\(Y=\beta X + \epsilon\)</span>)</li>
+</ul>
+</section>
+<section id="isnt-this-machine-learning" class="level2">
+<h2 class="anchored" data-anchor-id="isnt-this-machine-learning">Isn’t this Machine Learning?</h2>
+<ul>
+<li>You should notice that this sounds <em>very similar</em> to what machine learning attempts to do as well: <strong>make predictions on unseen data</strong>.</li>
+<li>So: what is different here?
+<ol type="1">
+<li>We focus mostly on in-sample prediction.</li>
+<li>Machine learning exerts a lot of computational effort to train a model <em>once</em> very well, then uses the model to make many, many predictions.</li>
+<li>We want to estimate structural economic models by <em>changing the parameters of the model</em> often; we would need to <em>train the model very often</em>, and use it make a prediction <strong>exactly once</strong>.</li>
+<li>That said, there are many frontier methods which use deep learning to solve economic models: https://web.stanford.edu/~maliars/Files/JME2021.pdf, https://onlinelibrary.wiley.com/doi/full/10.1111/iere.12575 and references therein.</li>
+</ol></li>
+</ul>
+</section>
+<section id="some-taxonomy" class="level2">
+<h2 class="anchored" data-anchor-id="some-taxonomy">Some Taxonomy</h2>
+<ul>
+<li>Local Approximations: approximate function and it’s derivative <span class="math inline">\(f,f'\)</span> at a <em>single</em> point <span class="math inline">\(x_0\)</span>. Taylor Series: <span class="math display">\[ f(x) = f(x_0) + (x-x_0)f'(x_0) + \frac{(x-x_0)^2}{2}f''(x_0) + \dots + \frac{(x-x_0)^n}{n!}f^{n}(x_0) \]</span></li>
+<li>Interpolation or <em>Colocation</em>: find a function <span class="math inline">\(\hat{f}\)</span> that is a good fit to <span class="math inline">\(f\)</span>, and require that <span class="math inline">\(\hat{f}\)</span> <em>passes through</em> the points. If we think of there being a <em>residual</em> <span class="math inline">\(\epsilon_i = f(x_i) - \hat{f}(x_i)\)</span> at each grid point <span class="math inline">\(i\)</span>, this methods succeeds in setting <span class="math inline">\(\epsilon_i=0,\forall i\)</span>.</li>
+<li>Regression: Minimize some notion of distance (or squared distance) between <span class="math inline">\(\hat{f}\)</span> and <span class="math inline">\(f\)</span>, without the requirement of pass through.</li>
+</ul>
+</section>
+<section id="doing-interpolation-in-julia" class="level2">
+<h2 class="anchored" data-anchor-id="doing-interpolation-in-julia">Doing Interpolation in Julia</h2>
+<ul>
+<li>In practice, you will make heavy use of high-quality interpolation packages in julia.</li>
+<li>List in the end.</li>
+<li>Nevertheless, function approximation is <em>extremely</em> problem-specific, so sometimes a certain approach does not work for your problem.</li>
+<li>This is why we will go through the mechanics of some common methods.</li>
+<li>I would like you to know where to start drilling if you need to go and hack somebody elses code.</li>
+</ul>
+<div id="cell-8" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">CSV</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">DataFrames</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">StatsPlots</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>iris <span class="op">=</span> CSV.<span class="fu">read</span>((<span class="fu">joinpath</span>(<span class="fu">dirname</span>(<span class="fu">pathof</span>(DataFrames)),</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">".."</span>, <span class="st">"docs"</span>, <span class="st">"src"</span>, <span class="st">"assets"</span>, <span class="st">"iris.csv"</span>)),</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>                       DataFrame)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">describe</span>(iris)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-9" class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">size</span>(iris)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>This dataset is like a <em>matrix</em>.</li>
+<li>We could think of each row as a <em>vector</em>. A <em>tuple</em> of input data, like <span class="math inline">\(x_1 = (5.1,3.5,1.4,0.2)\)</span>, and a one-dimensional ouput <span class="math inline">\(y_1\)</span>, the <em>species</em> label, like “setosa”. Stack the <span class="math inline">\(x\)</span> to get <span class="math inline">\(X\)</span> of size (150,4).</li>
+<li>How can we do <strong>mathematical operations on vectors</strong> <span class="math inline">\(x\)</span> like addition and scalar multiplication?</li>
+<li>Like, suppose we want to <em>standardize</em> the data in <span class="math inline">\(X\)</span>? We would like to create those two objects (each of them a length 4 vector)</li>
+</ul>
+<p><span class="math display">\[\begin{align}
+\mu &amp; = \frac{1}{150} \sum_{i=1}^{150} x_i \in \mathbb{R}^4 \\
+\sigma &amp; = \sqrt{\frac{1}{150} \sum_{i=1}^{150}
+\left(x_i - \mu_i \right)^2} \in \mathbb{R}^4 \\
+\end{align}\]</span></p>
+<ul>
+<li>(the interesting part is the <span class="math inline">\(\sum_{i=1}^{150} x_i\)</span> when <span class="math inline">\(x_i \in \mathbb{R}^4\)</span> )</li>
+<li>in order to then do</li>
+</ul>
+<p><span class="math display">\[\frac{x_1 - \mu}{\sigma},\frac{x_2 - \mu}{\sigma},\dots,\frac{x_{150} - \mu}{\sigma}\]</span></p>
+<div id="cell-11" class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Chain</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="pp">@chain</span> iris <span class="cf">begin</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stack</span>(_, [<span class="op">:</span>SepalLength, <span class="op">:</span>SepalWidth, <span class="op">:</span>PetalLength, <span class="op">:</span>PetalWidth])</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">subset</span>(<span class="op">:</span>Species <span class="op">=&gt;</span> x <span class="op">-&gt;</span> x <span class="op">.==</span> <span class="st">"Iris-setosa"</span>) </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="pp">@df</span> <span class="fu">density</span>(<span class="op">:</span>value, group <span class="op">=</span> <span class="op">:</span>variable, xlab <span class="op">=</span> <span class="st">"Setosa Measures"</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-12" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Chain</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Statistics</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="pp">@chain</span> iris <span class="cf">begin</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">subset</span>(<span class="op">:</span>Species <span class="op">=&gt;</span> x <span class="op">-&gt;</span> x <span class="op">.==</span> <span class="st">"Iris-setosa"</span>) </span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">transform</span>( [x <span class="op">=&gt;</span> (z <span class="op">-&gt;</span> (z <span class="op">.-</span> <span class="fu">mean</span>(z)) <span class="op">./</span> <span class="fu">std</span>(z)) <span class="op">=&gt;</span> x </span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>         for x <span class="kw">in</span> [<span class="op">:</span>SepalLength, <span class="op">:</span>SepalWidth, <span class="op">:</span>PetalLength, <span class="op">:</span>PetalWidth] ]</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stack</span>(_, [<span class="op">:</span>SepalLength, <span class="op">:</span>SepalWidth, <span class="op">:</span>PetalLength, <span class="op">:</span>PetalWidth])</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="pp">@df</span> <span class="fu">density</span>(<span class="op">:</span>value, group <span class="op">=</span> <span class="op">:</span>variable, xlab <span class="op">=</span> <span class="st">"Standardized Setosa Measures"</span>)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="what-is-a-vector-space" class="level3">
+<h3 class="anchored" data-anchor-id="what-is-a-vector-space">What is a Vector Space?</h3>
+<p>A <em>Vector Space</em> is a structure <span class="math inline">\((V,F,+,\cdot)\)</span>, where: 1. <span class="math inline">\(V\)</span> is a set of vectors 2. <span class="math inline">\(+: V \times V \mapsto V\)</span> is the <em>addition</em> operation, with</p>
+<pre><code>1. $x + y = y + x$  
+1. $x + (y + z ) = (x + y ) + z$  
+1. There is a null vector: $x + 0 = x, 0 \in V$  
+1. there is an inverse $-x \in V, x + (-x) = 0$</code></pre>
+<ol start="3" type="1">
+<li><span class="math inline">\(F\)</span> is a field of scalars: <span class="math inline">\(\mathbb{R}\)</span> or <span class="math inline">\(\mathbb{C}\)</span></li>
+<li><span class="math inline">\(\cdot : F \times V \mapsto V\)</span> is <em>scalar multiplication</em>, satisfying
+<ol type="1">
+<li><span class="math inline">\(a(bx) = (ab) x\)</span></li>
+<li><span class="math inline">\(a(x + y) = ax + ay\)</span></li>
+<li><span class="math inline">\(1x = x\)</span></li>
+</ol></li>
+</ol>
+</section>
+</section>
+<section id="examples-of-vector-spaces" class="level2">
+<h2 class="anchored" data-anchor-id="examples-of-vector-spaces">Examples of Vector Spaces</h2>
+<ol type="1">
+<li><span class="math inline">\((\mathbb{R}^n,\mathbb{R},+,\cdot)\)</span>: the most widely encountered vector space - particularly with <span class="math inline">\(n=2\)</span>.</li>
+<li><span class="math inline">\(\mathbb{R}[x] = \left\{\sum_{i=0}^n p_i x^i : p_i \in \mathbb{R}, n = 0,1,\dots \right\}\)</span>: We can add 2 polynomials: <span class="math display">\[(p + q)(x) = p(x) + q(x),\]</span> and also multiply with a scalar <span class="math display">\[(cp)(x) = c p(x)\]</span> which makes <span class="math inline">\((\mathbb{R}[x],\mathbb{R},+,\cdot)\)</span> a valid vector space.</li>
+</ol>
+</section>
+<section id="a-linear-basis" class="level2">
+<h2 class="anchored" data-anchor-id="a-linear-basis">A Linear Basis</h2>
+<ul>
+<li><span class="math inline">\(V\)</span> could contain infinitely many vectors.</li>
+<li>We can reduce this complexity by finding a set of vectors from which to easily <em>generate</em> the other vectors.</li>
+</ul>
+<p><span class="math display">\[ \begin{align}
+e_1 &amp;= (1,0,\dots,0)\\
+e_2 &amp;= (0,1,\dots,0)\\
+&amp; \vdots\\
+e_n &amp;= (0,0,\dots,1)
+\end{align} \]</span></p>
+<p>with those <span class="math inline">\(E = (e_1,e_2,\dots, e_n)\)</span>, we can represent any <span class="math inline">\(x \in V\)</span> as</p>
+<p><span class="math display">\[x = \sum_{i=1}^n e_i x_i, x_i \in \mathbb{R}, e_i \in \mathbb{R}^n\]</span></p>
+<ul>
+<li><p><span class="math inline">\(E\)</span> is a vector space <em>basis</em>. With addition and scalar multiplication defined, we can create <strong>any</strong> vector <span class="math inline">\(x\in V\)</span>, i.e.&nbsp;we can <strong>span</strong> the entire vector space.</p></li>
+<li><p><span class="math inline">\(E\)</span> is like a <strong>skeleton</strong> for <span class="math inline">\(V\)</span> (<span class="math inline">\(\mathbb{R}^n\)</span> in this example).</p></li>
+</ul>
+</section>
+<section id="linear-combinations" class="level2">
+<h2 class="anchored" data-anchor-id="linear-combinations">Linear Combinations</h2>
+<ul>
+<li>If instead of <span class="math inline">\(e_i\)</span> we write <span class="math inline">\(v_i\)</span> for <em>any vector</em>, and <span class="math inline">\(b_i \in \mathbb{R}\)</span> a <em>weight</em> , we can write <em>any other vector</em><span class="math display">\[z = \sum_{i=1}^n v_i b_i, v_i \in \mathbb{R}^n\]</span> as a <em>linear combination</em></li>
+<li>Potentially, there are multiple combinations of vectors which result in the same combination, e.g.&nbsp;for <span class="math inline">\(v_1 = (1,0),v_2 = (0,1), v_3= (1,1)\)</span>, we can have <span class="math display">\[(2,1) = 2 v_1 + v_2 = v_1 + v_3\]</span> i.e.&nbsp;there are 2 equivalent ways to generate <span class="math inline">\((2,1)\)</span> from those vectors.</li>
+<li>The set <span class="math inline">\(S = \{v_1 , v_2 v_3 \}\)</span> contains <strong>redundant information</strong>.</li>
+</ul>
+</section>
+<section id="linear-independence" class="level2">
+<h2 class="anchored" data-anchor-id="linear-independence">Linear Independence</h2>
+<p>Let <span class="math inline">\(V\)</span> be a vector space and <span class="math inline">\(S=\{v_1,\dots,v_n\}\)</span> be a subset of its vectors. <span class="math inline">\(S\)</span> is said to be <em>linearly dependent</em> if it only contains the null vector, or if there is a nonzero <span class="math inline">\(v_k\)</span> which can be expressed as a linear combination of the others <span class="math display">\[v_1,\dots,v_{k-1},v_{k+1},\dots,v_n\]</span></p>
+<p>If <span class="math inline">\(S\)</span> is not linearly dependent, it is linearly <em>independent</em>.</p>
+<p>Consider <span class="math inline">\(v_k\)</span>, which we write as a linear combination of the other members of <span class="math inline">\(S\)</span>:</p>
+<p><span class="math display">\[v_k = \sum_{i=1}^{k-1} b_i v_i + \sum_{i=k+1}^n b_i v_i\]</span> for nonzero <span class="math inline">\(v_k\)</span>. We already say <span class="math inline">\(S\)</span> is linearly dependent with this. But look:</p>
+<p>Substracting <span class="math inline">\(v_k\)</span> on both sides, we get the null vector:</p>
+<p><span class="math display">\[0 = \sum_{i=1}^{n} b_i v_i\]</span></p>
+<p>for some weights <span class="math inline">\(b_i\)</span>, where it has to be that <span class="math inline">\(b_k =-1\)</span>. So: we can obtain the null vector from a <em>nontrivial</em> linear combination.</p>
+<section id="basis-definition" class="level3">
+<h3 class="anchored" data-anchor-id="basis-definition"><em>Basis</em> Definition</h3>
+<p>Let <span class="math inline">\(V\)</span> be a vector space and <span class="math inline">\(S\)</span> be a subset of it’s vectors. <span class="math inline">\(S\)</span> is called <em>basis</em> of <span class="math inline">\(V\)</span> if 1. <span class="math inline">\(S\)</span> is linearly independent 2. <span class="math inline">\(S\)</span> <em>spans</em> <span class="math inline">\(V\)</span>, i.e.&nbsp;<span class="math inline">\(span(S) = V\)</span></p>
+<p>We obtain the <em>span</em> of a set of vectors <span class="math inline">\(S\)</span> by creating <em>all possible linear combinations amongst them</em>. For example, the span of two linearly independent vectors is the <strong>plane</strong>.</p>
+<ul>
+<li>The elements of a basis set are called <em>basis vectors</em>.</li>
+</ul>
+</section>
+<section id="basis-example-in-r2" class="level3">
+<h3 class="anchored" data-anchor-id="basis-example-in-r2">Basis Example in R2</h3>
+<ul>
+<li>The set <span class="math inline">\(\mathbb{R}^2\)</span> of ordered pairs of real numbers is a vector space <span class="math inline">\(V\)</span> for
+<ol type="1">
+<li>component-wise addition: <span class="math inline">\((a,b) + (c,d) = (a+c, b+d)\)</span></li>
+<li>scalar multiplication: <span class="math inline">\(\lambda (a,b) = (\lambda a, \lambda b), \lambda \in \mathbb{R}\)</span>.</li>
+</ol></li>
+<li>One basis called the <em>standard basis</em> of <span class="math inline">\(V\)</span> consists of two vectors:
+<ol type="1">
+<li><span class="math inline">\(e_1 = (1,0)\)</span></li>
+<li><span class="math inline">\(e_2 = (0,1)\)</span></li>
+</ol></li>
+<li>Any vector <span class="math inline">\(v=(a,b) \in \mathbb{R}^2\)</span> can be uniquely written as <span class="math inline">\(v = ae_1 + be_2\)</span></li>
+<li>Any other pair of linearly independent vectors like <span class="math inline">\((1,1)\)</span> and <span class="math inline">\((-1,2)\)</span> is also a basis of <span class="math inline">\(\mathbb{R}^2\)</span>.</li>
+</ul>
+</section>
+</section>
+<section id="what-is-a-basis-function" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-a-basis-function">What is a Basis <em>function</em>?</h2>
+<ul>
+<li>Now we know that every vector <span class="math inline">\(\mathbf{v}\)</span> in a vector space <span class="math inline">\(V\)</span> can be represented by a linear combination of <em>basis vectors</em>.</li>
+<li>Similarly, we can represent every <em>continuous</em> function in a particular <em>function space</em> <span class="math inline">\(F\)</span> by a linear combination of <em>basis functions</em>.</li>
+<li>Another good name for basis functions is <em>blending functions</em>. We often use a mixture of several basis functions to find an approximation.</li>
+</ul>
+</section>
+<section id="approximating-functions" class="level2">
+<h2 class="anchored" data-anchor-id="approximating-functions">Approximating Functions</h2>
+<ul>
+<li><p>Let <span class="math inline">\(F\)</span> by the space of continuous real-valued functions with domain <span class="math inline">\(\mathbf{x}\in \mathbb{R}\)</span>. <span class="math inline">\(F\)</span> is a vector space.</p></li>
+<li><p>Next, we define an inner-product operation on that space: <span class="math display">\[
+  &lt;g,h&gt; = \int_\mathbf{x} g(x) h(x) w(x) dx
+  \]</span> where functions <span class="math inline">\(g,h,w \in F\)</span> and <span class="math inline">\(w\)</span> is a weighting function.</p></li>
+<li><p>the pair <span class="math inline">\(\{F, &lt;.,.&gt;\}\)</span> form an <em>inner-product vector space</em>.</p></li>
+<li><p>Now we want to approximate a <strong>known</strong> function <span class="math inline">\(f:\mathbf{x}\mapsto\mathbb{R}\)</span> in <span class="math inline">\(\{F, &lt;.,.&gt;\}\)</span></p></li>
+<li><p>Let’s define <span class="math inline">\(\hat{f}(\cdot;c)\)</span> to be our parametric approximation function. We generically define this as</p></li>
+</ul>
+<p><span class="math display">\[  
+    \hat{f}(x;c) = \sum_{j=0}^{J-1} c_j \phi_j(x)
+\]</span></p>
+<p>where * <span class="math inline">\(\phi_j : \mathbb{R}^d \mapsto \mathbb{R}\)</span> is called a <strong>basis function</strong>, and <span class="math inline">\(\Phi_J = \{\phi_j\}_{j=0}^{J-1}\)</span>. * <span class="math inline">\(c={c_0,c_1,\dots,c_{J-1}}\)</span> is a coefficient vector * The integer <span class="math inline">\(J\)</span> is the <em>order</em> of the interpolation. * Our problem is to choose <span class="math inline">\((\phi_i,c)\)</span> in some way. * We want to minimize the residual function, i.e.&nbsp;<span class="math inline">\(\gamma(x,c) \equiv f(x) - \sum_{j=0}^{J-1} c_j \phi_j(x)\)</span></p>
+<ul>
+<li>To find coefficients <span class="math inline">\(c\)</span>, one could for example minimize the squared errors, OLS: <span class="math display">\[
+  c^* = \arg \min \int_\mathbf{x} \gamma(x,c) w(x) dx
+  \]</span></li>
+<li>In standard OLS, we’d set the weighting function to <span class="math inline">\(w(x) = 1\)</span></li>
+</ul>
+<p>We will construct a <em>grid</em> of <span class="math inline">\(M\geq J\)</span> points <span class="math inline">\({x_1,\dots,x_M}\)</span> within the domain <span class="math inline">\(\mathbb{R}^d\)</span>, and we will denote the <em>residuals</em> at each grid point by <span class="math inline">\(\epsilon = {\epsilon_1,\dots,\epsilon_M}\)</span>:</p>
+<p><span class="math display">\[
+    \left[\begin{array}{c}
+        \epsilon_1 \\
+         \vdots \\
+        \epsilon_M \\ \end{array} \right]  = \left[\begin{array}{c} f(x_1) \\ \vdots \\ f(x_M)  \end{array} \right] - \left[\begin{array}{ccc}
+        \phi_1(x_1) &amp; \dots &amp; \phi_J(x_1) \\   
+        \vdots      &amp; \ddots &amp; \vdots \\   
+        \phi_1(x_M) &amp; \dots &amp; \phi_J(x_M)    
+        \end{array} \right]  \cdot
+        \left[\begin{array}{c} c_1 \\ \vdots \\ c_J  \end{array} \right] \\
+        \mathbf{\epsilon} = \mathbf{y} - \mathbf{\Phi c}
+\]</span></p>
+<ul>
+<li><em>Interpolation</em> or <em>colocation</em> occurs when <span class="math inline">\(J=M\)</span>, i.e.&nbsp;we have a square matrix of basis functions, and can exactly solve this.</li>
+<li>We basically need to solve the system</li>
+</ul>
+<p><span class="math display">\[
+\begin{aligned}
+\sum_{j=1}^n c_j \phi_j(x_i) &amp;= f(x_i),\forall i=1,2,\dots,n \\
+                  \mathbf{\Phi c}&amp;= \mathbf{y}
+\end{aligned}
+\]</span></p>
+<p>where the second line uses vector notation, and <span class="math inline">\(\mathbf{y}\)</span> has all values of <span class="math inline">\(f\)</span>. * Solution: <span class="math inline">\(\mathbf{c}= \mathbf{\Phi}^{-1}y\)</span>.</p>
+</section>
+<section id="regression-basics" class="level2">
+<h2 class="anchored" data-anchor-id="regression-basics">Regression Basics</h2>
+<ul>
+<li>If we have more evaluation points than basis functions, <span class="math inline">\(M&gt;J\)</span> say, interpolation nodes than basis functions, we cannot do that. Instead we can define a loss function, and minimize it.</li>
+<li>In the case of squared loss, of course, this leads to the least squares solution:</li>
+</ul>
+<p><span class="math display">\[
+\begin{aligned} e_i &amp;= f(x_i) - \sum_{j=1}^n c_j \phi_j(x_i) \\
+        \min_c e_i^2 &amp; \implies \\
+        c            &amp;= (\Phi'\Phi)^{-1} \Phi'y
+\end{aligned}
+\]</span></p>
+</section>
+<section id="spectral-and-finite-element-methods" class="level2">
+<h2 class="anchored" data-anchor-id="spectral-and-finite-element-methods">Spectral and Finite Element Methods</h2>
+<ul>
+<li><strong>Spectral Methods</strong> are such that the basis functions are non-zero over the entire domain of <span class="math inline">\(f\)</span>.
+<ul>
+<li>Polynomial interpolation</li>
+<li>Chebychev interpolation</li>
+</ul></li>
+<li><strong>Finite Element</strong> methods are such that basis functions are non-zero only on a subset of the domain.
+<ul>
+<li>Splines
+<ul>
+<li>Linear splines, i.e.&nbsp;splines of degree 1, a.k.a. <em>linear approximation</em></li>
+<li>Higher order splines, mainly the <em>cubic spline</em>.</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="what-makes-a-good-approximation" class="level2">
+<h2 class="anchored" data-anchor-id="what-makes-a-good-approximation">What makes a <strong>good</strong> Approximation?</h2>
+<ul>
+<li>Should be arbitrarily accurate as we increase <span class="math inline">\(n\)</span>.</li>
+<li><span class="math inline">\(\Phi\)</span> Should be efficiently (fast) computable. If <span class="math inline">\(\Phi\)</span> were differentiable, we could easily get e.g.&nbsp;<span class="math inline">\(\hat{f}'(x) = \sum_{j=1}^J c_j \phi_j'(x_i)\)</span></li>
+<li><span class="math inline">\(c\)</span> Should be efficiently (fast) computable.</li>
+</ul>
+</section>
+<section id="what-polynomial-to-use-what-form-for-phi" class="level2">
+<h2 class="anchored" data-anchor-id="what-polynomial-to-use-what-form-for-phi">What Polynomial to use? What form for <span class="math inline">\(\Phi\)</span>?</h2>
+<ul>
+<li>In principle the <em>monomial basis</em> could be used. It is just the power functions of <span class="math inline">\(x\)</span>: <span class="math inline">\(1,x,x^2,x^3,\dots\)</span></li>
+<li>Stacking this up for each evaluation node gives the <em>Vandermonde Matrix</em>:</li>
+</ul>
+<p><span class="math display">\[
+V = \left[\begin{matrix}
+        1 &amp; x_1 &amp; \dots &amp; x_1^{n-2} &amp; x_1^{n-1} \\
+        1 &amp; x_2 &amp; \dots &amp; x_2^{n-2} &amp; x_2^{n-1} \\
+        \vdots &amp; \vdots &amp; \ddots &amp;  &amp; \vdots \\
+        1 &amp; x_m &amp; \dots &amp; x_m^{n-2} &amp; x_m^{n-1}
+        \end{matrix} \right]
+\]</span></p>
+<p>for the case with <span class="math inline">\(m\)</span> evaluation nodes for <span class="math inline">\(x\)</span>, and <span class="math inline">\(n\)</span> basis functions for each <span class="math inline">\(x_i\)</span>.</p>
+<section id="choosing-basis-matrices" class="level3">
+<h3 class="anchored" data-anchor-id="choosing-basis-matrices">Choosing Basis Matrices</h3>
+<ul>
+<li>If we choose <span class="math inline">\(\Phi\)</span> so that it’s elements share a lot of information, it will be hard to invert it.</li>
+<li>So, if the elements share very little information, it’s easier to invert, hence good for us</li>
+<li>For example, if we have <span class="math inline">\(\Phi\)</span> close to diagonal (i.e.&nbsp;different basis <span class="math inline">\(\phi_j(x)\)</span> are non-zero at different <span class="math inline">\(x\)</span>).</li>
+<li>Such <span class="math inline">\(\Phi\)</span> are generated by using <em>orthogonal Polynomials</em> (under our inner product definition).</li>
+<li>An orthogonal Polynomial has 2 sequences of polynomials orthogonal under an inner product: their inner product is zero under a certain weighting function <span class="math inline">\(w(x)\)</span>.</li>
+</ul>
+</section>
+<section id="choosing-basis-matrices-1" class="level3">
+<h3 class="anchored" data-anchor-id="choosing-basis-matrices-1">Choosing Basis Matrices</h3>
+<ul>
+<li>For example, the Chebyshev polynomials are orthogonal wrt. to weight <span class="math inline">\(\frac{1}{\sqrt{1-x^2}}\)</span></li>
+<li>for degrees <span class="math inline">\(n,m\)</span> of that polynomial, <span class="math inline">\(T_n,T_m\)</span>, we have <span class="math display">\[
+  \int_{-1}^1 T_n(x)T_m(x)\,\frac{dx}{\sqrt{1-x^2}}=
+  \begin{cases}
+      0 &amp; n\ne m \\ \pi &amp; n=m=0 \\ \frac{\pi}{2} &amp; n=m\ne 0
+  \end{cases}
+  \]</span></li>
+</ul>
+</section>
+<section id="chebyshev-polynomials-of-the-first-kind" class="level3">
+<h3 class="anchored" data-anchor-id="chebyshev-polynomials-of-the-first-kind">Chebyshev Polynomials <em>of the first kind</em></h3>
+<ul>
+<li>There is a nice recursion to get <span class="math inline">\(T_n(x)\)</span>: <span class="math display">\[\begin{align}
+      T_0(x) &amp; = 1 \\
+      T_1(x) &amp; = x \\
+      T_{n+1}(x) &amp; = 2xT_n(x) - T_{n-1}(x).
+  \end{align}\]</span></li>
+<li>Code that up and compute <span class="math inline">\(T_{3}(0.5)\)</span>!</li>
+<li>Check you get the same as with the alternative closed form <span class="math inline">\(T_n(x) = \cos(n \arccos(x))\)</span></li>
+</ul>
+<div id="cell-33" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">T</span>(x,n)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="pp">@assert</span> (x <span class="op">&gt;=</span> <span class="op">-</span><span class="fl">1</span>) <span class="op">&amp;</span> (x <span class="op">&lt;=</span> <span class="fl">1</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> n <span class="op">==</span> <span class="fl">0</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="fl">1.0</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elseif</span> n<span class="op">==</span><span class="fl">1</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> x</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>        <span class="fl">2</span><span class="fu">*x*T</span>(x,n<span class="op">-</span><span class="fl">1</span>) <span class="op">-</span> <span class="fu">T</span>(x,n<span class="op">-</span><span class="fl">2</span>)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="fu">T2</span>(x,n) <span class="op">=</span> <span class="fu">cos</span>(n<span class="op">*</span> <span class="fu">acos</span>(x))</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="pp">@show</span> <span class="fu">T</span>(<span class="fl">0.5</span>,<span class="fl">3</span>)</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Test</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="pp">@assert</span> <span class="fu">T2</span>(<span class="fl">0.5</span>,<span class="fl">3</span>) <span class="op">==</span> <span class="fu">T</span>(<span class="fl">0.5</span>,<span class="fl">3</span>)        </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-34" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># weighting function</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">w</span>(x) <span class="op">=</span> <span class="fl">1.0</span> <span class="op">/</span> <span class="fu">sqrt</span>(<span class="fl">1</span><span class="op">-</span>x<span class="op">^</span><span class="fl">2</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Statistics</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Test</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co"># simple integration works for n not equal m</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="pp">@assert</span> <span class="fu">isapprox</span>(<span class="fu">mean</span>(<span class="fu">T</span>(x,<span class="fl">0</span>) <span class="op">*</span> <span class="fu">T</span>(x,<span class="fl">1</span>) <span class="op">*</span> <span class="fu">w</span>(x) <span class="cf">for</span> x <span class="kw">in</span> <span class="fu">range</span>(<span class="op">-</span><span class="fl">0.99</span>,stop <span class="op">=</span> <span class="fl">0.99</span>, length<span class="op">=</span><span class="fl">100</span>)), <span class="fl">0.0</span>, atol <span class="op">=</span> <span class="fl">1e-16</span>)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="pp">@assert</span> <span class="fu">isapprox</span>(<span class="fu">mean</span>(<span class="fu">T</span>(x,<span class="fl">4</span>) <span class="op">*</span> <span class="fu">T</span>(x,<span class="fl">5</span>) <span class="op">*</span> <span class="fu">w</span>(x) <span class="cf">for</span> x <span class="kw">in</span> <span class="fu">range</span>(<span class="op">-</span><span class="fl">0.99</span>,stop <span class="op">=</span> <span class="fl">0.99</span>, length<span class="op">=</span><span class="fl">100</span>)), <span class="fl">0.0</span>, atol <span class="op">=</span> <span class="fl">1e-16</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="chebyshev-nodes" class="level2">
+<h2 class="anchored" data-anchor-id="chebyshev-nodes">Chebyshev Nodes</h2>
+<ul>
+<li><em>Chebyshev Nodes</em> are the roots of the chebyshev polynomial (i.e.&nbsp;where <span class="math inline">\(P(x) = 0\)</span>).</li>
+<li>They are defined in the interval <span class="math inline">\([-1,1]\)</span> as <span class="math display">\[ x_i = \cos\left(\frac{2k-1}{2n} \pi\right), k=1,\dots,n \]</span></li>
+<li>Which maps to general interval <span class="math inline">\([a,b]\)</span> as <span class="math display">\[ x_i = \frac{1}{2} (a+b) + \frac{1}{2} (b-a) \cos\left(\frac{2k-1}{2n} \pi\right) , k=1,\dots,n \]</span></li>
+<li>Chebyshev nodes are <strong>not</strong> evenly spaced: there are more points towards the boundaries. You might remember that from Gaussian Integration nodes.</li>
+</ul>
+<div id="cell-36" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Plots</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">FastGaussQuadrature</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>gcnodes <span class="op">=</span> <span class="fu">gausschebyshev</span>(<span class="fl">11</span>)  <span class="co"># generate 21 Chebyshev Nodes</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">gr</span>()</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">scatter</span>(gcnodes,<span class="fu">ones</span>(<span class="fl">21</span>),ylims<span class="op">=</span>(<span class="fl">0.9</span>,<span class="fl">1.1</span>),legend<span class="op">=</span><span class="cn">false</span>,size<span class="op">=</span>(<span class="fl">600</span>,<span class="fl">100</span>),yticks<span class="op">=</span><span class="cn">nothing</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="constructing-phi-as-t-evaluated-at-the-chebyshev-nodes" class="level3">
+<h3 class="anchored" data-anchor-id="constructing-phi-as-t-evaluated-at-the-chebyshev-nodes">Constructing <span class="math inline">\(\Phi\)</span> as <span class="math inline">\(T\)</span> evaluated <em>at</em> the Chebyshev Nodes</h3>
+<ul>
+<li>Combining Chebyshev nodes evaluated at the roots <span class="math inline">\(T\)</span> of the Cheby polynomial to construct <span class="math inline">\(\Phi\)</span> is a particularly good idea.</li>
+<li>Doing so, we obtain an interpolation matrix <span class="math inline">\(\Phi\)</span> with typical element <span class="math display">\[ \phi_{ij} = \cos\left( \frac{(n-i+0.5)(j-1)\pi}{n}\right)  \]</span></li>
+<li>And we obtain that <span class="math inline">\(\Phi\)</span> is indeed orthogonal <span class="math display">\[ \Phi^T \Phi = \text{diag}\{n,n/2,n/2,\dots,n/2\}  \]</span></li>
+</ul>
+<div id="cell-38" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">BasisMatrices</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="fu">range</span>(<span class="op">-</span><span class="fl">4</span>, stop <span class="op">=</span> <span class="fl">4</span> ,length <span class="op">=</span> <span class="fl">10</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>ϕ <span class="op">=</span> <span class="fu">Basis</span>(<span class="fu">ChebParams</span>(<span class="fu">length</span>(x),<span class="op">-</span><span class="fl">4</span>,<span class="fl">4</span>))</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>ϕ</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-39" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>S, y <span class="op">=</span> <span class="fu">nodes</span>(ϕ)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-40" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>Φ <span class="op">=</span> <span class="fu">BasisMatrix</span>(ϕ, <span class="fu">Expanded</span>(), S, <span class="fl">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-41" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>Φ.vals[<span class="fl">1</span>]<span class="ch">' * Φ.vals[1]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="chebyshev-interpolation-proceedure" class="level2">
+<h2 class="anchored" data-anchor-id="chebyshev-interpolation-proceedure">(Chebyshev) Interpolation Proceedure</h2>
+<ul>
+<li>Let’s summarize this proceedure.</li>
+<li>Instead of Chebyshev polynomials we could be using any other suitable family of polynomials.</li>
+<li>To obtain a Polynomial interpolant <span class="math inline">\(\hat{f}\)</span>, we need:
+<ol type="1">
+<li>a function to <span class="math inline">\(f\)</span> interpolate. We need to be able to get the function values somehow.</li>
+<li>A set of (Chebyshev) interpolation nodes at which to compute <span class="math inline">\(f\)</span></li>
+<li>An interpolation matrix <span class="math inline">\(\Phi\)</span> that corresponds to the nodes we have chosen.</li>
+<li>A resulting coefficient vector <span class="math inline">\(c\)</span></li>
+</ol></li>
+<li>To obtain the value of the interpolation at <span class="math inline">\(x'\)</span> off our grid, we also need a way to evaluate <span class="math inline">\(\Phi(x')\)</span>.
+<ol type="1">
+<li>Evaluate the Basis function <span class="math inline">\(\Phi\)</span> at <span class="math inline">\(x'\)</span>: get <span class="math inline">\(\Phi(x')\)</span></li>
+<li>obtain new values as <span class="math inline">\(y = \Phi(x') c\)</span>.</li>
+</ol></li>
+</ul>
+</section>
+<section id="polynomial-interpolation-with-julia-approxfun.jl" class="level2">
+<h2 class="anchored" data-anchor-id="polynomial-interpolation-with-julia-approxfun.jl">Polynomial Interpolation with <code>Julia</code>: <code>ApproxFun.jl</code></h2>
+<ul>
+<li><a href="https://github.com/ApproxFun/ApproxFun.jl"><code>ApproxFun.jl</code></a> is a Julia package based on the Matlab package <a href="http://www.chebfun.org"><code>chebfun</code></a>. It is quite amazing.</li>
+<li>More than just <em>function approximation</em>. This is a toolbox to actually <em>work</em> with functions.</li>
+<li>given 2 functions <span class="math inline">\(f,g\)</span>, we can do algebra with them, i.e.&nbsp;<span class="math inline">\(h(x) = f(x) + g(x)^2\)</span></li>
+<li>We can differentiate and integrate</li>
+<li>Solve ODE’s and PDE’s</li>
+<li>represent periodic functions</li>
+<li>Head over to the <a href="https://github.com/JuliaApproximation/ApproxFun.jl">website and look at the readme</a>.</li>
+</ul>
+<div id="cell-44" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">LinearAlgebra</span>, <span class="bu">SpecialFunctions</span>, <span class="bu">Plots</span>, <span class="bu">ApproxFun</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="fu">Fun</span>(identity,<span class="fl">0</span><span class="op">..</span><span class="fl">10</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>f <span class="op">=</span> <span class="fu">sin</span>(x<span class="op">^</span><span class="fl">2</span>)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>g <span class="op">=</span> <span class="fu">cos</span>(x)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>h <span class="op">=</span> f <span class="op">+</span> g<span class="op">^</span><span class="fl">2</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>r <span class="op">=</span> <span class="fu">roots</span>(h)</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>rp <span class="op">=</span> <span class="fu">roots</span>(h<span class="op">'</span>)</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Plots</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(h,labels <span class="op">=</span> <span class="st">"h"</span>)</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="fu">scatter!</span>(r,<span class="fu">h</span>.(r),labels<span class="op">=</span><span class="st">"roots h"</span>)</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="fu">scatter!</span>(rp,<span class="fu">h</span>.(rp),labels <span class="op">=</span> <span class="st">"roots h'"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-45" class="cell" data-scrolled="true" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># works even with discontinuities!</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>ff <span class="op">=</span> <span class="fu">x-&gt;sign</span>(x<span class="op">-</span><span class="fl">0.1</span>)<span class="op">/</span><span class="fl">2</span> <span class="op">+</span> <span class="fu">cos</span>(<span class="fl">4</span><span class="op">*</span>x);  <span class="co"># sign introduces a jump at 0.1</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>x  <span class="op">=</span> <span class="fu">Fun</span>(identity)  <span class="co"># set up a function space</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="fu">space</span>(x)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>f  <span class="op">=</span> <span class="fu">ff</span>(x)  <span class="co"># define ff on that space</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(f) <span class="co"># plot</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-46" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># whats the first deriv of that function at at 0.785?</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span>(f<span class="op">'</span>(<span class="fl">0.785</span>))</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># and close to the jump, at 0.100001?</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span>(f<span class="op">'</span>(<span class="fl">0.1000001</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>The main purpose of this package is to manipulate analytic functions, i.e.&nbsp;function with an algebraic representation.</li>
+<li>There is the possibility to supply a set of data points and fit a polynomial:</li>
+</ul>
+<div id="cell-48" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>S <span class="op">=</span> <span class="fu">Chebyshev</span>(<span class="fl">1</span><span class="op">..</span><span class="fl">2</span>);</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="fl">100</span>; m <span class="op">=</span> <span class="fl">50</span>;</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> <span class="fu">range</span>(<span class="fl">1</span>,stop<span class="op">=</span><span class="fl">2</span>,length<span class="op">=</span>n);   <span class="co"># a non-default grid</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>v <span class="op">=</span> <span class="fu">exp</span>.(p);           <span class="co"># values at the non-default grid</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>V <span class="op">=</span> <span class="fu">Array</span><span class="dt">{Float64}</span>(<span class="cn">undef</span>,n,m); <span class="co"># Create a Vandermonde matrix by evaluating the basis at the grid</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> k <span class="op">=</span> <span class="fl">1</span><span class="op">:</span>m</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    V[<span class="op">:</span>,k] <span class="op">=</span> <span class="fu">Fun</span>(S,[<span class="fu">zeros</span>(k<span class="op">-</span><span class="fl">1</span>);<span class="fl">1</span>]).(p)</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>f <span class="op">=</span> <span class="fu">Fun</span>(S,V<span class="op">\</span>v);</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="pp">@show</span> <span class="fu">f</span>(<span class="fl">1.1</span>)</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="pp">@show</span> <span class="fu">exp</span>(<span class="fl">1.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="splines-piecewise-polynomial-approximation" class="level2">
+<h2 class="anchored" data-anchor-id="splines-piecewise-polynomial-approximation">Splines: Piecewise Polynomial Approximation</h2>
+<ul>
+<li>Splines are a finite element method, i.e.&nbsp;there are regions of the function domain where some basis functions are zero.</li>
+<li>As such, they provide a very flexible framework for approximation instead of high-order polynomials.
+<ul>
+<li>Keep in mind that Polynomials basis functions are non-zero on the entire domain. Remember the Vandermonde matrix.</li>
+</ul></li>
+<li>They bring some element of local approximation back into our framework. What happens at one end of the domain to the function is not important to what happens at the other end.</li>
+<li>Looking back at the previous plot of random data: we are searching for <strong>one</strong> polynomial to fit <strong>all</strong> those wiggles. A spline will allow us to design <strong>different</strong> polynomials in different parts of the domain.</li>
+</ul>
+<section id="splines-basic-setup" class="level3">
+<h3 class="anchored" data-anchor-id="splines-basic-setup">Splines: Basic Setup</h3>
+<ul>
+<li>The fundamental building block is the <em>knot vector</em>, or the <em>breakpoints vector</em> <span class="math inline">\(\mathbf{z}\)</span> of length <span class="math inline">\(p\)</span>. An element of <span class="math inline">\(\mathbf{z}\)</span> is <span class="math inline">\(z_i\)</span>.</li>
+<li><span class="math inline">\(\mathbf{z}\)</span> is ordered in ascending order.</li>
+<li><span class="math inline">\(\mathbf{z}\)</span> spans the domain <span class="math inline">\([a,b]\)</span> of our function, and we have that <span class="math inline">\(a=z_1,b=z_p\)</span></li>
+<li>A spline is of <em>order k</em> if the polynomial segments are k-th order polynomials.</li>
+<li>Literature: <span class="citation" data-cites="deboor">[@deboor]</span> <cite data-cite="deboo"></cite> is the definitive reference for splines.</li>
+</ul>
+</section>
+<section id="splines-characterization" class="level3">
+<h3 class="anchored" data-anchor-id="splines-characterization">Splines: Characterization</h3>
+<ul>
+<li>Given <span class="math inline">\(p\)</span> knots, there are <span class="math inline">\(p-1\)</span> polynomial segments of order <span class="math inline">\(k\)</span>, each characterized by <span class="math inline">\(k+1\)</span> coefficients, i.e.&nbsp;a total of <span class="math inline">\((p-1)(k+1)\)</span> parameters.</li>
+<li>However, we also require the spline to be continuous and differentiable of degree <span class="math inline">\(k-1\)</span> at the <span class="math inline">\(p-2\)</span> interior breakpoints.</li>
+<li>Imposing that uses up an additional <span class="math inline">\(k(p-2)\)</span> conditions.</li>
+<li>We are left with <span class="math inline">\(n = (p-1)(k+1) - k(p-2) = p+k-1\)</span> free parameters.</li>
+<li>A Spline of order <span class="math inline">\(k\)</span> and <span class="math inline">\(p\)</span> knots can thus be written as a linear combination of it’s <span class="math inline">\(n = p+k-1\)</span> basis functions.</li>
+</ul>
+</section>
+</section>
+<section id="b-splines-definition" class="level2">
+<h2 class="anchored" data-anchor-id="b-splines-definition">B-Splines: Definition</h2>
+<ul>
+<li><p>We mostly use Basis Splines, or <strong>B-Splines</strong>.</p></li>
+<li><p>Here is a recursive definition of a B-Spline (and what is used in <code>ApproXD</code>):</p></li>
+<li><p>Denote the <span class="math inline">\(j\)</span>-th basis function of degree <span class="math inline">\(k\)</span> with knot vector <span class="math inline">\(\mathbf{z}\)</span> at <span class="math inline">\(x\)</span> as <span class="math inline">\(B_j^{k,\mathbf{z}} (x)\)</span></p></li>
+<li><p>Again, there are <span class="math inline">\(n = k + p - 1\)</span> <span class="math inline">\(B\)</span>’s (where <span class="math inline">\(p\)</span><code>= length(z)</code>)</p></li>
+<li><p>We can define <span class="math inline">\(B_j^{k,\mathbf{z}} (x)\)</span> recursively like this:</p>
+<p><span class="math display">\[
+  B_j^{k,\mathbf{z}} (x) = \frac{x-z_{j-k}}{z_j - z_{j-k}} B_{j-1}^{k-1,\mathbf{z}} (x)  + \frac{z_{j+1}-x}{z_{j+1} - z_{j+1-k}} B_{j}^{k-1,\mathbf{z}} (x), j=1,\dots,n
+  \]</span></p></li>
+<li><p>The recursion starts with</p></li>
+</ul>
+<p><span class="math display">\[ B_j^{0,\mathbf{z}} (x) = \begin{cases}
+    1 &amp; \text{if }z_j \leq x &lt;  z_{j+1}\\
+    0 &amp; \text{otherwise.}
+    \end{cases}
+\]</span></p>
+<ul>
+<li>For this formulation to work, we need to extend the knot vector for <span class="math inline">\(j&lt;1,j&gt;p\)</span>:</li>
+</ul>
+<p><span class="math display">\[ z_j = \begin{cases}
+    a &amp; \text{if }j \leq 1\\
+    b &amp; \text{if }j \geq p
+    \end{cases}
+\]</span></p>
+<ul>
+<li>And we need to set the endpoints <span class="math display">\[ B_0^{k-1,\mathbf{z}} = B_n^{k-1,\mathbf{z}} =0 \]</span></li>
+<li>You may see that this gives rise to a triangular computation strategy, as pointed out <a href="http://www.cs.mtu.edu/~shene/COURSES/cs3621/NOTES/spline/B-spline/bspline-basis.html">here</a>.</li>
+</ul>
+</section>
+<section id="b-splines-derivatives-and-integrals" class="level2">
+<h2 class="anchored" data-anchor-id="b-splines-derivatives-and-integrals">B-Splines: Derivatives and Integrals</h2>
+<ul>
+<li><p>This is another very nice thing about B-Splines.</p></li>
+<li><p>The derivative wrt to it’s argument <span class="math inline">\(x\)</span> is</p>
+<p><span class="math display">\[ \frac{d B_j^{k,\mathbf{z}} (x)}{dx} = \frac{k}{z_j - z_{j-k}} B_{j-1}^{k-1,\mathbf{z}} (x)  + \frac{k}{z_{j+1} - z_{j+1-k}} B_{j}^{k-1,\mathbf{z}} (x), j=1,\dots,n
+  \]</span></p></li>
+<li><p>Similarly, the Integral is just the sum over the basis functions: <span class="math display">\[ \int_a^x B_j^{k,\mathbf{z}} (y) dy = \sum_{i=j}^n \frac{z_i - z_{i-k}}{k} B_{i+1}^{k+1,\mathbf{z}} (x)  \]</span></p></li>
+</ul>
+<div id="cell-55" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">ApproXD</span>   </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ] dev https://github.com/floswald/ApproXD.jl</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>bs <span class="op">=</span> <span class="fu">BSpline</span>(<span class="fl">7</span>,<span class="fl">3</span>,<span class="fl">0</span>,<span class="fl">1</span>) <span class="co">#7 knots, degree 3 in [0,1]</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co"># how many basis functions? (go back 1 slide.)</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co"># getNumCoefs(bs)</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="fu">range</span>(<span class="fl">0</span>,stop <span class="op">=</span><span class="fl">1.0</span>, length <span class="op">=</span> <span class="fl">500</span>)</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>B <span class="op">=</span> <span class="fu">Array</span>(<span class="fu">getBasis</span>(<span class="fu">collect</span>(x),bs))</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x,B,layout<span class="op">=</span>(<span class="fl">3</span>,<span class="fl">3</span>),grid<span class="op">=</span><span class="cn">false</span>,ylim<span class="op">=</span>(<span class="op">-</span><span class="fl">0.1</span>,<span class="fl">1.1</span>),legend<span class="op">=</span><span class="cn">false</span>,linewidth<span class="op">=</span><span class="fl">2</span>,linecolor<span class="op">=:</span>black)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-56" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Notice that placing each of those panels on top of each other generates a sparse matrix!</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x,B,grid<span class="op">=</span><span class="cn">false</span>,ylim<span class="op">=</span>(<span class="op">-</span><span class="fl">0.1</span>,<span class="fl">1.1</span>),legend<span class="op">=</span><span class="cn">false</span>, lw <span class="op">=</span> <span class="fl">3</span>, color <span class="op">=</span> <span class="fu">reshape</span>(Plots.<span class="fu">distinguishable_colors</span>(<span class="fl">9</span>),<span class="fl">1</span>,<span class="fl">9</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>https://jipolanco.github.io/BSplineKit.jl/dev/generated/approximation/ https://fluxml.ai/Flux.jl/stable/guide/models/quickstart/#man-quickstart</p>
+</section>
+<section id="linear-b-spline-a-useful-special-case" class="level2">
+<h2 class="anchored" data-anchor-id="linear-b-spline-a-useful-special-case">Linear B-Spline: A useful special case</h2>
+<ul>
+<li>This is <em>connecting the dots with a straight line</em></li>
+<li>This may incur some approximation error if the underlying function is very curved between the dots.</li>
+<li>However, it has some benefits:
+<ul>
+<li>it is shape-preserving,</li>
+<li>it is fast,</li>
+<li>it is easy to build.</li>
+</ul></li>
+<li>For a linear spline with evenly spaced breakpoints, this becomes almost trivial.
+<ul>
+<li>Let’s define <span class="math inline">\(h = \frac{b-a}{n-1}\)</span> as the distance between breakpoints.</li>
+<li>Our basis function becomes very simple, giving us a measure of how far <span class="math inline">\(x\)</span> is from the next knot:</li>
+</ul></li>
+</ul>
+<p><span class="math display">\[ \phi_j (x) = \begin{cases}
+    1 - \frac{|x-z_j|}{h} &amp; \text{if } |x-z_j| \leq h \\
+    0                    &amp; \text{otherwise}
+    \end{cases}
+\]</span></p>
+<ul>
+<li>Notice that each interior basis function (i.e.&nbsp;not 0 and not <span class="math inline">\(n\)</span>) has witdth <span class="math inline">\(2h\)</span>.</li>
+</ul>
+<div id="cell-59" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>bs <span class="op">=</span> <span class="fu">BSpline</span>(<span class="fl">9</span>,<span class="fl">1</span>,<span class="fl">0</span>,<span class="fl">1</span>) <span class="co">#9 knots, degree 1 in [0,1]</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="fu">range</span>(<span class="fl">0</span>,stop <span class="op">=</span> <span class="fl">1.0</span>,length <span class="op">=</span> <span class="fl">500</span>)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>B <span class="op">=</span> <span class="fu">Array</span>(<span class="fu">getBasis</span>(<span class="fu">collect</span>(x),bs))</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x,B,layout<span class="op">=</span>(<span class="fl">3</span>,<span class="fl">3</span>),grid<span class="op">=</span><span class="cn">false</span>,ylim<span class="op">=</span>(<span class="op">-</span><span class="fl">0.1</span>,<span class="fl">1.1</span>),legend<span class="op">=</span><span class="cn">false</span>,linewidth<span class="op">=</span><span class="fl">2</span>,linecolor<span class="op">=:</span>black)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="linear-b-spline-evaluation" class="level2">
+<h2 class="anchored" data-anchor-id="linear-b-spline-evaluation">Linear B-Spline: Evaluation</h2>
+<ul>
+<li>In order to evaluate the linear interpolator, we need to know only one thing: Which knot span is active, i.e.&nbsp;what is <span class="math inline">\(j\)</span> s.t. <span class="math inline">\(x\in [z_j, z_{j+1}]\)</span>?</li>
+<li>This is a classic problem in computer science. Binary search.</li>
+<li><code>julia</code> implements <a href="http://docs.julialang.org/en/release-0.4/stdlib/sort/#Base.searchsortedlast"><code>searchsortedlast</code></a>.</li>
+<li>Once we know <span class="math inline">\(j\)</span>, it’s easy to get the interpolated value as <span class="math display">\[ \hat{f}(x) = \frac{x-z_j}{h}  f(z_{j+1}) + \frac{z_{j+1}-x}{h}  f(z_{j}) \]</span></li>
+</ul>
+</section>
+<section id="the-importance-of-knot-placement" class="level2">
+<h2 class="anchored" data-anchor-id="the-importance-of-knot-placement">The Importance of Knot Placement</h2>
+<ul>
+<li>We just talked about <em>equally spaced knots</em>. This is just a special case.</li>
+<li>B-Splines give us the flexibility to place the knots where we want.</li>
+<li>Contrary to Polynomial interpolations (where we cannot choose the evaluation nodes), this is very helpful in cases where we know that a function is very curved in a particular region.</li>
+<li>Canonical Example: Runge’s function: <span class="math inline">\(f(x) = (1+25x^2)^{-1}\)</span>.</li>
+<li>Also: If you know that your function has a kink (i.e.&nbsp;a discontinuous first derivative) at <span class="math inline">\(\hat{x}\)</span>, then you can stack breakpoints on top of each other <em>at</em> <span class="math inline">\(\hat{x}\)</span></li>
+<li>That’s going to be part of your homework!</li>
+</ul>
+<div id="cell-62" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gg</span>(x) <span class="op">=</span> (<span class="fl">1</span><span class="op">+</span><span class="fl">25</span>x<span class="op">^</span><span class="fl">2</span>)<span class="op">^</span>(<span class="op">-</span><span class="fl">1</span>)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(gg,lw <span class="op">=</span> <span class="fl">4</span>,leg <span class="op">=</span> <span class="cn">false</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="interpolation-with-interpolations.jl" class="level2">
+<h2 class="anchored" data-anchor-id="interpolation-with-interpolations.jl">Interpolation with <a href="https://github.com/JuliaMath/Interpolations.jl"><code>Interpolations.jl</code></a></h2>
+<ul>
+<li>Interpolations.jl assumes that data is uniformly spaced on grid <code>1:N</code></li>
+<li>Same for multiple dimensions</li>
+<li>However, we can scale <code>1:N</code> to different domains</li>
+<li>finally, we can also supply our own, non-uniform grids.</li>
+<li>Can get gradients of interpolations right away.</li>
+</ul>
+<div id="cell-64" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># interpolation</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="co"># restart kernel!</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Interpolations</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> <span class="fu">rand</span>(<span class="fl">10</span>,<span class="fl">5</span>)</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>itp <span class="op">=</span> <span class="fu">interpolate</span>(A, Interpolations.<span class="fu">BSpline</span>(<span class="fu">Quadratic</span>(<span class="fu">Reflect</span>(<span class="fu">OnCell</span>()))))</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="fu">itp</span>(<span class="fl">1.9</span>,<span class="fl">4.9</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-65" class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>A</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-66" class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>A[<span class="fl">2</span>,<span class="fl">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-67" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>A_x <span class="op">=</span> <span class="fl">1</span>.<span class="op">:</span><span class="fl">2</span>.<span class="op">:</span><span class="fl">40</span>.   <span class="co"># x in [1,40]</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> [<span class="fu">log</span>(x) for x <span class="kw">in</span> A_x] <span class="co"># f(x)</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>itp <span class="op">=</span> <span class="fu">interpolate</span>(A, Interpolations.<span class="fu">BSpline</span>(<span class="fu">Cubic</span>(Interpolations.<span class="fu">Line</span>(<span class="fu">OnGrid</span>()))))</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>sitp <span class="op">=</span> <span class="fu">scale</span>(itp, A_x)  <span class="co"># scale x-axis of interpolator</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="pp">@show</span> <span class="fu">sitp</span>(<span class="fl">3</span>.) <span class="co"># exactly log(3.)</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="pp">@show</span> <span class="fu">sitp</span>(<span class="fl">3.5</span>) <span class="co"># approximately log(3.5)</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="pp">@show</span> <span class="fu">itp</span>(<span class="fl">3</span>);  <span class="co"># is the 3rd index(!) in A, not the *value* 3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-68" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&nbsp;Same for 2D</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>A_x1 <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">.1</span><span class="op">:</span><span class="fl">10</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>A_x2 <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">.5</span><span class="op">:</span><span class="fl">20</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="fu">fff</span>(x1, x2) <span class="op">=</span> <span class="fu">log</span>(x1<span class="op">+</span>x2)</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> [<span class="fu">fff</span>(x1,x2) for x1 <span class="kw">in</span> A_x1, x2 <span class="kw">in</span> A_x2]</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>itp <span class="op">=</span> <span class="fu">interpolate</span>(A, Interpolations.<span class="fu">BSpline</span>(<span class="fu">Cubic</span>(Interpolations.<span class="fu">Line</span>(<span class="fu">OnGrid</span>()))))</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>sitp <span class="op">=</span> <span class="fu">scale</span>(itp, A_x1, A_x2)</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="fu">sitp</span>(<span class="fl">5</span>., <span class="fl">10</span>.) <span class="co"># exactly log(5 + 10)</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="fu">sitp</span>(<span class="fl">5.6</span>, <span class="fl">7.1</span>) <span class="co"># approximately log(5.6 + 7.1)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Very often we need a <strong>gridded</strong> interpolation. I.e. we supply the function values on an irregular grid.</li>
+<li>For this occasion, the <code>GriddedInterpolation</code> type is useful.</li>
+<li>For now this only works in 3 modes:
+<ul>
+<li>Gridded(Linear())</li>
+<li>Gridded(Constant()) nearest neighbor</li>
+<li>NoInterp (you must supply index ON grid)</li>
+</ul></li>
+</ul>
+<div id="cell-70" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> <span class="fu">rand</span>(<span class="fl">20</span>)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>A_x <span class="op">=</span> <span class="fu">collect</span>(<span class="fl">1.0</span><span class="op">:</span><span class="fl">2.0</span><span class="op">:</span><span class="fl">40.0</span>)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>knots <span class="op">=</span> (A_x,)</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>itp <span class="op">=</span> <span class="fu">interpolate</span>(knots, A, <span class="fu">Gridded</span>(<span class="fu">Linear</span>()))</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="fu">itp</span>(<span class="fl">2.0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-71" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2D</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> <span class="fu">rand</span>(<span class="fl">8</span>,<span class="fl">20</span>)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>knots <span class="op">=</span> ([x<span class="op">^</span><span class="fl">2</span> for x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">8</span>], [<span class="fl">0.2</span>y for y <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">20</span>])</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>itp <span class="op">=</span> <span class="fu">interpolate</span>(knots, A, <span class="fu">Gridded</span>(<span class="fu">Linear</span>()))</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="fu">itp</span>(<span class="fl">4</span>,<span class="fl">1.2</span>)  <span class="co"># approximately A[2,6]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-72" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># we can mix modes across dimensions!</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>itp <span class="op">=</span> <span class="fu">interpolate</span>(knots, A, (<span class="fu">Gridded</span>(<span class="fu">Linear</span>()),<span class="fu">Gridded</span>(<span class="fu">Constant</span>())))</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="fu">itp</span>(<span class="fl">4</span>,<span class="fl">1.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>What about vector valued interpolations?</li>
+<li>Suppose we have a function <span class="math inline">\(f : \mathbb{R} \mapsto \mathbb{R}^2\)</span></li>
+<li>Economics example:</li>
+</ul>
+<p><span class="math display">\[  
+f(x) = \left(\begin{array}{c} \text{savings}(x) \\ \text{consumption}(x) \end{array} \right)
+\]</span></p>
+<ul>
+<li><span class="math inline">\(x\)</span> is cash on hand.</li>
+<li>We often have situations where several functions are defined on a common support <span class="math inline">\(x\)</span>.</li>
+<li>what is <span class="math inline">\(f(1.75)\)</span>?</li>
+</ul>
+<div id="cell-74" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">StaticArrays</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="fu">range</span>(<span class="fl">1</span>,stop <span class="op">=</span> <span class="fl">3</span>, length <span class="op">=</span> <span class="fl">200</span>)  <span class="co"># cash on hand</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> <span class="dt">Float64</span>[<span class="fu">log</span>(<span class="fl">1</span><span class="op">+</span>j)<span class="op">*</span>i for j <span class="kw">in</span> x, i <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">2</span>]   <span class="co"># cons and save function</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> <span class="fu">reinterpret</span>(SVector{<span class="fl">2</span>,<span class="dt">Float64</span>}, a<span class="op">'</span>)[<span class="op">:</span>]</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>itp <span class="op">=</span> <span class="fu">interpolate</span>(b, Interpolations.<span class="fu">BSpline</span>(<span class="fu">Quadratic</span>(<span class="fu">Reflect</span>(<span class="fu">OnCell</span>()))))</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="pp">@show</span> <span class="fu">itp</span>(<span class="fl">3</span>)</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>sitp <span class="op">=</span> <span class="fu">scale</span>(itp,x)</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a><span class="pp">@show</span> <span class="fu">sitp</span>(<span class="fl">3</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-75" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>v <span class="op">=</span> <span class="fu">sitp</span>(<span class="fl">1.75</span>)  <span class="co"># get interpolated values for both function</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x,a,labels<span class="op">=</span>[<span class="st">"save"</span> <span class="st">"cons"</span>],yticks<span class="op">=</span><span class="fu">convert</span>(<span class="dt">Array</span>{<span class="dt">Float64</span>},v),xlabel<span class="op">=</span><span class="st">"current cash"</span>,lw <span class="op">=</span> <span class="fl">3</span>)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="fu">vline!</span>([<span class="fl">1.75</span>],lab<span class="op">=</span><span class="st">""</span>)</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="fu">hline!</span>([v[<span class="fl">1</span>],v[<span class="fl">2</span>]],lab<span class="op">=</span><span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="the-compecon-toolbox-of-miranda-and-fackler" class="level2">
+<h2 class="anchored" data-anchor-id="the-compecon-toolbox-of-miranda-and-fackler">The CompEcon Toolbox of Miranda and Fackler</h2>
+<ul>
+<li>another good alternative:</li>
+<li><a href="https://github.com/spencerlyon2/CompEcon.jl">CompEcon.jl</a></li>
+</ul>
+</section>
+<section id="multidimensional-approximation" class="level2">
+<h2 class="anchored" data-anchor-id="multidimensional-approximation">Multidimensional Approximation</h2>
+<ul>
+<li>Up to now, most of what we did was in one dimesion.</li>
+<li>Economic problems <em>often</em> have more dimension than that.
+<ul>
+<li>The number of state variables in your value functions are the number of dimensions.</li>
+</ul></li>
+<li>We can readily extend what we learned into more dimensions.</li>
+<li>However, we will quickly run into feasibility problems: hello <em>curse of dimensionality</em>.</li>
+</ul>
+</section>
+<section id="tensor-product-of-univariate-basis-functions-product-rule" class="level2">
+<h2 class="anchored" data-anchor-id="tensor-product-of-univariate-basis-functions-product-rule">Tensor Product of univariate Basis Functions: Product Rule</h2>
+<ul>
+<li>One possibility is to approximate e.g.&nbsp;the 2D function <span class="math inline">\(f(x,y)\)</span> by <span class="math display">\[ \hat{f}(x,y) = \sum_{i=1}^n \sum_{j=1}^m c_{i,j} \phi_i^x(x) \phi_j^y(y)  \]</span>
+<ul>
+<li>here <span class="math inline">\(\phi_i^x\)</span> is the basis function in <span class="math inline">\(x\)</span> space,</li>
+<li>you can see that the coefficient vector <span class="math inline">\(c_{i,j}\)</span> is indexed in two dimensions now.</li>
+<li>Notice that our initial notation was general enough to encompass this case, as we defined the basis functions as <span class="math inline">\(\mathbb{R}^d \mapsto \mathbb{R}\)</span>. So with the product rule, this mapping is just given by <span class="math inline">\(\phi_i^x(x) \phi_j^y(y)\)</span>.</li>
+</ul></li>
+<li>This formulation requires that we take the product of <span class="math inline">\(\phi_i^x(x), \phi_j^y(y)\)</span> at <em>all</em> combinations of their indices, as is clear from the summations.</li>
+<li>This is equivalent to the tensor product between <span class="math inline">\(\phi_i^x\)</span> and <span class="math inline">\(\phi_j^y\)</span>.</li>
+</ul>
+</section>
+<section id="computing-coefficients-from-tensor-product-spaces" class="level2">
+<h2 class="anchored" data-anchor-id="computing-coefficients-from-tensor-product-spaces">Computing Coefficients from Tensor Product Spaces</h2>
+<ul>
+<li>Extending this into <span class="math inline">\(D\)</span> dimensions, where in each dim <span class="math inline">\(i\)</span> we have <span class="math inline">\(n_i\)</span> basis functions, we get <span class="math display">\[ \hat{f}(x_1,x_2,\dots,x_D) = \sum_{i_1=1}^{n_1} \sum_{i_2=1}^{n_2} \dots  \sum_{i_D=1}^{n_D} c_{i_1,i_2,\dots,i_D} \phi_{i_1}(x_1) \phi_{i_2}(x_2) \dots \phi_{i_D}(x_D)  \]</span></li>
+<li>In Vector notation <span class="math display">\[
+  \hat{f}(x_1,x_2,\dots,x_D) =  \left[ \phi_{D}(x_D) \otimes \phi_{D-1}(x_{D-1})  \otimes \dots  \otimes  \phi_{1}(x_1) \right]  c \]</span> where <span class="math inline">\(c\)</span> is is an <span class="math inline">\(n=\Pi_{i=1}^D n_i\)</span> column vector</li>
+<li>The solution is the interpolation equation as before, <span class="math display">\[ \begin{aligned}\Phi c =&amp; y \\
+                  \Phi   =&amp; \Phi_D \otimes \Phi_{D-1} \otimes \dots \otimes \Phi_{1} \end{aligned} \]</span></li>
+</ul>
+<section id="the-problem-with-tensor-product-of-univariate-basis-functions" class="level3">
+<h3 class="anchored" data-anchor-id="the-problem-with-tensor-product-of-univariate-basis-functions">The Problem with Tensor Product of univariate Basis Functions</h3>
+<ul>
+<li>What’s the problem?</li>
+<li>Well, solving <span class="math inline">\(\Phi c = y\)</span> is hard.</li>
+<li>If we have as many evaluation points as basis functions in each dimension, i.e.&nbsp;if each single <span class="math inline">\(\Phi_i\)</span> is a square matrix, <span class="math inline">\(\Phi\)</span> is of size (n,n).</li>
+<li>Inverting this is <em>extremely</em> hard even for moderately sized problems.</li>
+<li>Sometimes it’s not even possible to allocate <span class="math inline">\(\Phi\)</span> in memory.</li>
+<li>Here it’s important to remember the sparsity structure of a spline basis function.</li>
+</ul>
+<div id="cell-81" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">ApproXD</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gr</span>()</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>bs <span class="op">=</span> ApproXD.<span class="fu">BSpline</span>(<span class="fl">7</span>,<span class="fl">3</span>,<span class="fl">0</span>,<span class="fl">1</span>) <span class="co">#7 knots, degree 3 in [0,1]</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="fl">500</span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>eval_points <span class="op">=</span> <span class="fu">collect</span>(<span class="fu">range</span>(<span class="fl">0</span>,stop <span class="op">=</span> <span class="fl">1.0</span>,length <span class="op">=</span> n))</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>B <span class="op">=</span> <span class="fu">Array</span>(ApproXD.<span class="fu">getBasis</span>(eval_points,bs))</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>ys <span class="op">=</span> [<span class="fu">string</span>(<span class="st">"Basis"</span>,i) for i <span class="op">=</span> <span class="fu">size</span>(B)[<span class="fl">2</span>]<span class="op">-</span><span class="fl">1</span><span class="op">:-</span><span class="fl">1</span><span class="op">:</span><span class="fl">0</span>]</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a><span class="fu">heatmap</span>(eval_points,ys,<span class="fu">reverse</span>(B<span class="op">'</span>,dims<span class="op">=</span><span class="fl">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>This is a cubic spline basis. at most <span class="math inline">\(k+1=4\)</span> basis are non-zero for any <span class="math inline">\(x\)</span>.</li>
+</ul>
+<div id="cell-83" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">heatmap</span>(eval_points,ys,<span class="fu">reverse</span>(B<span class="op">'</span>,dims<span class="op">=</span><span class="fl">1</span>) <span class="op">.&gt;</span> <span class="fl">0</span>, cbar <span class="op">=</span> <span class="cn">false</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="using-sparsity-of-splines" class="level2">
+<h2 class="anchored" data-anchor-id="using-sparsity-of-splines">Using Sparsity of Splines</h2>
+<ul>
+<li>It may be better to store the splines in sparse format.</li>
+<li>Look at object <code>B</code> by typing <code>B</code> and <code>typeof(B)</code></li>
+<li>There are sparse system solvers available.</li>
+<li>Creating and storing the inverse of <span class="math inline">\(\Phi\)</span> destroys the sparsity structure (inverse of a sparse matrix is not sparse), and may not be a good idea.</li>
+<li>Look back at <a href="#compute-c">Computing coefficients form the tensor product</a></li>
+<li>We only have to sum over the non-zero entries! Every other operation is pure cost.</li>
+<li>This is implemented in <code>ApproXD.jl</code> for example via</li>
+</ul>
+<div class="sourceCode" id="cb33"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>    <span class="kw">function</span> <span class="fu">evalTensor2</span><span class="dt">{T}</span>(mat1<span class="op">::</span><span class="dt">SparseMatrixCSC{T,Int64}</span>,</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>                            mat2<span class="op">::</span><span class="dt">SparseMatrixCSC{T,Int64}</span>,</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>                            c<span class="op">::</span><span class="dt">Vector{T}</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="high-dimensional-functions-introducing-the-smolyak-grid" class="level2">
+<h2 class="anchored" data-anchor-id="high-dimensional-functions-introducing-the-smolyak-grid">High Dimensional Functions: Introducing the Smolyak Grid</h2>
+<ul>
+<li>This is a modification of the Tensor product rule.</li>
+<li>It elemininates points from the full tensor product according to their <em>importance</em> for the quality of approximation.</li>
+<li>The user controls this quality parameter, thereby increasing/decreasing the size of the grid.</li>
+<li><span class="citation" data-cites="jmmv">[@jmmv]</span> <cite data-cite="jmmv"></cite>is a complete technical reference for this method.</li>
+<li><span class="citation" data-cites="maliar-maliar">[@maliar-maliar]</span> <cite data-cite="maliarmaliar"></cite>chapter 4 is very good overview of this topic, and the basis of this part of the lecture.</li>
+</ul>
+</section>
+<section id="the-smolyak-grid-in-2-dimensions" class="level2">
+<h2 class="anchored" data-anchor-id="the-smolyak-grid-in-2-dimensions">The Smolyak Grid in 2 Dimensions</h2>
+<ul>
+<li><p>Approximation level <span class="math inline">\(\mu \in \mathbb{N}\)</span> governs the quality of the approximation.</p></li>
+<li><p>Start with a unidimensional grid of points <span class="math inline">\(x\)</span>: <span class="math display">\[ x = \left\{-1,\frac{-1}{\sqrt{2}},0,\frac{1}{\sqrt{2}},1\right\} \]</span> which are 5 Chebyshev nodes (it’s not important that those are Chebyshev nodes, any grid will work).</p></li>
+<li><p>A 2D tensor product <span class="math inline">\(x\otimes x\)</span> gives 25 grid points <span class="math display">\[ x\otimes x=\left\{(-1,-1),(-1,\frac{-1}{\sqrt{2}}),\dots,(1,1)\right\} \]</span></p></li>
+<li><p>The Smolyak method proceeds differently.</p></li>
+<li><p>We construct three nested sets:</p></li>
+</ul>
+<p><span class="math display">\[ \begin{array}{l}
+        i=1 : S_1 = \{0\} \\
+        i=2 : S_2 = \{0,-1,1\} \\
+        i=3 : S_3 = \left\{-1,\frac{-1}{\sqrt{2}},0,\frac{1}{\sqrt{2}},1\right\}  \end{array} \]</span></p>
+<ul>
+<li>Then, we construct all possible 2D tensor products using elements from these nested sets in a table (next slide).</li>
+<li>Finally, we select only those elements of the table, that satisfy the Smolyak rule: <span class="math display">\[ i_1 + i_2 \leq d + \mu \]</span> where <span class="math inline">\(i_1,i_2\)</span> are column and row index, respectively, and <span class="math inline">\(d,\mu\)</span> are the number of dimensions and the quality of approximation.</li>
+</ul>
+</section>
+<section id="the-smolyak-grid-in-2d-tensor-table" class="level1">
+<h1>The Smolyak Grid in 2D: Tensor Table</h1>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="smolyak-tensortab.png" class="img-fluid figure-img"></p>
+<figcaption><span class="citation" data-cites="maliar-maliar">[@maliar-maliar]</span> table 3: All Tensor Products</figcaption>
+</figure>
+</div>
+<section id="selecting-elements" class="level2">
+<h2 class="anchored" data-anchor-id="selecting-elements">Selecting Elements</h2>
+<ul>
+<li>Denote the Smolyak grid for <span class="math inline">\(d\)</span> dimensions at level <span class="math inline">\(\mu\)</span> by <span class="math inline">\(\mathcal{H}^{d,\mu}\)</span>.</li>
+<li>if <span class="math inline">\(\mu=0\)</span> we have <span class="math inline">\(i_1+i_2\leq 2\)</span>. Only one point satisfies this, and <span class="math display">\[ \mathcal{H}^{2,0} = \{(0,0)\} \]</span></li>
+<li>if <span class="math inline">\(\mu=1\)</span> we have <span class="math inline">\(i_1+i_2\leq 3\)</span>. Three cases satisfy this:
+<ol type="1">
+<li><span class="math inline">\(i_1 = 1, i_2=1 \rightarrow (0,0)\)</span></li>
+<li><span class="math inline">\(i_1 = 1, i_2=2 \rightarrow (0,0),(0,-1),(0,1)\)</span></li>
+<li><span class="math inline">\(i_1 = 2, i_2=1 \rightarrow (0,0),(-1,0),(1,0)\)</span></li>
+</ol>
+<ul>
+<li>Therefore, the unique elements from the union of all of those is <span class="math display">\[ \mathcal{H}^{2,1} = \{(0,0),(-1,0),(1,0),(0,-1),(0,1)\} \]</span></li>
+</ul></li>
+<li>if <span class="math inline">\(\mu=2\)</span> we have <span class="math inline">\(i_1+i_2\leq 4\)</span>. Six cases satisfy this:
+<ol type="1">
+<li><span class="math inline">\(i_1 = 1, i_2=1\)</span></li>
+<li><span class="math inline">\(i_1 = 1, i_2=2\)</span></li>
+<li><span class="math inline">\(i_1 = 2, i_2=1\)</span></li>
+<li><span class="math inline">\(i_1 = 1, i_2=3\)</span></li>
+<li><span class="math inline">\(i_1 = 2, i_2=2\)</span></li>
+<li><span class="math inline">\(i_1 = 3, i_2=1\)</span></li>
+</ol>
+<ul>
+<li>Therefore, the unique elements from the union of all of those is <span class="math display">\[ \mathcal{H}^{2,2} = \left\{(-1,1),(0,1),(1,1),(-1,0),(0,0),(1,0),(-1,-1),(0,-1),(1,-1),\left(\frac{-1}{\sqrt{2}},0\right),\left(\frac{1}{\sqrt{2}},0\right),\left(0,\frac{-1}{\sqrt{2}}\right),\left(0,\frac{1}{\sqrt{2}}\right)\right\} \]</span></li>
+</ul></li>
+<li>Note that those elements are on the diagonal from top left to bottom right expanding through all the tensor products on table 3.</li>
+</ul>
+</section>
+<section id="size-of-smolyak-grids" class="level2">
+<h2 class="anchored" data-anchor-id="size-of-smolyak-grids">Size of Smolyak Grids</h2>
+<ul>
+<li>The Smolyak grid grows much slower (at order <span class="math inline">\(d\)</span> to a power of <span class="math inline">\(\mu\)</span>) than the Tensor grid (exponential growth)</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="smolyak-vs-tensor.png" class="img-fluid figure-img"></p>
+<figcaption><span class="citation" data-cites="maliar-maliar">[@maliar-maliar]</span> figure 2: Tensor vs Smolyak in 2D</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="smolyak-tensor-points.png" class="img-fluid figure-img"></p>
+<figcaption><span class="citation" data-cites="maliar-maliar">[@maliar-maliar]</span> figure 4: Tensor vs Smolyak in 2D, number of grid points</figcaption>
+</figure>
+</div>
+</section>
+<section id="smolyak-polynomials" class="level2">
+<h2 class="anchored" data-anchor-id="smolyak-polynomials">Smolyak Polynomials</h2>
+<ul>
+<li>Corresponding to the construction of grid points, there is the Smolyak way of constructing polynomials.</li>
+<li>This works exactly as before. We start with a one-dimensional set of basis functions (again Chebyshev here, again irrelevant): <span class="math display">\[ \left\{1,x,2x^2-1,4x^3-3x,8x^4-8x^2+1\right\} \]</span></li>
+<li>Three nested sets:</li>
+</ul>
+<p><span class="math display">\[ \begin{array}{l}
+    i=1 : S_1 = \{1\} \\
+    i=2 : S_2 = \{1,x,2x^2-1\} \\
+    i=3 : S_3 = \left\{1,x,2x^2-1,4x^3-3x,8x^4-8x^2+1\right\}  \end{array}
+\]</span></p>
+<ul>
+<li>Denoting <span class="math inline">\(\mathcal{P}^{d,\mu}\)</span> the Smolyak polynomial, we follow exactly the same steps as for the grids to select elements of the full tensor product table 5:</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="smolyak-polynomial.png" class="img-fluid figure-img"></p>
+<figcaption><span class="citation" data-cites="maliar-maliar">[@maliar-maliar]</span> figure 5: All Smolyak Polynomials in 2D</figcaption>
+</figure>
+</div>
+</section>
+<section id="smolyak-interpolation" class="level2">
+<h2 class="anchored" data-anchor-id="smolyak-interpolation">Smolyak Interpolation</h2>
+<p>This proceeds as in the previouses cases:</p>
+<ol type="1">
+<li>Evaluate <span class="math inline">\(f\)</span> at all grid points <span class="math inline">\(\mathcal{H}^{d,\mu}\)</span>.</li>
+<li>Evaluate the set of basis functions given by <span class="math inline">\(\mathcal{P}^{d,\mu}\)</span> at all grid points <span class="math inline">\(\mathcal{H}^{d,\mu}\)</span>.</li>
+<li>Solve for the interpolating coefficients by inverting the Basis function matrix.</li>
+</ol>
+</section>
+<section id="extensions" class="level2">
+<h2 class="anchored" data-anchor-id="extensions">Extensions</h2>
+<ul>
+<li>There is a lot of redundancy in computing the grids the way we did it.</li>
+<li>More sophisticated approaches take care not to compute repeated elements.</li>
+</ul>
+</section>
+<section id="smolyak-grids-in-julia" class="level2">
+<h2 class="anchored" data-anchor-id="smolyak-grids-in-julia">Smolyak Grids in Julia</h2>
+<ul>
+<li>There are at least 2 julia packages that implement this idea:
+<ul>
+<li><a href="BasisMatrices.jl">https://github.com/QuantEcon/BasisMatrices.jl</a></li>
+<li><a href="SmolyakApprox.jl">https://github.com/RJDennis/SmolyakApprox.jl</a></li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="using-smolyak-from-basismatrices" class="level1">
+<h1>Using (Smolyak from) <code>BasisMatrices</code></h1>
+<ul>
+<li><code>BasisMatrices</code> provides general support for all kinds of basis matrices.</li>
+<li><code>Cheb</code> for chebyshev basis matrix</li>
+<li><code>Spline</code> for spline</li>
+<li><code>Lin</code> for linear</li>
+</ul>
+<section id="outline-1" class="level3">
+<h3 class="anchored" data-anchor-id="outline-1">Outline</h3>
+<ul>
+<li>We usually start with defining <code>Params</code> for each type: bounds, grid points, degrees, etc</li>
+<li>Then we construct a Basis type <code>basis</code></li>
+<li>Then we can get evaluation nodes, i.e.&nbsp;points at which to evaluate our function with <code>nodes(basis)</code></li>
+<li>Then get an evaluted basis matrix with <code>BasisMatrix(basis)</code></li>
+</ul>
+<div id="cell-98" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">BasisMatrices</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>grid1 <span class="op">=</span> <span class="fu">range</span>(<span class="fl">1</span>,stop <span class="op">=</span> <span class="fl">3</span>,length <span class="op">=</span> <span class="fl">10</span>)</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>lp <span class="op">=</span> <span class="fu">LinParams</span>(grid1)</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>sp <span class="op">=</span> <span class="fu">SplineParams</span>(<span class="fu">collect</span>(grid1),<span class="fl">0</span>,<span class="fl">3</span>)  <span class="co"># nodes, whether only 2 nodes, degree of spline</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>sm <span class="op">=</span> <span class="fu">SmolyakParams</span>(<span class="fl">2</span>,<span class="fl">1</span>,[<span class="fl">3</span>],[<span class="fl">2</span>])   <span class="co">#&nbsp;dims,mu,lower bound(s), upper bound(s)</span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>sm2 <span class="op">=</span> <span class="fu">SmolyakParams</span>(<span class="fl">2</span>,[<span class="fl">1</span>,<span class="fl">2</span>],[<span class="fl">0</span>,<span class="op">-</span><span class="fl">0.5</span>],[<span class="fl">3</span>,<span class="fl">4.4</span>])   <span class="co">#&nbsp;dims,mu,lower bound(s), upper bound(s)</span></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>sm3 <span class="op">=</span> <span class="fu">SmolyakParams</span>(<span class="fl">3</span>,[<span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">2</span>],[<span class="fl">0</span>,<span class="op">-</span><span class="fl">0.5</span>,<span class="fl">1</span>],[<span class="fl">3</span>,<span class="fl">4.4</span>,<span class="fl">5</span>])   <span class="co">#&nbsp;dims,mu,lower bound(s), upper bound(s)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-99" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&nbsp;simple interpolation</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">fi</span>(x) <span class="op">=</span> x<span class="op">.^</span><span class="fl">2</span> <span class="op">-</span> <span class="fl">0.5</span><span class="op">*</span>x<span class="op">.^</span><span class="fl">3</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>sp <span class="op">=</span> <span class="fu">SplineParams</span>(<span class="fu">collect</span>(grid1),<span class="fl">0</span>,<span class="fl">3</span>)  <span class="co"># nodes, whether only 2 nodes, degree of spline</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>sb <span class="op">=</span> <span class="fu">Basis</span>(sp)</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>s,n <span class="op">=</span> BasisMatrices.<span class="fu">nodes</span>(sb)</span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>sv <span class="op">=</span><span class="fu">fi</span>(s)</span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>coef, bs_direct <span class="op">=</span> <span class="fu">funfitxy</span>(sb, s, sv)   <span class="co">#&nbsp;compute coefficients</span></span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fi,<span class="fl">1</span>,<span class="fl">3</span>,label<span class="op">=</span><span class="st">"truth"</span>)</span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>newx <span class="op">=</span> <span class="fl">1</span> <span class="op">.+</span> <span class="fu">rand</span>(<span class="fl">10</span>)<span class="op">*</span><span class="fl">2</span></span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>newy <span class="op">=</span> <span class="fu">funeval</span>(coef,sb,newx)   <span class="co"># evaluate basis at new points</span></span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a><span class="fu">scatter!</span>(newx,newy,label<span class="op">=</span><span class="st">"approx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-100" class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">PlotlyJS</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-101" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&nbsp;multiple dimensions</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>basis <span class="op">=</span> <span class="fu">Basis</span>(<span class="fu">SplineParams</span>(<span class="fl">25</span>, <span class="op">-</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>),<span class="fu">SplineParams</span>(<span class="fl">20</span>, <span class="op">-</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">1</span>))   <span class="co"># quadratic and linear spline</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="co"># get nodes</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>X, x12 <span class="op">=</span> BasisMatrices.<span class="fu">nodes</span>(basis)</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a><span class="co"># function to interpolate</span></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a><span class="fu">f2</span>(x1, x2) <span class="op">=</span> <span class="fu">cos</span>.(x2) <span class="op">./</span> <span class="fu">exp</span>.(x1)</span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a><span class="fu">f2</span>(X<span class="op">::</span><span class="dt">Matrix</span>) <span class="op">=</span> <span class="fu">f2</span>.(X[<span class="op">:</span>, <span class="fl">1</span>], X[<span class="op">:</span>, <span class="fl">2</span>])</span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a><span class="co"># f at nodes</span></span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> <span class="fu">f2</span>(X)</span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>Ymat <span class="op">=</span> [<span class="fu">f2</span>(i,j) for i <span class="kw">in</span> x12[<span class="fl">1</span>], j <span class="kw">in</span> x12[<span class="fl">2</span>]]</span>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a>coefs, bbs <span class="op">=</span> <span class="fu">funfitxy</span>(basis, X, y)</span>
+<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a>ynew <span class="op">=</span> <span class="fu">funeval</span>(coefs, basis, X[<span class="fl">5</span><span class="op">:</span><span class="fl">5</span>, <span class="op">:</span>])[<span class="fl">1</span>]</span>
+<span id="cb37-16"><a href="#cb37-16" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Test</span></span>
+<span id="cb37-17"><a href="#cb37-17" aria-hidden="true" tabindex="-1"></a><span class="pp">@test</span> <span class="fu">maximum</span>(abs, ynew <span class="op">-</span>  y[<span class="fl">5</span>]) <span class="op">&lt;=</span> <span class="fl">1e-12</span></span>
+<span id="cb37-18"><a href="#cb37-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-19"><a href="#cb37-19" aria-hidden="true" tabindex="-1"></a><span class="fu">plotlyjs</span>()</span>
+<span id="cb37-20"><a href="#cb37-20" aria-hidden="true" tabindex="-1"></a>Plots.<span class="fu">surface</span>(x12[<span class="fl">1</span>],x12[<span class="fl">2</span>],Ymat<span class="op">'</span>,alpha<span class="op">=</span><span class="fl">0.7</span>,cbar<span class="op">=</span><span class="cn">false</span>)</span>
+<span id="cb37-21"><a href="#cb37-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-22"><a href="#cb37-22" aria-hidden="true" tabindex="-1"></a>xnew<span class="op">=</span><span class="fu">hcat</span>(<span class="op">-</span><span class="fl">1</span> <span class="op">.+</span> <span class="fu">rand</span>(<span class="fl">10</span>)<span class="op">*</span><span class="fl">2</span> , <span class="op">-</span><span class="fl">1</span> <span class="op">.+</span> <span class="fu">rand</span>(<span class="fl">10</span>)<span class="op">*</span><span class="fl">3</span>)</span>
+<span id="cb37-23"><a href="#cb37-23" aria-hidden="true" tabindex="-1"></a>ynew <span class="op">=</span> [<span class="fu">funeval</span>(coefs, basis, xnew[i,<span class="op">:</span>]) for i <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu">size</span>(xnew,<span class="fl">1</span>)]</span>
+<span id="cb37-24"><a href="#cb37-24" aria-hidden="true" tabindex="-1"></a>Plots.<span class="fu">scatter!</span>(xnew[<span class="op">:</span>,<span class="fl">1</span>],xnew[<span class="op">:</span>,<span class="fl">2</span>],ynew,markersize<span class="op">=</span><span class="fl">2</span>,markershape<span class="op">=:</span>rect)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-102" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># same with the smolyak grid</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&nbsp;multiple dimensions</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">LinearAlgebra</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>sp <span class="op">=</span> <span class="fu">SmolyakParams</span>(<span class="fl">2</span>,<span class="fl">3</span>, [<span class="op">-</span><span class="fl">1</span>,<span class="op">-</span><span class="fl">1</span>],[<span class="fl">1</span>,<span class="fl">2</span>])</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>basis <span class="op">=</span> <span class="fu">Basis</span>(sp)   </span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a><span class="co"># get nodes</span></span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>X, x12 <span class="op">=</span> BasisMatrices.<span class="fu">nodes</span>(basis)</span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a><span class="co"># # f at nodes</span></span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> <span class="fu">f2</span>(X)</span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a>Ymat <span class="op">=</span> [<span class="fu">f2</span>(i,j) for i <span class="kw">in</span> <span class="fu">unique</span>(X[<span class="op">:</span>,<span class="fl">1</span>]), j <span class="kw">in</span> <span class="fu">unique</span>(X[<span class="op">:</span>,<span class="fl">2</span>])]</span>
+<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-14"><a href="#cb38-14" aria-hidden="true" tabindex="-1"></a><span class="co"># map domain into unit hypercube</span></span>
+<span id="cb38-15"><a href="#cb38-15" aria-hidden="true" tabindex="-1"></a>cube <span class="op">=</span> BasisMatrices.<span class="fu">dom2cube</span>(X, basis.params[<span class="fl">1</span>])</span>
+<span id="cb38-16"><a href="#cb38-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&nbsp;evaluate basis matrix</span></span>
+<span id="cb38-17"><a href="#cb38-17" aria-hidden="true" tabindex="-1"></a>eb   <span class="op">=</span> BasisMatrices.<span class="fu">build_B</span>(sp.d, sp.mu, cube, sp.pinds)</span>
+<span id="cb38-18"><a href="#cb38-18" aria-hidden="true" tabindex="-1"></a>coef <span class="op">=</span> <span class="fu">pinv</span>(eb) <span class="op">*</span> y</span>
+<span id="cb38-19"><a href="#cb38-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-20"><a href="#cb38-20" aria-hidden="true" tabindex="-1"></a>xnew <span class="op">=</span> <span class="fu">hcat</span>(<span class="op">-</span><span class="fl">1</span> <span class="op">.+</span> <span class="fu">rand</span>(<span class="fl">30</span>)<span class="op">*</span><span class="fl">2</span> , <span class="op">-</span><span class="fl">1</span> <span class="op">.+</span> <span class="fu">rand</span>(<span class="fl">30</span>)<span class="op">*</span><span class="fl">3</span>)</span>
+<span id="cb38-21"><a href="#cb38-21" aria-hidden="true" tabindex="-1"></a>cube <span class="op">=</span> BasisMatrices.<span class="fu">dom2cube</span>(xnew, sp)</span>
+<span id="cb38-22"><a href="#cb38-22" aria-hidden="true" tabindex="-1"></a>eb   <span class="op">=</span> BasisMatrices.<span class="fu">build_B</span>(sp.d, sp.mu, cube, sp.pinds)</span>
+<span id="cb38-23"><a href="#cb38-23" aria-hidden="true" tabindex="-1"></a>ynew <span class="op">=</span> eb <span class="op">*</span> coef</span>
+<span id="cb38-24"><a href="#cb38-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-25"><a href="#cb38-25" aria-hidden="true" tabindex="-1"></a><span class="fu">scatter</span>(X[<span class="op">:</span>,<span class="fl">1</span>],X[<span class="op">:</span>,<span class="fl">2</span>],y,markersize<span class="op">=</span><span class="fl">2</span>)</span>
+<span id="cb38-26"><a href="#cb38-26" aria-hidden="true" tabindex="-1"></a><span class="fu">scatter!</span>(xnew[<span class="op">:</span>,<span class="fl">1</span>],xnew[<span class="op">:</span>,<span class="fl">2</span>],ynew,markersize<span class="op">=</span><span class="fl">2</span>,markershape<span class="op">=:</span>rect)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="more-on-sparse-grids" class="level2">
+<h2 class="anchored" data-anchor-id="more-on-sparse-grids">More on Sparse Grids</h2>
+<ul>
+<li>Sparse Grids are widely used.</li>
+<li>The <a href="https://tasmanian.ornl.gov">Tasmanian</a> library is excellent.</li>
+<li>The <a href="https://github.com/floswald/Tasmanian.jl">Tasmanian.jl</a> is a simple wrapper to that library.</li>
+<li><a href="https://sites.google.com/site/simonscheidegger/home">Simon Scheidegger</a> has many useful resources on his website, in particular their joint paper with <a href="http://johannesbrumm.com">Johannes Brumm</a> features an application of sparse grids for high dimensional economics problems.</li>
+</ul>
+<div class="sourceCode" id="cb39"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Tasmanian</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>Tasmanian.<span class="fu">ex2</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><img src="ex2.gif" class="img-fluid"></p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>Tasmanian.<span class="fu">ex3</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><img src="ex3.gif" class="img-fluid"></p>
+
+
+</section>
+</section>
+
+<p>© Florian Oswald, 2025</p></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/floswald\.github\.io\/CompEcon\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
