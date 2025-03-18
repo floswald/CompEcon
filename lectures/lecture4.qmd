@@ -1,0 +1,13 @@
+---
+title: "Lecture 4: Optimization 2 and 3"
+---
+
+We continued our exploration of optimization algorithms. We also talked about how to solve systems of equations arising in many economic models, and we showcased an integer programming problem based on my research with Marleen where we reallocate buses across garages in London. 🚌
+
+Topic | Notebook
+:-----: | :--------:
+Algorithms, and `JuMP` | [download notebook](https://raw.githubusercontent.com/floswald/CompEcon/refs/heads/main/notebooks/week2/optimization2.jl)
+Constraints, (Mixed) Integer Problems | [download notebook](https://raw.githubusercontent.com/floswald/CompEcon/refs/heads/main/notebooks/week5/optimization3.jl)
+Solving Systems of equations | [download notebook](https://raw.githubusercontent.com/floswald/CompEcon/refs/heads/main/notebooks/week4/systems.jl)
+MIP Bus reallocation | [download notebook](https://raw.githubusercontent.com/floswald/CompEcon/refs/heads/main/notebooks/week5/reallocate.jl)
+

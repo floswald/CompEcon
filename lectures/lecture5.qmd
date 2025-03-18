@@ -1,0 +1,16 @@
+---
+title: "Lecture 5: Dynamic Programming"
+---
+
+We introduced the Dynamic Programming technique by means of the well known _cake eating_ problem. We showed probably the simplest way to solve for the optimal decision rule, on a discrete grid. We _also_ showed that this can lead to really poor results, so **implementation details matter** here. We introduced uncertainty and we looked at an Euler Equation solver for a consumption savings problem.
+
+
+Topic | Notebook 
+:-----: | :--------: 
+Dynamic Programming 1 | [download notebook](https://raw.githubusercontent.com/floswald/CompEcon/refs/heads/main/notebooks/week6/dp.jl) 
+Dynamic Programming 2 | [download notebook](https://raw.githubusercontent.com/floswald/CompEcon/refs/heads/main/notebooks/week6/dp2.jl)
+Endogenous Grid Method (EGM) | [download notebook](https://raw.githubusercontent.com/floswald/CompEcon/refs/heads/main/notebooks/week6/EGM.jl)
+The Shimer-Smith Model | [download notebook](https://raw.githubusercontent.com/floswald/CompEcon/refs/heads/main/notebooks/week6/shimer-smith.jl)
+
+
+
