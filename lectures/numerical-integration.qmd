@@ -1,6 +1,6 @@
 ---
 title: "Numerical Integration"
-subtitle: ScPo Computational Economics 2024
+subtitle: Collegio Carlo Alberto Computational Economics 2025
 author: Florian Oswald
 date: today
 engine: julia

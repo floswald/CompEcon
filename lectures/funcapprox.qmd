@@ -1,5 +1,10 @@
 ---
 title: Function Approximation
+engine: julia
+execute:
+    freeze: auto  # re-render only when source changes
+    echo: true
+    cache: true
 ---
 
 
@@ -18,7 +23,7 @@ V(a,z) &= \max_{a'} u((1+r)a + z - a') + \beta \mathbb{E}\left[ V(a',z') | z \ri
 
 :::
 
-## Approximation Methods
+# Approximation Methods
 
 * Confronted with a non-analytic function $f$ (i.e. something not like $\log(x)$), we need a way to numerically represent $f$ in a computer.
 	* If your problem is to compute a value function in a dynamic problem, you often don't have an *analytic representation* of $V$.
@@ -30,7 +35,9 @@ V(a,z) &= \max_{a'} u((1+r)a + z - a') + \beta \mathbb{E}\left[ V(a',z') | z \ri
 * To an economist this should sound very familiar: take a dataset, learn it's structure, and make predictions.
 * The only difference is that we can do much better here, because we have more degree's of freedom (we can choose our $X$ in $Y=\beta X + \epsilon$)
 
-### Isn't this Machine Learning?
+:::{.callout-tip}
+
+# Isn't this Machine Learning?
 
 * You should notice that this sounds *very similar* to what machine learning attempts to do as well: **make predictions on unseen data**. 
 * So: what is different here? 
@@ -38,16 +45,18 @@ V(a,z) &= \max_{a'} u((1+r)a + z - a') + \beta \mathbb{E}\left[ V(a',z') | z \ri
     2. Machine learning exerts a lot of computational effort to train a model *once* very well, then uses the model to make many, many predictions.
     3. We want to estimate structural economic models by *changing the parameters of the model* often; we would need to _train the model very often_, and use it make a prediction **exactly once**.
     4. That said, there are many frontier methods which use deep learning to solve economic models: https://web.stanford.edu/~maliars/Files/JME2021.pdf, https://onlinelibrary.wiley.com/doi/full/10.1111/iere.12575 and references therein.
+   
+:::
 
 
-### Some Taxonomy
+## Some Taxonomy
 
 * Local Approximations: approximate function and it's derivative $f,f'$ at a *single* point $x_0$. Taylor Series:
 	$$ f(x) = f(x_0) + (x-x_0)f'(x_0) + \frac{(x-x_0)^2}{2}f''(x_0) + \dots + \frac{(x-x_0)^n}{n!}f^{n}(x_0) $$
 * Interpolation or *Colocation*: find a function $\hat{f}$ that is a good fit to $f$, and require that $\hat{f}$ *passes through* the points. If we think of there being a *residual* $\epsilon_i = f(x_i) - \hat{f}(x_i)$ at each grid point $i$, this methods succeeds in setting $\epsilon_i=0,\forall i$.
 * Regression: Minimize some notion of distance (or squared distance) between $\hat{f}$ and $f$, without the requirement of pass through. 
 
-#### Doing Interpolation in Julia
+### Doing Interpolation in Julia
 
 * In practice, you will make heavy use of high-quality interpolation packages in julia.
 * List in the end.
@@ -55,17 +64,80 @@ V(a,z) &= \max_{a'} u((1+r)a + z - a') + \beta \mathbb{E}\left[ V(a',z') | z \ri
 * This is why we will go through the mechanics of some common methods.
 * I would like you to know where to start drilling if you need to go and hack somebody elses code.
 
+## Representing Data
 
-## What is a Vector Space?
+Let's have a look at the famous [Iris Dataset](https://en.wikipedia.org/wiki/Iris_flower_data_set).
+
+```{julia}
+
+using CSV
+using DataFrames
+using StatsPlots
+using Chain
+using Statistics
+
+iris = CSV.read(
+    (joinpath(dirname(pathof(DataFrames)),
+     "..", "docs", "src", "assets", "iris.csv")),
+    DataFrame)
+first(iris,5)
+```
+
+* This dataset is like a *matrix*.
+* We could think of each row as a _vector_. A *tuple* of input data, like $x_1 = (5.1,3.5,1.4,0.2)$, and a one-dimensional ouput $y_1$, the _species_ label, like "setosa". Stack the $x$ to get $X$ of size (150,4).
+
+
+How are the different measures distributed?
+
+```{julia}
+@chain iris begin
+    stack(_, Not(:Species))
+    subset(:Species => x -> x .== "Iris-setosa") 
+    @df density(:value, group = :variable, xlab = "Setosa Measures",lw = 2)
+end
+```
+
+Those measurements seem to be on different scales. The _SepalLength_ measure seems to have an average of around 5, where as _PetalWidth_ is smaller than 1 in most cases. 
+
+* How can we do **mathematical operations on vectors** $x$ like addition and scalar multiplication?
+* Like, suppose we want to *standardize* the data in `iris`? We would like to create those two objects (each of them a length 4 vector), standing for the mean and std deviation (across rows) of all 150 samples.
+
+$$\begin{align}
+\mu & = \frac{1}{150} \sum_{i=1}^{150} x_i \in \mathbb{R}^4 \\
+\sigma & = \sqrt{\frac{1}{150} \sum_{i=1}^{150} 
+\left(x_i - \mu_i \right)^2} \in \mathbb{R}^4 \\
+\end{align}$$
+
+* (the interesting part is the $\sum_{i=1}^{150} x_i$ when $x_i \in \mathbb{R}^4$ )
+* in order to then standardize each vector in turn like that (here $x$ is a 4-vector!): 
+
+$$\frac{x_1 - \mu}{\sigma},\frac{x_2 - \mu}{\sigma},\dots,\frac{x_{150} - \mu}{\sigma}$$
+
+
+```{julia}
+@chain iris begin
+    subset(:Species => x -> x .== "Iris-setosa") 
+    transform( [x => (z -> (z .- mean(z)) ./ std(z)) => x 
+         for x in [:SepalLength, :SepalWidth, :PetalLength, :PetalWidth] ]
+    )
+    stack(_, Not(:Species))
+    @df density(:value, group = :variable, xlab = "Standardized Setosa Measures")
+end
+```
+
+What we have done right now, i.e. to *transform* this data via _addition and multiplication_ into a **common space** is very important. In fact, it is related to the concept of **Vector Spaces**. 
+
+
+## Vector Spaces
 
 A *Vector Space* is a structure $(V,F,+,\cdot)$, where:
+
 1. $V$ is a set of vectors
 2. $+: V \times V \mapsto V$ is the _addition_ operation, with
-
     1. $x + y = y + x$  
-    1. $x + (y + z ) = (x + y ) + z$  
-    1. There is a null vector: $x + 0 = x, 0 \in V$  
-    1. there is an inverse $-x \in V, x + (-x) = 0$
+    2. $x + (y + z ) = (x + y ) + z$  
+    3. There is a null vector: $x + 0 = x, 0 \in V$  
+    4. there is an inverse $-x \in V, x + (-x) = 0$
 
 3. $F$ is a field of scalars: $\mathbb{R}$ or $\mathbb{C}$
 4. $\cdot : F \times V \mapsto V$ is _scalar multiplication_, satisfying
@@ -105,13 +177,18 @@ $$x = \sum_{i=1}^n e_i x_i, x_i \in \mathbb{R}, e_i \in \mathbb{R}^n$$
 
 * If instead of $e_i$ we write $v_i$ for *any vector*, and $b_i \in \mathbb{R}$ a *weight* , we can write *any other vector*$$z = \sum_{i=1}^n v_i b_i, v_i \in \mathbb{R}^n$$ as a *linear combination*
 * Potentially, there are multiple combinations of vectors which result in the same combination, e.g. for $v_1 = (1,0),v_2 = (0,1), v_3= (1,1)$, we can have $$(2,1) = 2 v_1 + v_2 = v_1 + v_3$$ i.e. there are 2 equivalent ways to  generate $(2,1)$ from those vectors.
-* The set $S = \{v_1 , v_2 v_3 \}$ contains **redundant information**.
+* The set $S = \{v_1 , v_2 , v_3 \}$ contains **redundant information**.
 
-### Linear Independence
+
+:::{.callout-tip}
+
+# Linear Independence
 
 Let $V$ be a vector space and $S=\{v_1,\dots,v_n\}$ be a subset of its vectors. $S$ is said to be *linearly dependent* if it only contains the null vector, or if there is a nonzero $v_k$ which can be expressed as a linear combination of the others $$v_1,\dots,v_{k-1},v_{k+1},\dots,v_n$$
 
 If $S$ is not linearly dependent, it is linearly *independent*.
+
+:::
 
 Consider $v_k$, which we write as a linear combination of the other members of $S$:
 
@@ -123,9 +200,21 @@ $$0 = \sum_{i=1}^{n} b_i v_i$$
 
 for some weights $b_i$, where it has to be that $b_k =-1$. So: we can obtain the null vector from a *nontrivial* linear combination.
 
+:::{.callout-note}
+
+# Theorem
+
+Let $V$ be a vector space and $S$ be a subset of it's vectors. 
+
+1. $S$ is linearly **dependent** if and only if the null vector can be generated as a nontrivial linear combination (i.e. a linear combination where not all coefficients are equal to zero)
+2. $S$ is linearly **independent** if and only if it is true that $0 = \sum_{i=1}^n x_i v_i$, then all coefficients $x_i = 0$.
+
+:::
+
 ### *Basis*  Definition
 
 Let $V$ be a vector space and $S$ be a subset of it's vectors. $S$ is called *basis* of $V$ if
+
 1. $S$ is linearly independent
 2. $S$ *spans* $V$, i.e. $span(S) = V$
 
@@ -148,9 +237,15 @@ We obtain the *span* of a set of vectors $S$ by creating *all possible linear co
 
 * Now we know that every vector $\mathbf{v}$ in a vector space $V$ can be represented by a linear combination of *basis vectors*.
 * Similarly, we can represent every *continuous* function in a particular *function space* $F$ by a linear combination of *basis functions*.
-* Another good name for basis functions is *blending functions*. We often use a mixture of several basis functions to find an approximation.
 
-## Approximating Functions
+:::{.callout-note}
+
+# Blending Functions
+
+Another good name for basis functions is *blending functions*. We often use a mixture of several basis functions to find an approximation. We will use this machinery now to see how we can approximate function from several, simple, component functions (which will be basis functions).
+:::
+
+# Approximating Functions
 
 * Let $F$ by the space of continuous real-valued functions with domain $\mathbf{x}\in \mathbb{R}$. $F$ is a vector space.
 * Next, we define an inner-product operation on that space:
@@ -169,6 +264,7 @@ $$
 $$
 
 where 
+
 * $\phi_j : \mathbb{R}^d \mapsto \mathbb{R}$ is called a **basis function**, and $\Phi_J = \{\phi_j\}_{j=0}^{J-1}$.
 * $c={c_0,c_1,\dots,c_{J-1}}$ is a coefficient vector
 * The integer $J$ is the *order* of the interpolation.
@@ -177,7 +273,7 @@ where
 
 * To find coefficients $c$, one could for example minimize the squared errors, OLS:
     $$
-    c^* = \arg \min \int_\mathbf{x} \gamma(x,c) w(x) dx
+    c^* = \arg \min \int_\mathbf{x} \gamma(x,c)^2 w(x) dx
     $$
 * In standard OLS, we'd set the weighting function to $w(x) = 1$
 
@@ -199,17 +295,47 @@ $$
 * *Interpolation* or *colocation* occurs when $J=M$, i.e. we have a square matrix of basis functions, and can exactly solve this.
 * We basically need to solve the system
 
-$$ 
-\begin{aligned} 
-\sum_{j=1}^n c_j \phi_j(x_i) &= f(x_i),\forall i=1,2,\dots,n \\
-                  \mathbf{\Phi c}&= \mathbf{y}
-\end{aligned}
-$$
+    $$ 
+    \begin{aligned} 
+    \sum_{j=1}^n c_j \phi_j(x_i) &= f(x_i),\forall i=1,2,\dots,n \\
+                    \mathbf{\Phi c}&= \mathbf{y}
+    \end{aligned}
+    $$
 
-where the second line uses vector notation, and $\mathbf{y}$ has all values of $f$.
-* Solution: $\mathbf{c}= \mathbf{\Phi}^{-1}y$.
+    where the second line uses vector notation, and $\mathbf{y}$ has all values of $f$.
 
+* This has solution: $\mathbf{c}= \mathbf{\Phi}^{-1}y$.
 
+:::{.callout-note}
+
+# Question
+
+Suppose we had
+
+$$\Phi = \left[\begin{array}{cc}
+1 & 0 \\
+1 & -2
+\end{array}\right], y = \left[\begin{array}{c}
+32 \\
+-4
+\end{array}\right]$$
+
+What is $c$ in
+
+$$\mathbf{\Phi c}= \mathbf{y}?$$
+
+:::
+
+```{julia}
+#| code-fold: true
+
+Φ = [1 0; 1 -2]; y = [32; -4];
+
+c = Φ \ y
+  
+Φ * c == y
+
+```
 
 
 ### Regression Basics
@@ -225,7 +351,7 @@ $$
  $$
 
 
-## Spectral and Finite Element Methods
+### Spectral and Finite Element Methods
 
 * **Spectral Methods** are such that the basis functions are non-zero over the entire domain of $f$.
 	* Polynomial interpolation
@@ -267,7 +393,7 @@ for the case with $m$ evaluation nodes for $x$, and $n$ basis functions for each
 
 ### Choosing Basis Matrices
 
-* If we choose $\Phi$ so that it's elements share a lot of information, it will be hard to invert it.
+* If we choose $\Phi$ so that it's elements would share a lot of information, it will be hard to invert it. Basically _multicollinearity_.
 * So, if the elements share very little information, it's easier to invert, hence good for us
 * For example, if we have $\Phi$ close to diagonal (i.e. different basis $\phi_j(x)$ are non-zero at different $x$).
 * Such $\Phi$ are generated by using *orthogonal Polynomials* (under our inner product definition).
@@ -297,7 +423,8 @@ for the case with $m$ evaluation nodes for $x$, and $n$ basis functions for each
 * Check you get the same as with the alternative closed form $T_n(x) = \cos(n \arccos(x))$
 
 
-```julia
+```{julia}
+#| code-fold: true
 function T(x,n)
     @assert (x >= -1) & (x <= 1)
     if n == 0
@@ -311,19 +438,21 @@ end
 T2(x,n) = cos(n* acos(x))
 @show T(0.5,3)
 using Test
-@assert T2(0.5,3) == T(0.5,3)        
+@assert T2(0.5,3) == T(0.5,3) 
 ```
 
 
-```julia
+Ok let's check this orthogonality claim. The formula says that if $n \neq m$, then integrating the product of two polynomials is exactly zero:
+
+```{julia}
 # weighting function
 w(x) = 1.0 / sqrt(1-x^2)
 using Statistics
 using Test
 
 # simple integration works for n not equal m
-@assert isapprox(mean(T(x,0) * T(x,1) * w(x) for x in range(-0.99,stop = 0.99, length=100)), 0.0, atol = 1e-16)
-@assert isapprox(mean(T(x,4) * T(x,5) * w(x) for x in range(-0.99,stop = 0.99, length=100)), 0.0, atol = 1e-16)
+@show sum(T(x,0) * T(x,1) * w(x) for x in range(-0.99,stop = 0.99, length=100))
+@show sum(T(x,4) * T(x,5) * w(x) for x in range(-0.99,stop = 0.99, length=100))
 ```
 
 
@@ -337,12 +466,10 @@ using Test
 * Chebyshev nodes are **not** evenly spaced: there are more points towards the boundaries. You might remember that from Gaussian Integration nodes.
 
 
-```julia
-using Plots
+```{julia}
 using FastGaussQuadrature
-gcnodes = gausschebyshev(11)  # generate 21 Chebyshev Nodes
-gr()
-scatter(gcnodes,ones(21),ylims=(0.9,1.1),legend=false,size=(600,100),yticks=nothing)
+gcnodes = gausschebyshev(11)  # generate 11 Chebyshev Nodes
+scatter(gcnodes,ones(11),ylims=(0.9,1.1))
 ```
 
 ### Constructing $\Phi$ as $T$ evaluated *at* the Chebyshev Nodes
@@ -356,7 +483,7 @@ scatter(gcnodes,ones(21),ylims=(0.9,1.1),legend=false,size=(600,100),yticks=noth
 
 
 
-```julia
+```{julia}
 using BasisMatrices
 x = range(-4, stop = 4 ,length = 10)
 ϕ = Basis(ChebParams(length(x),-4,4))
@@ -364,17 +491,9 @@ x = range(-4, stop = 4 ,length = 10)
 ```
 
 
-```julia
+```{julia}
 S, y = nodes(ϕ)
-```
-
-
-```julia
 Φ = BasisMatrix(ϕ, Expanded(), S, 0)
-```
-
-
-```julia
 Φ.vals[1]' * Φ.vals[1]
 ```
 
@@ -402,7 +521,7 @@ S, y = nodes(ϕ)
 * Head over to the [website and look at the readme](https://github.com/JuliaApproximation/ApproxFun.jl).
 
 
-```julia
+```{julia}
 using LinearAlgebra, SpecialFunctions, Plots, ApproxFun
 x = Fun(identity,0..10)
 f = sin(x^2)
@@ -412,49 +531,16 @@ h = f + g^2
 r = roots(h)
 rp = roots(h')
 
-using Plots
 plot(h,labels = "h")
 scatter!(r,h.(r),labels="roots h")
 scatter!(rp,h.(rp),labels = "roots h'")
 ```
 
 
-```julia
-# works even with discontinuities!
-ff = x->sign(x-0.1)/2 + cos(4*x);  # sign introduces a jump at 0.1
-x  = Fun(identity)	# set up a function space
-space(x)
-f  = ff(x)	# define ff on that space
-plot(f)	# plot
-```
 
-
-```julia
+```{julia}
 # whats the first deriv of that function at at 0.785?
 println(f'(0.785))
-# and close to the jump, at 0.100001?
-println(f'(0.1000001))
-
-```
-
-
-* The main purpose of this package is to manipulate analytic functions, i.e. function with an algebraic representation.
-* There is the possibility to supply a set of data points and fit a polynomial:
-
-
-```julia
-S = Chebyshev(1..2);
-n = 100; m = 50;
-p = range(1,stop=2,length=n);   # a non-default grid
-v = exp.(p);           # values at the non-default grid
-V = Array{Float64}(undef,n,m); # Create a Vandermonde matrix by evaluating the basis at the grid
-for k = 1:m
-    V[:,k] = Fun(S,[zeros(k-1);1]).(p)
-end
-f = Fun(S,V\v);
-@show f(1.1)
-@show exp(1.1)
-
 ```
 
 ## Splines: Piecewise Polynomial Approximation
@@ -483,7 +569,7 @@ f = Fun(S,V\v);
 * A Spline of order $k$ and $p$ knots can thus be written as a linear combination of it's $n = p+k-1$ basis functions.
 
 
-## B-Splines: Definition
+### B-Splines: Definition
 
 * We mostly use Basis Splines, or **B-Splines**.
 * Here is a recursive definition of a B-Spline (and what is used in `ApproXD`):
@@ -517,7 +603,7 @@ $$
 
 
 
-## B-Splines: Derivatives and Integrals
+### B-Splines: Derivatives and Integrals
 
 * This is another very nice thing about B-Splines.
 * The derivative wrt to it's argument $x$ is
@@ -529,81 +615,64 @@ $$
 	$$ \int_a^x B_j^{k,\mathbf{z}} (y) dy = \sum_{i=j}^n \frac{z_i - z_{i-k}}{k} B_{i+1}^{k+1,\mathbf{z}} (x)  $$
 
 
+### B-Splines in Action
 
+Here is a nice illustration of spline basis functions from [`BSplineKit`](https://jipolanco.github.io/BSplineKit.jl/dev/generated/approximation/):
 
-```julia
-using ApproXD   
-# ] dev https://github.com/floswald/ApproXD.jl
-bs = BSpline(7,3,0,1) #7 knots, degree 3 in [0,1]
-# how many basis functions? (go back 1 slide.)
-# getNumCoefs(bs)
-x = range(0,stop =1.0, length = 500)
-B = Array(getBasis(collect(x),bs))
-plot(x,B,layout=(3,3),grid=false,ylim=(-0.1,1.1),legend=false,linewidth=2,linecolor=:black)
+```{julia}
+using BSplineKit
+using CairoMakie
+
+ξs = range(0..1; length = 15)
+B = BSplineBasis(BSplineOrder(4), ξs)
+```
+
+```{julia}
+#| echo: false
+function plot_knots!(ax, ts; ybase = 0, knot_offset = 0.03, kws...)
+    ys = zero(ts) .+ ybase
+    # Add offset to distinguish knots with multiplicity > 1
+    if knot_offset !== nothing
+        for i in eachindex(ts)[(begin + 1):end]
+            if ts[i] == ts[i - 1]
+                ys[i] = ys[i - 1] + knot_offset
+            end
+        end
+    end
+    Makie.scatter!(ax, ts, ys; marker = '×', color = :gray, markersize = 24, kws...)
+    ax
+end
+
+function plot_basis!(ax, B; eval_args = (), kws...)
+    cmap = cgrad(:tab20)
+    N = length(B)
+    ts = knots(B)
+    hlines!(ax, 0; color = :gray)
+    for (n, bi) in enumerate(B)
+        color = cmap[(n - 1) / (N - 1)]
+        i, j = extrema(support(bi))
+        Makie.lines!(ax, ts[i]..ts[j], x -> bi(x, eval_args...); color, linewidth = 2.5)
+    end
+    plot_knots!(ax, ts; kws...)
+    ax
+end
+
+fig = Figure()
+ax = Axis(
+    fig[1, 1];
+    xlabel = rich("x"; font = :italic),
+    ylabel = rich("b", subscript("i"), rich("(x)"; offset = (0.1, 0.0)); font = :italic),
+)
+plot_basis!(ax, B; knot_offset = 0.05)
+fig
 ```
 
 
-```julia
-# Notice that placing each of those panels on top of each other generates a sparse matrix!
-plot(x,B,grid=false,ylim=(-0.1,1.1),legend=false, lw = 3, color = reshape(Plots.distinguishable_colors(9),1,9))
-```
+It's important to realize here that even though we have 17 lines on this plot (i.e. 17 basis functions), they are non-zero only over a small portion of the domain of interest (i.e. $[0,1]$ in this example). This improves stability of the approximation.
 
-https://jipolanco.github.io/BSplineKit.jl/dev/generated/approximation/
 https://fluxml.ai/Flux.jl/stable/guide/models/quickstart/#man-quickstart
 
-### Linear B-Spline: A useful special case
 
-* This is *connecting the dots with a straight line*
-* This may incur some approximation error if the underlying function is very curved between the dots.
-* However, it has some benefits: 
-	* it is shape-preserving, 
-	* it is fast,
-	* it is easy to build.
-* For a linear spline with evenly spaced breakpoints, this becomes almost trivial.
-	* Let's define $h = \frac{b-a}{n-1}$ as the distance between breakpoints.
-	* Our basis function becomes very simple, giving us a measure of how far $x$ is from the next knot:
-    
-$$ \phi_j (x) = \begin{cases}
-    1 - \frac{|x-z_j|}{h} & \text{if } |x-z_j| \leq h \\
-    0                    & \text{otherwise}
-    \end{cases} 
-$$
-
-* Notice that each interior basis function (i.e. not 0 and not $n$) has witdth $2h$.
-
-
-```julia
-bs = BSpline(9,1,0,1) #9 knots, degree 1 in [0,1]
-x = range(0,stop = 1.0,length = 500)
-B = Array(getBasis(collect(x),bs))
-plot(x,B,layout=(3,3),grid=false,ylim=(-0.1,1.1),legend=false,linewidth=2,linecolor=:black)
-```
-
-### Linear B-Spline: Evaluation
-
-* In order to evaluate the linear interpolator, we need to know only one thing: Which knot span is active, i.e. what is $j$ s.t. $x\in [z_j, z_{j+1}]$?
-* This is a classic problem in computer science. Binary search.
-* `julia` implements [`searchsortedlast`](http://docs.julialang.org/en/release-0.4/stdlib/sort/#Base.searchsortedlast).	
-* Once we know $j$, it's easy to get the interpolated value as
-	$$ \hat{f}(x) = \frac{x-z_j}{h}  f(z_{j+1}) + \frac{z_{j+1}-x}{h}  f(z_{j}) $$
-
-
-
-
-### The Importance of Knot Placement
-
-* We just talked about *equally spaced knots*. This is just a special case.
-* B-Splines give us the flexibility to place the knots where we want.
-* Contrary to Polynomial interpolations (where we cannot choose the evaluation nodes), this is very helpful in cases where we know that a function is very curved in a particular region.
-* Canonical Example: Runge's function: $f(x) = (1+25x^2)^{-1}$.
-* Also: If you know that your function has a kink (i.e. a discontinuous first derivative) at $\hat{x}$, then you can stack breakpoints on top of each other *at* $\hat{x}$
-* That's going to be part of your homework!
-
-
-```julia
-gg(x) = (1+25x^2)^(-1)
-plot(gg,lw = 4,leg = false)
-```
 
 ## Interpolation with [`Interpolations.jl`](https://github.com/JuliaMath/Interpolations.jl)
 
@@ -614,45 +683,32 @@ plot(gg,lw = 4,leg = false)
 * Can get gradients of interpolations right away.
 
 
-```julia
-# interpolation
-# restart kernel!
-using Interpolations
+```{julia}
+using Interpolations as Itp
 A = rand(10,5)
-itp = interpolate(A, Interpolations.BSpline(Quadratic(Reflect(OnCell()))))
+itp = Itp.interpolate(A, Interpolations.BSpline(Quadratic(Reflect(OnCell()))))
 itp(1.9,4.9)
 ```
 
 
-```julia
-A
-
-```
-
-
-```julia
-A[2,5]
-```
-
-
-```julia
+```{julia}
 A_x = 1.:2.:40.   # x in [1,40]
 A = [log(x) for x in A_x] # f(x)
-itp = interpolate(A, Interpolations.BSpline(Cubic(Interpolations.Line(OnGrid()))))
+itp = Itp.interpolate(A, Interpolations.BSpline(Cubic(Interpolations.Line(OnGrid()))))
 sitp = scale(itp, A_x)  # scale x-axis of interpolator
 @show sitp(3.) # exactly log(3.)
 @show sitp(3.5) # approximately log(3.5)
 @show itp(3);  # is the 3rd index(!) in A, not the *value* 3
 ```
 
+same for 2D
 
-```julia
-# Same for 2D
+```{julia}
 A_x1 = 1:.1:10
 A_x2 = 1:.5:20
 fff(x1, x2) = log(x1+x2)
 A = [fff(x1,x2) for x1 in A_x1, x2 in A_x2]
-itp = interpolate(A, Interpolations.BSpline(Cubic(Interpolations.Line(OnGrid()))))
+itp = Itp.interpolate(A, Interpolations.BSpline(Cubic(Interpolations.Line(OnGrid()))))
 sitp = scale(itp, A_x1, A_x2)
 sitp(5., 10.) # exactly log(5 + 10)
 sitp(5.6, 7.1) # approximately log(5.6 + 7.1)
@@ -670,7 +726,7 @@ sitp(5.6, 7.1) # approximately log(5.6 + 7.1)
 A = rand(20)
 A_x = collect(1.0:2.0:40.0)
 knots = (A_x,)
-itp = interpolate(knots, A, Gridded(Linear()))
+itp = Itp.interpolate(knots, A, Gridded(Linear()))
 itp(2.0)
 ```
 
@@ -679,14 +735,14 @@ itp(2.0)
 # 2D
 A = rand(8,20)
 knots = ([x^2 for x = 1:8], [0.2y for y = 1:20])
-itp = interpolate(knots, A, Gridded(Linear()))
+itp = Itp.interpolate(knots, A, Gridded(Linear()))
 itp(4,1.2)  # approximately A[2,6]
 ```
 
 
 ```julia
 # we can mix modes across dimensions!
-itp = interpolate(knots, A, (Gridded(Linear()),Gridded(Constant())))
+itp = Itp.interpolate(knots, A, (Gridded(Linear()),Gridded(Constant())))
 itp(4,1.2)
 ```
 
@@ -723,7 +779,7 @@ hline!([v[1],v[2]],lab="")
 ```
 
 
-## The CompEcon Toolbox of Miranda and Fackler
+### The CompEcon Toolbox of Miranda and Fackler
 
 * another good alternative:
 * [CompEcon.jl](https://github.com/spencerlyon2/CompEcon.jl)

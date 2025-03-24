@@ -1,17 +1,19 @@
 ### A Pluto.jl notebook ###
-# v0.19.46
+# v0.20.4
 
 using Markdown
 using InteractiveUtils
 
 # This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
 macro bind(def, element)
+    #! format: off
     quote
         local iv = try Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value catch; b -> missing; end
         local el = $(esc(element))
         global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : iv(el)
         el
     end
+    #! format: on
 end
 
 # ╔═╡ d257d214-0e18-444d-aad9-5f37ec978cf5
@@ -62,7 +64,7 @@ md"
 
 **With and Without Discrete Choices**
 
-*ScPo Numerical Methods 2024, Florian Oswald*
+*Carlo Alberto 2025, Florian Oswald*
 
 "
 
@@ -245,7 +247,7 @@ md"
 1. Log utility
 1. fixed income (no integration): $y = \bar{y}$
 
-$$V(M)=\max_{0 \le c \le M}\big\{log(c)+\beta V\big(R(M-c)+y\big)\big\}$$
+$$V(M)=\max_{0 \le c \le M}\big\{\log(c)+\beta V\big(R(M-c)+y\big)\big\}$$
 
 $$u'\big(c^\star(M)\big) = \beta R u'\big(c^\star\big(R[M-c^\star(M)]+y\big)\big)$$
 
@@ -625,7 +627,7 @@ PlutoUI = "~0.7.58"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.11.0"
+julia_version = "1.11.3"
 manifest_format = "2.0"
 project_hash = "c343b3e5400bad35774d745984f9178c395c6b40"
 
@@ -1936,7 +1938,7 @@ version = "1.4.1+1"
 # ╟─3dbb96da-0caa-4c16-b9cb-44e447a96b22
 # ╟─845f261e-9865-4cb3-a772-a46f0251f67e
 # ╟─1fefbafe-8fa9-4be3-a219-922dcf758e0e
-# ╠═abf95185-5948-496f-9058-369587c19a1b
+# ╟─abf95185-5948-496f-9058-369587c19a1b
 # ╟─00a5a487-4bf4-44bc-938a-e794c7d7ac6d
 # ╟─089d57dd-fdbf-454f-9263-3e2ca155346e
 # ╠═e80e1f7c-aa7f-48c3-a151-57ceea02286b

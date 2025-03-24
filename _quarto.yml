@@ -46,6 +46,7 @@ website:
         - href: homeworks/hw1.qmd
         - href: homeworks/hw2.qmd
         - href: homeworks/hw3.qmd
+        - href: homeworks/hw4.qmd
 
   navbar:
     search: true
