@@ -196,7 +196,7 @@ end
 plot_mc(mc_results)
 ```
 
-The last point, for $N=10000$ is what we'll consider as the true value. You can see, it takes us quite long until the monte carlo method converges to that value. So, that's the main drawback of this method.
+You can see the red dashed line as being the true value of the integral. The random nature of evaluation points means that while with $N=100$ points we are ok, with $N=1000$ points we are off the mark. We need to go up to $N=10000$ to be sure we got this right. You can see, it takes us quite long until the monte carlo method converges to that value. So, that's the main drawback of this method.
 
 ## Quasi-Monte carlo
 

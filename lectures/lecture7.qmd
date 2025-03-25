@@ -3,7 +3,6 @@ title: "Lecture 7: Parallel Computing"
 engine: julia
 execute:
     freeze: auto  # re-render only when source changes
-    echo: false
     cache: false
 ---
 
@@ -54,6 +53,7 @@ Even within a single thread there may be computational operations which can be p
 
 
 ```{julia}
+#| echo: true
 # make sure we only have a single thread
 # this is default startup behaviour
 Threads.nthreads()
@@ -62,6 +62,7 @@ Threads.nthreads()
 Suppose we have this long running operation (waiting for a server to respond, or something else to arrive):
 
 ```{julia}
+#| echo: true
 function long_process()
     sleep(3)
     return 42 # the answer to life, the universe, and everything
@@ -71,6 +72,7 @@ end
 Now let's run that function three times.
 
 ```{julia}
+#| echo: true
 @elapsed begin
     p1 = long_process()
     p2 = long_process()
@@ -86,6 +88,7 @@ Look at how we wrote the above program, pretty standard. We do one task after th
 Well...that's not always accurate. Check this out from the [manual](https://docs.julialang.org/en/v1/manual/asynchronous-programming/). You can think of a Task as a handle to a unit of computational work to be performed. It has a *create-start-run-finish* lifecycle. Tasks are created by calling the Task constructor on a 0-argument function to run, or using the @task macro:
 
 ```{julia}
+#| echo: true
 t = @task begin; sleep(5); println("done"); end
 ```
 
@@ -105,6 +108,7 @@ ok, back to our example:
 
 
 ```{julia}
+#| echo: true
 t0 = @elapsed begin
     p1 = long_process()
     p2 = long_process()
@@ -118,6 +122,7 @@ t0
 Now, check this out. Let's write this as tasks that should get scheduled.
 
 ```{julia}
+#| echo: true
 t1 = @elapsed begin
     t1 = Task(long_process); schedule(t1)
     t2 = Task(long_process); schedule(t2)
@@ -131,6 +136,7 @@ end
 🤯 3 seconds?! Keep in mind that
 
 ```{julia}
+#| echo: true
 Threads.nthreads()
 ```
 
@@ -153,6 +159,7 @@ First question you should ask: _how many cores does my computer have?_
 
 
 ```{julia}
+#| echo: true
 length(Sys.cpu_info())
 ```
 
