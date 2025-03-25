@@ -466,7 +466,7 @@ gtag('config', 'G-YG2MPSR1Q2', { 'anonymize_ip': true});
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    (p1, p2, p3)</span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
-<pre><code>9.007195292</code></pre>
+<pre><code>9.005572291</code></pre>
 </div>
 </div>
 <p>So this takes roughly 9 seconds, as expected.</p>
@@ -475,7 +475,7 @@ gtag('config', 'G-YG2MPSR1Q2', { 'anonymize_ip': true});
 <div id="8" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> <span class="pp">@task</span> <span class="cf">begin</span>; <span class="fu">sleep</span>(<span class="fl">5</span>); <span class="fu">println</span>(<span class="st">"done"</span>); <span class="cf">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
-<pre><code>Task (runnable) @0x0000000163719910</code></pre>
+<pre><code>Task (runnable) @0x000000010b20c330</code></pre>
 </div>
 </div>
 <p>that thing will sleep for 5 seconds and then print done. but why is nothing happening?</p>
@@ -495,7 +495,7 @@ gtag('config', 'G-YG2MPSR1Q2', { 'anonymize_ip': true});
 <span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>t0</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
-<pre><code>9.006307125</code></pre>
+<pre><code>9.006291167</code></pre>
 </div>
 </div>
 <p>Now, check this out. Let’s write this as tasks that should get scheduled.</p>
@@ -509,7 +509,7 @@ gtag('config', 'G-YG2MPSR1Q2', { 'anonymize_ip': true});
 <span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fetch</span>(t3)) <span class="co"># fetch triggers execution</span></span>
 <span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
-<pre><code>3.009303708</code></pre>
+<pre><code>3.009115</code></pre>
 </div>
 </div>
 <p>🤯 3 seconds?! Keep in mind that</p>
