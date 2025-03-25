@@ -36,6 +36,11 @@ $$
 f(x) = \sin(x)^2 + 0.1 x
 $$
 
+We will evaluate this over $x \in [0,5]$, where we find using standard calculus techniques, that 
+
+$$\begin{equation}
+\int_0^5 f(x) dx = 3.886
+\end{equation}$$
 
 Let's make a plot of this, where $f$ is a black line, and the red shaded area is $I$.
 
@@ -57,6 +62,7 @@ using FastGaussQuadrature  # for intergration rules
 using DataFrames           # to display a table
 using Sobol                # to get sobol sequences
 set_theme!()  # resetting all quarto default values for fig width etc
+true_I = 3.886
 ```
 
 
@@ -180,6 +186,7 @@ function plot_mc(od::OrderedDict; errors = true)
     ax = Axis(fig[1,1], xlabel = "N", ylabel = "Qn", xscale = log10)
     lines!(ax, x, Q, label = L"Q_n", color = :black, linewidth = 1)
     scatter!(ax, x, Q, label = L"Q_n", color = :black, markersize = 15)
+    hlines!(true_I, color = (:red,0.5), label = "Truth", linestyle = :dash)
     if errors errorbars!(ax, x, Q, E; whiskerwidth = 1, color = (:red)) end
     axislegend(; merge = true, position = :rb, unique = true)
 
@@ -325,5 +332,53 @@ integ = DataFrame(Rule=Symbol[Symbol(x) for x in keys(rules)],nodes=[x[1] for x 
 ### Approximating an AR1 process
 
 http://karenkopecky.net/Rouwenhorst_WP.pdf
+
+
+# Computing Expectations of *Functions* of Random Variables
+
+The `Expectations.jl` package provides a convenient shortcut to the above approach. Based on the distribution from which a RV $x$ is drawn, it will choose a suitable integration rule and we can readily use it. Here is an example:
+
+```{julia}
+#| echo: true
+using Distributions        # for standard distributions
+using Expectations         # to get a nice 𝔼 operator
+
+dist = Normal(3,2.5)
+E = expectation(dist)
+
+# should be 3
+E(x -> x) # expectation of identity function
+E(x -> x^2) # expectation of identity function
+```
+
+The nice part is that this will work for any function and also with vectors of values:
+
+```{julia}
+E(x -> x^3)
+E * rand(30)  # n=30 by default in E
+```
+
+So, instead of having to setup nodes and weights yourself, you can rely on the `Expectations.jl` package to do that for you. Make sure to check out the [documentation](https://github.com/QuantEcon/Expectations.jl)   
+
+For example, this is nice to show the relationship between a LogNormally distributed and normal random variable. The relationship is
+
+$$X \sim LN(\mu,\sigma^2) \Rightarrow \ln X \sim N(\mu,\sigma^2)$$
+
+```{julia}
+#| echo: true
+d2 = LogNormal(2.3,4.2)
+d3 =    Normal(2.3,4.2)
+
+E2 = expectation(d2)
+E3 = expectation(d3)
+E2(x -> x)
+E3(x -> exp(x))
+
+@assert E2(x -> x) ≈ E3(x -> exp(x))
+```
+
+
+
+
 
 

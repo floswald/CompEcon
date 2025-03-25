@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.46
+# v0.20.4
 
 using Markdown
 using InteractiveUtils
@@ -561,7 +561,7 @@ function eqmfind(;A = 1,N = 1, α = 0.33, β = 0.96, δ = 0.05)
 	am = Household(β = β, a_max = 20.0)
 
 	# Create a grid of r values at which to compute demand and supply of capital
-	r_vals = range(0.005, 0.04, length = 20)
+	# r_vals = range(0.005, 0.04, length = 20)
 
 	ex_supply(r) = next_K_stock(am, r, fp ) - Kd(r,fp)
 
@@ -615,7 +615,7 @@ Roots = "~1.3.11"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.11.0"
+julia_version = "1.11.3"
 manifest_format = "2.0"
 project_hash = "04e525c806cd7a679a6784ebb4690f92137953e6"
 

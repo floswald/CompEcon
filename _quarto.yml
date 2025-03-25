@@ -34,10 +34,16 @@ website:
           text: 4 - Optimization 2
         - href: lectures/lecture5.qmd
           text: 5 - Dynamic Programming
+        - href: lectures/lecture6.qmd
+          text: 6 - Data
+        - href: lectures/lecture7.qmd
+          text: 7 - Parallel Computing
+        - href: lectures/lecture8.qmd
+          text: 8 - Function Approximation
+        - href: lectures/lecture9.qmd
+          text: 9 - Numerical Integration
         - href: lectures/plotting.qmd
           text: Makie.jl Plotting
-        - href: lectures/numerical-integration.qmd
-          text: Numerical Integration
         - href: lectures/absorbing-mc.qmd
           text: Absorbing Markov Chains
     - section: Homeworks
