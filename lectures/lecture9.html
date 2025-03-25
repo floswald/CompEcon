@@ -391,6 +391,7 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#approximating-an-ar1-process" id="toc-approximating-an-ar1-process" class="nav-link" data-scroll-target="#approximating-an-ar1-process">Approximating an AR1 process</a></li>
   </ul></li>
+  <li><a href="#computing-expectations-of-functions-of-random-variables" id="toc-computing-expectations-of-functions-of-random-variables" class="nav-link" data-scroll-target="#computing-expectations-of-functions-of-random-variables">Computing Expectations of <em>Functions</em> of Random Variables</a></li>
   </ul>
 </nav>
     </div>
@@ -443,6 +444,10 @@ V = \int_\Omega dx
 <p><span class="math display">\[
 f(x) = \sin(x)^2 + 0.1 x
 \]</span></p>
+<p>We will evaluate this over <span class="math inline">\(x \in [0,5]\)</span>, where we find using standard calculus techniques, that</p>
+<p><span class="math display">\[\begin{equation}
+\int_0^5 f(x) dx = 3.886
+\end{equation}\]</span></p>
 <p>Let’s make a plot of this, where <span class="math inline">\(f\)</span> is a black line, and the red shaded area is <span class="math inline">\(I\)</span>.</p>
 </section>
 <section id="code-setup" class="level2">
@@ -457,21 +462,25 @@ f(x) = \sin(x)^2 + 0.1 x
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">FastGaussQuadrature</span>  <span class="co"># for intergration rules</span></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">DataFrames</span>           <span class="co"># to display a table</span></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Sobol</span>                <span class="co"># to get sobol sequences</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">set_theme!</span>()  <span class="co"># resetting all quarto default values for fig width etc</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">set_theme!</span>()  <span class="co"># resetting all quarto default values for fig width etc</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>true_I <span class="op">=</span> <span class="fl">3.886</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>3.886</code></pre>
+</div>
 </div>
 <div id="4" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Show Code</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="fl">0</span><span class="op">:</span><span class="fl">0.01</span><span class="op">:</span><span class="fl">5</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">f</span>(x) <span class="op">=</span> <span class="fu">sin</span>(x)<span class="op">^</span><span class="fl">2</span> <span class="op">+</span> <span class="fl">0.1</span>x</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> <span class="fu">f</span>.(x)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> <span class="fu">Figure</span>(size <span class="op">=</span> (<span class="fl">800</span>,<span class="fl">600</span>))</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> <span class="fu">Axis</span>(fig[<span class="fl">1</span>,<span class="fl">1</span>], xlabel <span class="op">=</span> L<span class="st">"x"</span>, ylabel <span class="op">=</span> L<span class="st">"\sin(x)^2 + 0.1 x"</span>)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">lines!</span>(ax, x, y, label <span class="op">=</span> L<span class="st">"f"</span>, color <span class="op">=</span> <span class="op">:</span>black, linewidth <span class="op">=</span> <span class="fl">2</span>)</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">band!</span>(ax, x, <span class="fu">fill</span>(<span class="fl">0</span>,<span class="fu">length</span>(x)), y, color <span class="op">=</span> (<span class="op">:</span>red, <span class="fl">0.5</span>), label <span class="op">=</span> <span class="st">"Integral"</span>)</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">axislegend</span>(; merge <span class="op">=</span> <span class="cn">true</span>, position <span class="op">=</span> <span class="op">:</span>lt)</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>fig</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="fl">0</span><span class="op">:</span><span class="fl">0.01</span><span class="op">:</span><span class="fl">5</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">f</span>(x) <span class="op">=</span> <span class="fu">sin</span>(x)<span class="op">^</span><span class="fl">2</span> <span class="op">+</span> <span class="fl">0.1</span>x</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> <span class="fu">f</span>.(x)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> <span class="fu">Figure</span>(size <span class="op">=</span> (<span class="fl">800</span>,<span class="fl">600</span>))</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> <span class="fu">Axis</span>(fig[<span class="fl">1</span>,<span class="fl">1</span>], xlabel <span class="op">=</span> L<span class="st">"x"</span>, ylabel <span class="op">=</span> L<span class="st">"\sin(x)^2 + 0.1 x"</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">lines!</span>(ax, x, y, label <span class="op">=</span> L<span class="st">"f"</span>, color <span class="op">=</span> <span class="op">:</span>black, linewidth <span class="op">=</span> <span class="fl">2</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="fu">band!</span>(ax, x, <span class="fu">fill</span>(<span class="fl">0</span>,<span class="fu">length</span>(x)), y, color <span class="op">=</span> (<span class="op">:</span>red, <span class="fl">0.5</span>), label <span class="op">=</span> <span class="st">"Integral"</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="fu">axislegend</span>(; merge <span class="op">=</span> <span class="cn">true</span>, position <span class="op">=</span> <span class="op">:</span>lt)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>fig</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="1">
 <div>
@@ -519,13 +528,13 @@ Compute <span class="math inline">\(\sigma_Q\)</span>!
 <div id="6" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Show Code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">σ</span>(sample_points,fun)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    N <span class="op">=</span> <span class="fu">length</span>(sample_points)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    ys <span class="op">=</span> <span class="fu">fun</span>.(sample_points)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    ybar <span class="op">=</span> <span class="fu">sum</span>(ys) <span class="op">/</span> N  <span class="co"># mean</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    var <span class="op">=</span> <span class="fl">1</span> <span class="op">/</span> (N<span class="op">-</span><span class="fl">1</span>) <span class="op">*</span> <span class="fu">sum</span>( (ys <span class="op">.-</span> ybar) <span class="op">.^</span> <span class="fl">2</span> )</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sqrt</span>(var)</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">σ</span>(sample_points,fun)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    N <span class="op">=</span> <span class="fu">length</span>(sample_points)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    ys <span class="op">=</span> <span class="fu">fun</span>.(sample_points)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    ybar <span class="op">=</span> <span class="fu">sum</span>(ys) <span class="op">/</span> N  <span class="co"># mean</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    var <span class="op">=</span> <span class="fl">1</span> <span class="op">/</span> (N<span class="op">-</span><span class="fl">1</span>) <span class="op">*</span> <span class="fu">sum</span>( (ys <span class="op">.-</span> ybar) <span class="op">.^</span> <span class="fl">2</span> )</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sqrt</span>(var)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="1">
 <pre><code>σ (generic function with 1 method)</code></pre>
@@ -547,19 +556,19 @@ Compute the monte carlo integral and it’s error!
 <div id="8" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Show Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">mc_integrate</span>(N,fun)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">Random</span>.<span class="fu">seed!</span>(<span class="fl">0</span>)   <span class="co"># any number works</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    V <span class="op">=</span> <span class="fl">5</span> <span class="co"># integrate dx from 0 to 5</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    pts <span class="op">=</span> <span class="fu">rand</span>(N) <span class="op">.*</span> V  <span class="co"># N random numbers in [0,5]</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    mc_integral <span class="op">=</span> V <span class="op">/</span> N <span class="op">*</span> <span class="fu">sum</span>( <span class="fu">fun</span>.(pts) )</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    mc_error <span class="op">=</span> V <span class="op">*</span> <span class="fu">σ</span>(pts,fun) <span class="op">/</span> <span class="fu">sqrt</span>(N)</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    mc_integral, mc_error</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>ns <span class="op">=</span> [<span class="fl">2</span>,<span class="fl">4</span>,<span class="fl">10</span>,<span class="fl">20</span>,<span class="fl">50</span>,<span class="fl">100</span>,<span class="fl">1000</span>,<span class="fl">10000</span>]</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>mc_results <span class="op">=</span> <span class="fu">OrderedDict</span>(k <span class="op">=&gt;</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mc_integrate</span>(k,f) <span class="cf">for</span> k <span class="kw">in</span> ns);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">mc_integrate</span>(N,fun)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">Random</span>.<span class="fu">seed!</span>(<span class="fl">0</span>)   <span class="co"># any number works</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    V <span class="op">=</span> <span class="fl">5</span> <span class="co"># integrate dx from 0 to 5</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    pts <span class="op">=</span> <span class="fu">rand</span>(N) <span class="op">.*</span> V  <span class="co"># N random numbers in [0,5]</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    mc_integral <span class="op">=</span> V <span class="op">/</span> N <span class="op">*</span> <span class="fu">sum</span>( <span class="fu">fun</span>.(pts) )</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    mc_error <span class="op">=</span> V <span class="op">*</span> <span class="fu">σ</span>(pts,fun) <span class="op">/</span> <span class="fu">sqrt</span>(N)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    mc_integral, mc_error</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>ns <span class="op">=</span> [<span class="fl">2</span>,<span class="fl">4</span>,<span class="fl">10</span>,<span class="fl">20</span>,<span class="fl">50</span>,<span class="fl">100</span>,<span class="fl">1000</span>,<span class="fl">10000</span>]</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>mc_results <span class="op">=</span> <span class="fu">OrderedDict</span>(k <span class="op">=&gt;</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mc_integrate</span>(k,f) <span class="cf">for</span> k <span class="kw">in</span> ns);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -578,23 +587,24 @@ Now make a plot!
 <div id="10" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Show Code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">plot_mc</span>(od<span class="op">::</span><span class="dt">OrderedDict</span>; errors <span class="op">=</span> <span class="cn">true</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> <span class="fu">collect</span>(<span class="fu">keys</span>(od))</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    v <span class="op">=</span> <span class="fu">collect</span>(<span class="fu">values</span>(od))</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    Q <span class="op">=</span> [i[<span class="fl">1</span>] for i <span class="kw">in</span> v]</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    E <span class="op">=</span> [i[<span class="fl">2</span>] for i <span class="kw">in</span> v]</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    fig <span class="op">=</span> <span class="fu">Figure</span>(size <span class="op">=</span> (<span class="fl">800</span>,<span class="fl">600</span>))</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    ax <span class="op">=</span> <span class="fu">Axis</span>(fig[<span class="fl">1</span>,<span class="fl">1</span>], xlabel <span class="op">=</span> <span class="st">"N"</span>, ylabel <span class="op">=</span> <span class="st">"Qn"</span>, xscale <span class="op">=</span> log10)</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">lines!</span>(ax, x, Q, label <span class="op">=</span> L<span class="st">"Q_n"</span>, color <span class="op">=</span> <span class="op">:</span>black, linewidth <span class="op">=</span> <span class="fl">1</span>)</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scatter!</span>(ax, x, Q, label <span class="op">=</span> L<span class="st">"Q_n"</span>, color <span class="op">=</span> <span class="op">:</span>black, markersize <span class="op">=</span> <span class="fl">15</span>)</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> errors <span class="fu">errorbars!</span>(ax, x, Q, E; whiskerwidth <span class="op">=</span> <span class="fl">1</span>, color <span class="op">=</span> (<span class="op">:</span>red)) <span class="cf">end</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">axislegend</span>(; merge <span class="op">=</span> <span class="cn">true</span>, position <span class="op">=</span> <span class="op">:</span>rb, unique <span class="op">=</span> <span class="cn">true</span>)</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> fig</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_mc</span>(mc_results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">plot_mc</span>(od<span class="op">::</span><span class="dt">OrderedDict</span>; errors <span class="op">=</span> <span class="cn">true</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> <span class="fu">collect</span>(<span class="fu">keys</span>(od))</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    v <span class="op">=</span> <span class="fu">collect</span>(<span class="fu">values</span>(od))</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    Q <span class="op">=</span> [i[<span class="fl">1</span>] for i <span class="kw">in</span> v]</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    E <span class="op">=</span> [i[<span class="fl">2</span>] for i <span class="kw">in</span> v]</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    fig <span class="op">=</span> <span class="fu">Figure</span>(size <span class="op">=</span> (<span class="fl">800</span>,<span class="fl">600</span>))</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    ax <span class="op">=</span> <span class="fu">Axis</span>(fig[<span class="fl">1</span>,<span class="fl">1</span>], xlabel <span class="op">=</span> <span class="st">"N"</span>, ylabel <span class="op">=</span> <span class="st">"Qn"</span>, xscale <span class="op">=</span> log10)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">lines!</span>(ax, x, Q, label <span class="op">=</span> L<span class="st">"Q_n"</span>, color <span class="op">=</span> <span class="op">:</span>black, linewidth <span class="op">=</span> <span class="fl">1</span>)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scatter!</span>(ax, x, Q, label <span class="op">=</span> L<span class="st">"Q_n"</span>, color <span class="op">=</span> <span class="op">:</span>black, markersize <span class="op">=</span> <span class="fl">15</span>)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">hlines!</span>(true_I, color <span class="op">=</span> (<span class="op">:</span>red,<span class="fl">0.5</span>), label <span class="op">=</span> <span class="st">"Truth"</span>, linestyle <span class="op">=</span> <span class="op">:</span>dash)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> errors <span class="fu">errorbars!</span>(ax, x, Q, E; whiskerwidth <span class="op">=</span> <span class="fl">1</span>, color <span class="op">=</span> (<span class="op">:</span>red)) <span class="cf">end</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">axislegend</span>(; merge <span class="op">=</span> <span class="cn">true</span>, position <span class="op">=</span> <span class="op">:</span>rb, unique <span class="op">=</span> <span class="cn">true</span>)</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> fig</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_mc</span>(mc_results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="1">
 <div>
@@ -641,19 +651,19 @@ Using <code>Sobol.jl</code>
 <div id="12" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Show Code</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">qmc_integrate</span>(N,fun)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">Random</span>.<span class="fu">seed!</span>(<span class="fl">0</span>)   <span class="co"># any number works</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    V <span class="op">=</span> <span class="fl">5</span> <span class="co"># integrate dx from 0 to 5</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    s <span class="op">=</span> <span class="fu">SobolSeq</span>([<span class="fl">0</span>], [<span class="fl">5</span>])</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    pts <span class="op">=</span> <span class="fu">reduce</span>(vcat, <span class="fu">next!</span>(s) <span class="cf">for</span> i <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span>N)</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    mc_integral <span class="op">=</span> V <span class="op">/</span> N <span class="op">*</span> <span class="fu">sum</span>( <span class="fu">fun</span>.(pts) )</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    mc_error <span class="op">=</span> V <span class="op">*</span> <span class="fu">σ</span>(pts,fun) <span class="op">/</span> <span class="fu">sqrt</span>(N)</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    mc_integral, mc_error</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>qmc_results <span class="op">=</span> <span class="fu">OrderedDict</span>(k <span class="op">=&gt;</span></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">qmc_integrate</span>(k,f) <span class="cf">for</span> k <span class="kw">in</span> ns);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">qmc_integrate</span>(N,fun)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">Random</span>.<span class="fu">seed!</span>(<span class="fl">0</span>)   <span class="co"># any number works</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    V <span class="op">=</span> <span class="fl">5</span> <span class="co"># integrate dx from 0 to 5</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    s <span class="op">=</span> <span class="fu">SobolSeq</span>([<span class="fl">0</span>], [<span class="fl">5</span>])</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    pts <span class="op">=</span> <span class="fu">reduce</span>(vcat, <span class="fu">next!</span>(s) <span class="cf">for</span> i <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span>N)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    mc_integral <span class="op">=</span> V <span class="op">/</span> N <span class="op">*</span> <span class="fu">sum</span>( <span class="fu">fun</span>.(pts) )</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    mc_error <span class="op">=</span> V <span class="op">*</span> <span class="fu">σ</span>(pts,fun) <span class="op">/</span> <span class="fu">sqrt</span>(N)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    mc_integral, mc_error</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>qmc_results <span class="op">=</span> <span class="fu">OrderedDict</span>(k <span class="op">=&gt;</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">qmc_integrate</span>(k,f) <span class="cf">for</span> k <span class="kw">in</span> ns);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div id="14" class="cell" data-execution_count="1">
@@ -727,13 +737,13 @@ E[G(\epsilon)] = \int_{\mathbb{R}^N} G(\epsilon) p(\epsilon) d\epsilon \approx \
 <section id="quadrature-with-julia" class="level2">
 <h2 class="anchored" data-anchor-id="quadrature-with-julia">Quadrature with julia</h2>
 <div id="16" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>np <span class="op">=</span> <span class="fl">3</span>  <span class="co"># number of points</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># functions from FastGaussQuadrature.jl</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>rules <span class="op">=</span> <span class="fu">Dict</span>(<span class="st">"hermite"</span> <span class="op">=&gt;</span> <span class="fu">gausshermite</span>(np),</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>             <span class="st">"chebyshev"</span> <span class="op">=&gt;</span> <span class="fu">gausschebyshev</span>(np),</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>             <span class="st">"legendre"</span> <span class="op">=&gt;</span> <span class="fu">gausslegendre</span>(np),</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>             <span class="st">"lobatto"</span> <span class="op">=&gt;</span> <span class="fu">gausslobatto</span>(np));</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>np <span class="op">=</span> <span class="fl">3</span>  <span class="co"># number of points</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># functions from FastGaussQuadrature.jl</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>rules <span class="op">=</span> <span class="fu">Dict</span>(<span class="st">"hermite"</span> <span class="op">=&gt;</span> <span class="fu">gausshermite</span>(np),</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>             <span class="st">"chebyshev"</span> <span class="op">=&gt;</span> <span class="fu">gausschebyshev</span>(np),</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>             <span class="st">"legendre"</span> <span class="op">=&gt;</span> <span class="fu">gausslegendre</span>(np),</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>             <span class="st">"lobatto"</span> <span class="op">=&gt;</span> <span class="fu">gausslobatto</span>(np));</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Here are the respective nodes and weights for each of those four rules:</p>
 <div id="18" class="cell" data-execution_count="1">
@@ -787,9 +797,53 @@ E[G(\epsilon)] = \int_{\mathbb{R}^N} G(\epsilon) p(\epsilon) d\epsilon \approx \
 <section id="approximating-an-ar1-process" class="level3">
 <h3 class="anchored" data-anchor-id="approximating-an-ar1-process">Approximating an AR1 process</h3>
 <p>http://karenkopecky.net/Rouwenhorst_WP.pdf</p>
-
-
 </section>
+</section>
+<section id="computing-expectations-of-functions-of-random-variables" class="level1">
+<h1>Computing Expectations of <em>Functions</em> of Random Variables</h1>
+<p>The <code>Expectations.jl</code> package provides a convenient shortcut to the above approach. Based on the distribution from which a RV <span class="math inline">\(x\)</span> is drawn, it will choose a suitable integration rule and we can readily use it. Here is an example:</p>
+<div id="20" class="cell" data-execution_count="1">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Distributions</span>        <span class="co"># for standard distributions</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Expectations</span>         <span class="co"># to get a nice 𝔼 operator</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>dist <span class="op">=</span> <span class="fu">Normal</span>(<span class="fl">3</span>,<span class="fl">2.5</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>E <span class="op">=</span> <span class="fu">expectation</span>(dist)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co"># should be 3</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="fu">E</span>(x <span class="op">-&gt;</span> x) <span class="co"># expectation of identity function</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="fu">E</span>(x <span class="op">-&gt;</span> x<span class="op">^</span><span class="fl">2</span>) <span class="co"># expectation of identity function</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>15.249999999999991</code></pre>
+</div>
+</div>
+<p>The nice part is that this will work for any function and also with vectors of values:</p>
+<div id="22" class="cell" data-execution_count="1">
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>0.4559384198172123</code></pre>
+</div>
+</div>
+<p>So, instead of having to setup nodes and weights yourself, you can rely on the <code>Expectations.jl</code> package to do that for you. Make sure to check out the <a href="https://github.com/QuantEcon/Expectations.jl">documentation</a></p>
+<p>For example, this is nice to show the relationship between a LogNormally distributed and normal random variable. The relationship is</p>
+<p><span class="math display">\[X \sim LN(\mu,\sigma^2) \Rightarrow \ln X \sim N(\mu,\sigma^2)\]</span></p>
+<div id="24" class="cell" data-execution_count="1">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>d2 <span class="op">=</span> <span class="fu">LogNormal</span>(<span class="fl">2.3</span>,<span class="fl">4.2</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>d3 <span class="op">=</span>    <span class="fu">Normal</span>(<span class="fl">2.3</span>,<span class="fl">4.2</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>E2 <span class="op">=</span> <span class="fu">expectation</span>(d2)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>E3 <span class="op">=</span> <span class="fu">expectation</span>(d3)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="fu">E2</span>(x <span class="op">-&gt;</span> x)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="fu">E3</span>(x <span class="op">-&gt;</span> <span class="fu">exp</span>(x))</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="pp">@assert</span> <span class="fu">E2</span>(x <span class="op">-&gt;</span> x) <span class="op">≈</span> <span class="fu">E3</span>(x <span class="op">-&gt;</span> <span class="fu">exp</span>(x))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+
+
 </section>
 
 <p>© Florian Oswald, 2025</p></main> <!-- /main -->

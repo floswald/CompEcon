@@ -512,7 +512,7 @@
     "href": "lectures/lecture9.html",
     "title": "Numerical Integration",
     "section": "",
-    "text": "We want to evaluate the potentially multidimensional definite integral\n\\[\\begin{equation}\nI = \\int_\\Omega f(x) dx\n\\end{equation}\\]\nwhere it’s important to keep track of the volume of the function domain, i.e. we say \\(\\Omega\\) is a subset of \\(\\mathbb{R}^m\\) with volume\n\\[\\begin{equation}\nV = \\int_\\Omega dx\n\\end{equation}\\]\nHere is an example of \\(f\\):\n\\[\nf(x) = \\sin(x)^2 + 0.1 x\n\\]\nLet’s make a plot of this, where \\(f\\) is a black line, and the red shaded area is \\(I\\).\n© Florian Oswald, 2025",
+    "text": "We want to evaluate the potentially multidimensional definite integral\n\\[\\begin{equation}\nI = \\int_\\Omega f(x) dx\n\\end{equation}\\]\nwhere it’s important to keep track of the volume of the function domain, i.e. we say \\(\\Omega\\) is a subset of \\(\\mathbb{R}^m\\) with volume\n\\[\\begin{equation}\nV = \\int_\\Omega dx\n\\end{equation}\\]\nHere is an example of \\(f\\):\n\\[\nf(x) = \\sin(x)^2 + 0.1 x\n\\]\nWe will evaluate this over \\(x \\in [0,5]\\), where we find using standard calculus techniques, that\n\\[\\begin{equation}\n\\int_0^5 f(x) dx = 3.886\n\\end{equation}\\]\nLet’s make a plot of this, where \\(f\\) is a black line, and the red shaded area is \\(I\\).\n© Florian Oswald, 2025",
     "crumbs": [
       "Home",
       "Lectures",
@@ -524,7 +524,7 @@
     "href": "lectures/lecture9.html#problem-definition",
     "title": "Numerical Integration",
     "section": "",
-    "text": "We want to evaluate the potentially multidimensional definite integral\n\\[\\begin{equation}\nI = \\int_\\Omega f(x) dx\n\\end{equation}\\]\nwhere it’s important to keep track of the volume of the function domain, i.e. we say \\(\\Omega\\) is a subset of \\(\\mathbb{R}^m\\) with volume\n\\[\\begin{equation}\nV = \\int_\\Omega dx\n\\end{equation}\\]\nHere is an example of \\(f\\):\n\\[\nf(x) = \\sin(x)^2 + 0.1 x\n\\]\nLet’s make a plot of this, where \\(f\\) is a black line, and the red shaded area is \\(I\\).",
+    "text": "We want to evaluate the potentially multidimensional definite integral\n\\[\\begin{equation}\nI = \\int_\\Omega f(x) dx\n\\end{equation}\\]\nwhere it’s important to keep track of the volume of the function domain, i.e. we say \\(\\Omega\\) is a subset of \\(\\mathbb{R}^m\\) with volume\n\\[\\begin{equation}\nV = \\int_\\Omega dx\n\\end{equation}\\]\nHere is an example of \\(f\\):\n\\[\nf(x) = \\sin(x)^2 + 0.1 x\n\\]\nWe will evaluate this over \\(x \\in [0,5]\\), where we find using standard calculus techniques, that\n\\[\\begin{equation}\n\\int_0^5 f(x) dx = 3.886\n\\end{equation}\\]\nLet’s make a plot of this, where \\(f\\) is a black line, and the red shaded area is \\(I\\).",
     "crumbs": [
       "Home",
       "Lectures",
@@ -536,7 +536,7 @@
     "href": "lectures/lecture9.html#code-setup",
     "title": "Numerical Integration",
     "section": "Code Setup",
-    "text": "Code Setup\nTo run the code in this document you need have an environment where the following packages are installed:\n\n# you need to have those packages installed.\nusing CairoMakie\nusing Random\nusing LaTeXStrings\nusing OrderedCollections   # for OrderedDict\nusing FastGaussQuadrature  # for intergration rules\nusing DataFrames           # to display a table\nusing Sobol                # to get sobol sequences\nset_theme!()  # resetting all quarto default values for fig width etc\n\n\n\nShow Code\nx = 0:0.01:5\nf(x) = sin(x)^2 + 0.1x\ny = f.(x)\nfig = Figure(size = (800,600))\nax = Axis(fig[1,1], xlabel = L\"x\", ylabel = L\"\\sin(x)^2 + 0.1 x\")\nlines!(ax, x, y, label = L\"f\", color = :black, linewidth = 2)\nband!(ax, x, fill(0,length(x)), y, color = (:red, 0.5), label = \"Integral\")\naxislegend(; merge = true, position = :lt)\n\nfig\n\n\n\n\n\n\n\n\n\nAs with Riemann Integrals where we split the continuous domain of \\(f\\) into smaller and smaller chunks, which we then sum up (\\(\\int\\)), the numerical counterpart does the same: measure the value of f (the height of the black line) at different points, and sum over them. The main question is:\nAt which points?",
+    "text": "Code Setup\nTo run the code in this document you need have an environment where the following packages are installed:\n\n# you need to have those packages installed.\nusing CairoMakie\nusing Random\nusing LaTeXStrings\nusing OrderedCollections   # for OrderedDict\nusing FastGaussQuadrature  # for intergration rules\nusing DataFrames           # to display a table\nusing Sobol                # to get sobol sequences\nset_theme!()  # resetting all quarto default values for fig width etc\ntrue_I = 3.886\n\n3.886\n\n\n\n\nShow Code\nx = 0:0.01:5\nf(x) = sin(x)^2 + 0.1x\ny = f.(x)\nfig = Figure(size = (800,600))\nax = Axis(fig[1,1], xlabel = L\"x\", ylabel = L\"\\sin(x)^2 + 0.1 x\")\nlines!(ax, x, y, label = L\"f\", color = :black, linewidth = 2)\nband!(ax, x, fill(0,length(x)), y, color = (:red, 0.5), label = \"Integral\")\naxislegend(; merge = true, position = :lt)\n\nfig\n\n\n\n\n\n\n\n\n\nAs with Riemann Integrals where we split the continuous domain of \\(f\\) into smaller and smaller chunks, which we then sum up (\\(\\int\\)), the numerical counterpart does the same: measure the value of f (the height of the black line) at different points, and sum over them. The main question is:\nAt which points?",
     "crumbs": [
       "Home",
       "Lectures",
@@ -548,7 +548,7 @@
     "href": "lectures/lecture9.html#monte-carlo-integration",
     "title": "Numerical Integration",
     "section": "Monte Carlo Integration",
-    "text": "Monte Carlo Integration\nA very intuitive first solution is to draw N random points from the domain of f, evalute the function there, and compute their average. We would approximate \\(I\\) as follows, where \\(x_i \\in \\Omega\\) is a randomly chosen point from the function’s domain:\n\\[\\begin{equation}\nI \\approx Q_N \\equiv V \\frac{1}{N} \\sum_{i=1}^N f(x_i) = V \\bar{f}\n\\end{equation}\\]\nThis works because the law of large numbers tells us that\n\\[\\begin{equation}\n\\lim_{N \\to \\infty} Q_N  = I.\n\\end{equation}\\]\nThe uncertainty from this method is easily quantifiable by the resulting variation in our estimate:\n\\[\\begin{equation}\nVar(f) = \\sigma_N^2 = \\frac{1}{N-1} \\sum_{i=1}^N (f(x_i) -  \\bar{f})^2\n\\end{equation}\\]\nfrom which we get the variance of \\(Q_N\\) as \\(Var(Q_N) = V^2 \\frac{\\sigma_N^2}{N}\\). Hence,clearly visible that this decreases as \\(N\\) increases. We usually report the standard error of the estimator, so we report\n\\[\\begin{equation}\n\\sigma_Q \\equiv \\sqrt{Var(Q_N)} = V \\frac{\\sigma_N}{\\sqrt{N}}\n\\end{equation}\\]\n👍\n\n\n\n\n\n\nCompute \\(\\sigma_Q\\)!\n\n\n\nWrite a function that takes \\(f\\) from above, and computes standard error \\(\\sigma_Q\\) for \\(N\\) points. Your function should take arguments sample_points, which is a vector of evaluation points, and fun, which is a function to evaluate.\n\n\n\n\nShow Code\nfunction σ(sample_points,fun)\n    N = length(sample_points)\n    ys = fun.(sample_points)\n    ybar = sum(ys) / N  # mean\n    var = 1 / (N-1) * sum( (ys .- ybar) .^ 2 )\n    sqrt(var)\nend\n\n\nσ (generic function with 1 method)\n\n\n\n\n\n\n\n\nCompute the monte carlo integral and it’s error!\n\n\n\nWrite a function mc_integrate that takes \\(f\\) from above, and computes both the monte carlo integration \\(Q_N\\) as well as its standard error \\(\\sigma_Q\\) for a set of \\(N\\) randomly chosen points. Your function should take arguments N, which is a vector of evaluation points, and fun, which is a function to evaluate. Set a random seed to ensure reproducibility. Then, call your function to compute \\(Q\\) for \\(N \\in \\{2,4,10,20,50,100,1000,10000\\}\\) and compare the outputs. Produce an OrderedDict where the keys are those values for \\(N\\).\n\n\n\n\nShow Code\nfunction mc_integrate(N,fun)\n    Random.seed!(0)   # any number works\n    V = 5 # integrate dx from 0 to 5\n    pts = rand(N) .* V  # N random numbers in [0,5]\n    mc_integral = V / N * sum( fun.(pts) )\n    mc_error = V * σ(pts,fun) / sqrt(N)\n    mc_integral, mc_error\nend\n\nns = [2,4,10,20,50,100,1000,10000]\n\nmc_results = OrderedDict(k =&gt;\n    mc_integrate(k,f) for k in ns);\n\n\n\n\n\n\n\n\nNow make a plot!\n\n\n\nTaking the dict from the above question, write a function that makes a line plot with \\(N\\) on the x axis and your estimate of the integral on the axis. Also add the error bars with band! function! Your function should take the output OrderedDict from above as argument. Scale the x-axis as log10.\n\n\n\n\nShow Code\nfunction plot_mc(od::OrderedDict; errors = true)\n    x = collect(keys(od))\n    v = collect(values(od))\n    Q = [i[1] for i in v]\n    E = [i[2] for i in v]\n\n    fig = Figure(size = (800,600))\n    ax = Axis(fig[1,1], xlabel = \"N\", ylabel = \"Qn\", xscale = log10)\n    lines!(ax, x, Q, label = L\"Q_n\", color = :black, linewidth = 1)\n    scatter!(ax, x, Q, label = L\"Q_n\", color = :black, markersize = 15)\n    if errors errorbars!(ax, x, Q, E; whiskerwidth = 1, color = (:red)) end\n    axislegend(; merge = true, position = :rb, unique = true)\n\n    return fig\nend\n\nplot_mc(mc_results)\n\n\n\n\n\n\n\n\n\nThe last point, for \\(N=10000\\) is what we’ll consider as the true value. You can see, it takes us quite long until the monte carlo method converges to that value. So, that’s the main drawback of this method.",
+    "text": "Monte Carlo Integration\nA very intuitive first solution is to draw N random points from the domain of f, evalute the function there, and compute their average. We would approximate \\(I\\) as follows, where \\(x_i \\in \\Omega\\) is a randomly chosen point from the function’s domain:\n\\[\\begin{equation}\nI \\approx Q_N \\equiv V \\frac{1}{N} \\sum_{i=1}^N f(x_i) = V \\bar{f}\n\\end{equation}\\]\nThis works because the law of large numbers tells us that\n\\[\\begin{equation}\n\\lim_{N \\to \\infty} Q_N  = I.\n\\end{equation}\\]\nThe uncertainty from this method is easily quantifiable by the resulting variation in our estimate:\n\\[\\begin{equation}\nVar(f) = \\sigma_N^2 = \\frac{1}{N-1} \\sum_{i=1}^N (f(x_i) -  \\bar{f})^2\n\\end{equation}\\]\nfrom which we get the variance of \\(Q_N\\) as \\(Var(Q_N) = V^2 \\frac{\\sigma_N^2}{N}\\). Hence,clearly visible that this decreases as \\(N\\) increases. We usually report the standard error of the estimator, so we report\n\\[\\begin{equation}\n\\sigma_Q \\equiv \\sqrt{Var(Q_N)} = V \\frac{\\sigma_N}{\\sqrt{N}}\n\\end{equation}\\]\n👍\n\n\n\n\n\n\nCompute \\(\\sigma_Q\\)!\n\n\n\nWrite a function that takes \\(f\\) from above, and computes standard error \\(\\sigma_Q\\) for \\(N\\) points. Your function should take arguments sample_points, which is a vector of evaluation points, and fun, which is a function to evaluate.\n\n\n\n\nShow Code\nfunction σ(sample_points,fun)\n    N = length(sample_points)\n    ys = fun.(sample_points)\n    ybar = sum(ys) / N  # mean\n    var = 1 / (N-1) * sum( (ys .- ybar) .^ 2 )\n    sqrt(var)\nend\n\n\nσ (generic function with 1 method)\n\n\n\n\n\n\n\n\nCompute the monte carlo integral and it’s error!\n\n\n\nWrite a function mc_integrate that takes \\(f\\) from above, and computes both the monte carlo integration \\(Q_N\\) as well as its standard error \\(\\sigma_Q\\) for a set of \\(N\\) randomly chosen points. Your function should take arguments N, which is a vector of evaluation points, and fun, which is a function to evaluate. Set a random seed to ensure reproducibility. Then, call your function to compute \\(Q\\) for \\(N \\in \\{2,4,10,20,50,100,1000,10000\\}\\) and compare the outputs. Produce an OrderedDict where the keys are those values for \\(N\\).\n\n\n\n\nShow Code\nfunction mc_integrate(N,fun)\n    Random.seed!(0)   # any number works\n    V = 5 # integrate dx from 0 to 5\n    pts = rand(N) .* V  # N random numbers in [0,5]\n    mc_integral = V / N * sum( fun.(pts) )\n    mc_error = V * σ(pts,fun) / sqrt(N)\n    mc_integral, mc_error\nend\n\nns = [2,4,10,20,50,100,1000,10000]\n\nmc_results = OrderedDict(k =&gt;\n    mc_integrate(k,f) for k in ns);\n\n\n\n\n\n\n\n\nNow make a plot!\n\n\n\nTaking the dict from the above question, write a function that makes a line plot with \\(N\\) on the x axis and your estimate of the integral on the axis. Also add the error bars with band! function! Your function should take the output OrderedDict from above as argument. Scale the x-axis as log10.\n\n\n\n\nShow Code\nfunction plot_mc(od::OrderedDict; errors = true)\n    x = collect(keys(od))\n    v = collect(values(od))\n    Q = [i[1] for i in v]\n    E = [i[2] for i in v]\n\n    fig = Figure(size = (800,600))\n    ax = Axis(fig[1,1], xlabel = \"N\", ylabel = \"Qn\", xscale = log10)\n    lines!(ax, x, Q, label = L\"Q_n\", color = :black, linewidth = 1)\n    scatter!(ax, x, Q, label = L\"Q_n\", color = :black, markersize = 15)\n    hlines!(true_I, color = (:red,0.5), label = \"Truth\", linestyle = :dash)\n    if errors errorbars!(ax, x, Q, E; whiskerwidth = 1, color = (:red)) end\n    axislegend(; merge = true, position = :rb, unique = true)\n\n    return fig\nend\n\nplot_mc(mc_results)\n\n\n\n\n\n\n\n\n\nThe last point, for \\(N=10000\\) is what we’ll consider as the true value. You can see, it takes us quite long until the monte carlo method converges to that value. So, that’s the main drawback of this method.",
     "crumbs": [
       "Home",
       "Lectures",
@@ -592,75 +592,77 @@
     ]
   },
   {
-    "objectID": "homeworks/hw4.html",
-    "href": "homeworks/hw4.html",
+    "objectID": "homeworks/hw5.html",
+    "href": "homeworks/hw5.html",
     "title": "Homework 4",
     "section": "",
-    "text": "This time we will extend our optimization efforts into a world with constraints. We have an application from finance: which assets best to invest in, if they have different expected returns?\nGet the homework notebook here. right click and save this notebook, or copy the link directly into a running Pluto session to open!\n© Florian Oswald, 2025",
-    "crumbs": [
-      "Home",
-      "Homeworks",
-      "Homework 4"
-    ]
+    "text": "This time we will extend our optimization efforts into a world with constraints. We have an application from finance: which assets best to invest in, if they have different expected returns?\nGet the homework notebook here. right click and save this notebook, or copy the link directly into a running Pluto session to open!\n© Florian Oswald, 2025"
   },
   {
-    "objectID": "homeworks/hw4.html#homework-submission",
-    "href": "homeworks/hw4.html#homework-submission",
+    "objectID": "homeworks/hw5.html#homework-submission",
+    "href": "homeworks/hw5.html#homework-submission",
     "title": "Homework 4",
     "section": "Homework Submission",
-    "text": "Homework Submission\n\nWhen: You have until 25/3.\nWho: teams of max 2/3\nWhat: one rendered HTML output of your notebook. make sure all cells (code?) that you want me to see are visible in your notebook, or they won’t be visible in the HTML either.\nHow: dropbox link via slack.",
-    "crumbs": [
-      "Home",
-      "Homeworks",
-      "Homework 4"
-    ]
+    "text": "Homework Submission\n\nWhen: You have until 25/3.\nWho: teams of max 2/3\nWhat: one rendered HTML output of your notebook. make sure all cells (code?) that you want me to see are visible in your notebook, or they won’t be visible in the HTML either.\nHow: dropbox link via slack."
   },
   {
-    "objectID": "homeworks/hw2.html",
-    "href": "homeworks/hw2.html",
-    "title": "Homework 2",
+    "objectID": "homeworks/hw3.html",
+    "href": "homeworks/hw3.html",
+    "title": "Homework 3",
     "section": "",
-    "text": "Let’s continue with some epidemic stuff! This time we’ll add a spatial dimension to our simulation.\nGet the homework notebook here. right click and save this notebook, or copy the link directly into a running Pluto session to open!\n© Florian Oswald, 2025",
+    "text": "Time for some optimization around here! Let me introduce you to the well known probit model! 😁\nGet the homework notebook here. right click and save this notebook, or copy the link directly into a running Pluto session to open!\n© Florian Oswald, 2025",
     "crumbs": [
       "Home",
       "Homeworks",
-      "Homework 2"
+      "Homework 3"
     ]
   },
   {
-    "objectID": "homeworks/hw2.html#homework-submission",
-    "href": "homeworks/hw2.html#homework-submission",
-    "title": "Homework 2",
+    "objectID": "homeworks/hw3.html#homework-submission",
+    "href": "homeworks/hw3.html#homework-submission",
+    "title": "Homework 3",
     "section": "Homework Submission",
-    "text": "Homework Submission\n\nWhen: You have until next wednesday.\nWho: teams of max 2/3\nWhat: one rendered HTML output of your notebook. make sure all cells (code?) that you want me to see are visible in your notebook, or they won’t be visible in the HTML either.\nHow: dropbox link via slack.",
+    "text": "Homework Submission\n\nWhen: You have until 17/3.\nWho: teams of max 2/3\nWhat: one rendered HTML output of your notebook. make sure all cells (code?) that you want me to see are visible in your notebook, or they won’t be visible in the HTML either.\nHow: dropbox link via slack.",
     "crumbs": [
       "Home",
       "Homeworks",
-      "Homework 2"
+      "Homework 3"
     ]
   },
   {
-    "objectID": "homeworks/hw1.html",
-    "href": "homeworks/hw1.html",
-    "title": "Homework 1",
+    "objectID": "homeworks/hw0.html",
+    "href": "homeworks/hw0.html",
+    "title": "Homework 0 (zero)",
     "section": "",
-    "text": "This homework will refer to something we have not done in class, but which you can easily read up on by yourself. Here is a notebook that introduces the SIR model. In the homework, I ask you to copy sections of code from there into your homework notebook, which you will then submit.\nGet the homework notebook here. right click and save this notebook, or copy the link directly into a running Pluto session to open!\n© Florian Oswald, 2025",
+    "text": "The first week’s homework is to make you familiar with the Pluto environment. Given it’s homework number 0, it won’t count towards your grade!\nYou can do the homework in teams of max 2 people (try not to do it alone!)\n© Florian Oswald, 2025",
     "crumbs": [
       "Home",
       "Homeworks",
-      "Homework 1"
+      "Homework 0 (zero)"
     ]
   },
   {
-    "objectID": "homeworks/hw1.html#homework-submission",
-    "href": "homeworks/hw1.html#homework-submission",
-    "title": "Homework 1",
-    "section": "Homework Submission",
-    "text": "Homework Submission\n\nWhen: You have until next monday.\nWho: teams of max 2/3\nWhat: one rendered HTML output of your notebook. make sure all cells (code?) that you want me to see are visible in your notebook, or they won’t be visible in the HTML either.\nHow: dropbox link via slack.",
+    "objectID": "homeworks/hw0.html#you-have-3-tasks",
+    "href": "homeworks/hw0.html#you-have-3-tasks",
+    "title": "Homework 0 (zero)",
+    "section": "You have 3 Tasks",
+    "text": "You have 3 Tasks\nI want you to go through the first 3 Pluto “featured notebooks”: “Getting Startet”, “Markdown” and “Basic Mathematics”. You can see those upon doing\nusing Pluto\nPluto.run()\nand scrolling down a bit.\nOnce the notebook is loaded, click top right on “edit” this notebook. Complete all tasks.",
     "crumbs": [
       "Home",
       "Homeworks",
-      "Homework 1"
+      "Homework 0 (zero)"
+    ]
+  },
+  {
+    "objectID": "homeworks/hw0.html#homework-submission",
+    "href": "homeworks/hw0.html#homework-submission",
+    "title": "Homework 0 (zero)",
+    "section": "Homework Submission",
+    "text": "Homework Submission\nsubmit by next class.\nHow and What to Submit?\n\nWhat? three static html files of each of your notebooks (click top right on “sharing” symbol) and select “Static HTML”. The first cell in your notebook must contain the names of students who worked on it.\nHow? Upload your .html files in format HW01-name1-name2.html, HW02-name1-name2.html and HW03-name1-name2.html the dropbox file request link which will be shared with you via slack.",
+    "crumbs": [
+      "Home",
+      "Homeworks",
+      "Homework 0 (zero)"
     ]
   },
   {
@@ -727,63 +729,75 @@
     "text": "License\nThe copyright notice to be included in any copies and other derivative work of this material is:\nCopyright 2025 Florian Oswald, florian.oswald@gmail.com\nThank you.\n This is licensed under Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License"
   },
   {
-    "objectID": "homeworks/hw0.html",
-    "href": "homeworks/hw0.html",
-    "title": "Homework 0 (zero)",
+    "objectID": "homeworks/hw1.html",
+    "href": "homeworks/hw1.html",
+    "title": "Homework 1",
     "section": "",
-    "text": "The first week’s homework is to make you familiar with the Pluto environment. Given it’s homework number 0, it won’t count towards your grade!\nYou can do the homework in teams of max 2 people (try not to do it alone!)\n© Florian Oswald, 2025",
+    "text": "This homework will refer to something we have not done in class, but which you can easily read up on by yourself. Here is a notebook that introduces the SIR model. In the homework, I ask you to copy sections of code from there into your homework notebook, which you will then submit.\nGet the homework notebook here. right click and save this notebook, or copy the link directly into a running Pluto session to open!\n© Florian Oswald, 2025",
     "crumbs": [
       "Home",
       "Homeworks",
-      "Homework 0 (zero)"
+      "Homework 1"
     ]
   },
   {
-    "objectID": "homeworks/hw0.html#you-have-3-tasks",
-    "href": "homeworks/hw0.html#you-have-3-tasks",
-    "title": "Homework 0 (zero)",
-    "section": "You have 3 Tasks",
-    "text": "You have 3 Tasks\nI want you to go through the first 3 Pluto “featured notebooks”: “Getting Startet”, “Markdown” and “Basic Mathematics”. You can see those upon doing\nusing Pluto\nPluto.run()\nand scrolling down a bit.\nOnce the notebook is loaded, click top right on “edit” this notebook. Complete all tasks.",
-    "crumbs": [
-      "Home",
-      "Homeworks",
-      "Homework 0 (zero)"
-    ]
-  },
-  {
-    "objectID": "homeworks/hw0.html#homework-submission",
-    "href": "homeworks/hw0.html#homework-submission",
-    "title": "Homework 0 (zero)",
+    "objectID": "homeworks/hw1.html#homework-submission",
+    "href": "homeworks/hw1.html#homework-submission",
+    "title": "Homework 1",
     "section": "Homework Submission",
-    "text": "Homework Submission\nsubmit by next class.\nHow and What to Submit?\n\nWhat? three static html files of each of your notebooks (click top right on “sharing” symbol) and select “Static HTML”. The first cell in your notebook must contain the names of students who worked on it.\nHow? Upload your .html files in format HW01-name1-name2.html, HW02-name1-name2.html and HW03-name1-name2.html the dropbox file request link which will be shared with you via slack.",
+    "text": "Homework Submission\n\nWhen: You have until next monday.\nWho: teams of max 2/3\nWhat: one rendered HTML output of your notebook. make sure all cells (code?) that you want me to see are visible in your notebook, or they won’t be visible in the HTML either.\nHow: dropbox link via slack.",
     "crumbs": [
       "Home",
       "Homeworks",
-      "Homework 0 (zero)"
+      "Homework 1"
     ]
   },
   {
-    "objectID": "homeworks/hw3.html",
-    "href": "homeworks/hw3.html",
-    "title": "Homework 3",
+    "objectID": "homeworks/hw2.html",
+    "href": "homeworks/hw2.html",
+    "title": "Homework 2",
     "section": "",
-    "text": "Time for some optimization around here! Let me introduce you to the well known probit model! 😁\nGet the homework notebook here. right click and save this notebook, or copy the link directly into a running Pluto session to open!\n© Florian Oswald, 2025",
+    "text": "Let’s continue with some epidemic stuff! This time we’ll add a spatial dimension to our simulation.\nGet the homework notebook here. right click and save this notebook, or copy the link directly into a running Pluto session to open!\n© Florian Oswald, 2025",
     "crumbs": [
       "Home",
       "Homeworks",
-      "Homework 3"
+      "Homework 2"
     ]
   },
   {
-    "objectID": "homeworks/hw3.html#homework-submission",
-    "href": "homeworks/hw3.html#homework-submission",
-    "title": "Homework 3",
+    "objectID": "homeworks/hw2.html#homework-submission",
+    "href": "homeworks/hw2.html#homework-submission",
+    "title": "Homework 2",
     "section": "Homework Submission",
-    "text": "Homework Submission\n\nWhen: You have until 17/3.\nWho: teams of max 2/3\nWhat: one rendered HTML output of your notebook. make sure all cells (code?) that you want me to see are visible in your notebook, or they won’t be visible in the HTML either.\nHow: dropbox link via slack.",
+    "text": "Homework Submission\n\nWhen: You have until next wednesday.\nWho: teams of max 2/3\nWhat: one rendered HTML output of your notebook. make sure all cells (code?) that you want me to see are visible in your notebook, or they won’t be visible in the HTML either.\nHow: dropbox link via slack.",
     "crumbs": [
       "Home",
       "Homeworks",
-      "Homework 3"
+      "Homework 2"
+    ]
+  },
+  {
+    "objectID": "homeworks/hw4.html",
+    "href": "homeworks/hw4.html",
+    "title": "Homework 4",
+    "section": "",
+    "text": "This time we will extend our optimization efforts into a world with constraints. We have an application from finance: which assets best to invest in, if they have different expected returns?\nGet the homework notebook here. right click and save this notebook, or copy the link directly into a running Pluto session to open!\n© Florian Oswald, 2025",
+    "crumbs": [
+      "Home",
+      "Homeworks",
+      "Homework 4"
+    ]
+  },
+  {
+    "objectID": "homeworks/hw4.html#homework-submission",
+    "href": "homeworks/hw4.html#homework-submission",
+    "title": "Homework 4",
+    "section": "Homework Submission",
+    "text": "Homework Submission\n\nWhen: You have until 25/3.\nWho: teams of max 2/3\nWhat: one rendered HTML output of your notebook. make sure all cells (code?) that you want me to see are visible in your notebook, or they won’t be visible in the HTML either.\nHow: dropbox link via slack.",
+    "crumbs": [
+      "Home",
+      "Homeworks",
+      "Homework 4"
     ]
   },
   {
