@@ -10,6 +10,18 @@ In class, instead, we will take the deep dive into the DataFrames.jl package wit
 
 There is a notebook for you [here](https://github.com/floswald/DataFrames-Showcase)
 
+## Important Packages for data
+
+1. DataFrames.jl
+2. [DataFramesMeta.jl](https://juliadata.org/DataFramesMeta.jl/stable/)
+3. [Chain.jl](https://github.com/jkrumbiegel/Chain.jl)
+4. [Chevrons](https://github.com/cjdoris/Chevrons.jl)
+
+## Notebooks
+
+1. DataFrames Showcase [here](https://github.com/floswald/DataFrames-Showcase)
+2. Econ-inspired showcase [here](https://raw.githubusercontent.com/floswald/CompEcon/refs/heads/main/notebooks/week7/notebook.jl). Notice you need to also download the data in the same directory.
+
 ## Further DataFrames.jl Resources
 
 1. [The Manual](https://dataframes.juliadata.org/stable/) is very well done, and lists a bunch of good resources on the landing page.
