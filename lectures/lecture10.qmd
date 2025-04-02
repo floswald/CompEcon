@@ -1,0 +1,14 @@
+---
+title: "Lecture 10: Dynamic Discrete Choice Models"
+---
+
+## The Rust Bus Model
+
+
+
+Here are some notebooks!
+
+Topic | Notebook
+:-----: | :--------:
+Solving the Model | [download notebook](https://raw.githubusercontent.com/floswald/CompEcon/refs/heads/main/notebooks/week9/Zurcher.jl)
+Estimating the Model | [download notebook](https://raw.githubusercontent.com/floswald/CompEcon/refs/heads/main/notebooks/week9/ZurcherEstimation.jl)

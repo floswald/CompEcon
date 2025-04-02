@@ -1,17 +1,22 @@
 ---
-title: Homework 4
+title: Homework 5
 sidebar: homeworks
 ---
 
-This time we will extend our optimization efforts into a world with constraints. We have an application from finance: which assets best to invest in, if they have different expected returns?
+# Homework - Harold Zurcher
+
+> How could we **not** talk about Harold Zurcher in this course!
+
+First things first: Who was Harold Zurcher? *Generations* of Econ PhD students have heard about this man. Harold Zurcher even had a parody account on twitter, while twitter still existed. Why the fame? Well he was the leading actor in [John Rust's](https://editorialexpress.com/jrust/) groundbreaking paper on Bus Engine Replacement. Much of what we do nowadays in structural micro econometrics can be traced back to that paper. Even I have a [paper](https://www.sciencedirect.com/science/article/pii/S0165176512000870) on the Bus Engine Replacement Model!
 
 
-Get the homework notebook here. [right click and save this notebook, or copy the link directly into a running Pluto session to open!](https://github.com/floswald/CompEcon/raw/refs/heads/main/notebooks/homework4/Assets-handout.jl)
+
+### This homework is easy 🍿
+
+In this very easy homework, I will outsource you to the phantastic video material of [Fedor Iskhakov](https://fedor.iskh.me/compecon). Fedor is among the world's leading experts of that model class - amongst other things - and therefore (trying to) redo what he did in his course is just pointless. We will next time in class implement the numerical solution in julia. Be sure to check out all the other great stuff that Fedor does [in his course](https://fedor.iskh.me/compecon).
+
+**So, what's to do?**
+
+* Watch the 45 minute video of Fedor [here](https://youtu.be/Yo69tlKKplY). It's full of relevant info beyond the Rust model at hand.
 
 
-## Homework Submission
-
-1. When: You have until 25/3.
-2. Who: teams of max 2/3
-3. What: one rendered HTML output of your notebook. make sure all cells (code?) that you want me to see are *visible* in your notebook, or they won't  be visible in the HTML either.
-4. How: dropbox link via slack.

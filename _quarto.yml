@@ -42,6 +42,8 @@ website:
           text: 8 - Function Approximation
         - href: lectures/lecture9.qmd
           text: 9 - Numerical Integration
+        - href: lectures/lecture10.qmd
+          text: 10 - Dynamic Discrete Choice
         - href: lectures/plotting.qmd
           text: Makie.jl Plotting
         - href: lectures/absorbing-mc.qmd
@@ -53,6 +55,7 @@ website:
         - href: homeworks/hw2.qmd
         - href: homeworks/hw3.qmd
         - href: homeworks/hw4.qmd
+        - href: homeworks/hw5.qmd
 
   navbar:
     search: true
