@@ -532,299 +532,6 @@
     ]
   },
   {
-    "objectID": "lectures/lecture9.html",
-    "href": "lectures/lecture9.html",
-    "title": "Numerical Integration",
-    "section": "",
-    "text": "We want to evaluate the potentially multidimensional definite integral\n\\[\\begin{equation}\nI = \\int_\\Omega f(x) dx\n\\end{equation}\\]\nwhere it’s important to keep track of the volume of the function domain, i.e. we say \\(\\Omega\\) is a subset of \\(\\mathbb{R}^m\\) with volume\n\\[\\begin{equation}\nV = \\int_\\Omega dx\n\\end{equation}\\]\nHere is an example of \\(f\\):\n\\[\nf(x) = \\sin(x)^2 + 0.1 x\n\\]\nWe will evaluate this over \\(x \\in [0,5]\\), where we find using standard calculus techniques, that\n\\[\\begin{equation}\n\\int_0^5 f(x) dx = 3.886\n\\end{equation}\\]\nLet’s make a plot of this, where \\(f\\) is a black line, and the red shaded area is \\(I\\).\n© Florian Oswald, 2025",
-    "crumbs": [
-      "Home",
-      "Lectures",
-      "9 - Numerical Integration"
-    ]
-  },
-  {
-    "objectID": "lectures/lecture9.html#problem-definition",
-    "href": "lectures/lecture9.html#problem-definition",
-    "title": "Numerical Integration",
-    "section": "",
-    "text": "We want to evaluate the potentially multidimensional definite integral\n\\[\\begin{equation}\nI = \\int_\\Omega f(x) dx\n\\end{equation}\\]\nwhere it’s important to keep track of the volume of the function domain, i.e. we say \\(\\Omega\\) is a subset of \\(\\mathbb{R}^m\\) with volume\n\\[\\begin{equation}\nV = \\int_\\Omega dx\n\\end{equation}\\]\nHere is an example of \\(f\\):\n\\[\nf(x) = \\sin(x)^2 + 0.1 x\n\\]\nWe will evaluate this over \\(x \\in [0,5]\\), where we find using standard calculus techniques, that\n\\[\\begin{equation}\n\\int_0^5 f(x) dx = 3.886\n\\end{equation}\\]\nLet’s make a plot of this, where \\(f\\) is a black line, and the red shaded area is \\(I\\).",
-    "crumbs": [
-      "Home",
-      "Lectures",
-      "9 - Numerical Integration"
-    ]
-  },
-  {
-    "objectID": "lectures/lecture9.html#code-setup",
-    "href": "lectures/lecture9.html#code-setup",
-    "title": "Numerical Integration",
-    "section": "Code Setup",
-    "text": "Code Setup\nTo run the code in this document you need have an environment where the following packages are installed:\n\n# you need to have those packages installed.\nusing CairoMakie\nusing Random\nusing LaTeXStrings\nusing OrderedCollections   # for OrderedDict\nusing FastGaussQuadrature  # for intergration rules\nusing DataFrames           # to display a table\nusing Sobol                # to get sobol sequences\nset_theme!()  # resetting all quarto default values for fig width etc\ntrue_I = 3.886\n\n3.886\n\n\n\n\nShow Code\nx = 0:0.01:5\nf(x) = sin(x)^2 + 0.1x\ny = f.(x)\nfig = Figure(size = (800,600))\nax = Axis(fig[1,1], xlabel = L\"x\", ylabel = L\"\\sin(x)^2 + 0.1 x\")\nlines!(ax, x, y, label = L\"f\", color = :black, linewidth = 2)\nband!(ax, x, fill(0,length(x)), y, color = (:red, 0.5), label = \"Integral\")\naxislegend(; merge = true, position = :lt)\n\nfig\n\n\n\n\n\n\n\n\n\nAs with Riemann Integrals where we split the continuous domain of \\(f\\) into smaller and smaller chunks, which we then sum up (\\(\\int\\)), the numerical counterpart does the same: measure the value of f (the height of the black line) at different points, and sum over them. The main question is:\nAt which points?",
-    "crumbs": [
-      "Home",
-      "Lectures",
-      "9 - Numerical Integration"
-    ]
-  },
-  {
-    "objectID": "lectures/lecture9.html#monte-carlo-integration",
-    "href": "lectures/lecture9.html#monte-carlo-integration",
-    "title": "Numerical Integration",
-    "section": "Monte Carlo Integration",
-    "text": "Monte Carlo Integration\nA very intuitive first solution is to draw N random points from the domain of f, evalute the function there, and compute their average. We would approximate \\(I\\) as follows, where \\(x_i \\in \\Omega\\) is a randomly chosen point from the function’s domain:\n\\[\\begin{equation}\nI \\approx Q_N \\equiv V \\frac{1}{N} \\sum_{i=1}^N f(x_i) = V \\bar{f}\n\\end{equation}\\]\nThis works because the law of large numbers tells us that\n\\[\\begin{equation}\n\\lim_{N \\to \\infty} Q_N  = I.\n\\end{equation}\\]\nThe uncertainty from this method is easily quantifiable by the resulting variation in our estimate:\n\\[\\begin{equation}\nVar(f) = \\sigma_N^2 = \\frac{1}{N-1} \\sum_{i=1}^N (f(x_i) -  \\bar{f})^2\n\\end{equation}\\]\nfrom which we get the variance of \\(Q_N\\) as \\(Var(Q_N) = V^2 \\frac{\\sigma_N^2}{N}\\). Hence,clearly visible that this decreases as \\(N\\) increases. We usually report the standard error of the estimator, so we report\n\\[\\begin{equation}\n\\sigma_Q \\equiv \\sqrt{Var(Q_N)} = V \\frac{\\sigma_N}{\\sqrt{N}}\n\\end{equation}\\]\n👍\n\n\n\n\n\n\nCompute \\(\\sigma_Q\\)!\n\n\n\nWrite a function that takes \\(f\\) from above, and computes standard error \\(\\sigma_Q\\) for \\(N\\) points. Your function should take arguments sample_points, which is a vector of evaluation points, and fun, which is a function to evaluate.\n\n\n\n\nShow Code\nfunction σ(sample_points,fun)\n    N = length(sample_points)\n    ys = fun.(sample_points)\n    ybar = sum(ys) / N  # mean\n    var = 1 / (N-1) * sum( (ys .- ybar) .^ 2 )\n    sqrt(var)\nend\n\n\nσ (generic function with 1 method)\n\n\n\n\n\n\n\n\nCompute the monte carlo integral and it’s error!\n\n\n\nWrite a function mc_integrate that takes \\(f\\) from above, and computes both the monte carlo integration \\(Q_N\\) as well as its standard error \\(\\sigma_Q\\) for a set of \\(N\\) randomly chosen points. Your function should take arguments N, which is a vector of evaluation points, and fun, which is a function to evaluate. Set a random seed to ensure reproducibility. Then, call your function to compute \\(Q\\) for \\(N \\in \\{2,4,10,20,50,100,1000,10000\\}\\) and compare the outputs. Produce an OrderedDict where the keys are those values for \\(N\\).\n\n\n\n\nShow Code\nfunction mc_integrate(N,fun)\n    Random.seed!(0)   # any number works\n    V = 5 # integrate dx from 0 to 5\n    pts = rand(N) .* V  # N random numbers in [0,5]\n    mc_integral = V / N * sum( fun.(pts) )\n    mc_error = V * σ(pts,fun) / sqrt(N)\n    mc_integral, mc_error\nend\n\nns = [2,4,10,20,50,100,1000,10000]\n\nmc_results = OrderedDict(k =&gt;\n    mc_integrate(k,f) for k in ns);\n\n\n\n\n\n\n\n\nNow make a plot!\n\n\n\nTaking the dict from the above question, write a function that makes a line plot with \\(N\\) on the x axis and your estimate of the integral on the axis. Also add the error bars with band! function! Your function should take the output OrderedDict from above as argument. Scale the x-axis as log10.\n\n\n\n\nShow Code\nfunction plot_mc(od::OrderedDict; errors = true)\n    x = collect(keys(od))\n    v = collect(values(od))\n    Q = [i[1] for i in v]\n    E = [i[2] for i in v]\n\n    fig = Figure(size = (800,600))\n    ax = Axis(fig[1,1], xlabel = \"N\", ylabel = \"Qn\", xscale = log10)\n    lines!(ax, x, Q, label = L\"Q_n\", color = :black, linewidth = 1)\n    scatter!(ax, x, Q, label = L\"Q_n\", color = :black, markersize = 15)\n    hlines!(true_I, color = (:red,0.5), label = \"Truth\", linestyle = :dash)\n    if errors errorbars!(ax, x, Q, E; whiskerwidth = 1, color = (:red)) end\n    axislegend(; merge = true, position = :rb, unique = true)\n\n    return fig\nend\n\nplot_mc(mc_results)\n\n\n\n\n\n\n\n\n\nYou can see the red dashed line as being the true value of the integral. The random nature of evaluation points means that while with \\(N=100\\) points we are ok, with \\(N=1000\\) points we are off the mark. We need to go up to \\(N=10000\\) to be sure we got this right. You can see, it takes us quite long until the monte carlo method converges to that value. So, that’s the main drawback of this method.",
-    "crumbs": [
-      "Home",
-      "Lectures",
-      "9 - Numerical Integration"
-    ]
-  },
-  {
-    "objectID": "lectures/lecture9.html#quasi-monte-carlo",
-    "href": "lectures/lecture9.html#quasi-monte-carlo",
-    "title": "Numerical Integration",
-    "section": "Quasi-Monte carlo",
-    "text": "Quasi-Monte carlo\nThat’s a version where we do not choose random numbers as evaluation points, but sub-random sequences or low discrepancy sequences of random numbers, which aim at variance reduction. Everything else is the same.\n\n\n\n\n\n\nModify your mc_integrate for Quasi-MC\n\n\n\nModify your function from above so that instead of rand it chooses numbers from the Sobol sequences. Then make the plot again.\n\n\n\n\n\n\n\n\nUsing Sobol.jl\n\n\n\n\nmake a constructor: s = SobolSeq(lb,ub) where ub,lb are vectors of upper and lower bounds\nget n sobol-random numbers into a vector with reduce(vcat, next!(s) for i in 1:n)\n\n\n\n\n\nShow Code\nfunction qmc_integrate(N,fun)\n    Random.seed!(0)   # any number works\n    V = 5 # integrate dx from 0 to 5\n\n    s = SobolSeq([0], [5])\n    pts = reduce(vcat, next!(s) for i in 1:N)\n    mc_integral = V / N * sum( fun.(pts) )\n    mc_error = V * σ(pts,fun) / sqrt(N)\n    mc_integral, mc_error\nend\n\nqmc_results = OrderedDict(k =&gt;\n    qmc_integrate(k,f) for k in ns);\n\n\n\n\n\n\n\n\n\n\n\nOne of the merits of quasi monte carlo integration is that it’s rate of convergence is faster. You see that here various integrations stabilize at the “true” value (where \\(N=1000\\)) earlier than before. Notice I removed the error bars from the plot because I the previous formula is no longer correct. However it’s good to know that the relationship between QMC and MC errors is\n\\[\nO\\left(\\frac{(\\log N)^s}{N} \\right) \\quad vs \\quad O\\left( \\frac{1}{\\sqrt{N}} \\right)\n\\]\ntherefore, for QMC to do better than MC, we need \\(s\\) small and \\(N\\) large. In other words, in high-dimensional settings (high \\(s\\)), you might actually do better with straight MC.",
-    "crumbs": [
-      "Home",
-      "Lectures",
-      "9 - Numerical Integration"
-    ]
-  },
-  {
-    "objectID": "lectures/lecture9.html#gaussian-quadrature-integration",
-    "href": "lectures/lecture9.html#gaussian-quadrature-integration",
-    "title": "Numerical Integration",
-    "section": "Gaussian Quadrature integration",
-    "text": "Gaussian Quadrature integration\nBased on an early contribution of Carl Friedrich Gauss, we have that an \\(n\\)-point quadrature rule will yield an exact integration result to functions that look like polynomials of degree \\(2n -1\\), or less, by choosing \\(n\\) suitable nodes \\(x_i\\) and weights \\(w_i\\). That is quite the result. The wikipedia entry is very interesting. Basically, we will now concentrate on how to do better than in monte carlo integration, where each point gets the same weight \\(1/N\\), and where our only hope is to generate a very large set of sample points, which may be costly.\nWe continue in the above framework, i.e. in order to compute the expected value of a function \\(G\\), say, we do the following:\n\\[\nE[G(\\epsilon)] = \\int_{\\mathbb{R}^N} G(\\epsilon) p(\\epsilon) d\\epsilon \\approx \\sum_{j=1}^J w_j G(\\epsilon_j)\n\\]\nWe have some explanation to do:\n\n\\(N\\) is the dimensionality of the integration problem.\n\\(G:\\mathbb{R}^N \\mapsto \\mathbb{R}\\) is the function we want to integrate wrt \\(\\epsilon \\in \\mathbb{R}^N\\).\n\\(p\\) is a density function s.t. \\(\\int_{\\mathbb{R}^n} p(\\epsilon) d\\epsilon = 1\\).\n\\(w\\) are integration weights such that (most of the time) \\(\\sum_{j=1}^J w_j = 1\\).\n\\(\\epsilon_j\\) are integration nodes, i.e. the points where we choose to evaluate function \\(G\\). Notice that nodes and weights come in pairs.\nWe will look at normal shocks \\(\\epsilon \\sim N(0_N,I_N)\\)\nin that case, the weighting function becomes \\(w(\\epsilon) = (2\\pi)^{-N/2} \\exp \\left(-\\frac{1}{2}\\epsilon^T \\epsilon \\right)\\)\n\\(I_N\\) is the n by n identity matrix, i.e. there is no correlation among the shocks for now.\nOther random processes will require different weighting functions, but the principle is identical.\nFor now, let’s say that \\(N=1\\)\n\n\nDifferent Quadrature Rules\n\nWe focus exclusively on those and leave Simpson and Newton Cowtes formulas out.\n\nThis is because Quadrature is the method that in many situations gives highes accuracy with lowest computational cost.\n\nQuadrature provides a rule to compute weights \\(w_j\\) and nodes \\(\\epsilon_j\\).\nThere are many different quadrature rules.\nThey differ in their domain and weighting function.\nwikipedia again has a useful table for us.\nIn general, we can convert our function domain to a rule-specific domain with change of variables.\n\n\n\nGauss-Hermite: Expectation of a Normally Distributed Variable\n\nThere are many different rules, all specific to a certain random process.\nGauss-Hermite is designed for an integral of the form \\[ \\int_{-\\infty}^{+\\infty} e^{-x^2} G(x) dx \\] and where we would approximate \\[ \\int_{-\\infty}^{+\\infty} e^{-x^2} f(x) dx \\approx \\sum_{i=1}^n w_i G(x_i) \\]\nNow, let’s say we want to approximate the expected value of function \\(f\\) when it’s argument is \\(z\\sim N(\\mu,\\sigma^2)\\): \\[ E[f(z)] = \\int_{-\\infty}^{+\\infty} \\frac{1}{\\sigma \\sqrt{2\\pi}} \\exp \\left( -\\frac{(z-\\mu)^2}{2\\sigma^2} \\right) f(z) dz \\]\n\n\n\nGauss-Quadrature with \\(N&gt;1\\)?\nEasy: we just take the kronecker product of all univariate rules, i.e. the kronecker product amongst all weights and all nodes. Let’s look at an example.\n\nThis works well as long as \\(N\\) is not too large. The number of required function evaluations grows exponentially. \\[ E[G(\\epsilon)] = \\int_{\\mathbb{R}^N} G(\\epsilon) p(\\epsilon) d\\epsilon \\approx \\sum_{j_1=1}^{J_1} \\cdots \\sum_{j_N=1}^{J_N} w_{j_1}^1 \\cdots w_{j_N}^N G(\\epsilon_{j_1}^1,\\dots,\\epsilon_{j_N}^N) \\] where \\(\\omega_{j_1}^1\\) stands for weight index \\(j_1\\) in dimension 1, same for \\(\\epsilon\\).\nTotal number of nodes: \\(J=J_1 J_2 \\cdots J_N\\), and \\(J_i\\) can differ from \\(J_k\\).\nSuppose we have \\(\\epsilon^i \\sim N(0,1),i=1,2,3\\) as three uncorrelated random variables.\nLet’s take \\(J=3\\) points in all dimensions, so that in total we have \\(J^N=27\\) points.",
-    "crumbs": [
-      "Home",
-      "Lectures",
-      "9 - Numerical Integration"
-    ]
-  },
-  {
-    "objectID": "lectures/lecture9.html#quadrature-with-julia",
-    "href": "lectures/lecture9.html#quadrature-with-julia",
-    "title": "Numerical Integration",
-    "section": "Quadrature with julia",
-    "text": "Quadrature with julia\n\nnp = 3  # number of points\n\n# functions from FastGaussQuadrature.jl\nrules = Dict(\"hermite\" =&gt; gausshermite(np),\n             \"chebyshev\" =&gt; gausschebyshev(np),\n             \"legendre\" =&gt; gausslegendre(np),\n             \"lobatto\" =&gt; gausslobatto(np));\n\nHere are the respective nodes and weights for each of those four rules:\n\n\n4×3 DataFrame\n\n\n\nRow\nRule\nnodes\nweights\n\n\n\nSymbol\nArray…\nArray…\n\n\n\n\n1\nlobatto\n[-1.0, 0.0, 1.0]\n[0.333333, 1.33333, 0.333333]\n\n\n2\nhermite\n[-1.22474, -1.11022e-15, 1.22474]\n[0.295409, 1.18164, 0.295409]\n\n\n3\nlegendre\n[-0.774597, 0.0, 0.774597]\n[0.555556, 0.888889, 0.555556]\n\n\n4\nchebyshev\n[-0.866025, 6.12323e-17, 0.866025]\n[1.0472, 1.0472, 1.0472]\n\n\n\n\n\n\n\nApproximating an AR1 process\nhttp://karenkopecky.net/Rouwenhorst_WP.pdf",
-    "crumbs": [
-      "Home",
-      "Lectures",
-      "9 - Numerical Integration"
-    ]
-  },
-  {
-    "objectID": "homeworks/hw5.html",
-    "href": "homeworks/hw5.html",
-    "title": "Homework 4",
-    "section": "",
-    "text": "This time we will extend our optimization efforts into a world with constraints. We have an application from finance: which assets best to invest in, if they have different expected returns?\nGet the homework notebook here. right click and save this notebook, or copy the link directly into a running Pluto session to open!\n© Florian Oswald, 2025"
-  },
-  {
-    "objectID": "homeworks/hw5.html#homework-submission",
-    "href": "homeworks/hw5.html#homework-submission",
-    "title": "Homework 4",
-    "section": "Homework Submission",
-    "text": "Homework Submission\n\nWhen: You have until 25/3.\nWho: teams of max 2/3\nWhat: one rendered HTML output of your notebook. make sure all cells (code?) that you want me to see are visible in your notebook, or they won’t be visible in the HTML either.\nHow: dropbox link via slack."
-  },
-  {
-    "objectID": "homeworks/hw3.html",
-    "href": "homeworks/hw3.html",
-    "title": "Homework 3",
-    "section": "",
-    "text": "Time for some optimization around here! Let me introduce you to the well known probit model! 😁\nGet the homework notebook here. right click and save this notebook, or copy the link directly into a running Pluto session to open!\n© Florian Oswald, 2025",
-    "crumbs": [
-      "Home",
-      "Homeworks",
-      "Homework 3"
-    ]
-  },
-  {
-    "objectID": "homeworks/hw3.html#homework-submission",
-    "href": "homeworks/hw3.html#homework-submission",
-    "title": "Homework 3",
-    "section": "Homework Submission",
-    "text": "Homework Submission\n\nWhen: You have until 17/3.\nWho: teams of max 2/3\nWhat: one rendered HTML output of your notebook. make sure all cells (code?) that you want me to see are visible in your notebook, or they won’t be visible in the HTML either.\nHow: dropbox link via slack.",
-    "crumbs": [
-      "Home",
-      "Homeworks",
-      "Homework 3"
-    ]
-  },
-  {
-    "objectID": "homeworks/hw0.html",
-    "href": "homeworks/hw0.html",
-    "title": "Homework 0 (zero)",
-    "section": "",
-    "text": "The first week’s homework is to make you familiar with the Pluto environment. Given it’s homework number 0, it won’t count towards your grade!\nYou can do the homework in teams of max 2 people (try not to do it alone!)\n© Florian Oswald, 2025",
-    "crumbs": [
-      "Home",
-      "Homeworks",
-      "Homework 0 (zero)"
-    ]
-  },
-  {
-    "objectID": "homeworks/hw0.html#you-have-3-tasks",
-    "href": "homeworks/hw0.html#you-have-3-tasks",
-    "title": "Homework 0 (zero)",
-    "section": "You have 3 Tasks",
-    "text": "You have 3 Tasks\nI want you to go through the first 3 Pluto “featured notebooks”: “Getting Startet”, “Markdown” and “Basic Mathematics”. You can see those upon doing\nusing Pluto\nPluto.run()\nand scrolling down a bit.\nOnce the notebook is loaded, click top right on “edit” this notebook. Complete all tasks.",
-    "crumbs": [
-      "Home",
-      "Homeworks",
-      "Homework 0 (zero)"
-    ]
-  },
-  {
-    "objectID": "homeworks/hw0.html#homework-submission",
-    "href": "homeworks/hw0.html#homework-submission",
-    "title": "Homework 0 (zero)",
-    "section": "Homework Submission",
-    "text": "Homework Submission\nsubmit by next class.\nHow and What to Submit?\n\nWhat? three static html files of each of your notebooks (click top right on “sharing” symbol) and select “Static HTML”. The first cell in your notebook must contain the names of students who worked on it.\nHow? Upload your .html files in format HW01-name1-name2.html, HW02-name1-name2.html and HW03-name1-name2.html the dropbox file request link which will be shared with you via slack.",
-    "crumbs": [
-      "Home",
-      "Homeworks",
-      "Homework 0 (zero)"
-    ]
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Computational Economics for PhDs",
-    "section": "",
-    "text": "Teacher: Florian Oswald, florian.oswald@unito.it\nClass Times: Weekly Monday and Tuesday 11:00-13:00\nClass Location: Collegio Carlo Alberto\nSlack: There will be a slack channel for all communication\n© Florian Oswald, 2025"
-  },
-  {
-    "objectID": "index.html#course-overview",
-    "href": "index.html#course-overview",
-    "title": "Computational Economics for PhDs",
-    "section": "Course Overview",
-    "text": "Course Overview\nThis is a course for PhD and Allievi students at Collegio Carlo Alberto in Computational Economics. You will learn about some commonly used methods in Computational Economics and Structural Econometrics. These methods are being used in all fields of Economics. The course has a clear focus on applying what you learn. We will cover the theoretical concepts that underlie each topic, but you should expect a fair amount of hands on action required on your behalf. In the words of the great Che-Lin Su:\n\nDoing Computation is the only way to learn Computation. Doing Computation is the only way to learn Computation. Doing Computation is the only way to learn Computation.\n\nTrue to that motto, there will be homeworks for you to try out what you learned in class. There will also be a term project."
-  },
-  {
-    "objectID": "index.html#outline-of-topics",
-    "href": "index.html#outline-of-topics",
-    "title": "Computational Economics for PhDs",
-    "section": "Outline of Topics",
-    "text": "Outline of Topics\n\n\n\nSection\nTopic\n\n\n\n\n1\nIntroduction, Why Julia\n\n\n2\njulia crash course 1\n\n\n3\njulia crash course 2\n\n\n4\nOptimization 1: Recap of theory, Automatic Differentiation, setting up an optimizer\n\n\n5\nOptimization 2: Algorithms\n\n\n6\nOptimization 3: Constraints\n\n\n7\nParallel Computing\n\n\n8\nData and Machine Learning\n\n\n9\nDynamic Programming 1: Basics\n\n\n9\nDynamic Programming 2: Aiyagari and Shimer+Smith Models\n\n\n10\nDiscrete and Continous Choice Problems\n\n\n11\nDynamic Discrete Choice Models"
-  },
-  {
-    "objectID": "index.html#prerequisites",
-    "href": "index.html#prerequisites",
-    "title": "Computational Economics for PhDs",
-    "section": "Prerequisites",
-    "text": "Prerequisites\n\nYou need a laptop.\nYou should be familiar with the material from Introduction to Programming.\nYou must sign up for a free account at github.com. Choose a reasonable user name and upload a profile picture.\nBefore you come the first class, please do this:\n\nDownload the latest stable julia release for your OS.\nDownload the VSCode Editor\n\n\n\nGetting Programming Skills\n\nCheck out what is being taught in the Introduction to Programming course. You should know this level.\nWe will be using Julia for this course.\n\nNoteworthy Differences from Other Languages\nMATLAB, Python, Julia Syntax Comparison"
-  },
-  {
-    "objectID": "index.html#term-project",
-    "href": "index.html#term-project",
-    "title": "Computational Economics for PhDs",
-    "section": "Term Project",
-    "text": "Term Project\nThere are two options:\n\nReplicate a published paper.\nDevelop the computational aspects of your own work.\n\n\nReplication\nThe requirements for choice of paper to replicate are:\n\nIt’s an economics paper.\nPublished version and replication kit is available online.\nThe paper to replicate must not use julia.\nYou must use julia for your replication.\n\nIdeally your choice will involve at least some level of computational interest (i.e. more than an IV regression)\nHowever, you can replicate a paper with an IV regression, but you have to go all the way to get the exact same results as in the paper. I.e. if the author typed the stata command ivreg2 lw s expr tenure rns smsa _I* (iq=med kww age), cluster(year) you will have to write (or find) julia code which will match all output from this, including standard errors.\n\nYou need to set up a public github repository where you will build a documentation website of your implementation. You’ll learn how to do this in the course.\nI encourage you to let the world know about your replication effort via social media and/or email to the authors directly. This is independent of whether you were able or not to replicate the results. Replication is not about finding errors in other peoples’ work. If you are able to replicate some result in julia, this may be very interesting for others.\n\n\nReplication Resources\n\nhere is a great list by the AEA\nECTA code and data\nRevEconDynamics codes\nEach issue of RevEconDynamics , e.g. https://www.economicdynamics.org/volume-39-2021/\nThe AEA Data Editor’s website\nThe Restud Data Editor and their zenodo repo of replication kits\nThe Social Science Data Editor’s joint website\n\n\n\n\nDevelop Your Own Work\nYou can develop your own work as well. Requirements:\n\nsetup a github repository which contains the code (your decision whether public or private, in any case you have to share it with me)\nproduce a short document (max 10 pages, ideally much less) which describes\n\nthe aim of the project\nthe computational problem\nyour computational strategy to solve that problem\n\nThe main focus for me will lie on\n\nHow easy is it to use your code?\nHow easy is it to understand your code (code readability and provided documentation)?\nDid you provide unit tests? Can I be convinced that your code does what it is supposed to do?"
-  },
-  {
-    "objectID": "index.html#grade",
-    "href": "index.html#grade",
-    "title": "Computational Economics for PhDs",
-    "section": "Grade",
-    "text": "Grade\nYour grade will be 60% homeworks, 40% term project."
-  },
-  {
-    "objectID": "index.html#textbooks",
-    "href": "index.html#textbooks",
-    "title": "Computational Economics for PhDs",
-    "section": "Textbooks",
-    "text": "Textbooks\nThere are some excellent references for computational methods out there. This course will use material from\n\nThe Classics\n\nFackler and Miranda (2002), Applied Computational Economics and Finance, MIT Press\nKenneth Judd (1998), Numerical Methods in Economics, MIT Press\nNocedal, Jorge, and Stephen J. Wright (2006): Numerical Optimization, Springer-Verlag\n\n\n\nNewcomers\n\nJulia for Data Analysis (2023), Bogumił Kamiński, Manning Publications.\nAlgorithms for Optimization (2019), Mykel J. Kochenderfer and Tim A. Wheeler, Algorithms for Optimization, MIT Press.\nA Gentle Introduction to Effective Computing in Quantitative Research - What Every Research Assistant Should Know, Harry J. Paarsch and Konstantin Golyaev\nStatistics with Julia (2021), Yoni Nazarathy and Hayden Klok, Springer.\nQuantitative Economics with Julia by Perla, Sargent and Stachurski is a wonderful resource and we use it a lot in this course."
-  },
-  {
-    "objectID": "index.html#code-of-conduct",
-    "href": "index.html#code-of-conduct",
-    "title": "Computational Economics for PhDs",
-    "section": "Code of Conduct",
-    "text": "Code of Conduct\nIf you decide to participate in this course, I expect you to abide by the following minimal code of conduct.\n\nBe polite to the other class participants.\nWhile in class, do not spend time on messaging apps, chat rooms, computer games, or similar content.\n\nYou can expect your instructor to abide by the same code of conduct, so this is a matter of mutual respect. If you are found in breach of the above you will be given a single warning, and I will ask you to no longer join the course after a second time. Your grade will be “fail”."
-  },
-  {
-    "objectID": "index.html#license",
-    "href": "index.html#license",
-    "title": "Computational Economics for PhDs",
-    "section": "License",
-    "text": "License\nThe copyright notice to be included in any copies and other derivative work of this material is:\nCopyright 2025 Florian Oswald, florian.oswald@gmail.com\nThank you.\n This is licensed under Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License"
-  },
-  {
-    "objectID": "homeworks/hw1.html",
-    "href": "homeworks/hw1.html",
-    "title": "Homework 1",
-    "section": "",
-    "text": "This homework will refer to something we have not done in class, but which you can easily read up on by yourself. Here is a notebook that introduces the SIR model. In the homework, I ask you to copy sections of code from there into your homework notebook, which you will then submit.\nGet the homework notebook here. right click and save this notebook, or copy the link directly into a running Pluto session to open!\n© Florian Oswald, 2025",
-    "crumbs": [
-      "Home",
-      "Homeworks",
-      "Homework 1"
-    ]
-  },
-  {
-    "objectID": "homeworks/hw1.html#homework-submission",
-    "href": "homeworks/hw1.html#homework-submission",
-    "title": "Homework 1",
-    "section": "Homework Submission",
-    "text": "Homework Submission\n\nWhen: You have until next monday.\nWho: teams of max 2/3\nWhat: one rendered HTML output of your notebook. make sure all cells (code?) that you want me to see are visible in your notebook, or they won’t be visible in the HTML either.\nHow: dropbox link via slack.",
-    "crumbs": [
-      "Home",
-      "Homeworks",
-      "Homework 1"
-    ]
-  },
-  {
-    "objectID": "homeworks/hw2.html",
-    "href": "homeworks/hw2.html",
-    "title": "Homework 2",
-    "section": "",
-    "text": "Let’s continue with some epidemic stuff! This time we’ll add a spatial dimension to our simulation.\nGet the homework notebook here. right click and save this notebook, or copy the link directly into a running Pluto session to open!\n© Florian Oswald, 2025",
-    "crumbs": [
-      "Home",
-      "Homeworks",
-      "Homework 2"
-    ]
-  },
-  {
-    "objectID": "homeworks/hw2.html#homework-submission",
-    "href": "homeworks/hw2.html#homework-submission",
-    "title": "Homework 2",
-    "section": "Homework Submission",
-    "text": "Homework Submission\n\nWhen: You have until next wednesday.\nWho: teams of max 2/3\nWhat: one rendered HTML output of your notebook. make sure all cells (code?) that you want me to see are visible in your notebook, or they won’t be visible in the HTML either.\nHow: dropbox link via slack.",
-    "crumbs": [
-      "Home",
-      "Homeworks",
-      "Homework 2"
-    ]
-  },
-  {
-    "objectID": "homeworks/hw4.html",
-    "href": "homeworks/hw4.html",
-    "title": "Homework 4",
-    "section": "",
-    "text": "This time we will extend our optimization efforts into a world with constraints. We have an application from finance: which assets best to invest in, if they have different expected returns?\nGet the homework notebook here. right click and save this notebook, or copy the link directly into a running Pluto session to open!\n© Florian Oswald, 2025",
-    "crumbs": [
-      "Home",
-      "Homeworks",
-      "Homework 4"
-    ]
-  },
-  {
-    "objectID": "homeworks/hw4.html#homework-submission",
-    "href": "homeworks/hw4.html#homework-submission",
-    "title": "Homework 4",
-    "section": "Homework Submission",
-    "text": "Homework Submission\n\nWhen: You have until 25/3.\nWho: teams of max 2/3\nWhat: one rendered HTML output of your notebook. make sure all cells (code?) that you want me to see are visible in your notebook, or they won’t be visible in the HTML either.\nHow: dropbox link via slack.",
-    "crumbs": [
-      "Home",
-      "Homeworks",
-      "Homework 4"
-    ]
-  },
-  {
     "objectID": "lectures/lecture8.html",
     "href": "lectures/lecture8.html",
     "title": "Function Approximation",
@@ -930,6 +637,321 @@
       "Home",
       "Lectures",
       "8 - Function Approximation"
+    ]
+  },
+  {
+    "objectID": "homeworks/hw4.html",
+    "href": "homeworks/hw4.html",
+    "title": "Homework 4",
+    "section": "",
+    "text": "This time we will extend our optimization efforts into a world with constraints. We have an application from finance: which assets best to invest in, if they have different expected returns?\nGet the homework notebook here. right click and save this notebook, or copy the link directly into a running Pluto session to open!\n© Florian Oswald, 2025",
+    "crumbs": [
+      "Home",
+      "Homeworks",
+      "Homework 4"
+    ]
+  },
+  {
+    "objectID": "homeworks/hw4.html#homework-submission",
+    "href": "homeworks/hw4.html#homework-submission",
+    "title": "Homework 4",
+    "section": "Homework Submission",
+    "text": "Homework Submission\n\nWhen: You have until 25/3.\nWho: teams of max 2/3\nWhat: one rendered HTML output of your notebook. make sure all cells (code?) that you want me to see are visible in your notebook, or they won’t be visible in the HTML either.\nHow: dropbox link via slack.",
+    "crumbs": [
+      "Home",
+      "Homeworks",
+      "Homework 4"
+    ]
+  },
+  {
+    "objectID": "homeworks/hw2.html",
+    "href": "homeworks/hw2.html",
+    "title": "Homework 2",
+    "section": "",
+    "text": "Let’s continue with some epidemic stuff! This time we’ll add a spatial dimension to our simulation.\nGet the homework notebook here. right click and save this notebook, or copy the link directly into a running Pluto session to open!\n© Florian Oswald, 2025",
+    "crumbs": [
+      "Home",
+      "Homeworks",
+      "Homework 2"
+    ]
+  },
+  {
+    "objectID": "homeworks/hw2.html#homework-submission",
+    "href": "homeworks/hw2.html#homework-submission",
+    "title": "Homework 2",
+    "section": "Homework Submission",
+    "text": "Homework Submission\n\nWhen: You have until next wednesday.\nWho: teams of max 2/3\nWhat: one rendered HTML output of your notebook. make sure all cells (code?) that you want me to see are visible in your notebook, or they won’t be visible in the HTML either.\nHow: dropbox link via slack.",
+    "crumbs": [
+      "Home",
+      "Homeworks",
+      "Homework 2"
+    ]
+  },
+  {
+    "objectID": "homeworks/hw1.html",
+    "href": "homeworks/hw1.html",
+    "title": "Homework 1",
+    "section": "",
+    "text": "This homework will refer to something we have not done in class, but which you can easily read up on by yourself. Here is a notebook that introduces the SIR model. In the homework, I ask you to copy sections of code from there into your homework notebook, which you will then submit.\nGet the homework notebook here. right click and save this notebook, or copy the link directly into a running Pluto session to open!\n© Florian Oswald, 2025",
+    "crumbs": [
+      "Home",
+      "Homeworks",
+      "Homework 1"
+    ]
+  },
+  {
+    "objectID": "homeworks/hw1.html#homework-submission",
+    "href": "homeworks/hw1.html#homework-submission",
+    "title": "Homework 1",
+    "section": "Homework Submission",
+    "text": "Homework Submission\n\nWhen: You have until next monday.\nWho: teams of max 2/3\nWhat: one rendered HTML output of your notebook. make sure all cells (code?) that you want me to see are visible in your notebook, or they won’t be visible in the HTML either.\nHow: dropbox link via slack.",
+    "crumbs": [
+      "Home",
+      "Homeworks",
+      "Homework 1"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Computational Economics for PhDs",
+    "section": "",
+    "text": "Teacher: Florian Oswald, florian.oswald@unito.it\nClass Times: Weekly Monday and Tuesday 11:00-13:00\nClass Location: Collegio Carlo Alberto\nSlack: There will be a slack channel for all communication\n© Florian Oswald, 2025"
+  },
+  {
+    "objectID": "index.html#course-overview",
+    "href": "index.html#course-overview",
+    "title": "Computational Economics for PhDs",
+    "section": "Course Overview",
+    "text": "Course Overview\nThis is a course for PhD and Allievi students at Collegio Carlo Alberto in Computational Economics. You will learn about some commonly used methods in Computational Economics and Structural Econometrics. These methods are being used in all fields of Economics. The course has a clear focus on applying what you learn. We will cover the theoretical concepts that underlie each topic, but you should expect a fair amount of hands on action required on your behalf. In the words of the great Che-Lin Su:\n\nDoing Computation is the only way to learn Computation. Doing Computation is the only way to learn Computation. Doing Computation is the only way to learn Computation.\n\nTrue to that motto, there will be homeworks for you to try out what you learned in class. There will also be a term project."
+  },
+  {
+    "objectID": "index.html#outline-of-topics",
+    "href": "index.html#outline-of-topics",
+    "title": "Computational Economics for PhDs",
+    "section": "Outline of Topics",
+    "text": "Outline of Topics\n\n\n\nSection\nTopic\n\n\n\n\n1\nIntroduction, Why Julia\n\n\n2\njulia crash course 1\n\n\n3\njulia crash course 2\n\n\n4\nOptimization 1: Recap of theory, Automatic Differentiation, setting up an optimizer\n\n\n5\nOptimization 2: Algorithms\n\n\n6\nOptimization 3: Constraints\n\n\n7\nParallel Computing\n\n\n8\nData and Machine Learning\n\n\n9\nDynamic Programming 1: Basics\n\n\n9\nDynamic Programming 2: Aiyagari and Shimer+Smith Models\n\n\n10\nDiscrete and Continous Choice Problems\n\n\n11\nDynamic Discrete Choice Models"
+  },
+  {
+    "objectID": "index.html#prerequisites",
+    "href": "index.html#prerequisites",
+    "title": "Computational Economics for PhDs",
+    "section": "Prerequisites",
+    "text": "Prerequisites\n\nYou need a laptop.\nYou should be familiar with the material from Introduction to Programming.\nYou must sign up for a free account at github.com. Choose a reasonable user name and upload a profile picture.\nBefore you come the first class, please do this:\n\nDownload the latest stable julia release for your OS.\nDownload the VSCode Editor\n\n\n\nGetting Programming Skills\n\nCheck out what is being taught in the Introduction to Programming course. You should know this level.\nWe will be using Julia for this course.\n\nNoteworthy Differences from Other Languages\nMATLAB, Python, Julia Syntax Comparison"
+  },
+  {
+    "objectID": "index.html#term-project",
+    "href": "index.html#term-project",
+    "title": "Computational Economics for PhDs",
+    "section": "Term Project",
+    "text": "Term Project\nThere are two options:\n\nReplicate a published paper.\nDevelop the computational aspects of your own work.\n\n\nReplication\nThe requirements for choice of paper to replicate are:\n\nIt’s an economics paper.\nPublished version and replication kit is available online.\nThe paper to replicate must not use julia.\nYou must use julia for your replication.\n\nIdeally your choice will involve at least some level of computational interest (i.e. more than an IV regression)\nHowever, you can replicate a paper with an IV regression, but you have to go all the way to get the exact same results as in the paper. I.e. if the author typed the stata command ivreg2 lw s expr tenure rns smsa _I* (iq=med kww age), cluster(year) you will have to write (or find) julia code which will match all output from this, including standard errors.\n\nYou need to set up a public github repository where you will build a documentation website of your implementation. You’ll learn how to do this in the course.\nI encourage you to let the world know about your replication effort via social media and/or email to the authors directly. This is independent of whether you were able or not to replicate the results. Replication is not about finding errors in other peoples’ work. If you are able to replicate some result in julia, this may be very interesting for others.\n\n\nReplication Resources\n\nhere is a great list by the AEA\nECTA code and data\nRevEconDynamics codes\nEach issue of RevEconDynamics , e.g. https://www.economicdynamics.org/volume-39-2021/\nThe AEA Data Editor’s website\nThe Restud Data Editor and their zenodo repo of replication kits\nThe Social Science Data Editor’s joint website\n\n\n\n\nDevelop Your Own Work\nYou can develop your own work as well. Requirements:\n\nsetup a github repository which contains the code (your decision whether public or private, in any case you have to share it with me)\nproduce a short document (max 10 pages, ideally much less) which describes\n\nthe aim of the project\nthe computational problem\nyour computational strategy to solve that problem\n\nThe main focus for me will lie on\n\nHow easy is it to use your code?\nHow easy is it to understand your code (code readability and provided documentation)?\nDid you provide unit tests? Can I be convinced that your code does what it is supposed to do?"
+  },
+  {
+    "objectID": "index.html#grade",
+    "href": "index.html#grade",
+    "title": "Computational Economics for PhDs",
+    "section": "Grade",
+    "text": "Grade\nYour grade will be 60% homeworks, 40% term project."
+  },
+  {
+    "objectID": "index.html#textbooks",
+    "href": "index.html#textbooks",
+    "title": "Computational Economics for PhDs",
+    "section": "Textbooks",
+    "text": "Textbooks\nThere are some excellent references for computational methods out there. This course will use material from\n\nThe Classics\n\nFackler and Miranda (2002), Applied Computational Economics and Finance, MIT Press\nKenneth Judd (1998), Numerical Methods in Economics, MIT Press\nNocedal, Jorge, and Stephen J. Wright (2006): Numerical Optimization, Springer-Verlag\n\n\n\nNewcomers\n\nJulia for Data Analysis (2023), Bogumił Kamiński, Manning Publications.\nAlgorithms for Optimization (2019), Mykel J. Kochenderfer and Tim A. Wheeler, Algorithms for Optimization, MIT Press.\nA Gentle Introduction to Effective Computing in Quantitative Research - What Every Research Assistant Should Know, Harry J. Paarsch and Konstantin Golyaev\nStatistics with Julia (2021), Yoni Nazarathy and Hayden Klok, Springer.\nQuantitative Economics with Julia by Perla, Sargent and Stachurski is a wonderful resource and we use it a lot in this course."
+  },
+  {
+    "objectID": "index.html#code-of-conduct",
+    "href": "index.html#code-of-conduct",
+    "title": "Computational Economics for PhDs",
+    "section": "Code of Conduct",
+    "text": "Code of Conduct\nIf you decide to participate in this course, I expect you to abide by the following minimal code of conduct.\n\nBe polite to the other class participants.\nWhile in class, do not spend time on messaging apps, chat rooms, computer games, or similar content.\n\nYou can expect your instructor to abide by the same code of conduct, so this is a matter of mutual respect. If you are found in breach of the above you will be given a single warning, and I will ask you to no longer join the course after a second time. Your grade will be “fail”."
+  },
+  {
+    "objectID": "index.html#license",
+    "href": "index.html#license",
+    "title": "Computational Economics for PhDs",
+    "section": "License",
+    "text": "License\nThe copyright notice to be included in any copies and other derivative work of this material is:\nCopyright 2025 Florian Oswald, florian.oswald@gmail.com\nThank you.\n This is licensed under Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License"
+  },
+  {
+    "objectID": "homeworks/hw0.html",
+    "href": "homeworks/hw0.html",
+    "title": "Homework 0 (zero)",
+    "section": "",
+    "text": "The first week’s homework is to make you familiar with the Pluto environment. Given it’s homework number 0, it won’t count towards your grade!\nYou can do the homework in teams of max 2 people (try not to do it alone!)\n© Florian Oswald, 2025",
+    "crumbs": [
+      "Home",
+      "Homeworks",
+      "Homework 0 (zero)"
+    ]
+  },
+  {
+    "objectID": "homeworks/hw0.html#you-have-3-tasks",
+    "href": "homeworks/hw0.html#you-have-3-tasks",
+    "title": "Homework 0 (zero)",
+    "section": "You have 3 Tasks",
+    "text": "You have 3 Tasks\nI want you to go through the first 3 Pluto “featured notebooks”: “Getting Startet”, “Markdown” and “Basic Mathematics”. You can see those upon doing\nusing Pluto\nPluto.run()\nand scrolling down a bit.\nOnce the notebook is loaded, click top right on “edit” this notebook. Complete all tasks.",
+    "crumbs": [
+      "Home",
+      "Homeworks",
+      "Homework 0 (zero)"
+    ]
+  },
+  {
+    "objectID": "homeworks/hw0.html#homework-submission",
+    "href": "homeworks/hw0.html#homework-submission",
+    "title": "Homework 0 (zero)",
+    "section": "Homework Submission",
+    "text": "Homework Submission\nsubmit by next class.\nHow and What to Submit?\n\nWhat? three static html files of each of your notebooks (click top right on “sharing” symbol) and select “Static HTML”. The first cell in your notebook must contain the names of students who worked on it.\nHow? Upload your .html files in format HW01-name1-name2.html, HW02-name1-name2.html and HW03-name1-name2.html the dropbox file request link which will be shared with you via slack.",
+    "crumbs": [
+      "Home",
+      "Homeworks",
+      "Homework 0 (zero)"
+    ]
+  },
+  {
+    "objectID": "homeworks/hw3.html",
+    "href": "homeworks/hw3.html",
+    "title": "Homework 3",
+    "section": "",
+    "text": "Time for some optimization around here! Let me introduce you to the well known probit model! 😁\nGet the homework notebook here. right click and save this notebook, or copy the link directly into a running Pluto session to open!\n© Florian Oswald, 2025",
+    "crumbs": [
+      "Home",
+      "Homeworks",
+      "Homework 3"
+    ]
+  },
+  {
+    "objectID": "homeworks/hw3.html#homework-submission",
+    "href": "homeworks/hw3.html#homework-submission",
+    "title": "Homework 3",
+    "section": "Homework Submission",
+    "text": "Homework Submission\n\nWhen: You have until 17/3.\nWho: teams of max 2/3\nWhat: one rendered HTML output of your notebook. make sure all cells (code?) that you want me to see are visible in your notebook, or they won’t be visible in the HTML either.\nHow: dropbox link via slack.",
+    "crumbs": [
+      "Home",
+      "Homeworks",
+      "Homework 3"
+    ]
+  },
+  {
+    "objectID": "homeworks/hw5.html",
+    "href": "homeworks/hw5.html",
+    "title": "Homework 5",
+    "section": "",
+    "text": "Homework - Harold Zurcher\n\nHow could we not talk about Harold Zurcher in this course!\n\nFirst things first: Who was Harold Zurcher? Generations of Econ PhD students have heard about this man. Harold Zurcher even had a parody account on twitter, while twitter still existed. Why the fame? Well he was the leading actor in John Rust’s groundbreaking paper on Bus Engine Replacement. Much of what we do nowadays in structural micro econometrics can be traced back to that paper. Even I have a paper on the Bus Engine Replacement Model!\n\nThis homework is easy 🍿\nIn this very easy homework, I will outsource you to the phantastic video material of Fedor Iskhakov. Fedor is among the world’s leading experts of that model class - amongst other things - and therefore (trying to) redo what he did in his course is just pointless. We will next time in class implement the numerical solution in julia. Be sure to check out all the other great stuff that Fedor does in his course.\nSo, what’s to do?\n\nWatch the 45 minute video of Fedor here. It’s full of relevant info beyond the Rust model at hand.\n\n\n\n\n\n\n© Florian Oswald, 2025",
+    "crumbs": [
+      "Home",
+      "Homeworks",
+      "Homework 5"
+    ]
+  },
+  {
+    "objectID": "lectures/lecture9.html",
+    "href": "lectures/lecture9.html",
+    "title": "Numerical Integration",
+    "section": "",
+    "text": "We want to evaluate the potentially multidimensional definite integral\n\\[\\begin{equation}\nI = \\int_\\Omega f(x) dx\n\\end{equation}\\]\nwhere it’s important to keep track of the volume of the function domain, i.e. we say \\(\\Omega\\) is a subset of \\(\\mathbb{R}^m\\) with volume\n\\[\\begin{equation}\nV = \\int_\\Omega dx\n\\end{equation}\\]\nHere is an example of \\(f\\):\n\\[\nf(x) = \\sin(x)^2 + 0.1 x\n\\]\nWe will evaluate this over \\(x \\in [0,5]\\), where we find using standard calculus techniques, that\n\\[\\begin{equation}\n\\int_0^5 f(x) dx = 3.886\n\\end{equation}\\]\nLet’s make a plot of this, where \\(f\\) is a black line, and the red shaded area is \\(I\\).\n© Florian Oswald, 2025",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "9 - Numerical Integration"
+    ]
+  },
+  {
+    "objectID": "lectures/lecture9.html#problem-definition",
+    "href": "lectures/lecture9.html#problem-definition",
+    "title": "Numerical Integration",
+    "section": "",
+    "text": "We want to evaluate the potentially multidimensional definite integral\n\\[\\begin{equation}\nI = \\int_\\Omega f(x) dx\n\\end{equation}\\]\nwhere it’s important to keep track of the volume of the function domain, i.e. we say \\(\\Omega\\) is a subset of \\(\\mathbb{R}^m\\) with volume\n\\[\\begin{equation}\nV = \\int_\\Omega dx\n\\end{equation}\\]\nHere is an example of \\(f\\):\n\\[\nf(x) = \\sin(x)^2 + 0.1 x\n\\]\nWe will evaluate this over \\(x \\in [0,5]\\), where we find using standard calculus techniques, that\n\\[\\begin{equation}\n\\int_0^5 f(x) dx = 3.886\n\\end{equation}\\]\nLet’s make a plot of this, where \\(f\\) is a black line, and the red shaded area is \\(I\\).",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "9 - Numerical Integration"
+    ]
+  },
+  {
+    "objectID": "lectures/lecture9.html#code-setup",
+    "href": "lectures/lecture9.html#code-setup",
+    "title": "Numerical Integration",
+    "section": "Code Setup",
+    "text": "Code Setup\nTo run the code in this document you need have an environment where the following packages are installed:\n\n# you need to have those packages installed.\nusing CairoMakie\nusing Random\nusing LaTeXStrings\nusing OrderedCollections   # for OrderedDict\nusing FastGaussQuadrature  # for intergration rules\nusing DataFrames           # to display a table\nusing Sobol                # to get sobol sequences\nset_theme!()  # resetting all quarto default values for fig width etc\ntrue_I = 3.886\n\n3.886\n\n\n\n\nShow Code\nx = 0:0.01:5\nf(x) = sin(x)^2 + 0.1x\ny = f.(x)\nfig = Figure(size = (800,600))\nax = Axis(fig[1,1], xlabel = L\"x\", ylabel = L\"\\sin(x)^2 + 0.1 x\")\nlines!(ax, x, y, label = L\"f\", color = :black, linewidth = 2)\nband!(ax, x, fill(0,length(x)), y, color = (:red, 0.5), label = \"Integral\")\naxislegend(; merge = true, position = :lt)\n\nfig\n\n\n\n\n\n\n\n\n\nAs with Riemann Integrals where we split the continuous domain of \\(f\\) into smaller and smaller chunks, which we then sum up (\\(\\int\\)), the numerical counterpart does the same: measure the value of f (the height of the black line) at different points, and sum over them. The main question is:\nAt which points?",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "9 - Numerical Integration"
+    ]
+  },
+  {
+    "objectID": "lectures/lecture9.html#monte-carlo-integration",
+    "href": "lectures/lecture9.html#monte-carlo-integration",
+    "title": "Numerical Integration",
+    "section": "Monte Carlo Integration",
+    "text": "Monte Carlo Integration\nA very intuitive first solution is to draw N random points from the domain of f, evalute the function there, and compute their average. We would approximate \\(I\\) as follows, where \\(x_i \\in \\Omega\\) is a randomly chosen point from the function’s domain:\n\\[\\begin{equation}\nI \\approx Q_N \\equiv V \\frac{1}{N} \\sum_{i=1}^N f(x_i) = V \\bar{f}\n\\end{equation}\\]\nThis works because the law of large numbers tells us that\n\\[\\begin{equation}\n\\lim_{N \\to \\infty} Q_N  = I.\n\\end{equation}\\]\nThe uncertainty from this method is easily quantifiable by the resulting variation in our estimate:\n\\[\\begin{equation}\nVar(f) = \\sigma_N^2 = \\frac{1}{N-1} \\sum_{i=1}^N (f(x_i) -  \\bar{f})^2\n\\end{equation}\\]\nfrom which we get the variance of \\(Q_N\\) as \\(Var(Q_N) = V^2 \\frac{\\sigma_N^2}{N}\\). Hence,clearly visible that this decreases as \\(N\\) increases. We usually report the standard error of the estimator, so we report\n\\[\\begin{equation}\n\\sigma_Q \\equiv \\sqrt{Var(Q_N)} = V \\frac{\\sigma_N}{\\sqrt{N}}\n\\end{equation}\\]\n👍\n\n\n\n\n\n\nCompute \\(\\sigma_Q\\)!\n\n\n\nWrite a function that takes \\(f\\) from above, and computes standard error \\(\\sigma_Q\\) for \\(N\\) points. Your function should take arguments sample_points, which is a vector of evaluation points, and fun, which is a function to evaluate.\n\n\n\n\nShow Code\nfunction σ(sample_points,fun)\n    N = length(sample_points)\n    ys = fun.(sample_points)\n    ybar = sum(ys) / N  # mean\n    var = 1 / (N-1) * sum( (ys .- ybar) .^ 2 )\n    sqrt(var)\nend\n\n\nσ (generic function with 1 method)\n\n\n\n\n\n\n\n\nCompute the monte carlo integral and it’s error!\n\n\n\nWrite a function mc_integrate that takes \\(f\\) from above, and computes both the monte carlo integration \\(Q_N\\) as well as its standard error \\(\\sigma_Q\\) for a set of \\(N\\) randomly chosen points. Your function should take arguments N, which is a vector of evaluation points, and fun, which is a function to evaluate. Set a random seed to ensure reproducibility. Then, call your function to compute \\(Q\\) for \\(N \\in \\{2,4,10,20,50,100,1000,10000\\}\\) and compare the outputs. Produce an OrderedDict where the keys are those values for \\(N\\).\n\n\n\n\nShow Code\nfunction mc_integrate(N,fun)\n    Random.seed!(0)   # any number works\n    V = 5 # integrate dx from 0 to 5\n    pts = rand(N) .* V  # N random numbers in [0,5]\n    mc_integral = V / N * sum( fun.(pts) )\n    mc_error = V * σ(pts,fun) / sqrt(N)\n    mc_integral, mc_error\nend\n\nns = [2,4,10,20,50,100,1000,10000]\n\nmc_results = OrderedDict(k =&gt;\n    mc_integrate(k,f) for k in ns);\n\n\n\n\n\n\n\n\nNow make a plot!\n\n\n\nTaking the dict from the above question, write a function that makes a line plot with \\(N\\) on the x axis and your estimate of the integral on the axis. Also add the error bars with band! function! Your function should take the output OrderedDict from above as argument. Scale the x-axis as log10.\n\n\n\n\nShow Code\nfunction plot_mc(od::OrderedDict; errors = true)\n    x = collect(keys(od))\n    v = collect(values(od))\n    Q = [i[1] for i in v]\n    E = [i[2] for i in v]\n\n    fig = Figure(size = (800,600))\n    ax = Axis(fig[1,1], xlabel = \"N\", ylabel = \"Qn\", xscale = log10)\n    lines!(ax, x, Q, label = L\"Q_n\", color = :black, linewidth = 1)\n    scatter!(ax, x, Q, label = L\"Q_n\", color = :black, markersize = 15)\n    hlines!(true_I, color = (:red,0.5), label = \"Truth\", linestyle = :dash)\n    if errors errorbars!(ax, x, Q, E; whiskerwidth = 1, color = (:red)) end\n    axislegend(; merge = true, position = :rb, unique = true)\n\n    return fig\nend\n\nplot_mc(mc_results)\n\n\n\n\n\n\n\n\n\nYou can see the red dashed line as being the true value of the integral. The random nature of evaluation points means that while with \\(N=100\\) points we are ok, with \\(N=1000\\) points we are off the mark. We need to go up to \\(N=10000\\) to be sure we got this right. You can see, it takes us quite long until the monte carlo method converges to that value. So, that’s the main drawback of this method.",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "9 - Numerical Integration"
+    ]
+  },
+  {
+    "objectID": "lectures/lecture9.html#quasi-monte-carlo",
+    "href": "lectures/lecture9.html#quasi-monte-carlo",
+    "title": "Numerical Integration",
+    "section": "Quasi-Monte carlo",
+    "text": "Quasi-Monte carlo\nThat’s a version where we do not choose random numbers as evaluation points, but sub-random sequences or low discrepancy sequences of random numbers, which aim at variance reduction. Everything else is the same.\n\n\n\n\n\n\nModify your mc_integrate for Quasi-MC\n\n\n\nModify your function from above so that instead of rand it chooses numbers from the Sobol sequences. Then make the plot again.\n\n\n\n\n\n\n\n\nUsing Sobol.jl\n\n\n\n\nmake a constructor: s = SobolSeq(lb,ub) where ub,lb are vectors of upper and lower bounds\nget n sobol-random numbers into a vector with reduce(vcat, next!(s) for i in 1:n)\n\n\n\n\n\nShow Code\nfunction qmc_integrate(N,fun)\n    Random.seed!(0)   # any number works\n    V = 5 # integrate dx from 0 to 5\n\n    s = SobolSeq([0], [5])\n    pts = reduce(vcat, next!(s) for i in 1:N)\n    mc_integral = V / N * sum( fun.(pts) )\n    mc_error = V * σ(pts,fun) / sqrt(N)\n    mc_integral, mc_error\nend\n\nqmc_results = OrderedDict(k =&gt;\n    qmc_integrate(k,f) for k in ns);\n\n\n\n\n\n\n\n\n\n\n\nOne of the merits of quasi monte carlo integration is that it’s rate of convergence is faster. You see that here various integrations stabilize at the “true” value (where \\(N=1000\\)) earlier than before. Notice I removed the error bars from the plot because I the previous formula is no longer correct. However it’s good to know that the relationship between QMC and MC errors is\n\\[\nO\\left(\\frac{(\\log N)^s}{N} \\right) \\quad vs \\quad O\\left( \\frac{1}{\\sqrt{N}} \\right)\n\\]\ntherefore, for QMC to do better than MC, we need \\(s\\) small and \\(N\\) large. In other words, in high-dimensional settings (high \\(s\\)), you might actually do better with straight MC.",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "9 - Numerical Integration"
+    ]
+  },
+  {
+    "objectID": "lectures/lecture9.html#gaussian-quadrature-integration",
+    "href": "lectures/lecture9.html#gaussian-quadrature-integration",
+    "title": "Numerical Integration",
+    "section": "Gaussian Quadrature integration",
+    "text": "Gaussian Quadrature integration\nBased on an early contribution of Carl Friedrich Gauss, we have that an \\(n\\)-point quadrature rule will yield an exact integration result to functions that look like polynomials of degree \\(2n -1\\), or less, by choosing \\(n\\) suitable nodes \\(x_i\\) and weights \\(w_i\\). That is quite the result. The wikipedia entry is very interesting. Basically, we will now concentrate on how to do better than in monte carlo integration, where each point gets the same weight \\(1/N\\), and where our only hope is to generate a very large set of sample points, which may be costly.\nWe continue in the above framework, i.e. in order to compute the expected value of a function \\(G\\), say, we do the following:\n\\[\nE[G(\\epsilon)] = \\int_{\\mathbb{R}^N} G(\\epsilon) p(\\epsilon) d\\epsilon \\approx \\sum_{j=1}^J w_j G(\\epsilon_j)\n\\]\nWe have some explanation to do:\n\n\\(N\\) is the dimensionality of the integration problem.\n\\(G:\\mathbb{R}^N \\mapsto \\mathbb{R}\\) is the function we want to integrate wrt \\(\\epsilon \\in \\mathbb{R}^N\\).\n\\(p\\) is a density function s.t. \\(\\int_{\\mathbb{R}^n} p(\\epsilon) d\\epsilon = 1\\).\n\\(w\\) are integration weights such that (most of the time) \\(\\sum_{j=1}^J w_j = 1\\).\n\\(\\epsilon_j\\) are integration nodes, i.e. the points where we choose to evaluate function \\(G\\). Notice that nodes and weights come in pairs.\nWe will look at normal shocks \\(\\epsilon \\sim N(0_N,I_N)\\)\nin that case, the weighting function becomes \\(w(\\epsilon) = (2\\pi)^{-N/2} \\exp \\left(-\\frac{1}{2}\\epsilon^T \\epsilon \\right)\\)\n\\(I_N\\) is the n by n identity matrix, i.e. there is no correlation among the shocks for now.\nOther random processes will require different weighting functions, but the principle is identical.\nFor now, let’s say that \\(N=1\\)\n\n\nDifferent Quadrature Rules\n\nWe focus exclusively on those and leave Simpson and Newton Cowtes formulas out.\n\nThis is because Quadrature is the method that in many situations gives highes accuracy with lowest computational cost.\n\nQuadrature provides a rule to compute weights \\(w_j\\) and nodes \\(\\epsilon_j\\).\nThere are many different quadrature rules.\nThey differ in their domain and weighting function.\nwikipedia again has a useful table for us.\nIn general, we can convert our function domain to a rule-specific domain with change of variables.\n\n\n\nGauss-Hermite: Expectation of a Normally Distributed Variable\n\nThere are many different rules, all specific to a certain random process.\nGauss-Hermite is designed for an integral of the form \\[ \\int_{-\\infty}^{+\\infty} e^{-x^2} G(x) dx \\] and where we would approximate \\[ \\int_{-\\infty}^{+\\infty} e^{-x^2} f(x) dx \\approx \\sum_{i=1}^n w_i G(x_i) \\]\nNow, let’s say we want to approximate the expected value of function \\(f\\) when it’s argument is \\(z\\sim N(\\mu,\\sigma^2)\\): \\[ E[f(z)] = \\int_{-\\infty}^{+\\infty} \\frac{1}{\\sigma \\sqrt{2\\pi}} \\exp \\left( -\\frac{(z-\\mu)^2}{2\\sigma^2} \\right) f(z) dz \\]\n\n\n\nGauss-Quadrature with \\(N&gt;1\\)?\nEasy: we just take the kronecker product of all univariate rules, i.e. the kronecker product amongst all weights and all nodes. Let’s look at an example.\n\nThis works well as long as \\(N\\) is not too large. The number of required function evaluations grows exponentially. \\[ E[G(\\epsilon)] = \\int_{\\mathbb{R}^N} G(\\epsilon) p(\\epsilon) d\\epsilon \\approx \\sum_{j_1=1}^{J_1} \\cdots \\sum_{j_N=1}^{J_N} w_{j_1}^1 \\cdots w_{j_N}^N G(\\epsilon_{j_1}^1,\\dots,\\epsilon_{j_N}^N) \\] where \\(\\omega_{j_1}^1\\) stands for weight index \\(j_1\\) in dimension 1, same for \\(\\epsilon\\).\nTotal number of nodes: \\(J=J_1 J_2 \\cdots J_N\\), and \\(J_i\\) can differ from \\(J_k\\).\nSuppose we have \\(\\epsilon^i \\sim N(0,1),i=1,2,3\\) as three uncorrelated random variables.\nLet’s take \\(J=3\\) points in all dimensions, so that in total we have \\(J^N=27\\) points.",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "9 - Numerical Integration"
+    ]
+  },
+  {
+    "objectID": "lectures/lecture9.html#quadrature-with-julia",
+    "href": "lectures/lecture9.html#quadrature-with-julia",
+    "title": "Numerical Integration",
+    "section": "Quadrature with julia",
+    "text": "Quadrature with julia\n\nnp = 3  # number of points\n\n# functions from FastGaussQuadrature.jl\nrules = Dict(\"hermite\" =&gt; gausshermite(np),\n             \"chebyshev\" =&gt; gausschebyshev(np),\n             \"legendre\" =&gt; gausslegendre(np),\n             \"lobatto\" =&gt; gausslobatto(np));\n\nHere are the respective nodes and weights for each of those four rules:\n\n\n4×3 DataFrame\n\n\n\nRow\nRule\nnodes\nweights\n\n\n\nSymbol\nArray…\nArray…\n\n\n\n\n1\nlobatto\n[-1.0, 0.0, 1.0]\n[0.333333, 1.33333, 0.333333]\n\n\n2\nhermite\n[-1.22474, -1.11022e-15, 1.22474]\n[0.295409, 1.18164, 0.295409]\n\n\n3\nlegendre\n[-0.774597, 0.0, 0.774597]\n[0.555556, 0.888889, 0.555556]\n\n\n4\nchebyshev\n[-0.866025, 6.12323e-17, 0.866025]\n[1.0472, 1.0472, 1.0472]\n\n\n\n\n\n\n\nApproximating an AR1 process\nhttp://karenkopecky.net/Rouwenhorst_WP.pdf",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "9 - Numerical Integration"
+    ]
+  },
+  {
+    "objectID": "lectures/lecture10.html",
+    "href": "lectures/lecture10.html",
+    "title": "Lecture 10: Dynamic Discrete Choice Models",
+    "section": "",
+    "text": "Here are some notebooks!\n\n\n\nTopic\nNotebook\n\n\n\n\nSolving the Model\ndownload notebook\n\n\nEstimating the Model\ndownload notebook\n© Florian Oswald, 2025",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "10 - Dynamic Discrete Choice"
+    ]
+  },
+  {
+    "objectID": "lectures/lecture10.html#the-rust-bus-model",
+    "href": "lectures/lecture10.html#the-rust-bus-model",
+    "title": "Lecture 10: Dynamic Discrete Choice Models",
+    "section": "",
+    "text": "Here are some notebooks!\n\n\n\nTopic\nNotebook\n\n\n\n\nSolving the Model\ndownload notebook\n\n\nEstimating the Model\ndownload notebook",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "10 - Dynamic Discrete Choice"
     ]
   },
   {
