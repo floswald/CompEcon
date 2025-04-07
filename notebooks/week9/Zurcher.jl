@@ -61,7 +61,7 @@ html"<button onclick='present()'>present</button>"
 
 # ╔═╡ 6692f61f-1aa9-4a7d-b22d-54cdbc072c0d
 md"
-# Computational Econ @ ScPo 2024
+# Computational Econ @ CCA 2025
 
 **Dynamic Discrete Choice Models**
 
@@ -83,7 +83,67 @@ md"
 
 This notebook is again based on [Fedor Iskhakov's](https://github.com/fediskhakov/CompEcon) great material - check it out!
 
-## Setup
+
+
+"
+
+# ╔═╡ a43c512c-8b4f-4aa6-b645-982c7548906d
+md"""
+## Discrete Choice Models
+
+* Random Utility Models (RUM) are much used nowadays. McFadden, Train, etc
+* We image a consumer have a complete choice set of $J$ alternatives (much exciting research about *consumer specific choice sets*)
+* Consumer $i$'s choice is simple: Choose $j$ iff $U_{ij} > U_{ik}$
+* Our problem: $U_{ij}$ exists only in the consumer's head - we cannot observe it. We can split $U_{ij} = V_{ij} + \epsilon_{ij}$. Train calls $V_{ij}(x_{ij})$ *representative utility*, or something we can confidently model and measure.
+* $\epsilon_{ij}$ is simply the difference between our model and the real utility level.
+
+### Randomness
+
+* Since the researcher cannot know $\epsilon_{ij}$, the next best is to assume a joint density for each choice $j$ and assume that $[\epsilon_{i1},\dots,\epsilon_{iJ} ] \sim F_\epsilon$, with associated density function $f$.
+* With that in hand, we can talk about the *probability of making a choice* as follows:
+
+$$
+\begin{align}
+
+\Pr[i \text{ chooses } j] &=  \Pr[U_{ij} > U_{ik}], \forall k \neq j \\
+                          &= \Pr[V_{ij} + \epsilon_{ij} > V_{ik} + \epsilon_{ik}] \\
+						  &= \Pr[\epsilon_{ik} - \epsilon_{ij} < V_{ij} - V_{ik}]
+ 
+\end{align}$$
+"""
+
+# ╔═╡ c6a81b58-6c90-44b6-9332-b0b1ad695a45
+md"""
+This last line has an expression as follows. Define $I$ the indicator function.
+
+$$\begin{align}
+
+Pr[\epsilon_{ik} - \epsilon_{ij} < V_{ij} - V_{ik}] & = 
+
+\int_\epsilon I(\epsilon_{ik} - \epsilon_{ij} < V_{ij} - V_{ik}) f(\epsilon_i) d\epsilon_i
+
+\end{align}$$
+
+
+### Example
+
+Let's suppose there are 2 choices, A and B. Consumer $i$ has $V_a = 4, V_b = 5$, and so prefers option B *based on the V part only*. That does not mean they would end up choosing B, because of course there are the unobserved factors $\epsilon$ which could make up for the difference in V.
+
+In this case, if we observed consumer $i$ choosing option A, we could infer that
+
+$$V_a + \epsilon_a > V_b + \epsilon_b \Rightarrow \epsilon_a - \epsilon_b > 1$$
+
+### Interpretation of shocks
+
+1. Law or large numbers: Imagine many people with the same setup of $V_a,V_b$ (same values). We see a certain fraction of them choosing option A. This identifies the density function $f$.
+2. Research could have a strong prior and *know* the correct $f$
+3. Could account for bounded rationality and say people are just strange.
+
+"""
+
+# ╔═╡ 4211dbbe-0a05-4aac-9020-dc10b3aae493
+md"""
+## Rust Setup
 
 Let's remember from the homework that we cast the model in *expected value function space* - i.e. we *integrate out the type 1 EV shock*. We called this object here
 
@@ -123,8 +183,7 @@ EV(x,d,\theta) &=& \sum_{x' \in X} \log \big( \exp[v(x',0)] + \exp[v(x',1)] \big
 v(x,d) &=& u(x,d) + \beta EV(x,d)
 \end{eqnarray}$$
 
-
-"
+"""
 
 # ╔═╡ 484255dc-63f1-4e98-b5a7-2ce00f544b78
 md"
@@ -524,7 +583,7 @@ StatsPlots = "~0.14.33"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.11.3"
+julia_version = "1.11.4"
 manifest_format = "2.0"
 project_hash = "3d4d6eb71d73b09973f02ad1cfe23d9c05220408"
 
@@ -1318,7 +1377,7 @@ version = "0.3.27+1"
 [[deps.OpenLibm_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "05823500-19ac-5b8b-9628-191a04bc5112"
-version = "0.8.1+2"
+version = "0.8.1+4"
 
 [[deps.OpenSSL_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
@@ -2009,6 +2068,9 @@ version = "1.4.1+1"
 # ╟─2d376efe-49ce-4629-90a4-7bea521ffa97
 # ╟─6692f61f-1aa9-4a7d-b22d-54cdbc072c0d
 # ╟─6bf55a2d-f998-4866-850f-826044ebbfb8
+# ╟─a43c512c-8b4f-4aa6-b645-982c7548906d
+# ╟─c6a81b58-6c90-44b6-9332-b0b1ad695a45
+# ╟─4211dbbe-0a05-4aac-9020-dc10b3aae493
 # ╟─484255dc-63f1-4e98-b5a7-2ce00f544b78
 # ╟─e9145508-1f60-4dba-af41-e1c779b1d44a
 # ╟─651a8398-db65-423f-b2af-471e8508d684

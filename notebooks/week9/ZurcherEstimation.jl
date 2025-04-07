@@ -45,7 +45,7 @@ md"
 
 # Estimating the Rust Bus Model
 
-*Compuational Economics 2024*
+*Compuational Economics 2025*
 
 >Florian Oswald
 
@@ -688,7 +688,7 @@ StatsPlots = "f3b207a7-027a-5e70-b257-86293d7955fd"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.11.3"
+julia_version = "1.11.4"
 manifest_format = "2.0"
 project_hash = "ac1be2dba2ca33d89d5895da13c19d338e11678d"
 
@@ -1643,7 +1643,7 @@ version = "0.3.27+1"
 [[deps.OpenLibm_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "05823500-19ac-5b8b-9628-191a04bc5112"
-version = "0.8.1+2"
+version = "0.8.1+4"
 
 [[deps.OpenSSL]]
 deps = ["BitFlags", "Dates", "MozillaCACerts_jll", "OpenSSL_jll", "Sockets"]

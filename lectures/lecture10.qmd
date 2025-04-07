@@ -5,6 +5,12 @@ title: "Lecture 10: Dynamic Discrete Choice Models"
 ## The Rust Bus Model
 
 
+* We gave an overview of discrete choice models on the board (also contained in the first notebook below)
+* We introduced the bus model.
+* We did talk about estimation of dynamic programming models. [Here](/assets/tex/dp-estimation/dp-estimation.pdf) are some slides.
+
+
+
 
 Here are some notebooks!
 
