@@ -1,28 +1,42 @@
 ---
-title: "Structural Econometrics with Computational Applications for PhDs"
+title: "Computational Economics"
+abstract: "The vast majority of modern-day economists need to deal with scientific computation in their daily work. Teaching *Scientific computing*  to yourself is possible, but doing so is inefficient (and not much fun). This course wants to teach you *Scientific computing* in an efficient (and fun #emoji.face) way. The unofficial title of this course is hence \"Scientific Computing: from Zero to Hero\""
 format:
-  pdf:
-    toc: false
+  typst:
+    include-in-header:
+      - text: |
+          /* Color links */
+          #show link: set text(fill: rgb(0, 0, 255))
     number-sections: true
-    colorlinks: true
+    
 editor: source
-author: "[Florian Oswald](https://floswald.github.io)"
+author: "Teacher: [Florian Oswald](https://floswald.github.io)"
 ---
-
 
 
 ## Course Overview
 
-This is a course for PhD students in Structural Econometrics where computation matters. You will learn about some commonly used methods in Computational Economics. These methods are being used in *all* fields of Economics, so we will not limit ourselves to any given subfield, but rather will we study techniques which are helpful in all of them. The course has a clear focus on applying what you learn. We will cover the theoretical concepts that underlie each topic, but you should expect a fair amount of *hands on* action required on your behalf. In the words of the great [Che-Lin Su](https://scholar.google.com/citations?user=6AZSMiwAAAAJ&hl=en):
+This is a course for PhD and Allievi students in Computational Economics. In general, you should expect a thorough introduction to what we will call *Scientific computing*. Scientific computing turns theoretical models into something you can simulate, test, and explore with a computer. Scientific computing is something you can learn yourself, but it's hard and inefficient. In this course I'll try and teach you exactly that. 
+
+After a thorough introduction, you will learn about some commonly used methods in Computational Economics. These methods are being used in *all* fields of Economics, so we will not limit ourselves to any given subfield, but rather will we study techniques which are helpful in all of them. The course has a clear focus on applying what you learn. We will cover the theoretical concepts that underlie each topic, but you should expect a fair amount of *hands on* action required on your behalf. In the words of the great [Che-Lin Su](https://scholar.google.com/citations?user=6AZSMiwAAAAJ&hl=en):
 
 > Doing Computation is the only way to learn Computation. Doing Computation is the only way to learn Computation. Doing Computation is the only way to learn Computation.
 
 True to that motto, there will be homeworks for you to try out what you learned in class. There will also be a term paper.
 
+## Content
+
+You can see the current table of contents on the course website [here](https://floswald.github.io/CompEcon/#outline-of-topics). This is content is subject to be revised. In short, there will be additional material assuming very little or no programming knowledge. Main topics to be added:
+
+1. How does your computer work?
+2. How to organize/share/collaborate on code for scientific computing? Spoiler: *not dropbox*.
+3. How to run a job on a super computer?
+4. What is reproducibility, and what is a docker container?
+
 ## Prerequisites
 
 1. You need a laptop. 
-2. You should be familiar with the material from [Introduction to Programming](https://floswald.github.io/ScPoProgramming).
+2. We will start with some material from [Introduction to Programming](https://floswald.github.io/ScPoProgramming).
 3. You must sign up for a free account at github.com. Choose a reasonable user name and upload a profile picture.
 4. **Before** you come the first class, please do this:
     1. Download the latest [stable `julia` release](https://julialang.org/downloads/) for your OS.
@@ -30,7 +44,7 @@ True to that motto, there will be homeworks for you to try out what you learned 
 
 ### Getting Programming Skills
 
-1. Check out what is being taught in the [Introduction to Programming](https://floswald.github.io/ScPoProgramming) course. You should know this level.
+1. Check out what is being taught in the [Introduction to Programming](https://floswald.github.io/ScPoProgramming) course and see whether you can spend some time on this yourself. It's suitable for self-study.
 1. We will be using [Julia](http://julialang.org/) for this course. 
     - [Noteworthy Differences from Other Languages](https://docs.julialang.org/en/v1/manual/noteworthy-differences/)
     - [MATLAB, Python, Julia Syntax Comparison](http://cheatsheets.quantecon.org/)
@@ -56,10 +70,10 @@ The requirements for choice of paper to replicate are:
 4. You need to set up a public github repository where you will build a documentation website of your implementation. You'll learn how to do this in the course.
 5. I encourage you to let the world know about your replication effort via social media and/or email to the authors directly. This is independent of whether you were able or not to replicate the results. Replication is not about finding errors in other peoples' work. If you are able to replicate some result in julia, this may be very interesting for others.
 
-> Please use the starter kit available at [https://github.com/floswald/Replicate.jl](https://github.com/floswald/Replicate.jl) to get going!
 
 #### Replication Resources
 
+* [The JPE Dataverse](https://dataverse.harvard.edu/dataverse/JPE)
 * [here is a great list by the AEA](https://www.aeaweb.org/rfe/showCat.php?cat_id=9)
 * [ECTA code and data](https://www.econometricsociety.org/publications/econometrica/journal-materials/supplemental-materials)
 * [RevEconDynamics codes](https://ideas.repec.org/s/red/ccodes.html)
@@ -120,7 +134,7 @@ You can expect your instructor to abide by the same code of conduct, so this is 
 The copyright notice to be included in any copies and other derivative work of this material is:
 
 ```
-Copyright 2024 Florian Oswald, florian.oswald@gmail.com
+Copyright 2025 Florian Oswald, florian.oswald@gmail.com
 ```
 
 Thank you.

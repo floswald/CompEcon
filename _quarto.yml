@@ -8,9 +8,11 @@ website:
   body-footer: © Florian Oswald, 2025
   favicon: /images/cca.png
   twitter-card: true
+  cookie-consent: true
   google-analytics: 
     tracking-id: "G-YG2MPSR1Q2"
-    storage: none
+    storage: cookies
+    anonymize-ip: true
   sidebar:
     collapse-level: 1
     contents:
