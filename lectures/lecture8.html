@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.40">
+<meta name="generator" content="quarto-1.8.26">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -21,8 +21,9 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 /* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -33,7 +34,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -67,15 +68,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="..//images/cca.png" rel="icon" type="image/png">
 <script src="../site_libs/cookie-consent/cookie-consent.js"></script>
 <link href="../site_libs/cookie-consent/cookie-consent.css" rel="stylesheet">
-<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-6bd9cfa162949bde0a231f530c97869d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-5b4ad623e5705c0698d39aec6f10cf02.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -148,7 +151,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -171,7 +174,7 @@ window.Quarto = {
 <meta name="twitter:card" content="summary_large_image">
 </head>
 
-<body class="nav-sidebar floating nav-fixed">
+<body class="nav-sidebar floating nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -179,7 +182,8 @@ window.Quarto = {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a href="../index.html" class="navbar-brand navbar-brand-logo">
-    <img src="../images/cca-julia.png" alt="" class="navbar-logo">
+    <img src="../images/cca-julia.png" alt="" class="navbar-logo light-content">
+    <img src="../images/cca-julia.png" alt="" class="navbar-logo dark-content">
     </a>
     <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">Computational Economics</span>
@@ -498,7 +502,7 @@ window.Quarto = {
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Problem statement
+<span class="screen-reader-only">Note</span>Problem statement
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -531,7 +535,7 @@ V(a,z) &amp;= \max_{a'} u((1+r)a + z - a') + \beta \mathbb{E}\left[ V(a',z') | z
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Isn’t this Machine Learning?
+<span class="screen-reader-only">Tip</span>Isn’t this Machine Learning?
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -569,7 +573,7 @@ Isn’t this Machine Learning?
 <h2 class="anchored" data-anchor-id="representing-data">Representing Data</h2>
 <p>Let’s have a look at the famous <a href="https://en.wikipedia.org/wiki/Iris_flower_data_set">Iris Dataset</a>.</p>
 <div id="2" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">CSV</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">DataFrames</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">StatsPlots</span></span>
@@ -580,10 +584,10 @@ Isn’t this Machine Learning?
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    (<span class="fu">joinpath</span>(<span class="fu">dirname</span>(<span class="fu">pathof</span>(DataFrames)),</span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>     <span class="st">".."</span>, <span class="st">"docs"</span>, <span class="st">"src"</span>, <span class="st">"assets"</span>, <span class="st">"iris.csv"</span>)),</span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    DataFrame)</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">first</span>(iris,<span class="fl">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">first</span>(iris,<span class="fl">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
 <div><div style="float: left;"><span>5×5 DataFrame</span></div><div style="clear: both;"></div></div><div class="data-frame" style="overflow-x: scroll;">
-<table class="data-frame caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="data-frame caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
 <th class="rowNumber" data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold;">Row</th>
@@ -654,11 +658,11 @@ Isn’t this Machine Learning?
 </ul>
 <p>How are the different measures distributed?</p>
 <div id="4" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="pp">@chain</span> iris <span class="cf">begin</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="pp">@chain</span> iris <span class="cf">begin</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stack</span>(_, <span class="fu">Not</span>(<span class="op">:</span>Species))</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">subset</span>(<span class="op">:</span>Species <span class="op">=&gt;</span> x <span class="op">-&gt;</span> x <span class="op">.==</span> <span class="st">"Iris-setosa"</span>) </span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="pp">@df</span> <span class="fu">density</span>(<span class="op">:</span>value, group <span class="op">=</span> <span class="op">:</span>variable, xlab <span class="op">=</span> <span class="st">"Setosa Measures"</span>,lw <span class="op">=</span> <span class="fl">2</span>)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
 <!--?xml version="1.0" encoding="utf-8"?-->
 <svg xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="672" height="480" viewbox="0 0 2688 1920">
@@ -732,14 +736,14 @@ Isn’t this Machine Learning?
 </ul>
 <p><span class="math display">\[\frac{x_1 - \mu}{\sigma},\frac{x_2 - \mu}{\sigma},\dots,\frac{x_{150} - \mu}{\sigma}\]</span></p>
 <div id="6" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="pp">@chain</span> iris <span class="cf">begin</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="pp">@chain</span> iris <span class="cf">begin</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">subset</span>(<span class="op">:</span>Species <span class="op">=&gt;</span> x <span class="op">-&gt;</span> x <span class="op">.==</span> <span class="st">"Iris-setosa"</span>) </span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">transform</span>( [x <span class="op">=&gt;</span> (z <span class="op">-&gt;</span> (z <span class="op">.-</span> <span class="fu">mean</span>(z)) <span class="op">./</span> <span class="fu">std</span>(z)) <span class="op">=&gt;</span> x </span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>         for x <span class="kw">in</span> [<span class="op">:</span>SepalLength, <span class="op">:</span>SepalWidth, <span class="op">:</span>PetalLength, <span class="op">:</span>PetalWidth] ]</span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    )</span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stack</span>(_, <span class="fu">Not</span>(<span class="op">:</span>Species))</span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="pp">@df</span> <span class="fu">density</span>(<span class="op">:</span>value, group <span class="op">=</span> <span class="op">:</span>variable, xlab <span class="op">=</span> <span class="st">"Standardized Setosa Measures"</span>)</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
 <!--?xml version="1.0" encoding="utf-8"?-->
 <svg xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="672" height="480" viewbox="0 0 2688 1920">
@@ -859,7 +863,7 @@ e_n &amp;= (0,0,\dots,1)
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Linear Independence
+<span class="screen-reader-only">Tip</span>Linear Independence
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -878,7 +882,7 @@ Linear Independence
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Theorem
+<span class="screen-reader-only">Note</span>Theorem
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -931,7 +935,7 @@ Theorem
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Blending Functions
+<span class="screen-reader-only">Note</span>Blending Functions
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -998,7 +1002,7 @@ Blending Functions
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Question
+<span class="screen-reader-only">Note</span>Question
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1017,11 +1021,11 @@ Question
 <div id="8" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Φ <span class="op">=</span> [<span class="fl">1</span> <span class="fl">0</span>; <span class="fl">1</span> <span class="op">-</span><span class="fl">2</span>]; y <span class="op">=</span> [<span class="fl">32</span>; <span class="op">-</span><span class="fl">4</span>];</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Φ <span class="op">=</span> [<span class="fl">1</span> <span class="fl">0</span>; <span class="fl">1</span> <span class="op">-</span><span class="fl">2</span>]; y <span class="op">=</span> [<span class="fl">32</span>; <span class="op">-</span><span class="fl">4</span>];</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>c <span class="op">=</span> Φ <span class="op">\</span> y</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>Φ <span class="op">*</span> c <span class="op">==</span> y</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>Φ <span class="op">*</span> c <span class="op">==</span> y</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="1">
 <pre><code>true</code></pre>
@@ -1115,7 +1119,7 @@ V = \left[\begin{matrix}
 <div id="10" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">T</span>(x,n)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">T</span>(x,n)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="pp">@assert</span> (x <span class="op">&gt;=</span> <span class="op">-</span><span class="fl">1</span>) <span class="op">&amp;</span> (x <span class="op">&lt;=</span> <span class="fl">1</span>)</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> n <span class="op">==</span> <span class="fl">0</span></span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="fl">1.0</span></span>
@@ -1128,7 +1132,7 @@ V = \left[\begin{matrix}
 <span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="fu">T2</span>(x,n) <span class="op">=</span> <span class="fu">cos</span>(n<span class="op">*</span> <span class="fu">acos</span>(x))</span>
 <span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="pp">@show</span> <span class="fu">T</span>(<span class="fl">0.5</span>,<span class="fl">3</span>)</span>
 <span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Test</span></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="pp">@assert</span> <span class="fu">T2</span>(<span class="fl">0.5</span>,<span class="fl">3</span>) <span class="op">==</span> <span class="fu">T</span>(<span class="fl">0.5</span>,<span class="fl">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="pp">@assert</span> <span class="fu">T2</span>(<span class="fl">0.5</span>,<span class="fl">3</span>) <span class="op">==</span> <span class="fu">T</span>(<span class="fl">0.5</span>,<span class="fl">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>T(0.5, 3) = -1.0</code></pre>
@@ -1136,14 +1140,14 @@ V = \left[\begin{matrix}
 </div>
 <p>Ok let’s check this orthogonality claim. The formula says that if <span class="math inline">\(n \neq m\)</span>, then integrating the product of two polynomials is exactly zero:</p>
 <div id="12" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># weighting function</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># weighting function</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">w</span>(x) <span class="op">=</span> <span class="fl">1.0</span> <span class="op">/</span> <span class="fu">sqrt</span>(<span class="fl">1</span><span class="op">-</span>x<span class="op">^</span><span class="fl">2</span>)</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Statistics</span></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Test</span></span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co"># simple integration works for n not equal m</span></span>
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="pp">@show</span> <span class="fu">sum</span>(<span class="fu">T</span>(x,<span class="fl">0</span>) <span class="op">*</span> <span class="fu">T</span>(x,<span class="fl">1</span>) <span class="op">*</span> <span class="fu">w</span>(x) <span class="cf">for</span> x <span class="kw">in</span> <span class="fu">range</span>(<span class="op">-</span><span class="fl">0.99</span>,stop <span class="op">=</span> <span class="fl">0.99</span>, length<span class="op">=</span><span class="fl">100</span>))</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="pp">@show</span> <span class="fu">sum</span>(<span class="fu">T</span>(x,<span class="fl">4</span>) <span class="op">*</span> <span class="fu">T</span>(x,<span class="fl">5</span>) <span class="op">*</span> <span class="fu">w</span>(x) <span class="cf">for</span> x <span class="kw">in</span> <span class="fu">range</span>(<span class="op">-</span><span class="fl">0.99</span>,stop <span class="op">=</span> <span class="fl">0.99</span>, length<span class="op">=</span><span class="fl">100</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="pp">@show</span> <span class="fu">sum</span>(<span class="fu">T</span>(x,<span class="fl">4</span>) <span class="op">*</span> <span class="fu">T</span>(x,<span class="fl">5</span>) <span class="op">*</span> <span class="fu">w</span>(x) <span class="cf">for</span> x <span class="kw">in</span> <span class="fu">range</span>(<span class="op">-</span><span class="fl">0.99</span>,stop <span class="op">=</span> <span class="fl">0.99</span>, length<span class="op">=</span><span class="fl">100</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>sum((T(x, 0) * T(x, 1) * w(x) for x = range(-0.99, stop = 0.99, length = 100))) = -1.7763568394002505e-15
 sum((T(x, 4) * T(x, 5) * w(x) for x = range(-0.99, stop = 0.99, length = 100))) = -4.440892098500626e-15</code></pre>
@@ -1162,9 +1166,9 @@ sum((T(x, 4) * T(x, 5) * w(x) for x = range(-0.99, stop = 0.99, length = 100))) 
 <li>Chebyshev nodes are <strong>not</strong> evenly spaced: there are more points towards the boundaries. You might remember that from Gaussian Integration nodes.</li>
 </ul>
 <div id="14" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">FastGaussQuadrature</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">FastGaussQuadrature</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>gcnodes <span class="op">=</span> <span class="fu">gausschebyshev</span>(<span class="fl">11</span>)  <span class="co"># generate 11 Chebyshev Nodes</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">scatter</span>(gcnodes,<span class="fu">ones</span>(<span class="fl">11</span>),ylims<span class="op">=</span>(<span class="fl">0.9</span>,<span class="fl">1.1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">scatter</span>(gcnodes,<span class="fu">ones</span>(<span class="fl">11</span>),ylims<span class="op">=</span>(<span class="fl">0.9</span>,<span class="fl">1.1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
 <!--?xml version="1.0" encoding="utf-8"?-->
 <svg xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="672" height="480" viewbox="0 0 2688 1920">
@@ -1231,19 +1235,19 @@ sum((T(x, 4) * T(x, 5) * w(x) for x = range(-0.99, stop = 0.99, length = 100))) 
 <li>And we obtain that <span class="math inline">\(\Phi\)</span> is indeed orthogonal <span class="math display">\[ \Phi^T \Phi = \text{diag}\{n,n/2,n/2,\dots,n/2\}  \]</span></li>
 </ul>
 <div id="16" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">BasisMatrices</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">BasisMatrices</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="fu">range</span>(<span class="op">-</span><span class="fl">4</span>, stop <span class="op">=</span> <span class="fl">4</span> ,length <span class="op">=</span> <span class="fl">10</span>)</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>ϕ <span class="op">=</span> <span class="fu">Basis</span>(<span class="fu">ChebParams</span>(<span class="fu">length</span>(x),<span class="op">-</span><span class="fl">4</span>,<span class="fl">4</span>))</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>ϕ</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>ϕ</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
 <pre><code>1 dimensional Basis on the hypercube formed by (-4.0,) × (4.0,).
 Basis families are Cheb</code></pre>
 </div>
 </div>
 <div id="18" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>S, y <span class="op">=</span> <span class="fu">nodes</span>(ϕ)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>S, y <span class="op">=</span> <span class="fu">nodes</span>(ϕ)</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>Φ <span class="op">=</span> <span class="fu">BasisMatrix</span>(ϕ, <span class="fu">Expanded</span>(), S, <span class="fl">0</span>)</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>Φ.vals[<span class="fl">1</span>]<span class="ch">' * Φ.vals[1]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>Φ.vals[<span class="fl">1</span>]<span class="ch">' * Φ.vals[1]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
 <pre><code>10×10 Matrix{Float64}:
  10.0          -1.11022e-16  -2.22045e-16  …  -2.10942e-15  -5.32907e-15
@@ -1290,7 +1294,7 @@ Basis families are Cheb</code></pre>
 <li>Head over to the <a href="https://github.com/JuliaApproximation/ApproxFun.jl">website and look at the readme</a>.</li>
 </ul>
 <div id="20" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">LinearAlgebra</span>, <span class="bu">SpecialFunctions</span>, <span class="bu">Plots</span>, <span class="bu">ApproxFun</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">LinearAlgebra</span>, <span class="bu">SpecialFunctions</span>, <span class="bu">Plots</span>, <span class="bu">ApproxFun</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="fu">Fun</span>(identity,<span class="fl">0</span><span class="op">..</span><span class="fl">10</span>)</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>f <span class="op">=</span> <span class="fu">sin</span>(x<span class="op">^</span><span class="fl">2</span>)</span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>g <span class="op">=</span> <span class="fu">cos</span>(x)</span>
@@ -1301,7 +1305,7 @@ Basis families are Cheb</code></pre>
 <span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(h,labels <span class="op">=</span> <span class="st">"h"</span>)</span>
 <span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="fu">scatter!</span>(r,<span class="fu">h</span>.(r),labels<span class="op">=</span><span class="st">"roots h"</span>)</span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="fu">scatter!</span>(rp,<span class="fu">h</span>.(rp),labels <span class="op">=</span> <span class="st">"roots h'"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="fu">scatter!</span>(rp,<span class="fu">h</span>.(rp),labels <span class="op">=</span> <span class="st">"roots h'"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>WARNING: using ApproxFun.transform in module Notebook conflicts with an existing identifier.</code></pre>
 </div>
@@ -1420,8 +1424,8 @@ Basis families are Cheb</code></pre>
 </div>
 </div>
 <div id="22" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># whats the first deriv of that function at at 0.785?</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span>(f<span class="op">'</span>(<span class="fl">0.785</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># whats the first deriv of that function at at 0.785?</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span>(f<span class="op">'</span>(<span class="fl">0.785</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>1.281223714282486</code></pre>
 </div>
@@ -1505,11 +1509,11 @@ Basis families are Cheb</code></pre>
 <h3 class="anchored" data-anchor-id="b-splines-in-action">B-Splines in Action</h3>
 <p>Here is a nice illustration of spline basis functions from <a href="https://jipolanco.github.io/BSplineKit.jl/dev/generated/approximation/"><code>BSplineKit</code></a>:</p>
 <div id="24" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">BSplineKit</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">BSplineKit</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">CairoMakie</span></span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>ξs <span class="op">=</span> <span class="fu">range</span>(<span class="fl">0</span><span class="op">..</span><span class="fl">1</span>; length <span class="op">=</span> <span class="fl">15</span>)</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>B <span class="op">=</span> <span class="fu">BSplineBasis</span>(<span class="fu">BSplineOrder</span>(<span class="fl">4</span>), ξs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>B <span class="op">=</span> <span class="fu">BSplineBasis</span>(<span class="fu">BSplineOrder</span>(<span class="fl">4</span>), ξs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
 <pre><code>17-element BSplineBasis of order 4, domain [0.0, 1.0]
  knots: [0.0, 0.0, 0.0, 0.0, 0.0714286, 0.142857, 0.214286, 0.285714, 0.357143, 0.428571  …  0.571429, 0.642857, 0.714286, 0.785714, 0.857143, 0.928571, 1.0, 1.0, 1.0, 1.0]</code></pre>
@@ -1538,11 +1542,11 @@ Basis families are Cheb</code></pre>
 <li>Can get gradients of interpolations right away.</li>
 </ul>
 <div id="28" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Interpolations</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Interpolations</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> <span class="bu">Interpolations</span>: interpolate as itper</span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> <span class="fu">rand</span>(<span class="fl">10</span>,<span class="fl">5</span>)</span>
 <span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>itp <span class="op">=</span> <span class="fu">itper</span>(A, Interpolations.<span class="fu">BSpline</span>(<span class="fu">Quadratic</span>(<span class="fu">Reflect</span>(<span class="fu">OnCell</span>()))))</span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="fu">itp</span>(<span class="fl">1.9</span>,<span class="fl">4.9</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="fu">itp</span>(<span class="fl">1.9</span>,<span class="fl">4.9</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>WARNING: using Interpolations.knots in module Notebook conflicts with an existing identifier.</code></pre>
 </div>
@@ -1551,13 +1555,13 @@ Basis families are Cheb</code></pre>
 </div>
 </div>
 <div id="30" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>A_x <span class="op">=</span> <span class="fl">1</span>.<span class="op">:</span><span class="fl">2</span>.<span class="op">:</span><span class="fl">40</span>.   <span class="co"># x in [1,40]</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>A_x <span class="op">=</span> <span class="fl">1</span>.<span class="op">:</span><span class="fl">2</span>.<span class="op">:</span><span class="fl">40</span>.   <span class="co"># x in [1,40]</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> [<span class="fu">log</span>(x) for x <span class="kw">in</span> A_x] <span class="co"># f(x)</span></span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>itp <span class="op">=</span> <span class="fu">itper</span>(A, Interpolations.<span class="fu">BSpline</span>(<span class="fu">Cubic</span>(Interpolations.<span class="fu">Line</span>(<span class="fu">OnGrid</span>()))))</span>
 <span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>sitp <span class="op">=</span> <span class="fu">scale</span>(itp, A_x)  <span class="co"># scale x-axis of interpolator</span></span>
 <span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="pp">@show</span> <span class="fu">sitp</span>(<span class="fl">3</span>.) <span class="co"># exactly log(3.)</span></span>
 <span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="pp">@show</span> <span class="fu">sitp</span>(<span class="fl">3.5</span>) <span class="co"># approximately log(3.5)</span></span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="pp">@show</span> <span class="fu">itp</span>(<span class="fl">3</span>);  <span class="co"># is the 3rd index(!) in A, not the *value* 3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="pp">@show</span> <span class="fu">itp</span>(<span class="fl">3</span>);  <span class="co"># is the 3rd index(!) in A, not the *value* 3</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>sitp(3.0) = 1.0986122886681098
 sitp(3.5) = 1.2748716241925298
@@ -1566,14 +1570,14 @@ itp(3) = 1.6094379124341</code></pre>
 </div>
 <p>same for 2D</p>
 <div id="32" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>A_x1 <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">.1</span><span class="op">:</span><span class="fl">10</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>A_x1 <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">.1</span><span class="op">:</span><span class="fl">10</span></span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>A_x2 <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">.5</span><span class="op">:</span><span class="fl">20</span></span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">fff</span>(x1, x2) <span class="op">=</span> <span class="fu">log</span>(x1<span class="op">+</span>x2)</span>
 <span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> [<span class="fu">fff</span>(x1,x2) for x1 <span class="kw">in</span> A_x1, x2 <span class="kw">in</span> A_x2]</span>
 <span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>itp <span class="op">=</span> <span class="fu">itper</span>(A, Interpolations.<span class="fu">BSpline</span>(<span class="fu">Cubic</span>(Interpolations.<span class="fu">Line</span>(<span class="fu">OnGrid</span>()))))</span>
 <span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>sitp <span class="op">=</span> <span class="fu">scale</span>(itp, A_x1, A_x2)</span>
 <span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="fu">sitp</span>(<span class="fl">5</span>., <span class="fl">10</span>.) <span class="co"># exactly log(5 + 10)</span></span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="fu">sitp</span>(<span class="fl">5.6</span>, <span class="fl">7.1</span>) <span class="co"># approximately log(5.6 + 7.1)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="fu">sitp</span>(<span class="fl">5.6</span>, <span class="fl">7.1</span>) <span class="co"># approximately log(5.6 + 7.1)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
 <pre><code>2.541602006923902</code></pre>
 </div>
@@ -1588,19 +1592,19 @@ itp(3) = 1.6094379124341</code></pre>
 <li>NoInterp (you must supply index ON grid)</li>
 </ul></li>
 </ul>
-<div class="sourceCode" id="cb29"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> <span class="fu">rand</span>(<span class="fl">20</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> <span class="fu">rand</span>(<span class="fl">20</span>)</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>A_x <span class="op">=</span> <span class="fu">collect</span>(<span class="fl">1.0</span><span class="op">:</span><span class="fl">2.0</span><span class="op">:</span><span class="fl">40.0</span>)</span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>knots <span class="op">=</span> (A_x,)</span>
 <span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>itp <span class="op">=</span> <span class="fu">itper</span>(knots, A, <span class="fu">Gridded</span>(<span class="fu">Linear</span>()))</span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="fu">itp</span>(<span class="fl">2.0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb30"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2D</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="fu">itp</span>(<span class="fl">2.0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2D</span></span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> <span class="fu">rand</span>(<span class="fl">8</span>,<span class="fl">20</span>)</span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>knots <span class="op">=</span> ([x<span class="op">^</span><span class="fl">2</span> for x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">8</span>], [<span class="fl">0.2</span>y for y <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">20</span>])</span>
 <span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>itp <span class="op">=</span> <span class="fu">itper</span>(knots, A, <span class="fu">Gridded</span>(<span class="fu">Linear</span>()))</span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="fu">itp</span>(<span class="fl">4</span>,<span class="fl">1.2</span>)  <span class="co"># approximately A[2,6]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb31"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># we can mix modes across dimensions!</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="fu">itp</span>(<span class="fl">4</span>,<span class="fl">1.2</span>)  <span class="co"># approximately A[2,6]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># we can mix modes across dimensions!</span></span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>itp <span class="op">=</span> <span class="fu">itper</span>(knots, A, (<span class="fu">Gridded</span>(<span class="fu">Linear</span>()),<span class="fu">Gridded</span>(<span class="fu">Constant</span>())))</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="fu">itp</span>(<span class="fl">4</span>,<span class="fl">1.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="fu">itp</span>(<span class="fl">4</span>,<span class="fl">1.2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li>What about vector valued interpolations?</li>
 <li>Suppose we have a function <span class="math inline">\(f : \mathbb{R} \mapsto \mathbb{R}^2\)</span></li>
@@ -1614,18 +1618,18 @@ f(x) = \left(\begin{array}{c} \text{savings}(x) \\ \text{consumption}(x) \end{ar
 <li>We often have situations where several functions are defined on a common support <span class="math inline">\(x\)</span>.</li>
 <li>what is <span class="math inline">\(f(1.75)\)</span>?</li>
 </ul>
-<div class="sourceCode" id="cb32"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">StaticArrays</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">StaticArrays</span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="fu">range</span>(<span class="fl">1</span>,stop <span class="op">=</span> <span class="fl">3</span>, length <span class="op">=</span> <span class="fl">200</span>)  <span class="co"># cash on hand</span></span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> <span class="dt">Float64</span>[<span class="fu">log</span>(<span class="fl">1</span><span class="op">+</span>j)<span class="op">*</span>i for j <span class="kw">in</span> x, i <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">2</span>]   <span class="co"># cons and save function</span></span>
 <span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> <span class="fu">reinterpret</span>(SVector{<span class="fl">2</span>,<span class="dt">Float64</span>}, a<span class="op">'</span>)[<span class="op">:</span>]</span>
 <span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>itp <span class="op">=</span> <span class="fu">itper</span>(b, Interpolations.<span class="fu">BSpline</span>(<span class="fu">Quadratic</span>(<span class="fu">Reflect</span>(<span class="fu">OnCell</span>()))))</span>
 <span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="pp">@show</span> <span class="fu">itp</span>(<span class="fl">3</span>)</span>
 <span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>sitp <span class="op">=</span> <span class="fu">scale</span>(itp,x)</span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a><span class="pp">@show</span> <span class="fu">sitp</span>(<span class="fl">3</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb33"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>v <span class="op">=</span> <span class="fu">sitp</span>(<span class="fl">1.75</span>)  <span class="co"># get interpolated values for both function</span></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a><span class="pp">@show</span> <span class="fu">sitp</span>(<span class="fl">3</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>v <span class="op">=</span> <span class="fu">sitp</span>(<span class="fl">1.75</span>)  <span class="co"># get interpolated values for both function</span></span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x,a,labels<span class="op">=</span>[<span class="st">"save"</span> <span class="st">"cons"</span>],yticks<span class="op">=</span><span class="fu">convert</span>(<span class="dt">Array</span>{<span class="dt">Float64</span>},v),xlabel<span class="op">=</span><span class="st">"current cash"</span>,lw <span class="op">=</span> <span class="fl">3</span>)</span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="fu">vline!</span>([<span class="fl">1.75</span>],lab<span class="op">=</span><span class="st">""</span>)</span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="fu">hline!</span>([v[<span class="fl">1</span>],v[<span class="fl">2</span>]],lab<span class="op">=</span><span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="fu">hline!</span>([v[<span class="fl">1</span>],v[<span class="fl">2</span>]],lab<span class="op">=</span><span class="st">""</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <section id="the-compecon-toolbox-of-miranda-and-fackler" class="level3">
 <h3 class="anchored" data-anchor-id="the-compecon-toolbox-of-miranda-and-fackler">The CompEcon Toolbox of Miranda and Fackler</h3>
 <ul>
@@ -1678,18 +1682,18 @@ f(x) = \left(\begin{array}{c} \text{savings}(x) \\ \text{consumption}(x) \end{ar
 <li>Sometimes it’s not even possible to allocate <span class="math inline">\(\Phi\)</span> in memory.</li>
 <li>Here it’s important to remember the sparsity structure of a spline basis function.</li>
 </ul>
-<div class="sourceCode" id="cb34"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">ApproXD</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">ApproXD</span></span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gr</span>()</span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>bs <span class="op">=</span> ApproXD.<span class="fu">BSpline</span>(<span class="fl">7</span>,<span class="fl">3</span>,<span class="fl">0</span>,<span class="fl">1</span>) <span class="co">#7 knots, degree 3 in [0,1]</span></span>
 <span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="fl">500</span></span>
 <span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>eval_points <span class="op">=</span> <span class="fu">collect</span>(<span class="fu">range</span>(<span class="fl">0</span>,stop <span class="op">=</span> <span class="fl">1.0</span>,length <span class="op">=</span> n))</span>
 <span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>B <span class="op">=</span> <span class="fu">Array</span>(ApproXD.<span class="fu">getBasis</span>(eval_points,bs))</span>
 <span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>ys <span class="op">=</span> [<span class="fu">string</span>(<span class="st">"Basis"</span>,i) for i <span class="op">=</span> <span class="fu">size</span>(B)[<span class="fl">2</span>]<span class="op">-</span><span class="fl">1</span><span class="op">:-</span><span class="fl">1</span><span class="op">:</span><span class="fl">0</span>]</span>
-<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a><span class="fu">heatmap</span>(eval_points,ys,<span class="fu">reverse</span>(B<span class="op">'</span>,dims<span class="op">=</span><span class="fl">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a><span class="fu">heatmap</span>(eval_points,ys,<span class="fu">reverse</span>(B<span class="op">'</span>,dims<span class="op">=</span><span class="fl">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li>This is a cubic spline basis. at most <span class="math inline">\(k+1=4\)</span> basis are non-zero for any <span class="math inline">\(x\)</span>.</li>
 </ul>
-<div class="sourceCode" id="cb35"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">heatmap</span>(eval_points,ys,<span class="fu">reverse</span>(B<span class="op">'</span>,dims<span class="op">=</span><span class="fl">1</span>) <span class="op">.&gt;</span> <span class="fl">0</span>, cbar <span class="op">=</span> <span class="cn">false</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">heatmap</span>(eval_points,ys,<span class="fu">reverse</span>(B<span class="op">'</span>,dims<span class="op">=</span><span class="fl">1</span>) <span class="op">.&gt;</span> <span class="fl">0</span>, cbar <span class="op">=</span> <span class="cn">false</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="using-sparsity-of-splines" class="level3">
 <h3 class="anchored" data-anchor-id="using-sparsity-of-splines">Using Sparsity of Splines</h3>
@@ -1702,9 +1706,9 @@ f(x) = \left(\begin{array}{c} \text{savings}(x) \\ \text{consumption}(x) \end{ar
 <li>We only have to sum over the non-zero entries! Every other operation is pure cost.</li>
 <li>This is implemented in <code>ApproXD.jl</code> for example via</li>
 </ul>
-<div class="sourceCode" id="cb36"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>    <span class="kw">function</span> <span class="fu">evalTensor2</span><span class="dt">{T}</span>(mat1<span class="op">::</span><span class="dt">SparseMatrixCSC{T,Int64}</span>,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>    <span class="kw">function</span> <span class="fu">evalTensor2</span><span class="dt">{T}</span>(mat1<span class="op">::</span><span class="dt">SparseMatrixCSC{T,Int64}</span>,</span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>                            mat2<span class="op">::</span><span class="dt">SparseMatrixCSC{T,Int64}</span>,</span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>                            c<span class="op">::</span><span class="dt">Vector{T}</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>                            c<span class="op">::</span><span class="dt">Vector{T}</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 </section>
 <section id="high-dimensional-functions-introducing-the-smolyak-grid" class="level2">
@@ -1847,14 +1851,14 @@ f(x) = \left(\begin{array}{c} \text{savings}(x) \\ \text{consumption}(x) \end{ar
 <li><p>Then we can get evaluation nodes, i.e.&nbsp;points at which to evaluate our function with <code>nodes(basis)</code></p></li>
 <li><p>Then get an evaluted basis matrix with <code>BasisMatrix(basis)</code></p></li>
 </ul>
-<div class="sourceCode" id="cb37"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">BasisMatrices</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">BasisMatrices</span></span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>grid1 <span class="op">=</span> <span class="fu">range</span>(<span class="fl">1</span>,stop <span class="op">=</span> <span class="fl">3</span>,length <span class="op">=</span> <span class="fl">10</span>)</span>
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>lp <span class="op">=</span> <span class="fu">LinParams</span>(grid1)</span>
 <span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>sp <span class="op">=</span> <span class="fu">SplineParams</span>(<span class="fu">collect</span>(grid1),<span class="fl">0</span>,<span class="fl">3</span>)  <span class="co"># nodes, whether only 2 nodes, degree of spline</span></span>
 <span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>sm <span class="op">=</span> <span class="fu">SmolyakParams</span>(<span class="fl">2</span>,<span class="fl">1</span>,[<span class="fl">3</span>],[<span class="fl">2</span>])   <span class="co">#&nbsp;dims,mu,lower bound(s), upper bound(s)</span></span>
 <span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>sm2 <span class="op">=</span> <span class="fu">SmolyakParams</span>(<span class="fl">2</span>,[<span class="fl">1</span>,<span class="fl">2</span>],[<span class="fl">0</span>,<span class="op">-</span><span class="fl">0.5</span>],[<span class="fl">3</span>,<span class="fl">4.4</span>])   <span class="co">#&nbsp;dims,mu,lower bound(s), upper bound(s)</span></span>
-<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>sm3 <span class="op">=</span> <span class="fu">SmolyakParams</span>(<span class="fl">3</span>,[<span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">2</span>],[<span class="fl">0</span>,<span class="op">-</span><span class="fl">0.5</span>,<span class="fl">1</span>],[<span class="fl">3</span>,<span class="fl">4.4</span>,<span class="fl">5</span>])   <span class="co">#&nbsp;dims,mu,lower bound(s), upper bound(s)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb38"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&nbsp;simple interpolation</span></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>sm3 <span class="op">=</span> <span class="fu">SmolyakParams</span>(<span class="fl">3</span>,[<span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">2</span>],[<span class="fl">0</span>,<span class="op">-</span><span class="fl">0.5</span>,<span class="fl">1</span>],[<span class="fl">3</span>,<span class="fl">4.4</span>,<span class="fl">5</span>])   <span class="co">#&nbsp;dims,mu,lower bound(s), upper bound(s)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&nbsp;simple interpolation</span></span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">fi</span>(x) <span class="op">=</span> x<span class="op">.^</span><span class="fl">2</span> <span class="op">-</span> <span class="fl">0.5</span><span class="op">*</span>x<span class="op">.^</span><span class="fl">3</span></span>
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>sp <span class="op">=</span> <span class="fu">SplineParams</span>(<span class="fu">collect</span>(grid1),<span class="fl">0</span>,<span class="fl">3</span>)  <span class="co"># nodes, whether only 2 nodes, degree of spline</span></span>
@@ -1865,9 +1869,9 @@ f(x) = \left(\begin{array}{c} \text{savings}(x) \\ \text{consumption}(x) \end{ar
 <span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fi,<span class="fl">1</span>,<span class="fl">3</span>,label<span class="op">=</span><span class="st">"truth"</span>)</span>
 <span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>newx <span class="op">=</span> <span class="fl">1</span> <span class="op">.+</span> <span class="fu">rand</span>(<span class="fl">10</span>)<span class="op">*</span><span class="fl">2</span></span>
 <span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a>newy <span class="op">=</span> <span class="fu">funeval</span>(coef,sb,newx)   <span class="co"># evaluate basis at new points</span></span>
-<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a><span class="fu">scatter!</span>(newx,newy,label<span class="op">=</span><span class="st">"approx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb39"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">PlotlyJS</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb40"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&nbsp;multiple dimensions</span></span>
+<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a><span class="fu">scatter!</span>(newx,newy,label<span class="op">=</span><span class="st">"approx"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">PlotlyJS</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&nbsp;multiple dimensions</span></span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>basis <span class="op">=</span> <span class="fu">Basis</span>(<span class="fu">SplineParams</span>(<span class="fl">25</span>, <span class="op">-</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>),<span class="fu">SplineParams</span>(<span class="fl">20</span>, <span class="op">-</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">1</span>))   <span class="co"># quadratic and linear spline</span></span>
 <span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="co"># get nodes</span></span>
 <span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>X, x12 <span class="op">=</span> BasisMatrices.<span class="fu">nodes</span>(basis)</span>
@@ -1890,8 +1894,8 @@ f(x) = \left(\begin{array}{c} \text{savings}(x) \\ \text{consumption}(x) \end{ar
 <span id="cb40-21"><a href="#cb40-21" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb40-22"><a href="#cb40-22" aria-hidden="true" tabindex="-1"></a>xnew<span class="op">=</span><span class="fu">hcat</span>(<span class="op">-</span><span class="fl">1</span> <span class="op">.+</span> <span class="fu">rand</span>(<span class="fl">10</span>)<span class="op">*</span><span class="fl">2</span> , <span class="op">-</span><span class="fl">1</span> <span class="op">.+</span> <span class="fu">rand</span>(<span class="fl">10</span>)<span class="op">*</span><span class="fl">3</span>)</span>
 <span id="cb40-23"><a href="#cb40-23" aria-hidden="true" tabindex="-1"></a>ynew <span class="op">=</span> [<span class="fu">funeval</span>(coefs, basis, xnew[i,<span class="op">:</span>]) for i <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu">size</span>(xnew,<span class="fl">1</span>)]</span>
-<span id="cb40-24"><a href="#cb40-24" aria-hidden="true" tabindex="-1"></a>Plots.<span class="fu">scatter!</span>(xnew[<span class="op">:</span>,<span class="fl">1</span>],xnew[<span class="op">:</span>,<span class="fl">2</span>],ynew,markersize<span class="op">=</span><span class="fl">2</span>,markershape<span class="op">=:</span>rect)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb41"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># same with the smolyak grid</span></span>
+<span id="cb40-24"><a href="#cb40-24" aria-hidden="true" tabindex="-1"></a>Plots.<span class="fu">scatter!</span>(xnew[<span class="op">:</span>,<span class="fl">1</span>],xnew[<span class="op">:</span>,<span class="fl">2</span>],ynew,markersize<span class="op">=</span><span class="fl">2</span>,markershape<span class="op">=:</span>rect)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># same with the smolyak grid</span></span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&nbsp;multiple dimensions</span></span>
 <span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">LinearAlgebra</span></span>
 <span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>sp <span class="op">=</span> <span class="fu">SmolyakParams</span>(<span class="fl">2</span>,<span class="fl">3</span>, [<span class="op">-</span><span class="fl">1</span>,<span class="op">-</span><span class="fl">1</span>],[<span class="fl">1</span>,<span class="fl">2</span>])</span>
@@ -1916,7 +1920,7 @@ f(x) = \left(\begin{array}{c} \text{savings}(x) \\ \text{consumption}(x) \end{ar
 <span id="cb41-23"><a href="#cb41-23" aria-hidden="true" tabindex="-1"></a>ynew <span class="op">=</span> eb <span class="op">*</span> coef</span>
 <span id="cb41-24"><a href="#cb41-24" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb41-25"><a href="#cb41-25" aria-hidden="true" tabindex="-1"></a><span class="fu">scatter</span>(X[<span class="op">:</span>,<span class="fl">1</span>],X[<span class="op">:</span>,<span class="fl">2</span>],y,markersize<span class="op">=</span><span class="fl">2</span>)</span>
-<span id="cb41-26"><a href="#cb41-26" aria-hidden="true" tabindex="-1"></a><span class="fu">scatter!</span>(xnew[<span class="op">:</span>,<span class="fl">1</span>],xnew[<span class="op">:</span>,<span class="fl">2</span>],ynew,markersize<span class="op">=</span><span class="fl">2</span>,markershape<span class="op">=:</span>rect)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb41-26"><a href="#cb41-26" aria-hidden="true" tabindex="-1"></a><span class="fu">scatter!</span>(xnew[<span class="op">:</span>,<span class="fl">1</span>],xnew[<span class="op">:</span>,<span class="fl">2</span>],ynew,markersize<span class="op">=</span><span class="fl">2</span>,markershape<span class="op">=:</span>rect)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 </section>
 <section id="sparse-grids" class="level2">
@@ -1927,12 +1931,12 @@ f(x) = \left(\begin{array}{c} \text{savings}(x) \\ \text{consumption}(x) \end{ar
 <li>The <a href="https://github.com/floswald/Tasmanian.jl">Tasmanian.jl</a> is a simple wrapper to that library.</li>
 <li><a href="https://sites.google.com/site/simonscheidegger/home">Simon Scheidegger</a> has many useful resources on his website, in particular their joint paper with <a href="http://johannesbrumm.com">Johannes Brumm</a> features an application of sparse grids for high dimensional economics problems.</li>
 </ul>
-<div class="sourceCode" id="cb42"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Tasmanian</span></span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>Tasmanian.<span class="fu">ex2</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb42"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Tasmanian</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>Tasmanian.<span class="fu">ex2</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><img src="ex2.gif" class="img-fluid"></p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>Tasmanian.<span class="fu">ex3</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb43"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>Tasmanian.<span class="fu">ex3</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><img src="ex3.gif" class="img-fluid"></p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb44"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 
 </section>
@@ -1940,236 +1944,243 @@ f(x) = \left(\begin{array}{c} \text{savings}(x) \\ \text{consumption}(x) \end{ar
 
 <p>© Florian Oswald, 2025</p></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
-window.document.addEventListener("DOMContentLoaded", function (event) {
-  const toggleBodyColorMode = (bsSheetEl) => {
-    const mode = bsSheetEl.getAttribute("data-mode");
-    const bodyEl = window.document.querySelector("body");
-    if (mode === "dark") {
-      bodyEl.classList.add("quarto-dark");
-      bodyEl.classList.remove("quarto-light");
-    } else {
-      bodyEl.classList.add("quarto-light");
-      bodyEl.classList.remove("quarto-dark");
-    }
-  }
-  const toggleBodyColorPrimary = () => {
-    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
-    if (bsSheetEl) {
-      toggleBodyColorMode(bsSheetEl);
-    }
-  }
-  toggleBodyColorPrimary();  
-  const icon = "";
-  const anchorJS = new window.AnchorJS();
-  anchorJS.options = {
-    placement: 'right',
-    icon: icon
-  };
-  anchorJS.add('.anchored');
-  const isCodeAnnotation = (el) => {
-    for (const clz of el.classList) {
-      if (clz.startsWith('code-annotation-')) {                     
-        return true;
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
       }
+      return false;
     }
-    return false;
-  }
-  const onCopySuccess = function(e) {
-    // button target
-    const button = e.trigger;
-    // don't keep focus
-    button.blur();
-    // flash "checked"
-    button.classList.add('code-copy-button-checked');
-    var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copied!");
-    let tooltip;
-    if (window.bootstrap) {
-      button.setAttribute("data-bs-toggle", "tooltip");
-      button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copied!");
-      tooltip = new bootstrap.Tooltip(button, 
-        { trigger: "manual", 
-          customClass: "code-copy-button-tooltip",
-          offset: [0, -8]});
-      tooltip.show();    
-    }
-    setTimeout(function() {
-      if (tooltip) {
-        tooltip.hide();
-        button.removeAttribute("data-bs-title");
-        button.removeAttribute("data-bs-toggle");
-        button.removeAttribute("data-bs-placement");
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
       }
-      button.setAttribute("title", currentTitle);
-      button.classList.remove('code-copy-button-checked');
-    }, 1000);
-    // clear code selection
-    e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
       for (const childEl of codeEl.children) {
         if (isCodeAnnotation(childEl)) {
           childEl.remove();
         }
       }
       return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
-  });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
     });
-    clipboardModal.on('success', onCopySuccess);
-  }
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/floswald\.github\.io\/CompEcon\/");
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
     }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/floswald\.github\.io\/CompEcon\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
-    }
-  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-    const config = {
-      allowHTML: true,
-      maxWidth: 500,
-      delay: 100,
-      arrow: false,
-      appendTo: function(el) {
-          return el.parentElement;
-      },
-      interactive: true,
-      interactiveBorder: 10,
-      theme: 'quarto',
-      placement: 'bottom-start',
-    };
-    if (contentFn) {
-      config.content = contentFn;
-    }
-    if (onTriggerFn) {
-      config.onTrigger = onTriggerFn;
-    }
-    if (onUntriggerFn) {
-      config.onUntrigger = onUntriggerFn;
-    }
-    window.tippy(el, config); 
-  }
-  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-  for (var i=0; i<noterefs.length; i++) {
-    const ref = noterefs[i];
-    tippyHover(ref, function() {
-      // use id or data attribute instead here
-      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-      try { href = new URL(href).hash; } catch {}
-      const id = href.replace(/^#\/?/, "");
-      const note = window.document.getElementById(id);
-      if (note) {
-        return note.innerHTML;
-      } else {
-        return "";
-      }
-    });
-  }
-  const xrefs = window.document.querySelectorAll('a.quarto-xref');
-  const processXRef = (id, note) => {
-    // Strip column container classes
-    const stripColumnClz = (el) => {
-      el.classList.remove("page-full", "page-columns");
-      if (el.children) {
-        for (const child of el.children) {
-          stripColumnClz(child);
-        }
-      }
-    }
-    stripColumnClz(note)
-    if (id === null || id.startsWith('sec-')) {
-      // Special case sections, only their first couple elements
-      const container = document.createElement("div");
-      if (note.children && note.children.length > 2) {
-        container.appendChild(note.children[0].cloneNode(true));
-        for (let i = 1; i < note.children.length; i++) {
-          const child = note.children[i];
-          if (child.tagName === "P" && child.innerText === "") {
-            continue;
-          } else {
-            container.appendChild(child.cloneNode(true));
-            break;
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
           }
         }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(container);
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
         }
-        return container.innerHTML
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
       } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
         if (window.Quarto?.typesetMath) {
           window.Quarto.typesetMath(note);
         }
-        return note.innerHTML;
-      }
-    } else {
-      // Remove any anchor links if they are present
-      const anchorLink = note.querySelector('a.anchorjs-link');
-      if (anchorLink) {
-        anchorLink.remove();
-      }
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(note);
-      }
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
       }
     }
-  }
-  for (var i=0; i<xrefs.length; i++) {
-    const xref = xrefs[i];
-    tippyHover(xref, undefined, function(instance) {
-      instance.disable();
-      let url = xref.getAttribute('href');
-      let hash = undefined; 
-      if (url.startsWith('#')) {
-        hash = url;
-      } else {
-        try { hash = new URL(url).hash; } catch {}
-      }
-      if (hash) {
-        const id = hash.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note !== null) {
-          try {
-            const html = processXRef(id, note.cloneNode(true));
-            instance.setContent(html);
-          } finally {
-            instance.enable();
-            instance.show();
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
           }
         } else {
-          // See if we can fetch this
-          fetch(url.split('#')[0])
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
           .then(res => res.text())
           .then(html => {
             const parser = new DOMParser();
             const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.getElementById(id);
+            const note = htmlDoc.querySelector('main.content');
             if (note !== null) {
-              const html = processXRef(id, note);
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
               instance.setContent(html);
             } 
           }).finally(() => {
@@ -2177,185 +2188,161 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             instance.show();
           });
         }
-      } else {
-        // See if we can fetch a full url (with no hash to target)
-        // This is a special case and we should probably do some content thinning / targeting
-        fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const htmlDoc = parser.parseFromString(html, "text/html");
-          const note = htmlDoc.querySelector('main.content');
-          if (note !== null) {
-            // This should only happen for chapter cross references
-            // (since there is no id in the URL)
-            // remove the first header
-            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-              note.children[0].remove();
-            }
-            const html = processXRef(null, note);
-            instance.setContent(html);
-          } 
-        }).finally(() => {
-          instance.enable();
-          instance.show();
-        });
-      }
-    }, function(instance) {
-    });
-  }
-      let selectedAnnoteEl;
-      const selectorForAnnotation = ( cell, annotation) => {
-        let cellAttr = 'data-code-cell="' + cell + '"';
-        let lineAttr = 'data-code-annotation="' +  annotation + '"';
-        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
-        return selector;
-      }
-      const selectCodeLines = (annoteEl) => {
-        const doc = window.document;
-        const targetCell = annoteEl.getAttribute("data-target-cell");
-        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
-        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-        const lineIds = lines.map((line) => {
-          return targetCell + "-" + line;
-        })
-        let top = null;
-        let height = null;
-        let parent = null;
-        if (lineIds.length > 0) {
-            //compute the position of the single el (top and bottom and make a div)
-            const el = window.document.getElementById(lineIds[0]);
-            top = el.offsetTop;
-            height = el.offsetHeight;
-            parent = el.parentElement.parentElement;
-          if (lineIds.length > 1) {
-            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-            height = bottom - top;
-          }
-          if (top !== null && height !== null && parent !== null) {
-            // cook up a div (if necessary) and position it 
-            let div = window.document.getElementById("code-annotation-line-highlight");
-            if (div === null) {
-              div = window.document.createElement("div");
-              div.setAttribute("id", "code-annotation-line-highlight");
-              div.style.position = 'absolute';
-              parent.appendChild(div);
-            }
-            div.style.top = top - 2 + "px";
-            div.style.height = height + 4 + "px";
-            div.style.left = 0;
-            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-            if (gutterDiv === null) {
-              gutterDiv = window.document.createElement("div");
-              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-              gutterDiv.style.position = 'absolute';
-              const codeCell = window.document.getElementById(targetCell);
-              const gutter = codeCell.querySelector('.code-annotation-gutter');
-              gutter.appendChild(gutterDiv);
-            }
-            gutterDiv.style.top = top - 2 + "px";
-            gutterDiv.style.height = height + 4 + "px";
-          }
-          selectedAnnoteEl = annoteEl;
-        }
-      };
-      const unselectCodeLines = () => {
-        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
-        elementsIds.forEach((elId) => {
-          const div = window.document.getElementById(elId);
-          if (div) {
-            div.remove();
-          }
-        });
-        selectedAnnoteEl = undefined;
-      };
-        // Handle positioning of the toggle
-    window.addEventListener(
-      "resize",
-      throttle(() => {
-        elRect = undefined;
-        if (selectedAnnoteEl) {
-          selectCodeLines(selectedAnnoteEl);
-        }
-      }, 10)
-    );
-    function throttle(fn, ms) {
-    let throttle = false;
-    let timer;
-      return (...args) => {
-        if(!throttle) { // first call gets through
-            fn.apply(this, args);
-            throttle = true;
-        } else { // all the others get throttled
-            if(timer) clearTimeout(timer); // cancel #2
-            timer = setTimeout(() => {
-              fn.apply(this, args);
-              timer = throttle = false;
-            }, ms);
-        }
-      };
-    }
-      // Attach click handler to the DT
-      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-      for (const annoteDlNode of annoteDls) {
-        annoteDlNode.addEventListener('click', (event) => {
-          const clickedEl = event.target;
-          if (clickedEl !== selectedAnnoteEl) {
-            unselectCodeLines();
-            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-            if (activeEl) {
-              activeEl.classList.remove('code-annotation-active');
-            }
-            selectCodeLines(clickedEl);
-            clickedEl.classList.add('code-annotation-active');
-          } else {
-            // Unselect the line
-            unselectCodeLines();
-            clickedEl.classList.remove('code-annotation-active');
-          }
-        });
-      }
-  const findCites = (el) => {
-    const parentEl = el.parentElement;
-    if (parentEl) {
-      const cites = parentEl.dataset.cites;
-      if (cites) {
-        return {
-          el,
-          cites: cites.split(' ')
-        };
-      } else {
-        return findCites(el.parentElement)
-      }
-    } else {
-      return undefined;
-    }
-  };
-  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-  for (var i=0; i<bibliorefs.length; i++) {
-    const ref = bibliorefs[i];
-    const citeInfo = findCites(ref);
-    if (citeInfo) {
-      tippyHover(citeInfo.el, function() {
-        var popup = window.document.createElement('div');
-        citeInfo.cites.forEach(function(cite) {
-          var citeDiv = window.document.createElement('div');
-          citeDiv.classList.add('hanging-indent');
-          citeDiv.classList.add('csl-entry');
-          var biblioDiv = window.document.getElementById('ref-' + cite);
-          if (biblioDiv) {
-            citeDiv.innerHTML = biblioDiv.innerHTML;
-          }
-          popup.appendChild(citeDiv);
-        });
-        return popup.innerHTML;
+      }, function(instance) {
       });
     }
-  }
-});
-</script>
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
