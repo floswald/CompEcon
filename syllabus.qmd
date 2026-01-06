@@ -1,6 +1,6 @@
 ---
 title: "Computational Economics"
-abstract: "The vast majority of modern-day economists need to deal with scientific computation in their daily work. Teaching *Scientific computing*  to yourself is possible, but doing so is inefficient (and not much fun). This course wants to teach you *Scientific computing* in an efficient (and fun #emoji.face) way. The unofficial title of this course is hence \"Scientific Computing: from Zero to Hero\""
+abstract: "The vast majority of modern-day economists need to deal with scientific computation in their daily work. Teaching *Scientific computing*  to yourself is possible, but doing so is inefficient (and not much fun). This course wants to teach you *Scientific computing* in an efficient (and fun) way. The unofficial title of this course is hence \"Scientific Computing: from Zero to Hero\""
 format:
   typst:
     include-in-header:
@@ -26,7 +26,7 @@ True to that motto, there will be homeworks for you to try out what you learned 
 
 ## Content
 
-You can see the current table of contents on the course website [here](https://floswald.github.io/CompEcon/#outline-of-topics). This is content is subject to be revised. In short, there will be additional material assuming very little or no programming knowledge. Main topics to be added:
+You can see the current table of contents on the course website [here](https://floswald.github.io/CompEcon/#outline-of-topics). This content is subject to be revised. In short, there will be additional material assuming very little or no programming knowledge. Main topics to be added:
 
 1. How does your computer work?
 2. How to organize/share/collaborate on code for scientific computing? Spoiler: *not dropbox*.
