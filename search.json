@@ -4,7 +4,7 @@
     "href": "cheatsheets.html",
     "title": "Cheatsheets and Resources to Learn Julia",
     "section": "",
-    "text": "My Julia Bootcamp\nOfficial Julia Manual is a great place to start.\nThe learning section of julialang.org introduces the Julia Academy, which are expert-led videos on diverse topics, all as self-contained courses and very accessible - outstanding material.\nFastrack to Julia cheatsheet.\nMATLAB-Julia-Python comparative cheatsheet by QuantEcon group Quantitative Economics with Julia by Perla, Sargent and Stachurski, in particular the initial sections.\n© Florian Oswald, 2025",
+    "text": "My Julia Bootcamp\nOfficial Julia Manual is a great place to start.\nThe learning section of julialang.org introduces the Julia Academy, which are expert-led videos on diverse topics, all as self-contained courses and very accessible - outstanding material.\nFastrack to Julia cheatsheet.\nMATLAB-Julia-Python comparative cheatsheet by QuantEcon group Quantitative Economics with Julia by Perla, Sargent and Stachurski, in particular the initial sections.\n© Florian Oswald, 2026",
     "crumbs": [
       "Home",
       "Setup",
@@ -40,7 +40,7 @@
     "href": "notebooks/week8/funcapprox.html",
     "title": "Function Approximation",
     "section": "",
-    "text": "Collegio Carlo Alberto, Spring 2025\n© Florian Oswald, 2025"
+    "text": "Collegio Carlo Alberto, Spring 2025\n© Florian Oswald, 2026"
   },
   {
     "objectID": "notebooks/week8/funcapprox.html#outline",
@@ -320,7 +320,7 @@
     "href": "lectures/plotting.html",
     "title": "Plotting",
     "section": "",
-    "text": "Good plotting is one of the main requirements we have for a fully fledged computing language. We want to be able to quickly make good looking plots of data objects (like for instance the R library ggplot2 allows us to do), and we want to have the ability to build up plots step by step as for instance the python library matplotlib allows us to do. There are several solutions available in julia:\n© Florian Oswald, 2025",
+    "text": "Good plotting is one of the main requirements we have for a fully fledged computing language. We want to be able to quickly make good looking plots of data objects (like for instance the R library ggplot2 allows us to do), and we want to have the ability to build up plots step by step as for instance the python library matplotlib allows us to do. There are several solutions available in julia:\n© Florian Oswald, 2026",
     "crumbs": [
       "Home",
       "Lectures",
@@ -404,7 +404,7 @@
     "href": "lectures/lecture5.html",
     "title": "Lecture 5: Dynamic Programming",
     "section": "",
-    "text": "We introduced the Dynamic Programming technique by means of the well known cake eating problem. We showed probably the simplest way to solve for the optimal decision rule, on a discrete grid. We also showed that this can lead to really poor results, so implementation details matter here. We introduced uncertainty and we looked at an Euler Equation solver for a consumption savings problem.\n\n\n\nTopic\nNotebook\n\n\n\n\nDynamic Programming 1\ndownload notebook\n\n\nDynamic Programming 2\ndownload notebook\n\n\nEndogenous Grid Method (EGM)\ndownload notebook\n\n\nThe Shimer-Smith Model\ndownload notebook\n\n\nThe Ayiagari Model\ndownload notebook\n\n\n\n\n\n\n© Florian Oswald, 2025",
+    "text": "We introduced the Dynamic Programming technique by means of the well known cake eating problem. We showed probably the simplest way to solve for the optimal decision rule, on a discrete grid. We also showed that this can lead to really poor results, so implementation details matter here. We introduced uncertainty and we looked at an Euler Equation solver for a consumption savings problem.\n\n\n\nTopic\nNotebook\n\n\n\n\nDynamic Programming 1\ndownload notebook\n\n\nDynamic Programming 2\ndownload notebook\n\n\nEndogenous Grid Method (EGM)\ndownload notebook\n\n\nThe Shimer-Smith Model\ndownload notebook\n\n\nThe Ayiagari Model\ndownload notebook\n\n\n\n\n\n\n© Florian Oswald, 2026",
     "crumbs": [
       "Home",
       "Lectures",
@@ -416,7 +416,7 @@
     "href": "lectures/lecture6.html",
     "title": "Lecture 6: Data",
     "section": "",
-    "text": "Data in julia means: DataFrames.jl and friends.\nNew users are adivsed to start with the new users section in the manual. I advise you to go through that.\nIn class, instead, we will take the deep dive into the DataFrames.jl package with a showcase.\nThere is a notebook for you here\n© Florian Oswald, 2025",
+    "text": "Data in julia means: DataFrames.jl and friends.\nNew users are adivsed to start with the new users section in the manual. I advise you to go through that.\nIn class, instead, we will take the deep dive into the DataFrames.jl package with a showcase.\nThere is a notebook for you here\n© Florian Oswald, 2026",
     "crumbs": [
       "Home",
       "Lectures",
@@ -464,7 +464,7 @@
     "href": "lectures/lecture2.html",
     "title": "Week 2 - Examples",
     "section": "",
-    "text": "In this section we present some simple usage examples of julia in the wild. We will again have a few notebooks to go through.\n© Florian Oswald, 2025",
+    "text": "In this section we present some simple usage examples of julia in the wild. We will again have a few notebooks to go through.\n© Florian Oswald, 2026",
     "crumbs": [
       "Home",
       "Lectures",
@@ -488,7 +488,7 @@
     "href": "lectures/lecture1.html",
     "title": "Programming Languages and - Why Julia?",
     "section": "",
-    "text": "TipInstallation\n\n\n\nMake sure to check out the installation page on this website before you come to class.\n© Florian Oswald, 2025",
+    "text": "TipInstallation\n\n\n\nMake sure to check out the installation page on this website before you come to class.\n© Florian Oswald, 2026",
     "crumbs": [
       "Home",
       "Lectures",
@@ -536,7 +536,7 @@
     "href": "lectures/lecture8.html",
     "title": "Function Approximation",
     "section": "",
-    "text": "NoteProblem statement\n\n\n\nSuppose you have this problem to solve.\n\\[ \\begin{align}\nV(a,z) &= \\max_{a'} u((1+r)a + z - a') + \\beta \\mathbb{E}\\left[ V(a',z') | z \\right]\\\\\n\\end{align} \\]\n\nSuppose you know the values of \\(V(a_i,z_j)\\), but only on two discrete grids \\((\\mathcal{A}, \\mathcal{Z})\\).\nIn order to perform the \\(\\max_{a'}\\) operation, you need to evaluate \\(V(a',z_j)\\), where \\(a' \\notin \\mathcal{A}\\). How do you go about this task?\n© Florian Oswald, 2025",
+    "text": "NoteProblem statement\n\n\n\nSuppose you have this problem to solve.\n\\[ \\begin{align}\nV(a,z) &= \\max_{a'} u((1+r)a + z - a') + \\beta \\mathbb{E}\\left[ V(a',z') | z \\right]\\\\\n\\end{align} \\]\n\nSuppose you know the values of \\(V(a_i,z_j)\\), but only on two discrete grids \\((\\mathcal{A}, \\mathcal{Z})\\).\nIn order to perform the \\(\\max_{a'}\\) operation, you need to evaluate \\(V(a',z_j)\\), where \\(a' \\notin \\mathcal{A}\\). How do you go about this task?\n© Florian Oswald, 2026",
     "crumbs": [
       "Home",
       "Lectures",
@@ -644,7 +644,7 @@
     "href": "homeworks/hw4.html",
     "title": "Homework 4",
     "section": "",
-    "text": "This time we will extend our optimization efforts into a world with constraints. We have an application from finance: which assets best to invest in, if they have different expected returns?\nGet the homework notebook here. right click and save this notebook, or copy the link directly into a running Pluto session to open!\n© Florian Oswald, 2025",
+    "text": "This time we will extend our optimization efforts into a world with constraints. We have an application from finance: which assets best to invest in, if they have different expected returns?\nGet the homework notebook here. right click and save this notebook, or copy the link directly into a running Pluto session to open!\n© Florian Oswald, 2026",
     "crumbs": [
       "Home",
       "Homeworks",
@@ -668,7 +668,7 @@
     "href": "homeworks/hw2.html",
     "title": "Homework 2",
     "section": "",
-    "text": "Let’s continue with some epidemic stuff! This time we’ll add a spatial dimension to our simulation.\nGet the homework notebook here. right click and save this notebook, or copy the link directly into a running Pluto session to open!\n© Florian Oswald, 2025",
+    "text": "Let’s continue with some epidemic stuff! This time we’ll add a spatial dimension to our simulation.\nGet the homework notebook here. right click and save this notebook, or copy the link directly into a running Pluto session to open!\n© Florian Oswald, 2026",
     "crumbs": [
       "Home",
       "Homeworks",
@@ -692,7 +692,7 @@
     "href": "homeworks/hw1.html",
     "title": "Homework 1",
     "section": "",
-    "text": "This homework will refer to something we have not done in class, but which you can easily read up on by yourself. Here is a notebook that introduces the SIR model. In the homework, I ask you to copy sections of code from there into your homework notebook, which you will then submit.\nGet the homework notebook here. right click and save this notebook, or copy the link directly into a running Pluto session to open!\n© Florian Oswald, 2025",
+    "text": "This homework will refer to something we have not done in class, but which you can easily read up on by yourself. Here is a notebook that introduces the SIR model. In the homework, I ask you to copy sections of code from there into your homework notebook, which you will then submit.\nGet the homework notebook here. right click and save this notebook, or copy the link directly into a running Pluto session to open!\n© Florian Oswald, 2026",
     "crumbs": [
       "Home",
       "Homeworks",
@@ -716,7 +716,7 @@
     "href": "index.html",
     "title": "Computational Economics for PhDs",
     "section": "",
-    "text": "Teacher: Florian Oswald, florian.oswald@unito.it\nClass Times: tbc\nClass Location: Collegio Carlo Alberto\nSlack: There will be a slack channel for all communication\n© Florian Oswald, 2025"
+    "text": "Teacher: Florian Oswald, florian.oswald@unito.it\nClass Times: tbc\nClass Location: Collegio Carlo Alberto\nSlack: There will be a slack channel for all communication\n© Florian Oswald, 2026"
   },
   {
     "objectID": "index.html#course-overview",
@@ -737,7 +737,7 @@
     "href": "index.html#prerequisites",
     "title": "Computational Economics for PhDs",
     "section": "Prerequisites",
-    "text": "Prerequisites\n\nYou need a laptop.\nYou should be familiar with the material from Introduction to Programming.\nYou must sign up for a free account at github.com. Choose a reasonable user name and upload a profile picture.\nBefore you come the first class, please do this:\n\nDownload the latest stable julia release for your OS.\nDownload the VSCode Editor\n\n\n\nGetting Programming Skills\n\nCheck out what is being taught in the Introduction to Programming course. You should know this level.\nWe will be using Julia for this course.\n\nNoteworthy Differences from Other Languages\nMATLAB, Python, Julia Syntax Comparison"
+    "text": "Prerequisites\n\nYou need a laptop.\nYou should be familiar with the material from Introduction to Programming - more below.\nYou must sign up for a free account at github.com. Choose a reasonable user name and upload a profile picture.\nBefore you come the first class, please follow closely the installation instructions.\n\n\nGetting Programming Skills\n\nCheck out what is being taught in the Introduction to Programming course. I want you to read through sessions 1-3 on your own. I will give you a quiz to complete on this before week 3.\nWe will be using Julia for this course.\n\nNoteworthy Differences from Other Languages\nMATLAB, Python, Julia Syntax Comparison"
   },
   {
     "objectID": "index.html#term-project",
@@ -772,14 +772,14 @@
     "href": "index.html#license",
     "title": "Computational Economics for PhDs",
     "section": "License",
-    "text": "License\nThe copyright notice to be included in any copies and other derivative work of this material is:\nCopyright 2025 Florian Oswald, florian.oswald@gmail.com\nThank you.\n This is licensed under Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License"
+    "text": "License\nThe copyright notice to be included in any copies and other derivative work of this material is:\nCopyright 2026 Florian Oswald, florian.oswald@gmail.com\nThank you.\n This is licensed under Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License"
   },
   {
     "objectID": "homeworks/hw0.html",
     "href": "homeworks/hw0.html",
     "title": "Homework 0 (zero)",
     "section": "",
-    "text": "The first week’s homework is to make you familiar with the Pluto environment. Given it’s homework number 0, it won’t count towards your grade!\nYou can do the homework in teams of max 2 people (try not to do it alone!)\n© Florian Oswald, 2025",
+    "text": "The first week’s homework is to make you familiar with the Pluto environment. Given it’s homework number 0, it won’t count towards your grade!\nYou can do the homework in teams of max 2 people (try not to do it alone!)\n© Florian Oswald, 2026",
     "crumbs": [
       "Home",
       "Homeworks",
@@ -815,7 +815,7 @@
     "href": "homeworks/hw3.html",
     "title": "Homework 3",
     "section": "",
-    "text": "Time for some optimization around here! Let me introduce you to the well known probit model! 😁\nGet the homework notebook here. right click and save this notebook, or copy the link directly into a running Pluto session to open!\n© Florian Oswald, 2025",
+    "text": "Time for some optimization around here! Let me introduce you to the well known probit model! 😁\nGet the homework notebook here. right click and save this notebook, or copy the link directly into a running Pluto session to open!\n© Florian Oswald, 2026",
     "crumbs": [
       "Home",
       "Homeworks",
@@ -839,7 +839,7 @@
     "href": "homeworks/hw5.html",
     "title": "Homework 5",
     "section": "",
-    "text": "Homework - Harold Zurcher\n\nHow could we not talk about Harold Zurcher in this course!\n\nFirst things first: Who was Harold Zurcher? Generations of Econ PhD students have heard about this man. Harold Zurcher even had a parody account on twitter, while twitter still existed. Why the fame? Well he was the leading actor in John Rust’s groundbreaking paper on Bus Engine Replacement. Much of what we do nowadays in structural micro econometrics can be traced back to that paper. Even I have a paper on the Bus Engine Replacement Model!\n\nThis homework is easy 🍿\nIn this very easy homework, I will outsource you to the phantastic video material of Fedor Iskhakov. Fedor is among the world’s leading experts of that model class - amongst other things - and therefore (trying to) redo what he did in his course is just pointless. We will next time in class implement the numerical solution in julia. Be sure to check out all the other great stuff that Fedor does in his course.\nSo, what’s to do?\n\nWatch the 45 minute video of Fedor here. It’s full of relevant info beyond the Rust model at hand.\n\n\n\n\n\n\n© Florian Oswald, 2025",
+    "text": "Homework - Harold Zurcher\n\nHow could we not talk about Harold Zurcher in this course!\n\nFirst things first: Who was Harold Zurcher? Generations of Econ PhD students have heard about this man. Harold Zurcher even had a parody account on twitter, while twitter still existed. Why the fame? Well he was the leading actor in John Rust’s groundbreaking paper on Bus Engine Replacement. Much of what we do nowadays in structural micro econometrics can be traced back to that paper. Even I have a paper on the Bus Engine Replacement Model!\n\nThis homework is easy 🍿\nIn this very easy homework, I will outsource you to the phantastic video material of Fedor Iskhakov. Fedor is among the world’s leading experts of that model class - amongst other things - and therefore (trying to) redo what he did in his course is just pointless. We will next time in class implement the numerical solution in julia. Be sure to check out all the other great stuff that Fedor does in his course.\nSo, what’s to do?\n\nWatch the 45 minute video of Fedor here. It’s full of relevant info beyond the Rust model at hand.\n\n\n\n\n\n\n© Florian Oswald, 2026",
     "crumbs": [
       "Home",
       "Homeworks",
@@ -851,7 +851,7 @@
     "href": "lectures/lecture9.html",
     "title": "Numerical Integration",
     "section": "",
-    "text": "We want to evaluate the potentially multidimensional definite integral\n\\[\\begin{equation}\nI = \\int_\\Omega f(x) dx\n\\end{equation}\\]\nwhere it’s important to keep track of the volume of the function domain, i.e. we say \\(\\Omega\\) is a subset of \\(\\mathbb{R}^m\\) with volume\n\\[\\begin{equation}\nV = \\int_\\Omega dx\n\\end{equation}\\]\nHere is an example of \\(f\\):\n\\[\nf(x) = \\sin(x)^2 + 0.1 x\n\\]\nWe will evaluate this over \\(x \\in [0,5]\\), where we find using standard calculus techniques, that\n\\[\\begin{equation}\n\\int_0^5 f(x) dx = 3.886\n\\end{equation}\\]\nLet’s make a plot of this, where \\(f\\) is a black line, and the red shaded area is \\(I\\).\n© Florian Oswald, 2025",
+    "text": "We want to evaluate the potentially multidimensional definite integral\n\\[\\begin{equation}\nI = \\int_\\Omega f(x) dx\n\\end{equation}\\]\nwhere it’s important to keep track of the volume of the function domain, i.e. we say \\(\\Omega\\) is a subset of \\(\\mathbb{R}^m\\) with volume\n\\[\\begin{equation}\nV = \\int_\\Omega dx\n\\end{equation}\\]\nHere is an example of \\(f\\):\n\\[\nf(x) = \\sin(x)^2 + 0.1 x\n\\]\nWe will evaluate this over \\(x \\in [0,5]\\), where we find using standard calculus techniques, that\n\\[\\begin{equation}\n\\int_0^5 f(x) dx = 3.886\n\\end{equation}\\]\nLet’s make a plot of this, where \\(f\\) is a black line, and the red shaded area is \\(I\\).\n© Florian Oswald, 2026",
     "crumbs": [
       "Home",
       "Lectures",
@@ -935,7 +935,7 @@
     "href": "lectures/lecture10.html",
     "title": "Lecture 10: Dynamic Discrete Choice Models",
     "section": "",
-    "text": "We gave an overview of discrete choice models on the board (also contained in the first notebook below)\nWe introduced the bus model.\nWe did talk about estimation of dynamic programming models. Here are some slides.\n\nHere are some notebooks!\n\n\n\nTopic\nNotebook\n\n\n\n\nSolving the Model\ndownload notebook\n\n\nEstimating the Model\ndownload notebook\n© Florian Oswald, 2025",
+    "text": "We gave an overview of discrete choice models on the board (also contained in the first notebook below)\nWe introduced the bus model.\nWe did talk about estimation of dynamic programming models. Here are some slides.\n\nHere are some notebooks!\n\n\n\nTopic\nNotebook\n\n\n\n\nSolving the Model\ndownload notebook\n\n\nEstimating the Model\ndownload notebook\n© Florian Oswald, 2026",
     "crumbs": [
       "Home",
       "Lectures",
@@ -959,7 +959,7 @@
     "href": "lectures/lecture3.html",
     "title": "Lecture 3: Optimization 1",
     "section": "",
-    "text": "Creating a package is a great way to ensure reproducibility of your work.\nIt helps to make your work shareable.\nIt helps to test the code which makes up your work.\n👉 Let’s do it!\n\n\n\n\nStart julia\ntwo equivalent options:\n\nenter Pkg mode (hit ]), then generate path/to/new/package, or\nsay using Pkg, then Pkg.generate(\"path/to/new/package\")\n\n\nHere is an example:\n\n]    # this jumps into Pkg mode\n\n(@v1.11) pkg&gt; generate Mypkg\n  Generating  project Mypkg:\n    Mypkg/Project.toml\n    Mypkg/src/Mypkg.jl\n\n(@v1.11) pkg&gt; \nDepending on where you started your julia session, there is now a new folder Mypkg:\nshell&gt; ls Mypkg/\nProject.toml  src/\nIt’s a good idea to start a new VSCode window at that folder location. Doing so, you would see this:\n\n\n\nOur julia package\n\n\n\ngreat. Start a julia repl in the usual way.\nNotice how the bottom bar in VSCode indicates that we are in Mypkg env - VScode asked me whether I wanted to change into this. If this is not the case, you won’t be able to load our package:\n\njulia&gt; using Mypkg\nERROR: ArgumentError: Package Mypkg not found in current path.\n- Run `import Pkg; Pkg.add(\"Mypkg\")` to install the Mypkg package.\n\nWe need to switch into the environment of this package before we can load it locally. This is called activate an environment:\n\n]  # in Pkg mode\n(@v1.11) pkg&gt; activate .  # `.` for current directory\n  Activating project at `~/Mypkg`\n\n(Mypkg) pkg&gt;  # hit backspace\n\njulia&gt; using Mypkg\n[ Info: Precompiling Mypkg [c4d85591-a952-48fb-b3d1-49a9454516b2] \nAlternatively, just click on the env indicator in VSCode and choose the current folder.\nGreat, now we can use the functions contained in the package. Let’s see:\njulia&gt; Mypkg.greet()\nHello World!\n\n\n\n\n\n\nNoteCode Loading\n\n\n\nThere are two ways in which we can load code into a running julia session:\n\nBy includeing code - equivalent to copy and pasting code into the REPL, and what happens when we say execute active file in REPL in VSCode. In practice, those mechanisms execute the function include(\"some_file.jl\").\nVia package loading: We import a set of functions contained in a package, via the using or import statements.\n\nNotice how we did not have to say run current file in REPL or similar commands. Saying using Mypkg immediately made our code available in the current session.\n\n\n\n\n\nNext question: How can we now work on the code and investigate it’s changes in the REPL?\n\nWe can obviously execute the current file in the REPL (basically copy and paste the code into the REPL). Again, copy and paste, or include(\"file.jl\"). But that’s cumbersome.\nThere is a great alternative - Revise.jl. Loading this package before you import your package means that Revise will track changes in your source code and expose them immediately in what you see in the REPL. Revise tracks all changes in our code. Let’s go and look the package documentation.\n\nGood, let’s try this out. Restart the REPL in the Mypkg project. First, we add Revise to our package’s environment, so we can always load it.\n] # for pkg mode\n(Mypkg) pkg&gt; add Revise\nNext, let’s load Revise before we import any other code we want to work on:\nusing Revise\nusing Mypkg\nsee again if that works now:\njulia&gt; Mypkg.greet()\nHello World!\n\nGreat! Now let’s open VSCode in that location and make some changes. Like, let’s just change the greet function slightly and save the Mypkg.jl file:\n\ngreet() = print(\"Hello Earthlings!\")\n\nExecute again in the REPL (notice no code loading action necessary on our behalf!)\n\njulia&gt; Mypkg.greet()\nHello Earthlings!\n\nAwesome! So we can change our code and immediately try out it’s effects. Notice that a limitation of Revise tracking are changes to type definitions and removal of exports. In early stages of development, when you change the content of your types frequently, that can be an issue. Either restart the REPL after each change of types, or rename them, as illustrated here.\nLet us add some more functionality to our package now.\n\nmodule Mypkg\n\ngreet() = print(\"Hello Earthlings!\")\n\nmutable struct MPoint\n    x::Number\n    y::Number\nend\n# want to add a `+` method: must import all known `+` first\nimport Base.:+\n+(a::MPoint,b::MPoint) = MPoint(a.x + b.x, a.y + b.y)\n\nend # module Mypkg\n\nWe added a custom data type MPoint, and our version of the + function for it. Let’s try it out in the REPL!\n\njulia&gt; a = Mypkg.MPoint(2,3)\nMypkg.MPoint(2, 3)\n\njulia&gt; b = Mypkg.MPoint(3,1)\nMypkg.MPoint(3, 1)\n\njulia&gt; a + b\nMypkg.MPoint(5, 4)\n\nOk, seems to work. Isn’t it a bit annoying that we always have to type Mypkg in front of our functions, though? Does it even work without typing this? What’s the deal here?\n\n\n\n\n\n\n\nTipModule Namespace and Export\n\n\n\n\nBy default, none of the objects (functions, variables, etc) contained in a Module are visible from outside of it.\nThe keyword export xyz will export the name xyz from your package into the scope where it was loaded, hence, make it visible to the outside.\n\n\n\n\nLet’s add export MPoint in our module definition and try again:\n\njulia&gt; a = MPoint(2,3)\nMPoint(2, 3)\n\njulia&gt; b = MPoint(3,1)\nMPoint(3, 1)\n\njulia&gt; a + b\nMPoint(5, 4)\n🎉\n© Florian Oswald, 2025",
+    "text": "Creating a package is a great way to ensure reproducibility of your work.\nIt helps to make your work shareable.\nIt helps to test the code which makes up your work.\n👉 Let’s do it!\n\n\n\n\nStart julia\ntwo equivalent options:\n\nenter Pkg mode (hit ]), then generate path/to/new/package, or\nsay using Pkg, then Pkg.generate(\"path/to/new/package\")\n\n\nHere is an example:\n\n]    # this jumps into Pkg mode\n\n(@v1.11) pkg&gt; generate Mypkg\n  Generating  project Mypkg:\n    Mypkg/Project.toml\n    Mypkg/src/Mypkg.jl\n\n(@v1.11) pkg&gt; \nDepending on where you started your julia session, there is now a new folder Mypkg:\nshell&gt; ls Mypkg/\nProject.toml  src/\nIt’s a good idea to start a new VSCode window at that folder location. Doing so, you would see this:\n\n\n\nOur julia package\n\n\n\ngreat. Start a julia repl in the usual way.\nNotice how the bottom bar in VSCode indicates that we are in Mypkg env - VScode asked me whether I wanted to change into this. If this is not the case, you won’t be able to load our package:\n\njulia&gt; using Mypkg\nERROR: ArgumentError: Package Mypkg not found in current path.\n- Run `import Pkg; Pkg.add(\"Mypkg\")` to install the Mypkg package.\n\nWe need to switch into the environment of this package before we can load it locally. This is called activate an environment:\n\n]  # in Pkg mode\n(@v1.11) pkg&gt; activate .  # `.` for current directory\n  Activating project at `~/Mypkg`\n\n(Mypkg) pkg&gt;  # hit backspace\n\njulia&gt; using Mypkg\n[ Info: Precompiling Mypkg [c4d85591-a952-48fb-b3d1-49a9454516b2] \nAlternatively, just click on the env indicator in VSCode and choose the current folder.\nGreat, now we can use the functions contained in the package. Let’s see:\njulia&gt; Mypkg.greet()\nHello World!\n\n\n\n\n\n\nNoteCode Loading\n\n\n\nThere are two ways in which we can load code into a running julia session:\n\nBy includeing code - equivalent to copy and pasting code into the REPL, and what happens when we say execute active file in REPL in VSCode. In practice, those mechanisms execute the function include(\"some_file.jl\").\nVia package loading: We import a set of functions contained in a package, via the using or import statements.\n\nNotice how we did not have to say run current file in REPL or similar commands. Saying using Mypkg immediately made our code available in the current session.\n\n\n\n\n\nNext question: How can we now work on the code and investigate it’s changes in the REPL?\n\nWe can obviously execute the current file in the REPL (basically copy and paste the code into the REPL). Again, copy and paste, or include(\"file.jl\"). But that’s cumbersome.\nThere is a great alternative - Revise.jl. Loading this package before you import your package means that Revise will track changes in your source code and expose them immediately in what you see in the REPL. Revise tracks all changes in our code. Let’s go and look the package documentation.\n\nGood, let’s try this out. Restart the REPL in the Mypkg project. First, we add Revise to our package’s environment, so we can always load it.\n] # for pkg mode\n(Mypkg) pkg&gt; add Revise\nNext, let’s load Revise before we import any other code we want to work on:\nusing Revise\nusing Mypkg\nsee again if that works now:\njulia&gt; Mypkg.greet()\nHello World!\n\nGreat! Now let’s open VSCode in that location and make some changes. Like, let’s just change the greet function slightly and save the Mypkg.jl file:\n\ngreet() = print(\"Hello Earthlings!\")\n\nExecute again in the REPL (notice no code loading action necessary on our behalf!)\n\njulia&gt; Mypkg.greet()\nHello Earthlings!\n\nAwesome! So we can change our code and immediately try out it’s effects. Notice that a limitation of Revise tracking are changes to type definitions and removal of exports. In early stages of development, when you change the content of your types frequently, that can be an issue. Either restart the REPL after each change of types, or rename them, as illustrated here.\nLet us add some more functionality to our package now.\n\nmodule Mypkg\n\ngreet() = print(\"Hello Earthlings!\")\n\nmutable struct MPoint\n    x::Number\n    y::Number\nend\n# want to add a `+` method: must import all known `+` first\nimport Base.:+\n+(a::MPoint,b::MPoint) = MPoint(a.x + b.x, a.y + b.y)\n\nend # module Mypkg\n\nWe added a custom data type MPoint, and our version of the + function for it. Let’s try it out in the REPL!\n\njulia&gt; a = Mypkg.MPoint(2,3)\nMypkg.MPoint(2, 3)\n\njulia&gt; b = Mypkg.MPoint(3,1)\nMypkg.MPoint(3, 1)\n\njulia&gt; a + b\nMypkg.MPoint(5, 4)\n\nOk, seems to work. Isn’t it a bit annoying that we always have to type Mypkg in front of our functions, though? Does it even work without typing this? What’s the deal here?\n\n\n\n\n\n\n\nTipModule Namespace and Export\n\n\n\n\nBy default, none of the objects (functions, variables, etc) contained in a Module are visible from outside of it.\nThe keyword export xyz will export the name xyz from your package into the scope where it was loaded, hence, make it visible to the outside.\n\n\n\n\nLet’s add export MPoint in our module definition and try again:\n\njulia&gt; a = MPoint(2,3)\nMPoint(2, 3)\n\njulia&gt; b = MPoint(3,1)\nMPoint(3, 1)\n\njulia&gt; a + b\nMPoint(5, 4)\n🎉\n© Florian Oswald, 2026",
     "crumbs": [
       "Home",
       "Lectures",
@@ -1031,7 +1031,7 @@
     "href": "lectures/absorbing-mc.html",
     "title": "Absorbing Markov Chains",
     "section": "",
-    "text": "This elaborates on Bogumił’s blog post about the problem of generating a sequence of coin tosses. We will add some theory to his simulation study.\n© Florian Oswald, 2025",
+    "text": "This elaborates on Bogumił’s blog post about the problem of generating a sequence of coin tosses. We will add some theory to his simulation study.\n© Florian Oswald, 2026",
     "crumbs": [
       "Home",
       "Lectures",
@@ -1115,7 +1115,7 @@
     "href": "lectures/lecture7.html",
     "title": "Lecture 7: Parallel Computing",
     "section": "",
-    "text": "You hear often: “sure, that’s a big problem you have there. But you can parallelize it!” Whether that will help in your case is strictly problem-specific. You need to try it out in order to know.\nFirst, you want to make sure your application produces correct results. You test it.\nThen you try to make it as efficient as possible on a single process, i.e. in serial mode. There are a great, many things to know about how to write efficient code; starting with the hardware you dispose of\nFinally, you can attempt to scale your application to more than one processes. That’s what we’ll talk about today.\n© Florian Oswald, 2025",
+    "text": "You hear often: “sure, that’s a big problem you have there. But you can parallelize it!” Whether that will help in your case is strictly problem-specific. You need to try it out in order to know.\nFirst, you want to make sure your application produces correct results. You test it.\nThen you try to make it as efficient as possible on a single process, i.e. in serial mode. There are a great, many things to know about how to write efficient code; starting with the hardware you dispose of\nFinally, you can attempt to scale your application to more than one processes. That’s what we’ll talk about today.\n© Florian Oswald, 2026",
     "crumbs": [
       "Home",
       "Lectures",
@@ -1223,7 +1223,7 @@
     "href": "lectures/lecture4.html",
     "title": "Lecture 4: Optimization 2 and 3",
     "section": "",
-    "text": "We continued our exploration of optimization algorithms. We also talked about how to solve systems of equations arising in many economic models, and we showcased an integer programming problem based on my research with Marleen where we reallocate buses across garages in London. 🚌\n\n\n\nTopic\nNotebook\n\n\n\n\nAlgorithms, and JuMP\ndownload notebook\n\n\nConstraints, (Mixed) Integer Problems\ndownload notebook\n\n\nSolving Systems of equations\ndownload notebook\n\n\nMIP Bus reallocation\ndownload notebook\n\n\n\n\n\n\n© Florian Oswald, 2025",
+    "text": "We continued our exploration of optimization algorithms. We also talked about how to solve systems of equations arising in many economic models, and we showcased an integer programming problem based on my research with Marleen where we reallocate buses across garages in London. 🚌\n\n\n\nTopic\nNotebook\n\n\n\n\nAlgorithms, and JuMP\ndownload notebook\n\n\nConstraints, (Mixed) Integer Problems\ndownload notebook\n\n\nSolving Systems of equations\ndownload notebook\n\n\nMIP Bus reallocation\ndownload notebook\n\n\n\n\n\n\n© Florian Oswald, 2026",
     "crumbs": [
       "Home",
       "Lectures",
@@ -1235,7 +1235,7 @@
     "href": "installation.html",
     "title": "Installation Instructions",
     "section": "",
-    "text": "The best way to install julia (allows for multiple installed versions and will always alert to new releases) is via the instructions at juliaup - please follow those for your OS.\n\n\n\nyou can equally well download the current release for your OS from here\n© Florian Oswald, 2025",
+    "text": "On this page you find the relevant installation instructions for this course. Please come with all components installed to the first class.\n© Florian Oswald, 2026",
     "crumbs": [
       "Home",
       "Setup",
@@ -1243,11 +1243,11 @@
     ]
   },
   {
-    "objectID": "installation.html#step-1-install-julia",
-    "href": "installation.html#step-1-install-julia",
+    "objectID": "installation.html#windows",
+    "href": "installation.html#windows",
     "title": "Installation Instructions",
-    "section": "",
-    "text": "The best way to install julia (allows for multiple installed versions and will always alert to new releases) is via the instructions at juliaup - please follow those for your OS.\n\n\n\nyou can equally well download the current release for your OS from here",
+    "section": "1.1 Windows",
+    "text": "1.1 Windows\n\nYou need at least windows 10, better windows 11.\nYou need to install the Windows Subsystem for Windows (WSL) version 2, i.e. WSL2. You should never just do what I say, but instead consult the official documentation. Therein, you will see that installing this is as easy as typing\n# start your PowerShell as Administrator\n# (right click on PowerShell...)\nwsl --install\n# choose all the default settings (in particular, install the Ubuntu Distribution)\n# restart your computer after this is completed.\nAfter successful installation and restart, have a look at your file browser. There is a like a second filesystem now - the one for linux!\nStart the Ubuntu terminal by typing “Ubuntu” in your Windows Start Button.\nIn the running terminal type commands, followed each time by enter:\npwd  # tells you where you are\nwhoami # tells you who you are \nhostname # tells you the name of this host",
     "crumbs": [
       "Home",
       "Setup",
@@ -1255,11 +1255,11 @@
     ]
   },
   {
-    "objectID": "installation.html#step-2-run-julia",
-    "href": "installation.html#step-2-run-julia",
+    "objectID": "installation.html#nix",
+    "href": "installation.html#nix",
     "title": "Installation Instructions",
-    "section": "Step 2: Run Julia",
-    "text": "Step 2: Run Julia\nAfter installing, make sure that you can run Julia. If you installed via juliaup, you should be able to start julia from your command line now by typing julia and hitting enter. Otherwise just launch the julia app from your Applications folder.\nMake sure that you are able to launch Julia and calculate 1+1 before proceeding!",
+    "section": "1.2 *nix",
+    "text": "1.2 *nix\nComputers not running a Windows OS are typically grouped together under the term *nix (star nix) - i.e. most current unix based OS out there. This includes MacOS.\nIf you have one of those, you have it easier.\n\n1.2.1 MacOS\nOpen the terminal application and type\ngit --version\nif that throws an error, type\nxcode-select --install\n\n\n1.2.2 Ubuntu\nIf you have any Linux distribution (Ubuntu, RedHat etc), just make sure you have the main tools installed.\n# type this and enter\nwhich git make gcc python3\nYou could then install any missing packages with\nsudo apt update\nsudo apt install -y build-essential git python3 python-is-python3",
     "crumbs": [
       "Home",
       "Setup",
@@ -1267,11 +1267,11 @@
     ]
   },
   {
-    "objectID": "installation.html#step-3-install-pluto",
-    "href": "installation.html#step-3-install-pluto",
+    "objectID": "installation.html#via-juliaup",
+    "href": "installation.html#via-juliaup",
     "title": "Installation Instructions",
-    "section": "Step 3: Install Pluto",
-    "text": "Step 3: Install Pluto\nNext we will install the Pluto notebook that we will be using during the course. Pluto is a Julia programming environment designed for interactivity and quick experiments.\nOpen the Julia REPL. This is the command-line interface to Julia, similar to the previous screenshot.\nHere you type Julia commands, and when you press ENTER, it runs, and you see the result.\nTo install Pluto, we want to run a package manager command. To switch from Julia mode to Pkg mode, type ] (closing square bracket) at the julia&gt; prompt:\njulia&gt; ]\n\n(@v1.10) pkg&gt;\nThe line turns blue and the prompt changes to pkg&gt;, telling you that you are now in package manager mode. This mode allows you to do operations on packages (also called libraries).\nTo install Pluto, run the following (case sensitive) command to add (install) the package to your system by downloading it from the internet. You should only need to do this once for each installation of Julia:\n(@v1.10) pkg&gt; add Pluto\nThis might take a couple of minutes, so you can go get yourself a cup of tea!\n\n\n\nimage\n\n\nYou can now close the terminal.",
+    "section": "2.1 via juliaup",
+    "text": "2.1 via juliaup\nThe best way to install julia (allows for multiple installed versions and will always alert to new releases) is via the instructions at juliaup - please follow those for your OS.",
     "crumbs": [
       "Home",
       "Setup",
@@ -1279,11 +1279,11 @@
     ]
   },
   {
-    "objectID": "installation.html#step-4-use-a-modern-browser-mozilla-firefox-or-google-chrome",
-    "href": "installation.html#step-4-use-a-modern-browser-mozilla-firefox-or-google-chrome",
+    "objectID": "installation.html#via-direct-download",
+    "href": "installation.html#via-direct-download",
     "title": "Installation Instructions",
-    "section": "Step 4: Use a modern browser: Mozilla Firefox or Google Chrome",
-    "text": "Step 4: Use a modern browser: Mozilla Firefox or Google Chrome\nWe need a modern browser to view Pluto notebooks with. Firefox and Chrome work best.",
+    "section": "2.2 via direct download",
+    "text": "2.2 via direct download\nyou can equally well download the current release for your OS from here",
     "crumbs": [
       "Home",
       "Setup",
@@ -1291,59 +1291,11 @@
     ]
   },
   {
-    "objectID": "installation.html#step-1-start-pluto",
-    "href": "installation.html#step-1-start-pluto",
+    "objectID": "installation.html#second-time-running-pluto-opening-a-notebook",
+    "href": "installation.html#second-time-running-pluto-opening-a-notebook",
     "title": "Installation Instructions",
-    "section": "Step 1: Start Pluto",
-    "text": "Step 1: Start Pluto\nStart the Julia REPL, like you did during the setup. In the REPL, type:\njulia&gt; using Pluto\n\njulia&gt; Pluto.run()\n\n\n\nimage\n\n\nThe terminal tells us to go to http://localhost:1234/ (or a similar URL). Let’s open Firefox or Chrome and type that into the address bar.\n\n\n\nimage\n\n\n\nIf you’re curious about what a Pluto notebook looks like, have a look at the sample notebooks. Samples 1, 2 and 6 may be useful for learning some basics of Julia programming.\nIf you want to hear the story behind Pluto, have a look a the JuliaCon presentation.\n\nIf nothing happens in the browser the first time, close Julia and try again. And please let us know!",
-    "crumbs": [
-      "Home",
-      "Setup",
-      "Installation"
-    ]
-  },
-  {
-    "objectID": "installation.html#step-2a-opening-a-notebook-from-the-web",
-    "href": "installation.html#step-2a-opening-a-notebook-from-the-web",
-    "title": "Installation Instructions",
-    "section": "Step 2a: Opening a notebook from the web",
-    "text": "Step 2a: Opening a notebook from the web\nThis is the main menu - here you can create new notebooks, or open existing ones. Our homework assignments will always be based on a template notebook, available in this GitHub repository. To start from a template notebook on the web, you can paste the URL into the blue box and press ENTER.\nFor example, homework 0 is available here. Copy this link (right click -&gt; Copy Link), and paste it into the box. Press ENTER, and select OK in the confirmation box.\n\n\n\nimage\n\n\nThe first thing we will want to do is to save the notebook somewhere on our own computer; see below.",
-    "crumbs": [
-      "Home",
-      "Setup",
-      "Installation"
-    ]
-  },
-  {
-    "objectID": "installation.html#step-2b-opening-an-existing-notebook-file",
-    "href": "installation.html#step-2b-opening-an-existing-notebook-file",
-    "title": "Installation Instructions",
-    "section": "Step 2b: Opening an existing notebook file",
-    "text": "Step 2b: Opening an existing notebook file\nWhen you launch Pluto for the second time, your recent notebooks will appear in the main menu. You can click on them to continue where you left off.\nIf you want to run a local notebook file that you have not opened before, then you need to enter its full path into the blue box in the main menu. More on finding full paths in step 3.",
-    "crumbs": [
-      "Home",
-      "Setup",
-      "Installation"
-    ]
-  },
-  {
-    "objectID": "installation.html#step-3-saving-a-notebook",
-    "href": "installation.html#step-3-saving-a-notebook",
-    "title": "Installation Instructions",
-    "section": "Step 3: Saving a notebook",
-    "text": "Step 3: Saving a notebook\nWe first need a folder to save our homework in. Open your file explorer and create one.\nNext, we need to know the absolute path of that folder. Here’s how you do that in Windows, MacOS and Ubuntu.\nFor example, you might have:\n\nC:\\\\Users\\\\fonsi\\\\Documents\\\\18S191_assignments\\\\ on Windows\n/Users/fonsi/Documents/18S191_assignments/ on MacOS\n/home/fonsi/Documents/18S191_assignments/ on Ubuntu\n\nNow that we know the absolute path, go back to your Pluto notebook, and at the top of the page, click on “Save notebook…”.\n\n\n\nimage\n\n\nThis is where you type the new path+filename for your notebook:\n\n\n\nimage\n\n\nClick Choose.",
-    "crumbs": [
-      "Home",
-      "Setup",
-      "Installation"
-    ]
-  },
-  {
-    "objectID": "installation.html#step-4-sharing-a-notebook",
-    "href": "installation.html#step-4-sharing-a-notebook",
-    "title": "Installation Instructions",
-    "section": "Step 4: Sharing a notebook",
-    "text": "Step 4: Sharing a notebook\nAfter working on your notebook (your code is autosaved when you run it), you will find your notebook file in the folder we created in step 3. This the file that you can share with others, or submit as your homework assignment to Canvas.",
+    "section": "5.1 Second time: Running Pluto & opening a notebook",
+    "text": "5.1 Second time: Running Pluto & opening a notebook\nRepeat the following steps whenever you want to work on a project or homework assignment which requires Pluto.\n\n5.1.1 Start Pluto\nStart the Julia REPL, like you did during the setup. In the REPL, type:\njulia&gt; using Pluto\n\njulia&gt; Pluto.run()\n\n\n\nimage\n\n\nThe terminal tells us to go to http://localhost:1234/ (or a similar URL). Let’s open Firefox or Chrome and type that into the address bar.\n\n\n\nimage\n\n\n\nIf you’re curious about what a Pluto notebook looks like, have a look at the sample notebooks. Samples 1, 2 and 6 may be useful for learning some basics of Julia programming.\nIf you want to hear the story behind Pluto, have a look a the JuliaCon presentation.\n\nIf nothing happens in the browser the first time, close Julia and try again.\n\n\n5.1.2 Opening a notebook from the web\nThis is the main menu - here you can create new notebooks, or open existing ones. Our homework assignments will always be based on a template notebook, available in this GitHub repository. To start from a template notebook on the web, you can paste the URL into the blue box and press ENTER.\nFor example, homework 0 is available here. Copy this link (right click -&gt; Copy Link), and paste it into the box. Press ENTER, and select OK in the confirmation box.\n\n\n\nimage\n\n\nThe first thing we will want to do is to save the notebook somewhere on our own computer; see below.\n\n\n5.1.3 Opening an existing notebook file\nWhen you launch Pluto for the second time, your recent notebooks will appear in the main menu. You can click on them to continue where you left off.\nIf you want to run a local notebook file that you have not opened before, then you need to enter its full path into the blue box in the main menu. More on finding full paths in step 3.",
     "crumbs": [
       "Home",
       "Setup",
@@ -1355,6 +1307,6 @@
     "href": "notebooks/week4/Figures.html",
     "title": "BFGS and GradientDescent",
     "section": "",
-    "text": "using Interact, Optim, Plots, OptimTestProblems, LineSearches, LinearAlgebra\n\n\n\n    Unable to load WebIO. Please make sure WebIO works for your Jupyter client.\n    For troubleshooting, please see \n    the WebIO/IJulia documentation.\n    \n\n\n\n\nprob = UnconstrainedProblems.examples[\"Rosenbrock\"]\nf = prob.f\ng! = prob.g!\nh! = prob.h!\n\nrosenbrock_hessian! (generic function with 1 method)\n\n\n\nx = [-1,1.]\nres = optimize(f, x, GradientDescent(), Optim.Options(store_trace=true, extended_trace=true))\n@manipulate for ix = slider(1:Optim.iterations(res), value = 1)\n    contour(-2.5:0.01:2, -1.5:0.01:2, (x,y)-&gt;sqrt(f([x, y])), fill=true, color=:deep, legend=false)\n    xtracemat = hcat(Optim.x_trace(res)...)\n    plot!(xtracemat[1, 1:ix], xtracemat[2, 1:ix], mc = :white, lab=\"\")\n    scatter!(xtracemat[1:1,ix], xtracemat[2:2,ix], mc=:black, msc=:red, lab=\"\")\n    scatter!([1.], [1.], mc=:red, msc=:red, lab=\"\")\n    scatter!(x[1:1], x[2:2], mc=:yellow, msc=:black, label=\"start\", legend=true)\nend\n\n\n    \n\n\n\n\nx = [-4, -3.]\n@manipulate for ix = slider(120:160, value = 120)\n    c = contour(-.85:0.01:-0.60, 0:0.01:1.2, (x,y)-&gt;sqrt(f([x, y])), fill=true, color=:deep, legend=false)\n    res = optimize(f, x, GradientDescent(), Optim.Options(store_trace=true, extended_trace=true))\n    xtracemat = hcat(Optim.x_trace(res)...)\n    \n    plot!(xtracemat[1, 120:ix], xtracemat[2, 120:ix], mc = :white, legend=true, label=\"Gradient Descent\")\n    scatter!(xtracemat[1:1,ix], xtracemat[2:2,ix], mc=:black, msc=:red, label = \"\")\n    scatter!(xtracemat[1:1,120], xtracemat[2:2,120], mc=:blue, msc=:blue, label=\"start\")\n    p = plot(1:ix, [Optim.trace(res)[i].metadata[\"Current step size\"] for i  = 1:ix], \"alpha\")\n    plot(c, p, layout=(2,1))\nend\n\n\nx = [-1., -1.]\nres = optimize(f, x, GradientDescent(), Optim.Options(store_trace=true, extended_trace=true))\nres2 = optimize(f, x, Newton(), Optim.Options(store_trace=true, extended_trace=true))\n@manipulate for ix = slider(1:Optim.iterations(res2), value = 1)\n    p = contour(-2.5:0.01:2, -1.5:0.01:2, (x,y)-&gt;sqrt(f([x, y])), fill=true, color=:deep, legend=false)\n    xtracemat = hcat(Optim.x_trace(res)...)\n    plot!(xtracemat[1, 1:ix], xtracemat[2, 1:ix], mc = :white,  label=\"Gradient Descent\", legend=true)\n    scatter!(xtracemat[1:1,ix], xtracemat[2:2,ix], mc=:black, msc=:red, label=\"\")\n    \n    xtracemat2 = hcat(Optim.x_trace(res2)...)\n    plot!(xtracemat2[1, 1:ix], xtracemat2[2, 1:ix], c=:blue, label=\"Newton\")\n    scatter!(xtracemat2[1:1,ix], xtracemat2[2:2,ix], mc=:black, msc=:blue, label=\"\")\n    scatter!([1.], [1.], mc=:red, msc=:red, label=\"\")\n    scatter!(x[1:1], x[2:2], mc=:yellow, msc=:yellow, label=\"start\")\nend\n\n\n## Linesearch\n# say we're at x = [-0.5,-0.5]\n# What is the gradient descent step?\nx_ls = [1.5,1.01]\nstor = similar(x_ls)\nh_stor = zeros(2,2)\ng!(stor, x_ls)\nh!(h_stor, x_ls)\nprintln(\"Gradient descent search direction: \", stor)\nprintln(\"Newton's method search direction: \", h_stor\\stor)\n\n\nf_ls=f(x_ls)\nxs = (0:0.0001:0.0051)\nplot(plot(xs,t-&gt; f(x_ls-t*stor),label=\"Gradient Descent\"),\nplot(xs,t-&gt;f(x_ls-t*(h_stor\\stor)), label=\"Newton's method\"))\n\n\n@manipulate for xx = slider(-2.:0.5:2., value = -2., label=\"x₁\"), yy = slider(-2.:0.5:2., value = -2., label=\"x₂\"), solver = Dict(\"GradientDescent()\" =&gt; GradientDescent, \"Newton()\" =&gt; Newton, \"BFGS()\" =&gt; BFGS), linesearch = Dict(\"HagerZhang()\" =&gt; LineSearches.HagerZhang(), \"MoreThuente()\" =&gt; LineSearches.MoreThuente(), \"BackTracking(order=3)\" =&gt; LineSearches.BackTracking(order=3), \"BackTracking(order=2)\" =&gt; LineSearches.BackTracking(order=2))\n    x = [xx, yy]\n    contour(-2.5:0.01:2.5, -2.5:0.01:4.0, (x,y)-&gt;sqrt(f([x, y])), fill=true, color=:deep, legend=false)\n    res = optimize(f, g!, h!, x, solver(linesearch=linesearch), Optim.Options(store_trace=true, extended_trace=true))\n    xtracemat = hcat(Optim.x_trace(res)...)\n    plot!(xtracemat[1, :], xtracemat[2, :], mc = :white, lab=\"\")\n    scatter!(xtracemat[1, 1:10:end], xtracemat[2, 1:10:end], mc = :white, lab=\"\")\n    scatter!([1.], [1.], mc=:red, msc=:red, lab=\"\")\n    scatter!(x[1:1], x[2:2], mc=:yellow, msc=:black, label=\"start\", legend=true)\nend\n\n\n# g(x, y) = dot([x, y]'*diagm([1.0, 1.0]),[x,y])\ng(x, y, v) = dot([x, y]'*diagm([1.0, v]),[x,y])\n\n\n@manipulate for xx = slider(-2.:.1:2., value = -2., label=\"x2\"), val = slider(1.0:0.5:150.0, label=\"v\", value = 1.0)\n    _x = [5., xx]\n    contour(-6.5:0.1:5.5, -3.5:0.1:3.5, (x,y)-&gt;g(x,y,val), fill=false, color=:deep, legend=false)\n    res = optimize(x-&gt;g(x[1],x[2],val), _x, GradientDescent(), Optim.Options(store_trace=true, extended_trace=true))\n    xtracemat = hcat(Optim.x_trace(res)...)\n    plot!(xtracemat[1, :], xtracemat[2, :], mc = :white)\n    scatter!(xtracemat[1, :], xtracemat[2, :], mc = :white)\n   #\n    scatter!([0.], [0.], mc=:red, msc=:red)\nend\n\n\nfh(x, y, v) = dot([x, y]'*[1.0 v/10;0.0 v],[x,y])\n\n\n@manipulate for xx = slider(-2.:.1:2., value = -2., label=\"x2\"), val = slider(10.0:0.5:150.0, value = 1.0, label=\"v\"), solver = Dict(:GradientDescent =&gt; GradientDescent(), :Newton =&gt; Newton(), :BFGS =&gt; BFGS())\n    _x = [5., xx]\n    contour(-6.5:0.1:5.5, -3.5:0.1:3.5, (x,y)-&gt;fh(x,y,val), fill=false, color=:deep, legend=false)\n    res = optimize(x-&gt;fh(x[1],x[2],val), _x, solver, Optim.Options(store_trace=true, extended_trace=true))\n    xtracemat = hcat(Optim.x_trace(res)...)\n    plot!(xtracemat[1, :], xtracemat[2, :], mc = :white)\n    scatter!(xtracemat[1, :], xtracemat[2, :], mc = :white)\n   #\n    scatter!([0.], [0.], mc=:red, msc=:red)\nend\n\n\n@manipulate for xx = slider(-2.:.1:2., value = -2., label=\"x2\"), val = slider(1.0:0.5:150.0, value = 1.0, label=\"v\")\n    _x = [5., xx]\n    contour(-6.5:0.1:5.5, -3.5:0.1:3.5, (x,y)-&gt;fh(x,y,val), fill=false, color=:deep, legend=false)\n    res = optimize(x-&gt;fh(x[1],x[2],val), _x, GradientDescent(), Optim.Options(store_trace=true, extended_trace=true))\n    res2 = optimize(x-&gt;fh(x[1],x[2],val), _x, BFGS(), Optim.Options(store_trace=true, extended_trace=true))\n    xtracemat = hcat(Optim.x_trace(res)...)\n    plot!(xtracemat[1, :], xtracemat[2, :], mc = :white, label=\"GradientDescent\", legend=true)\n    scatter!(xtracemat[1, :], xtracemat[2, :], mc = :white, label=\"\")\n    xtracemat2 = hcat(Optim.x_trace(res2)...)\n    plot!(xtracemat2[1, :], xtracemat2[2, :], c = :black, mc = :blue, label=\"BFGS\")\n    scatter!(xtracemat2[1, :], xtracemat2[2, :], mc = :blue, label=\"\")\n\n   #\n    scatter!([0.], [0.], mc=:red, msc=:red)\nend\n\n\n\n\n© Florian Oswald, 2025"
+    "text": "using Interact, Optim, Plots, OptimTestProblems, LineSearches, LinearAlgebra\n\n\n\n    Unable to load WebIO. Please make sure WebIO works for your Jupyter client.\n    For troubleshooting, please see \n    the WebIO/IJulia documentation.\n    \n\n\n\n\nprob = UnconstrainedProblems.examples[\"Rosenbrock\"]\nf = prob.f\ng! = prob.g!\nh! = prob.h!\n\nrosenbrock_hessian! (generic function with 1 method)\n\n\n\nx = [-1,1.]\nres = optimize(f, x, GradientDescent(), Optim.Options(store_trace=true, extended_trace=true))\n@manipulate for ix = slider(1:Optim.iterations(res), value = 1)\n    contour(-2.5:0.01:2, -1.5:0.01:2, (x,y)-&gt;sqrt(f([x, y])), fill=true, color=:deep, legend=false)\n    xtracemat = hcat(Optim.x_trace(res)...)\n    plot!(xtracemat[1, 1:ix], xtracemat[2, 1:ix], mc = :white, lab=\"\")\n    scatter!(xtracemat[1:1,ix], xtracemat[2:2,ix], mc=:black, msc=:red, lab=\"\")\n    scatter!([1.], [1.], mc=:red, msc=:red, lab=\"\")\n    scatter!(x[1:1], x[2:2], mc=:yellow, msc=:black, label=\"start\", legend=true)\nend\n\n\n    \n\n\n\n\nx = [-4, -3.]\n@manipulate for ix = slider(120:160, value = 120)\n    c = contour(-.85:0.01:-0.60, 0:0.01:1.2, (x,y)-&gt;sqrt(f([x, y])), fill=true, color=:deep, legend=false)\n    res = optimize(f, x, GradientDescent(), Optim.Options(store_trace=true, extended_trace=true))\n    xtracemat = hcat(Optim.x_trace(res)...)\n    \n    plot!(xtracemat[1, 120:ix], xtracemat[2, 120:ix], mc = :white, legend=true, label=\"Gradient Descent\")\n    scatter!(xtracemat[1:1,ix], xtracemat[2:2,ix], mc=:black, msc=:red, label = \"\")\n    scatter!(xtracemat[1:1,120], xtracemat[2:2,120], mc=:blue, msc=:blue, label=\"start\")\n    p = plot(1:ix, [Optim.trace(res)[i].metadata[\"Current step size\"] for i  = 1:ix], \"alpha\")\n    plot(c, p, layout=(2,1))\nend\n\n\nx = [-1., -1.]\nres = optimize(f, x, GradientDescent(), Optim.Options(store_trace=true, extended_trace=true))\nres2 = optimize(f, x, Newton(), Optim.Options(store_trace=true, extended_trace=true))\n@manipulate for ix = slider(1:Optim.iterations(res2), value = 1)\n    p = contour(-2.5:0.01:2, -1.5:0.01:2, (x,y)-&gt;sqrt(f([x, y])), fill=true, color=:deep, legend=false)\n    xtracemat = hcat(Optim.x_trace(res)...)\n    plot!(xtracemat[1, 1:ix], xtracemat[2, 1:ix], mc = :white,  label=\"Gradient Descent\", legend=true)\n    scatter!(xtracemat[1:1,ix], xtracemat[2:2,ix], mc=:black, msc=:red, label=\"\")\n    \n    xtracemat2 = hcat(Optim.x_trace(res2)...)\n    plot!(xtracemat2[1, 1:ix], xtracemat2[2, 1:ix], c=:blue, label=\"Newton\")\n    scatter!(xtracemat2[1:1,ix], xtracemat2[2:2,ix], mc=:black, msc=:blue, label=\"\")\n    scatter!([1.], [1.], mc=:red, msc=:red, label=\"\")\n    scatter!(x[1:1], x[2:2], mc=:yellow, msc=:yellow, label=\"start\")\nend\n\n\n## Linesearch\n# say we're at x = [-0.5,-0.5]\n# What is the gradient descent step?\nx_ls = [1.5,1.01]\nstor = similar(x_ls)\nh_stor = zeros(2,2)\ng!(stor, x_ls)\nh!(h_stor, x_ls)\nprintln(\"Gradient descent search direction: \", stor)\nprintln(\"Newton's method search direction: \", h_stor\\stor)\n\n\nf_ls=f(x_ls)\nxs = (0:0.0001:0.0051)\nplot(plot(xs,t-&gt; f(x_ls-t*stor),label=\"Gradient Descent\"),\nplot(xs,t-&gt;f(x_ls-t*(h_stor\\stor)), label=\"Newton's method\"))\n\n\n@manipulate for xx = slider(-2.:0.5:2., value = -2., label=\"x₁\"), yy = slider(-2.:0.5:2., value = -2., label=\"x₂\"), solver = Dict(\"GradientDescent()\" =&gt; GradientDescent, \"Newton()\" =&gt; Newton, \"BFGS()\" =&gt; BFGS), linesearch = Dict(\"HagerZhang()\" =&gt; LineSearches.HagerZhang(), \"MoreThuente()\" =&gt; LineSearches.MoreThuente(), \"BackTracking(order=3)\" =&gt; LineSearches.BackTracking(order=3), \"BackTracking(order=2)\" =&gt; LineSearches.BackTracking(order=2))\n    x = [xx, yy]\n    contour(-2.5:0.01:2.5, -2.5:0.01:4.0, (x,y)-&gt;sqrt(f([x, y])), fill=true, color=:deep, legend=false)\n    res = optimize(f, g!, h!, x, solver(linesearch=linesearch), Optim.Options(store_trace=true, extended_trace=true))\n    xtracemat = hcat(Optim.x_trace(res)...)\n    plot!(xtracemat[1, :], xtracemat[2, :], mc = :white, lab=\"\")\n    scatter!(xtracemat[1, 1:10:end], xtracemat[2, 1:10:end], mc = :white, lab=\"\")\n    scatter!([1.], [1.], mc=:red, msc=:red, lab=\"\")\n    scatter!(x[1:1], x[2:2], mc=:yellow, msc=:black, label=\"start\", legend=true)\nend\n\n\n# g(x, y) = dot([x, y]'*diagm([1.0, 1.0]),[x,y])\ng(x, y, v) = dot([x, y]'*diagm([1.0, v]),[x,y])\n\n\n@manipulate for xx = slider(-2.:.1:2., value = -2., label=\"x2\"), val = slider(1.0:0.5:150.0, label=\"v\", value = 1.0)\n    _x = [5., xx]\n    contour(-6.5:0.1:5.5, -3.5:0.1:3.5, (x,y)-&gt;g(x,y,val), fill=false, color=:deep, legend=false)\n    res = optimize(x-&gt;g(x[1],x[2],val), _x, GradientDescent(), Optim.Options(store_trace=true, extended_trace=true))\n    xtracemat = hcat(Optim.x_trace(res)...)\n    plot!(xtracemat[1, :], xtracemat[2, :], mc = :white)\n    scatter!(xtracemat[1, :], xtracemat[2, :], mc = :white)\n   #\n    scatter!([0.], [0.], mc=:red, msc=:red)\nend\n\n\nfh(x, y, v) = dot([x, y]'*[1.0 v/10;0.0 v],[x,y])\n\n\n@manipulate for xx = slider(-2.:.1:2., value = -2., label=\"x2\"), val = slider(10.0:0.5:150.0, value = 1.0, label=\"v\"), solver = Dict(:GradientDescent =&gt; GradientDescent(), :Newton =&gt; Newton(), :BFGS =&gt; BFGS())\n    _x = [5., xx]\n    contour(-6.5:0.1:5.5, -3.5:0.1:3.5, (x,y)-&gt;fh(x,y,val), fill=false, color=:deep, legend=false)\n    res = optimize(x-&gt;fh(x[1],x[2],val), _x, solver, Optim.Options(store_trace=true, extended_trace=true))\n    xtracemat = hcat(Optim.x_trace(res)...)\n    plot!(xtracemat[1, :], xtracemat[2, :], mc = :white)\n    scatter!(xtracemat[1, :], xtracemat[2, :], mc = :white)\n   #\n    scatter!([0.], [0.], mc=:red, msc=:red)\nend\n\n\n@manipulate for xx = slider(-2.:.1:2., value = -2., label=\"x2\"), val = slider(1.0:0.5:150.0, value = 1.0, label=\"v\")\n    _x = [5., xx]\n    contour(-6.5:0.1:5.5, -3.5:0.1:3.5, (x,y)-&gt;fh(x,y,val), fill=false, color=:deep, legend=false)\n    res = optimize(x-&gt;fh(x[1],x[2],val), _x, GradientDescent(), Optim.Options(store_trace=true, extended_trace=true))\n    res2 = optimize(x-&gt;fh(x[1],x[2],val), _x, BFGS(), Optim.Options(store_trace=true, extended_trace=true))\n    xtracemat = hcat(Optim.x_trace(res)...)\n    plot!(xtracemat[1, :], xtracemat[2, :], mc = :white, label=\"GradientDescent\", legend=true)\n    scatter!(xtracemat[1, :], xtracemat[2, :], mc = :white, label=\"\")\n    xtracemat2 = hcat(Optim.x_trace(res2)...)\n    plot!(xtracemat2[1, :], xtracemat2[2, :], c = :black, mc = :blue, label=\"BFGS\")\n    scatter!(xtracemat2[1, :], xtracemat2[2, :], mc = :blue, label=\"\")\n\n   #\n    scatter!([0.], [0.], mc=:red, msc=:red)\nend\n\n\n\n\n© Florian Oswald, 2026"
   }
 ]

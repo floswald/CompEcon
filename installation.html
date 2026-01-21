@@ -373,22 +373,34 @@ cookieconsent.run({
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#step-1-install-julia" id="toc-step-1-install-julia" class="nav-link active" data-scroll-target="#step-1-install-julia">Step 1: Install Julia</a>
+  <li><a href="#your-os" id="toc-your-os" class="nav-link active" data-scroll-target="#your-os"><span class="header-section-number">1</span> Your OS</a>
   <ul class="collapse">
-  <li><a href="#a-via-juliaup" id="toc-a-via-juliaup" class="nav-link" data-scroll-target="#a-via-juliaup">1.a via <code>juliaup</code></a></li>
-  <li><a href="#b-via-direct-download" id="toc-b-via-direct-download" class="nav-link" data-scroll-target="#b-via-direct-download">1.b via direct download</a></li>
-  </ul></li>
-  <li><a href="#step-2-run-julia" id="toc-step-2-run-julia" class="nav-link" data-scroll-target="#step-2-run-julia">Step 2: Run Julia</a></li>
-  <li><a href="#step-3-install-pluto" id="toc-step-3-install-pluto" class="nav-link" data-scroll-target="#step-3-install-pluto">Step 3: Install <code>Pluto</code></a></li>
-  <li><a href="#step-4-use-a-modern-browser-mozilla-firefox-or-google-chrome" id="toc-step-4-use-a-modern-browser-mozilla-firefox-or-google-chrome" class="nav-link" data-scroll-target="#step-4-use-a-modern-browser-mozilla-firefox-or-google-chrome">Step 4: Use a modern browser: Mozilla Firefox or Google Chrome</a></li>
-  <li><a href="#second-time-running-pluto-opening-a-notebook" id="toc-second-time-running-pluto-opening-a-notebook" class="nav-link" data-scroll-target="#second-time-running-pluto-opening-a-notebook">Second time: <em>Running Pluto &amp; opening a notebook</em></a>
+  <li><a href="#windows" id="toc-windows" class="nav-link" data-scroll-target="#windows"><span class="header-section-number">1.1</span> Windows</a></li>
+  <li><a href="#nix" id="toc-nix" class="nav-link" data-scroll-target="#nix"><span class="header-section-number">1.2</span> <code>*nix</code></a>
   <ul class="collapse">
-  <li><a href="#step-1-start-pluto" id="toc-step-1-start-pluto" class="nav-link" data-scroll-target="#step-1-start-pluto">Step 1: Start Pluto</a></li>
-  <li><a href="#step-2a-opening-a-notebook-from-the-web" id="toc-step-2a-opening-a-notebook-from-the-web" class="nav-link" data-scroll-target="#step-2a-opening-a-notebook-from-the-web">Step 2a: Opening a notebook from the web</a></li>
-  <li><a href="#step-2b-opening-an-existing-notebook-file" id="toc-step-2b-opening-an-existing-notebook-file" class="nav-link" data-scroll-target="#step-2b-opening-an-existing-notebook-file">Step 2b: Opening an existing notebook file</a></li>
-  <li><a href="#step-3-saving-a-notebook" id="toc-step-3-saving-a-notebook" class="nav-link" data-scroll-target="#step-3-saving-a-notebook">Step 3: Saving a notebook</a></li>
-  <li><a href="#step-4-sharing-a-notebook" id="toc-step-4-sharing-a-notebook" class="nav-link" data-scroll-target="#step-4-sharing-a-notebook">Step 4: Sharing a notebook</a></li>
+  <li><a href="#macos" id="toc-macos" class="nav-link" data-scroll-target="#macos"><span class="header-section-number">1.2.1</span> MacOS</a></li>
+  <li><a href="#ubuntu" id="toc-ubuntu" class="nav-link" data-scroll-target="#ubuntu"><span class="header-section-number">1.2.2</span> Ubuntu</a></li>
   </ul></li>
+  </ul></li>
+  <li><a href="#install-julia" id="toc-install-julia" class="nav-link" data-scroll-target="#install-julia"><span class="header-section-number">2</span> Install Julia</a>
+  <ul class="collapse">
+  <li><a href="#via-juliaup" id="toc-via-juliaup" class="nav-link" data-scroll-target="#via-juliaup"><span class="header-section-number">2.1</span> via <code>juliaup</code></a></li>
+  <li><a href="#via-direct-download" id="toc-via-direct-download" class="nav-link" data-scroll-target="#via-direct-download"><span class="header-section-number">2.2</span> via direct download</a></li>
+  </ul></li>
+  <li><a href="#run-julia" id="toc-run-julia" class="nav-link" data-scroll-target="#run-julia"><span class="header-section-number">3</span> Run Julia</a></li>
+  <li><a href="#install-pluto" id="toc-install-pluto" class="nav-link" data-scroll-target="#install-pluto"><span class="header-section-number">4</span> Install <code>Pluto</code></a></li>
+  <li><a href="#use-a-modern-browser-mozilla-firefox-or-google-chrome" id="toc-use-a-modern-browser-mozilla-firefox-or-google-chrome" class="nav-link" data-scroll-target="#use-a-modern-browser-mozilla-firefox-or-google-chrome"><span class="header-section-number">5</span> Use a modern browser: Mozilla Firefox or Google Chrome</a>
+  <ul class="collapse">
+  <li><a href="#second-time-running-pluto-opening-a-notebook" id="toc-second-time-running-pluto-opening-a-notebook" class="nav-link" data-scroll-target="#second-time-running-pluto-opening-a-notebook"><span class="header-section-number">5.1</span> Second time: <em>Running Pluto &amp; opening a notebook</em></a>
+  <ul class="collapse">
+  <li><a href="#start-pluto" id="toc-start-pluto" class="nav-link" data-scroll-target="#start-pluto"><span class="header-section-number">5.1.1</span> Start Pluto</a></li>
+  <li><a href="#opening-a-notebook-from-the-web" id="toc-opening-a-notebook-from-the-web" class="nav-link" data-scroll-target="#opening-a-notebook-from-the-web"><span class="header-section-number">5.1.2</span> Opening a notebook from the web</a></li>
+  <li><a href="#opening-an-existing-notebook-file" id="toc-opening-an-existing-notebook-file" class="nav-link" data-scroll-target="#opening-an-existing-notebook-file"><span class="header-section-number">5.1.3</span> Opening an existing notebook file</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#saving-a-notebook" id="toc-saving-a-notebook" class="nav-link" data-scroll-target="#saving-a-notebook"><span class="header-section-number">6</span> Saving a notebook</a></li>
+  <li><a href="#sharing-a-notebook" id="toc-sharing-a-notebook" class="nav-link" data-scroll-target="#sharing-a-notebook"><span class="header-section-number">7</span> Sharing a notebook</a></li>
+  <li><a href="#install-vscode" id="toc-install-vscode" class="nav-link" data-scroll-target="#install-vscode"><span class="header-section-number">8</span> Install VSCode</a></li>
   </ul>
 </nav>
     </div>
@@ -414,34 +426,83 @@ cookieconsent.run({
 </header>
 
 
-<section id="step-1-install-julia" class="level2">
-<h2 class="anchored" data-anchor-id="step-1-install-julia">Step 1: Install Julia</h2>
-<section id="a-via-juliaup" class="level3">
-<h3 class="anchored" data-anchor-id="a-via-juliaup">1.a via <code>juliaup</code></h3>
+<p>On this page you find the relevant installation instructions for this course. Please come with all components installed to the first class.</p>
+<section id="your-os" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Your OS</h1>
+<p>You need an up to date operating system. If you have not updated this in a while - <strong>now</strong> is the moment to do so. 🍜</p>
+<p>After you are back, make sure you have all tools needed for modern scientific computing on board. There are 2 cases:</p>
+<ol type="1">
+<li>You have a windows computer: We need to do some work here.</li>
+<li>You do not have a windows computer: Relax.</li>
+</ol>
+<section id="windows" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="windows"><span class="header-section-number">1.1</span> Windows</h2>
+<ul>
+<li><p>You need at least windows 10, better windows 11.</p></li>
+<li><p>You need to install the <em>Windows Subsystem for Windows</em> (WSL) version 2, i.e.&nbsp;WSL2. You should never just do what I say, but instead consult <a href="https://learn.microsoft.com/en-us/windows/wsl/install">the official documentation</a>. Therein, you will see that installing this is as easy as typing</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># start your PowerShell as Administrator</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># (right click on PowerShell...)</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>wsl <span class="op">--</span>install</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># choose all the default settings (in particular, install the Ubuntu Distribution)</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># restart your computer after this is completed.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<li><p>After successful installation and restart, have a look at your file browser. There is a like a second filesystem now - the one for linux!</p></li>
+<li><p>Start the Ubuntu terminal by typing “Ubuntu” in your Windows Start Button.</p></li>
+<li><p>In the running terminal type commands, followed each time by <code>enter</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pwd</span>  <span class="co"># tells you where you are</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>whoami <span class="co"># tells you who you are </span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>hostname <span class="co"># tells you the name of this host</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+</ul>
+</section>
+<section id="nix" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="nix"><span class="header-section-number">1.2</span> <code>*nix</code></h2>
+<p>Computers <em>not</em> running a Windows OS are typically grouped together under the term <code>*nix</code> (<em>star nix</em>) - i.e.&nbsp;most current unix based OS out there. <em>This includes MacOS</em>.</p>
+<p>If you have one of those, you have it easier.</p>
+<section id="macos" class="level3" data-number="1.2.1">
+<h3 data-number="1.2.1" class="anchored" data-anchor-id="macos"><span class="header-section-number">1.2.1</span> MacOS</h3>
+<p>Open the terminal application and type</p>
+<pre><code>git --version</code></pre>
+<p>if that throws an error, type</p>
+<pre><code>xcode-select --install</code></pre>
+</section>
+<section id="ubuntu" class="level3" data-number="1.2.2">
+<h3 data-number="1.2.2" class="anchored" data-anchor-id="ubuntu"><span class="header-section-number">1.2.2</span> Ubuntu</h3>
+<p>If you have any Linux distribution (Ubuntu, RedHat etc), just make sure you have the main tools installed.</p>
+<pre><code># type this and enter
+which git make gcc python3</code></pre>
+<p>You could then install any missing packages with</p>
+<pre><code>sudo apt update
+sudo apt install -y build-essential git python3 python-is-python3</code></pre>
+</section>
+</section>
+</section>
+<section id="install-julia" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Install Julia</h1>
+<section id="via-juliaup" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="via-juliaup"><span class="header-section-number">2.1</span> via <code>juliaup</code></h2>
 <p>The best way to install julia (allows for multiple installed versions and will always alert to new releases) is via the instructions at <a href="https://github.com/JuliaLang/juliaup">juliaup</a> - please follow those for your OS.</p>
 </section>
-<section id="b-via-direct-download" class="level3">
-<h3 class="anchored" data-anchor-id="b-via-direct-download">1.b via direct download</h3>
+<section id="via-direct-download" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="via-direct-download"><span class="header-section-number">2.2</span> via direct download</h2>
 <p>you can equally well download the current release for your OS from <a href="https://julialang.org/downloads/">here</a></p>
 </section>
 </section>
-<section id="step-2-run-julia" class="level2">
-<h2 class="anchored" data-anchor-id="step-2-run-julia">Step 2: Run Julia</h2>
+<section id="run-julia" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Run Julia</h1>
 <p>After installing, <strong>make sure that you can run Julia</strong>. If you installed via <code>juliaup</code>, you should be able to start julia from your command line now by typing <code>julia</code> and hitting enter. Otherwise just launch the julia app from your Applications folder.</p>
 <p><em>Make sure that you are able to launch Julia and calculate <code>1+1</code> before proceeding!</em></p>
 </section>
-<section id="step-3-install-pluto" class="level2">
-<h2 class="anchored" data-anchor-id="step-3-install-pluto">Step 3: Install <a href="https://github.com/fonsp/Pluto.jl"><code>Pluto</code></a></h2>
+<section id="install-pluto" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Install <a href="https://github.com/fonsp/Pluto.jl"><code>Pluto</code></a></h1>
 <p>Next we will install the <a href="https://github.com/fonsp/Pluto.jl/blob/master/README.md"><strong>Pluto notebook</strong></a> that we will be using during the course. Pluto is a Julia <em>programming environment</em> designed for interactivity and quick experiments.</p>
 <p>Open the <strong>Julia REPL</strong>. This is the command-line interface to Julia, similar to the previous screenshot.</p>
 <p>Here you type <em>Julia commands</em>, and when you press ENTER, it runs, and you see the result.</p>
 <p>To install Pluto, we want to run a <em>package manager command</em>. To switch from <em>Julia</em> mode to <em>Pkg</em> mode, type <code>]</code> (closing square bracket) at the <code>julia&gt;</code> prompt:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>julia<span class="op">&gt;</span> ]</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>(<span class="pp">@v1</span><span class="fl">.10</span>) pkg<span class="op">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>julia<span class="op">&gt;</span> ]</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>(<span class="pp">@v1</span><span class="fl">.12</span>) pkg<span class="op">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The line turns blue and the prompt changes to <code>pkg&gt;</code>, telling you that you are now in <em>package manager mode</em>. This mode allows you to do operations on <strong>packages</strong> (also called libraries).</p>
 <p>To install Pluto, run the following (case sensitive) command to <em>add</em> (install) the package to your system by downloading it from the internet. You should only need to do this <em>once</em> for each installation of Julia:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>(<span class="pp">@v1</span><span class="fl">.10</span>) pkg<span class="op">&gt;</span> add Pluto</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>(<span class="pp">@v1</span><span class="fl">.12</span>) pkg<span class="op">&gt;</span> add Pluto</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This might take a couple of minutes, so you can go get yourself a cup of tea!</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -451,19 +512,18 @@ cookieconsent.run({
 </div>
 <p>You can now close the terminal.</p>
 </section>
-<section id="step-4-use-a-modern-browser-mozilla-firefox-or-google-chrome" class="level2">
-<h2 class="anchored" data-anchor-id="step-4-use-a-modern-browser-mozilla-firefox-or-google-chrome">Step 4: Use a modern browser: Mozilla Firefox or Google Chrome</h2>
+<section id="use-a-modern-browser-mozilla-firefox-or-google-chrome" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Use a modern browser: Mozilla Firefox or Google Chrome</h1>
 <p>We need a modern browser to view Pluto notebooks with. Firefox and Chrome work best.</p>
-</section>
-<section id="second-time-running-pluto-opening-a-notebook" class="level1">
-<h1>Second time: <em>Running Pluto &amp; opening a notebook</em></h1>
-<p>Repeat the following steps whenever you want to work on a project or homework assignment.</p>
-<section id="step-1-start-pluto" class="level2">
-<h2 class="anchored" data-anchor-id="step-1-start-pluto">Step 1: Start Pluto</h2>
+<section id="second-time-running-pluto-opening-a-notebook" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="second-time-running-pluto-opening-a-notebook"><span class="header-section-number">5.1</span> Second time: <em>Running Pluto &amp; opening a notebook</em></h2>
+<p>Repeat the following steps whenever you want to work on a project or homework assignment which requires Pluto.</p>
+<section id="start-pluto" class="level3" data-number="5.1.1">
+<h3 data-number="5.1.1" class="anchored" data-anchor-id="start-pluto"><span class="header-section-number">5.1.1</span> Start Pluto</h3>
 <p>Start the Julia REPL, like you did during the setup. In the REPL, type:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>julia<span class="op">&gt;</span> <span class="im">using</span> <span class="bu">Pluto</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>julia<span class="op">&gt;</span> Pluto.<span class="fu">run</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>julia<span class="op">&gt;</span> <span class="im">using</span> <span class="bu">Pluto</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>julia<span class="op">&gt;</span> Pluto.<span class="fu">run</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://user-images.githubusercontent.com/6933510/91441094-eb01d080-e86f-11ea-856f-e667fdd9b85c.png" class="img-fluid figure-img"></p>
@@ -481,10 +541,10 @@ cookieconsent.run({
 <p>If you’re curious about what a <em>Pluto notebook</em> looks like, have a look at the <strong>sample notebooks</strong>. Samples 1, 2 and 6 may be useful for learning some basics of Julia programming.</p>
 <p>If you want to hear the story behind Pluto, have a look a the <a href="https://www.youtube.com/watch?v=IAF8DjrQSSk">JuliaCon presentation</a>.</p>
 </blockquote>
-<p>If nothing happens in the browser the first time, close Julia and try again. And please let us know!</p>
+<p>If nothing happens in the browser the first time, close Julia and try again.</p>
 </section>
-<section id="step-2a-opening-a-notebook-from-the-web" class="level2">
-<h2 class="anchored" data-anchor-id="step-2a-opening-a-notebook-from-the-web">Step 2a: Opening a notebook from the web</h2>
+<section id="opening-a-notebook-from-the-web" class="level3" data-number="5.1.2">
+<h3 data-number="5.1.2" class="anchored" data-anchor-id="opening-a-notebook-from-the-web"><span class="header-section-number">5.1.2</span> Opening a notebook from the web</h3>
 <p>This is the main menu - here you can create new notebooks, or open existing ones. Our homework assignments will always be based on a <em>template notebook</em>, available in this GitHub repository. To start from a template notebook on the web, you can <em>paste the URL into the blue box</em> and press ENTER.</p>
 <p>For example, homework 0 is available <a href="https://github.com/mitmath/18S191/blob/master/homework/homework0/hw0.jl">here</a>. Copy this link (right click -&gt; Copy Link), and paste it into the box. Press ENTER, and select OK in the confirmation box.</p>
 <div class="quarto-figure quarto-figure-center">
@@ -495,13 +555,15 @@ cookieconsent.run({
 </div>
 <p><strong>The first thing we will want to do is to save the notebook somewhere on our own computer; see below.</strong></p>
 </section>
-<section id="step-2b-opening-an-existing-notebook-file" class="level2">
-<h2 class="anchored" data-anchor-id="step-2b-opening-an-existing-notebook-file">Step 2b: Opening an existing notebook file</h2>
+<section id="opening-an-existing-notebook-file" class="level3" data-number="5.1.3">
+<h3 data-number="5.1.3" class="anchored" data-anchor-id="opening-an-existing-notebook-file"><span class="header-section-number">5.1.3</span> Opening an existing notebook file</h3>
 <p>When you launch Pluto for the second time, your recent notebooks will appear in the main menu. You can click on them to continue where you left off.</p>
 <p>If you want to run a local notebook file that you have not opened before, then you need to enter its <em>full path</em> into the blue box in the main menu. More on finding full paths in step 3.</p>
 </section>
-<section id="step-3-saving-a-notebook" class="level2">
-<h2 class="anchored" data-anchor-id="step-3-saving-a-notebook">Step 3: Saving a notebook</h2>
+</section>
+</section>
+<section id="saving-a-notebook" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Saving a notebook</h1>
 <p>We first need a folder to save our homework in. Open your file explorer and create one.</p>
 <p>Next, we need to know the <em>absolute path</em> of that folder. Here’s how you do that in <a href="https://www.top-password.com/blog/copy-full-path-of-a-folder-file-in-windows/">Windows</a>, <a href="https://www.josharcher.uk/code/find-path-to-folder-on-mac/">MacOS</a> and <a href="">Ubuntu</a>.</p>
 <p>For example, you might have:</p>
@@ -526,15 +588,18 @@ cookieconsent.run({
 </div>
 <p>Click <em>Choose</em>.</p>
 </section>
-<section id="step-4-sharing-a-notebook" class="level2">
-<h2 class="anchored" data-anchor-id="step-4-sharing-a-notebook">Step 4: Sharing a notebook</h2>
-<p>After working on your notebook (your code is autosaved when you run it), you will find your notebook file in the folder we created in step 3. This the file that you can share with others, or submit as your homework assignment to Canvas.</p>
+<section id="sharing-a-notebook" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Sharing a notebook</h1>
+<p>After working on your notebook (your code is autosaved when you run it), you will find your notebook file in the folder we created above. This the file that you can share with others, or submit as your homework assignment. You can click on the <em>share</em> symbol on top and choose to export it as a static HTML file, for example, or a PDF.</p>
+</section>
+<section id="install-vscode" class="level1" data-number="8">
+<h1 data-number="8"><span class="header-section-number">8</span> Install VSCode</h1>
+<p>VSCode is a very powerful text editor which we will use extensively. Get the version for your OS <a href="https://code.visualstudio.com/download">here</a>.</p>
 
 
 </section>
-</section>
 
-<p>© Florian Oswald, 2025</p></main> <!-- /main -->
+<p>© Florian Oswald, 2026</p></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
