@@ -1,14 +1,14 @@
 ---
 title: "Computational Economics for PhDs"
 author: "[Florian Oswald](https://floswald.github.io)"
-subtitle: "Collegio Carlo Alberto, 2025"
+subtitle: "Collegio Carlo Alberto, 2026"
 ---
 
 ::: {.columns}
 
 ::: {.column width="70%"}
 * **Teacher:** Florian Oswald, [florian.oswald@unito.it](mailto:florian.oswald@unito.it)
-* **Class Times:** Weekly Monday and Tuesday 11:00-13:00
+* **Class Times:** tbc
 * **Class Location:** Collegio Carlo Alberto
 * **Slack**: There will be a slack channel for all communication
 :::
@@ -58,16 +58,14 @@ Section | Topic
 ## Prerequisites
 
 1. You need a laptop. 
-2. You should be familiar with the material from [Introduction to Programming](https://floswald.github.io/ScPoProgramming).
+2. You should be familiar with the material from [Introduction to Programming](https://floswald.github.io/IntroProgramming) - more below.
 3. You must sign up for a free account at github.com. Choose a reasonable user name and upload a profile picture.
-4. **Before** you come the first class, please do this:
-    1. Download the latest [stable `julia` release](https://julialang.org/downloads/) for your OS.
-    2. Download the [`VSCode Editor`](https://code.visualstudio.com)
+4. **Before** you come the first class, please follow closely the [installation instructions](installation.qmd).
 
 ### Getting Programming Skills
 
-1. Check out what is being taught in the [Introduction to Programming](https://floswald.github.io/ScPoProgramming) course. You should know this level.
-1. We will be using [Julia](http://julialang.org/) for this course. 
+1. Check out what is being taught in the [Introduction to Programming](https://floswald.github.io/IntroProgramming) course. I want you to read through sessions 1-3 on your own. I will give you a quiz to complete on this before week 3. 
+2. We will be using [Julia](http://julialang.org/) for this course. 
     - [Noteworthy Differences from Other Languages](https://docs.julialang.org/en/v1/manual/noteworthy-differences/)
     - [MATLAB, Python, Julia Syntax Comparison](http://cheatsheets.quantecon.org/)
 
@@ -156,7 +154,7 @@ You can expect your instructor to abide by the same code of conduct, so this is 
 The copyright notice to be included in any copies and other derivative work of this material is:
 
 ```
-Copyright 2025 Florian Oswald, florian.oswald@gmail.com
+Copyright 2026 Florian Oswald, florian.oswald@gmail.com
 ```
 
 Thank you.

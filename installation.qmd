@@ -1,27 +1,97 @@
 ---
 title: Installation Instructions
+number-sections: true
 ---
 
+On this page you find the relevant installation instructions for this course. Please come with all components installed to the first class.
 
-## Step 1: Install Julia 
+# Your OS
 
-### 1.a via `juliaup`
+You need an up to date operating system. If you have not updated this in a while - **now** is the moment to do so. 🍜
+
+After you are back, make sure you have all tools needed for modern scientific computing on board. There are 2 cases:
+
+1. You have a windows computer: We need to do some work here.
+2. You do not have a windows computer: Relax.
+
+## Windows
+
+* You need at least windows 10, better windows 11.
+* You need to install the *Windows Subsystem for Windows* (WSL) version 2, i.e. WSL2. You should never just do what I say, but instead consult [the official documentation](https://learn.microsoft.com/en-us/windows/wsl/install). Therein, you will see that installing this is as easy as typing
+
+    ```powershell
+    # start your PowerShell as Administrator
+    # (right click on PowerShell...)
+    wsl --install
+    # choose all the default settings (in particular, install the Ubuntu Distribution)
+    # restart your computer after this is completed.
+    ```
+* After successful installation and restart, have a look at your file browser. There is a like a second filesystem now - the one for linux!
+* Start the Ubuntu terminal by typing "Ubuntu" in your Windows Start Button.
+* In the running terminal type commands, followed each time by `enter`:
+    
+    ```powershell
+    pwd  # tells you where you are
+    whoami # tells you who you are 
+    hostname # tells you the name of this host
+    ```
+
+## `*nix`
+
+Computers *not* running a Windows OS are typically grouped together under the term `*nix` (*star nix*) - i.e. most current unix based OS out there. *This includes MacOS*. 
+
+If you have one of those, you have it easier. 
+
+### MacOS
+
+Open the terminal application and type
+
+```
+git --version
+```
+
+if that throws an error, type
+
+```
+xcode-select --install
+```
+
+### Ubuntu
+
+If you have any Linux distribution (Ubuntu, RedHat etc), just make sure you have the main tools installed.
+
+```
+# type this and enter
+which git make gcc python3
+```
+
+You could then install any missing packages with
+
+```
+sudo apt update
+sudo apt install -y build-essential git python3 python-is-python3
+```
+
+
+# Install Julia 
+
+## via `juliaup`
 
 The best way to install julia (allows for multiple installed versions and will always alert to new releases) is via the instructions at [juliaup](https://github.com/JuliaLang/juliaup) - please follow those for your OS.
 
 
-### 1.b via direct download
+## via direct download
 
 you can equally well download the current release for your OS from [here](https://julialang.org/downloads/)
 
 
-## Step 2: Run Julia
+# Run Julia
 
 After installing, **make sure that you can run Julia**. If you installed via `juliaup`, you should be able to start julia from your command line now by typing `julia` and hitting enter. Otherwise just launch the julia app from your Applications folder.
 
 *Make sure that you are able to launch Julia and calculate `1+1` before proceeding!*
 
-## Step 3: Install [`Pluto`](https://github.com/fonsp/Pluto.jl)
+# Install [`Pluto`](https://github.com/fonsp/Pluto.jl)
 
 Next we will install the [**Pluto notebook**](https://github.com/fonsp/Pluto.jl/blob/master/README.md) that we will be using during the course. Pluto is a Julia _programming environment_ designed for interactivity and quick experiments.
 
@@ -33,7 +103,7 @@ To install Pluto, we want to run a _package manager command_. To switch from _Ju
 ```julia
 julia> ]
 
-(@v1.10) pkg>
+(@v1.12) pkg>
 ```
 
 The line turns blue and the prompt changes to `pkg>`, telling you that you are now in _package manager mode_. This mode allows you to do operations on **packages** (also called libraries).
@@ -42,7 +112,7 @@ To install Pluto, run the following (case sensitive) command to *add* (install) 
 You should only need to do this *once* for each installation of Julia:
 
 ```julia
-(@v1.10) pkg> add Pluto
+(@v1.12) pkg> add Pluto
 ```
 
 This might take a couple of minutes, so you can go get yourself a cup of tea!
@@ -51,15 +121,15 @@ This might take a couple of minutes, so you can go get yourself a cup of tea!
 
 You can now close the terminal.
 
-## Step 4: Use a modern browser: Mozilla Firefox or Google Chrome
+# Use a modern browser: Mozilla Firefox or Google Chrome
 
 We need a modern browser to view Pluto notebooks with. Firefox and Chrome work best.
 
 
-# Second time: _Running Pluto & opening a notebook_
-Repeat the following steps whenever you want to work on a project or homework assignment.
+## Second time: _Running Pluto & opening a notebook_
+Repeat the following steps whenever you want to work on a project or homework assignment which requires Pluto.
 
-## Step 1: Start Pluto
+### Start Pluto
 
 Start the Julia REPL, like you did during the setup. In the REPL, type:
 ```julia
@@ -78,9 +148,9 @@ The terminal tells us to go to `http://localhost:1234/` (or a similar URL). Let'
 > 
 > If you want to hear the story behind Pluto, have a look a the [JuliaCon presentation](https://www.youtube.com/watch?v=IAF8DjrQSSk).
 
-If nothing happens in the browser the first time, close Julia and try again. And please let us know!
+If nothing happens in the browser the first time, close Julia and try again.
 
-## Step 2a: Opening a notebook from the web
+### Opening a notebook from the web
 
 This is the main menu - here you can create new notebooks, or open existing ones. Our homework assignments will always be based on a _template notebook_, available in this GitHub repository. To start from a template notebook on the web, you can _paste the URL into the blue box_ and press ENTER.
 
@@ -90,12 +160,12 @@ For example, homework 0 is available [here](https://github.com/mitmath/18S191/bl
 
 **The first thing we will want to do is to save the notebook somewhere on our own computer; see below.** 
 
-## Step 2b: Opening an existing notebook file
+### Opening an existing notebook file
 When you launch Pluto for the second time, your recent notebooks will appear in the main menu. You can click on them to continue where you left off.
 
 If you want to run a local notebook file that you have not opened before, then you need to enter its _full path_ into the blue box in the main menu. More on finding full paths in step 3.
 
-## Step 3: Saving a notebook
+# Saving a notebook
 We first need a folder to save our homework in. Open your file explorer and create one. 
 
 Next, we need to know the _absolute path_ of that folder. Here's how you do that in [Windows](https://www.top-password.com/blog/copy-full-path-of-a-folder-file-in-windows/), [MacOS](https://www.josharcher.uk/code/find-path-to-folder-on-mac/) and [Ubuntu]().
@@ -118,6 +188,11 @@ This is where you type the **new path+filename for your notebook**:
 
 Click _Choose_.
 
-## Step 4: Sharing a notebook
+# Sharing a notebook
 
-After working on your notebook (your code is autosaved when you run it), you will find your notebook file in the folder we created in step 3. This the file that you can share with others, or submit as your homework assignment to Canvas.
+After working on your notebook (your code is autosaved when you run it), you will find your notebook file in the folder we created above. This the file that you can share with others, or submit as your homework assignment. You can click on the *share* symbol on top and choose to export it as a static HTML file, for example, or a PDF. 
+
+
+# Install VSCode
+
+VSCode is a very powerful text editor which we will use extensively. Get the version for your OS [here](https://code.visualstudio.com/download).
