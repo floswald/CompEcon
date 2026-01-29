@@ -1,0 +1,205 @@
+---
+title: (Research) Software Engineering
+subtitle: Who Writes Code and How?
+format:
+  revealjs:
+    theme: _extensions/clean/clean.scss
+author:
+  - name: Florian Oswald
+    url: https://floswald.github.io
+    email: florian.oswald@unito.it
+    orcid: 0000-0001-7737-2038
+    affiliations:
+      - University of Turin
+      - Collegio Carlo Alberto
+      - JPE Data Editor
+date: last-modified
+execute: 
+  cache: true
+bibliography: refs.bib
+---
+
+## (Research?) Software Engineering
+
+* You will spend a large fraction of your time writing code.
+* People who write a lot of code are software engineers.
+* You write code *for research*, so you are a *research* software engineer. 
+
+::: {.fragment}
+::: {.callout-tip}
+# Research Software Engineer (RES)
+
+An RSE is a professional who combines software engineering expertise with research domain knowledge to develop, maintain, and optimize software tools and infrastructure that enable scientific research.
+
+:::
+
+::: {.fragment}
+... Sounds a bit like yourself, not? 🤔
+The [Software Sustainability Institute](https://www.software.ac.uk/about/research-software-engineers) created the term RSE in 2012.
+:::
+
+::: {.fragment}
+
+::: {.columns}
+::: {.column width = "45%"}
+typical academic: code because they must
+:::
+::: {.column width = "5%"}
+vs
+
+:::
+::: {.column width = "45%"}
+RSE: empasizes software quality, version control, testing, documentation.
+:::
+::: 
+
+
+:::
+:::
+
+## What Do We Want From our Code?
+
+
+
+::: {.incremental}
+1. Results are Correct. Incorrect answers are at best useless, and at worst dangerous.
+2. Efficiently computed.
+3. Maintainable.
+4. Scalable.
+5. Reproducible:
+   1. Documented
+   2. Portable
+
+
+:::
+
+::: {.fragment}
+
+::: {.callout-note}
+This classification is [from Jesus](https://www.sas.upenn.edu/~jesusfv/Chapter_HPC_2_Software_Engineering.pdf).
+:::
+:::
+
+## What Do We Want From our Code?
+
+### Correct Results
+
+#### Ariane 5 Flight 501 (1996)
+
+
+{{< video https://youtu.be/N5t9QYLQ88g?si=bdWGax4zl90bz3pb width="500" height="400" >}}
+
+
+## What Do We Want From our Code?
+
+### Correct Results
+
+#### Ariane 5 Flight 501 (1996)
+
+* Rocket exploded 37 seconds after launch due to an integer overflow error. 
+* The software tried to convert a 64-bit floating-point number representing velocity ( `65536`, say) into a 16-bit signed integer (`[-32768 , +32767]`)
+* 16-bit was fine on Ariane 4: was much slower.
+* Ariane 5 accelerated much faster. The conversion failed, triggering an exception that crashed the guidance system. Cost: $370 million and 10 years of work destroyed.
+
+The bug: Reusing old Ariane 4 code without checking if the new rocket's flight characteristics would exceed the original assumptions.
+
+
+
+## What Do We Want From our Code?
+
+### Correct Results
+
+#### Mars Climate Orbiter (1999)
+
+* NASA's $125 million spacecraft burned up in Mars' atmosphere 
+* One team used imperial units (pound-force) while another used metric units (newtons) for thruster calculations. 
+* The navigation software expected metric inputs but received imperial values, causing the spacecraft to fly 170 km too close to Mars instead of entering a safe orbit.
+
+The bug: No unit conversion between two software components, and insufficient integration testing to catch the mismatch.
+
+
+
+## What Do We Want From our Code?
+
+### Correct Results
+
+#### And in Economics Research?
+
+Mistakes happen. My prior is that the vast majority of those are unintentional. But negligence is bad enough.
+
+1. @reinhart2010growth used Excel and selected rows 30-44 instead of 30-49. Caught by @herndon.
+2. @levitt had several coding errors which meant that effect sizes changed. Found by @foote
+3. There are many more examples. 
+
+  
+::: {.callout-caution}
+
+# Don't Jump To Conclusions
+
+Most of those cases are *very* messy. Despite that, they get publicized aggressively on social media. It's important to keep those cases at the level of scholarly debate, **not sleaze match**.
+:::
+
+
+## What Do We Want From our Code?
+
+### Efficiently Computed Results
+
+* Suppose we are happy that our code is correct now.
+* What if it takes 10 days to get one set of results? Not overly practical. 
+* Typically we iterate many times over a model in order to understand it better, so long waits are costly.
+* Some model specifications (more than 4 state variables, say) might not finish solving in finite time - **some questions cannot be answered given prevalent computing power**.
+* Correct results which take forever to compute are useless, too.
+
+::: {.fragment}
+::: {.callout-note}
+# The Development Time vs Running Time Tradeoff
+
+People focus excessively on how fast *the code* runs, without enough attention on *how long it took to develop it*. We shall return on that.
+
+:::
+:::
+
+
+## What Do We Want From our Code?
+
+### Maintainable
+
+* **No** paper gets accepted in the first round. **You** will have to go back to it and change it. Your code is alive and it evolves.
+* In practice: force yourself to develop code *packages* - with given structure (`R` packages etc)
+* Modular code is crucial. You can leave some modules unchanged, add others, have them interact correctly, etc
+  * You can test each module (and each part of a module) in isolation.
+* Unit testing, Test-driven development and continuous integration (CI) are key concepts for maintainable code.
+* If you want *others* to help and collaborate on your package, it has to be maintainable.
+
+
+## What Do We Want From our Code?
+
+### Scalable
+
+::: {.incremental}
+* We often (always?) start from a small prototype for a larger project.
+* You want to allow for ways to make your prototype larger without too much effort.
+* This is crucial in machine learning applications
+  * we often prototype an algorithm on our CPU, i.e. standard serial code execution
+  * but then we need to run the model on a more powerful device (e.g. a GPU)
+  * You want to avoid having to rewrite your code for that step. 
+  * In leading AI/ML `julia` libraries, you can just set `device=gpu` for instance, same code.
+:::
+
+
+
+## What Do We Want From our Code?
+
+### Reproducible
+
+* Ideally, any researcher should be able to reproduce your results.
+* Documentation is key.
+  * Data access, computing environment, instructions for execution, known limitations to reproducibility
+* Portability is a concern.
+  * Different versions of a program/library
+  * Different OS 
+  * Different *machines* 
+* Can easily fill a [full workshop](https://res-reproducibility.github.io/CCA-Torino-2025/).
+
+
+## References

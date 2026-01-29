@@ -1,0 +1,781 @@
+---
+title: Why `julia`?
+subtitle: Everybody needs a weapon of choice
+format:
+  revealjs:
+    theme: _extensions/clean/clean.scss
+    self-contained: true
+author:
+  - name: Florian Oswald
+    url: https://floswald.github.io
+    email: florian.oswald@unito.it
+    orcid: 0000-0001-7737-2038
+    affiliations:
+      - University of Turin
+      - Collegio Carlo Alberto
+      - JPE Data Editor
+date: last-modified
+execute: 
+  cache: true
+---
+
+
+## Choosing a Language
+
+* You are an economics grad student and need to choose your *weapon of choice*.
+
+::: {.fragment}
+* You will use more than one language. (This is a good thing.)
+:::
+
+::: {.fragment}
+* All Languages have pros and cons. I will give some opinionated advice.
+:::
+
+::: {.fragment}
+* Then I will force you to use a certain language to complete homeworks 😜
+:::
+
+## Taxonomy of Languages
+
+![](images/stack.png){fig-align="center" width="95%"}
+
+## The Pros/Cons Rundown {.impact}
+
+## Hello, World?
+
+::: {.fragment}
+* It's good custom to first print `hello world` when introducing a language. It's fun, but pretty uninformative. Like, *what's the performance of printing "hello, world"?*
+:::
+
+::: {.fragment}
+* Instead, we will show in each language how to implement the function `sum over an array` of values `a`:
+    $$\text{sum}(a) = \sum_{i=1}^n a_i$$
+    where $n$ is the number of elements in $a$
+
+* Later, we will then *benchmark* each language to see tradeoff between high- and low level languages.
+:::
+
+## `C/C++`
+
+* The world pretty much runs on `C++`.
+
+::: {.fragment}
+* If you now some `C++` and some `Unix` you know a lot already.
+:::
+
+::: {.fragment}
+* Developed at Bell Labs in 1980s.
+:::
+
+::: {.fragment}
+* All `C` programs are valid `C++`, not other way around.
+:::
+
+## C++ Code Example
+
+```C
+//sumvec.cpp
+#include <iostream>
+#include <vector>
+int main(){
+    std::vector<int> x;
+    for (int i=1;i<5;i++){
+        x.push_back(i);
+    }
+    int sum = 0;
+    for (std::vector<int>::iterator i=x.begin();i!=x.end();i++){
+        sum += *i;
+    }
+    std::cout << "sum is " << sum << std::endl;
+}
+//compile
+g++ sumvec.cpp -o sum.x
+```
+
+## `C sum`
+
+* Defining the function:
+    ```C
+    #include <stddef.h>
+    double c_sum(size_t n, double *X) {
+        double s = 0.0;
+        for (size_t i = 0; i < n; ++i) {
+            s += X[i];
+        }
+        return s;
+    }
+    ```
+* place in `main()`, compile and run as above.
+
+## `C++`: Pros and Cons
+
+::: {.columns}
+::: {.column width="50%"}
+### Pros
+* Very versatile.
+* Continuously Evolving. C++ 2020 standard is current.
+* Very performant.
+* Excellent open source compilers.
+* Very stable and widely used.
+* Large community.
+:::
+
+::: {.column width="50%"}
+::: {.fragment}
+### Cons
+* Hard to learn. Pointers, Classes, OOP in general.
+* Some find it hard to work with Compiled languages.
+* It's easy to overcomplicate things for novices.
+:::
+:::
+:::
+
+## Python
+
+* *The* general purpose language out there. Swiss Army Knife. All Terrain. 🚙
+
+::: {.fragment}
+* Open Source
+:::
+
+::: {.fragment}
+* Designed by Guido von Rossum.
+:::
+
+::: {.fragment}
+* Elegant, intuitive, full OOP support (Classes etc).
+:::
+
+## `python sum`
+
+* we just use the built-in `sum`:
+    ```python
+    a = [1,2,3,4,5]
+    sum(a)
+    ```
+* that's it!
+
+## Python Pros/Cons
+
+::: {.columns}
+::: {.column width="50%"}
+### Pros
+* Console: good for exploration.
+* Many useful libraries (NumPy, SciPy, Pandas, matplotlib)
+* Easy Unit Testing
+* Very Performant String Manipulation
+* Large community
+:::
+
+::: {.column width="50%"}
+::: {.fragment}
+### Cons
+* Slow.
+* Version `2.7` or `3.6`? Huge problem.
+* High performance routes use annoted Python code. Numba: JIT compiler,Pypy: JIT compiler, Cython: compile to C++
+* All feel a bit like a [78-liter 3,500hp V18 truck engine on a Mini Chassis](https://www.hotcars.com/21-pictures-of-small-cars-with-big-modded-engines/).
+:::
+:::
+:::
+
+## Python Performance Analogy
+
+![](images/mini.jpg){width="80%"}
+
+## `R`
+
+* High level open source language for statistical computing. 
+
+::: {.fragment}
+* Ross Ihaka and Robert Gentleman developed `R` as a successor to John Chambers' `S`
+:::
+
+::: {.fragment}
+* `R` went open source quickly via [http://cran.r-project.org/](http://cran.r-project.org/)
+:::
+
+::: {.fragment}
+* Tremendously rich add-on packages environment.
+:::
+
+::: {.fragment}
+* Has basic OOP support via `S4` classes and methods.
+:::
+
+## `R sum`
+
+* we just use the built-in `sum`:
+    ```R
+    a = 1:5
+    sum(a)
+    ```
+* that's (again) it!
+
+## `R` Pros/Cons
+
+::: {.columns}
+::: {.column width="50%"}
+### Pros
+* Excellent IDE [Rstudio](https://rstudio.com)
+* Thousands of high quality packages. `tidyverse` is a sensation in itself.
+* *Many many* [econometrics-related packages](https://cran.r-project.org/web/views/Econometrics.html).
+* Wide community.
+* `Rcpp` is good to connect to `C++`
+* Unbeatable for **spatial data**: the `sf` package.
+* Very good for data processing.
+:::
+
+::: {.column width="50%"}
+::: {.fragment}
+### Cons
+* Base `R` is slow.
+* Not a modern language. Some quite arcane behaviours.
+* `Rcpp` means you end up writing `C++` code.
+* Not straightforward to write performant low-level code close to the math (i.e.: loops)
+:::
+:::
+:::
+
+## Fortran
+
+* The Grandfather of all languages 👴🏽
+
+::: {.fragment}
+* FORTRAN (Formula Translation) was developed in 1957.
+:::
+
+::: {.fragment}
+* Still used by many economists, for example [Mitman-Kaplan-Violante JPE 2020](https://github.com/kurtmitman/housing-boom-bust)
+:::
+
+::: {.fragment}
+* Still used for many scientific problems (nuclear bombs design, wheather forecasts, phyical experiments, etc) 💣 🌦
+:::
+
+## Fortran Example
+
+* create a text file `test.f90`:
+    ```fortran
+    program sumit
+        implicit none
+        double precision a(5)   ! allocate an array with 5 slots
+        a = (/1,2,3,4,5/)       ! fill with values
+        print *,"result is ", sum(a)
+    end program sumit
+    ```
+
+* compile it and run it:
+    ```bash
+    $ gfortran test.f90 -o test
+    $ ./test
+     result is    15.000000000000000  
+    ```
+
+## `FORTRAN` Pros/Cons
+
+::: {.columns}
+::: {.column width="50%"}
+### Pros
+* Relatively easy to learn.
+* Good array support built in.
+* Good parallelization support via MPI.
+* Fast.
+:::
+
+::: {.column width="50%"}
+::: {.fragment}
+### Cons
+* Different compilers implement different standards (Intel Fortran vs `GFORTRAN` array constructor, e.g.)
+* Small user community.
+* Not very many tutorials.
+* Not faster than C++ (used to be true).
+* Hard to automatize unit testing via e.g. [pfunit](http://pfunit.sourceforge.net).
+* Language is very bare-bone. 
+* Hard to process data.
+:::
+:::
+:::
+
+## Victims of Speed vs Productivity Tradeoff?
+
+* We have seen high-level langs (R, python etc) are good for productivity: Iterate fast on `try, fail, repeat`
+
+::: {.fragment}
+* We have seen that low level languages *run* fast, but are worse for productivity.
+:::
+
+::: {.fragment}
+* So we cannot have both speed and productivity. 
+:::
+
+::: {.fragment}
+* Or can we?
+:::
+
+## Can We Have Both? {.impact background-image="images/obama-yes.jpg"}
+
+## Case Study
+
+### 🔥🔥 Our Time is Running Out 🔥🔥
+
+#### Oswald (QE 2019): Homeownership and Location Choice
+
+::: {.columns}
+::: {.column}
+![](images/QE.png){fig-align="left"}
+:::
+
+::: {.column}
+* I wanted to compute this model of housing and location choice on US micro data.
+
+* Large state space. 🚫 `R`, 🚫 `python`
+
+* Non-trivial estimation exercise.
+
+* I had no code to build upon. And only a vague idea of how to do this.
+:::
+:::
+
+## When the Clock is Ticking ⏰
+
+::: {.columns}
+::: {.column}
+![](images/fast.png){fig-align="left"}
+:::
+
+::: {.column}
+* [repo](https://github.com/floswald/migration) starts with C++ (Blitz++)
+
+* Given my C++ level, this was taking too much time to develop!
+
+* No chance to finish in time. 😟
+:::
+:::
+
+## When the Clock is Ticking ⏰
+
+::: {.columns}
+::: {.column}
+![](images/fast2.png){fig-align="left"}
+:::
+
+::: {.column}
+* [repo](https://github.com/floswald/migration) starts with C++ (Blitz++)
+
+* Given my C++ level, this was taking too much time to develop!
+
+* No chance to finish in time. 😟
+
+* Enter `julia`! 🚀
+:::
+:::
+
+## [Why We Created Julia](https://julialang.org/blog/2012/02/why-we-created-julia) - 2012 blogpost
+
+>We are power Matlab users. Some of us are Lisp hackers. Some are Pythonistas, others Rubyists, still others Perl hackers. There are those of us who used Mathematica before we could grow facial hair. There are those who still can't grow facial hair. We've generated more R plots than any sane person should. C is our desert island programming language. 
+>We are greedy: we want more.  
+>We want a language that's open source, with a liberal license. We want the speed of C with the dynamism of Ruby. We want a language that's homoiconic, with true macros like Lisp, but with obvious, familiar mathematical notation like Matlab. We want something as usable for general programming as Python, as easy for statistics as R, as natural for string processing as Perl, as powerful for linear algebra as Matlab, as good at gluing programs together as the shell. Something that is dirt simple to learn, yet keeps the most serious hackers happy. We want it interactive and we want it compiled.
+
+## Julia History of Success
+
+::: {.incremental}
+* That proposal was **very bold**. 
+* Not the first time that a new language arrives. It's hard to carve out some market share.
+* Development started in 2009
+* Version 1.0 released in 2018
+* Funding model to preserve language development (JuliaComputing Inc)
+:::
+
+::: {.fragment}
+
+### Tiobe Index
+
+Let's browse the [Thiobe Index](https://www.tiobe.com/tiobe-index/)!
+
+:::
+
+
+
+
+## What is Julia?
+
+* Modern language
+
+::: {.fragment}
+* Built for high performance and parallel: LLVM-JIT
+:::
+
+::: {.fragment}
+* Dynamically typed: good interactive use
+:::
+
+::: {.fragment}
+* Rich data type system
+:::
+
+::: {.fragment}
+* Many Packages.
+:::
+
+::: {.fragment}
+* Good Interoperability with other languages.
+:::
+
+## [Benchmarks](https://julialang.org/benchmarks/) 
+
+
+![](images/benchmarks.png)
+
+## Which problem does Julia want to solve?
+
+* Julia cofounder Stefan Karpinski [talks about **the 2 languages problem**](https://youtu.be/QTbPtKxDquc?si=30g1uIJpq4sGVzMv&t=231)
+
+
+
+{{< video https://youtu.be/QTbPtKxDquc?si=30g1uIJpq4sGVzMv&t=231 width="800" height="500" >}}
+
+
+## Which problem does Julia want to solve?
+
+
+::: {.fragment}
+* **Key: Wall in scientific software stack creates a social barrier.** Developer and User are different people. (Basically: who knows C++/fortran?)
+:::
+
+![](images/stack.png){fig-align="center"}
+
+## Scientific Software Stacks
+
+::: {.columns}
+::: {.column width="50%"}
+### Past: At least 4 langs!
+* Process messy data. String manipulation, plotting, data wrangling. `R` or `python`.
+* Prototype a numerical model. `matlab`
+* Work around speed bottlneck: rewrite (parts) in `C++`
+* Try to test (combo of `googletest` and `R`/`python`)
+* Analyse output data:  `R` or `python`
+* Tie it all together with `bash` scripts or `ruby` etc.
+:::
+
+::: {.column width="50%"}
+::: {.fragment}
+### Present: one lang only.
+* Process messy data. String manipulation, plotting, data wrangling. `julia`.
+* Prototype a numerical model. `julia`
+* Work around speed bottlneck: rewrite (parts) in `julia`
+* Test : `julia`
+* Analyse output data:  `julia`
+* Tie it all together with `julia`.
+:::
+:::
+:::
+
+## Comparing Programming Languages in Economics 
+
+* S. Boragoan Aruoba and Jesus Fernandez-Villaverde [compare performance of languages on an Industry Standard Growth Model](https://www.sas.upenn.edu/~jesusfv/comparison_languages.pdf).
+
+::: {.fragment}
+* Conceptually difficult to write *identical* code in different languages. [Authors do a good job](https://github.com/jesusfv/Comparison-Programming-Languages-Economics). (How many *tricks* is one allowed to use before an implementation is no longer comparable? Wouldn't users use all available tricks?)
+:::
+
+::: {.fragment}
+* I'll show you the results from an [updated version of the paper](https://www.sas.upenn.edu/~jesusfv/Update_March_23_2018.pdf)
+:::
+
+## Results
+
+::: {.columns}
+::: {.column width="50%"}
+![](images/jesus-bench.png){fig-align="center" width="85%"}
+:::
+
+::: {.column width="50%"}
+![](images/jesus-bench2.png){fig-align="center" width="85%"}
+:::
+:::
+
+## Not Mentioned
+
+There are many other languages out there. We have not mentioned
+
+* Matlab: widely used in economics, but clearly inferior to julia (Expensive + license block)
+* Stata: very popular in microeconometrics, old design, commercial software.
+* Java
+* Rust
+* Scala
+* Go
+
+# `julia` Jaw-Droppers {background-color="#107895"}
+
+## What's so cool about base julia?
+
+### Built-in Memory Mapping: BIG DATA
+
+* Big Data is everywhere, and all the cool kids do it.
+* Typical Out-of-core (OOC) computing on large systems is important and useful, but a bit more involved. [E.g. spark](https://spark.apache.org/docs/latest/quick-start.html).
+* A proper database will go a long way. [See our `duckdb` tutorial](https://floswald.github.io/duckdb-polars/)
+* In julia we can do out-of-core computation without any external libraires.
+
+
+<!-- 
+
+this makes the dataset
+
+```julia
+using Random
+
+function create_large_binary_file(filepath, size_gb)
+    n_float64 = Int(size_gb * 1e9 / 8)  # each Float64 is 8 bytes
+    chunk_size = 10^8  # write 100 million at a time
+    
+    open(filepath, "w") do io
+        n_chunks = div(n_float64, chunk_size)
+        remainder = rem(n_float64, chunk_size)
+        
+        for i in 1:n_chunks
+            write(io, rand(Float64, chunk_size))
+            println("Chunk $i/$n_chunks")
+        end
+        
+        remainder > 0 && write(io, rand(Float64, remainder))
+    end
+    println("Created $(filesize(filepath) / 1e9) GB file")
+    println("these are $n_float64 numbers with 8 bytes each")
+end
+``` -->
+
+
+
+## Got Some Big Data, yeah?
+
+### Built-in Memory Mapping: BIG DATA
+
+
+* Suppose you have this binary file on your laptop, containing Float64 numbers.
+  
+    ```bash
+    floswald@PTL11077 > ls -lh large.bin
+    -rw-r--r--  1 floswald  staff    32G Jan 29 15:31 large.bin
+    ```
+
+* Suppose your laptop has 32GB of RAM.
+* Suppose you don't want to set up on a huge cluster to do you work.
+* You just want to compute a single mean from that data - maybe to decide whether it's worth to pursue that particular research strategy.
+* How hard can it be?
+
+
+## What `R` you going to do?
+
+### Built-in Memory Mapping: BIG DATA
+
+
+* Come here `R`, my old friend.
+* Let's see if we can compute that mean.
+
+```R
+> (n_elements <- file.size("large.bin") / 8) # bytes per number
+[1] 4.25e+09  # 4.25 billion numbers
+> (GB_RAM_required_for_data <- file.size("large.bin") / 1e9)
+[1] 34
+> x <- readBin("large.bin", "numeric", n = n_elements)
+```
+
+<br>
+
+::: {.columns}
+::: {.column}
+* Wow, this actually worked!
+* However, my OS put most of this data into *swap* memory.
+:::
+::: {.column}
+
+* That is - onto my storage device (an SSD disk)
+* What does that mean?
+:::
+::: 
+
+## What `R` you going to do?
+
+### Built-in Memory Mapping: BIG DATA
+
+
+::: {layout-nrow="2" layout-align="center"}
+
+![swap used: 20GB](images/swap-ram.png){width="50%"}
+
+![disk IO during computation of `mean(x)`](images/swap-io.png){width="50%"}
+
+:::
+
+## What `R` you going to do?
+
+### Built-in Memory Mapping: BIG DATA
+
+
+* While this actually *worked* because my OS was bending backwards...
+* ...it's not a good solution:
+
+    ```R
+    > (n_elements <- file.size("large.bin") / 8)
+    [1] 4.25e+09
+    > x <- readBin("large.bin", "numeric", n = n_elements)
+    > system.time(mean(x))
+        user  system elapsed 
+        9.163  37.625 233.907 
+    > 233 / 60
+    [1] 3.883333
+    ```
+
+* that took almost 4 minutes and put a huge strain on my system.
+
+## Out-of-core compute with `julia`?
+
+### Built-in Memory Mapping: BIG DATA
+
+
+```julia
+julia> using SharedArrays  # part of base julia
+
+julia> @time s = SharedArray{Float64}(
+    "/Users/floswald/git/CompEcon/large.bin",(Int(4.25e+09),)
+    );
+  0.585849 seconds (1.84 M allocations: 90.189 MiB, 11.90% gc time, 97.76% compilation time)
+```
+
+* That allocated only 90 megabytes (!) of memory 🤯
+
+::: {.fragment}
+* Ok, and the mean?
+:::
+
+::: {.fragment}
+```julia
+julia> @time mean(s)
+ 54.721824 seconds (140.13 k allocations: 6.873 MiB, 0.07% compilation time)
+0.4999939011980801
+```
+:::
+
+::: {.fragment}
+* 54 seconds, i.e more than a 4x speedup compared to `R`.
+* This worked because `julia` can map memory very efficiently.
+
+:::
+
+
+## Parallel Computation Out-of-the-box
+
+### Boostrapping...
+
+
+::: {.columns}
+::: {.column}
+
+
+* ...great for parallel demo - fully independent tasks
+* problem: each process needs their own copy of the data (think base R)
+:::
+
+::: {.column}
+* `julia` can *share* data across workers.
+:::
+:::
+
+```julia
+# started julia with the -p flag:
+# $ julia -p auto
+using Distributed  # distributed computing functions
+nworkers()  # like that one
+8  # julia processes running
+
+using SharedArrays
+s = SharedArray{Float64}((10^5,)); 
+# put 100K random numbers into s
+s .= rand(10^5);  
+```
+
+## Parallel Computation Out-of-the-box
+
+### Boostrapping...
+
+
+```julia
+@everywhere using Statistics
+@everywhere n_bs_samples = 10_000  # num bootstrap samples
+
+# a model...
+@everywhere my_model(x) = rand(x, length(x))
+
+# bootstrap sampling. heavy workload.
+# creates an array of length n_bs_samples
+@everywhere bs_means(x) = [mean(my_model(x)) for i in 1:n_bs_samples]
+
+# single core version.
+function f_1core(x)
+    # compute the variance of those means
+    # split over 8 independent batches
+    var(vcat([bs_means(x) for i in 1:8]...))
+end
+
+# multi-core version
+function f_multicore(x)
+    # split a `promise` over 8 independent batches
+    promise = [@spawn bs_means(x) for i in 1:8]
+    # `fetch` triggers execution
+    var(vcat([fetch(pr) for pr in promise]...))
+end
+
+```
+
+
+## Parallel Computation Out-of-the-box
+
+### Boostrapping...
+
+
+```bash
+floswald@PTL11077 > julia -p auto _snippets/bootstrap.jl
+
+ 31.704981 seconds (431.35 k allocations: 61.050 GiB, 6.51% gc time, 0.13% compilation time)
+
+  4.879901 seconds (611.59 k allocations: 31.086 MiB, 0.06% gc time, 1.89% compilation time)
+
+Info: result 1core = 8.387862736845913e-7
+Info: result multicore = 8.295566662153075e-7
+```
+
+<br>
+
+* That's a 6.5x speedup, almost linear with the 8 cores we had. 
+* Given the effort required, I'll take that any day.
+* **Always** Check the numbers on the output! (Why are they different?)
+
+
+## So What?
+
+* This is _cool_ because it is part of the core language. Not an add-on package.
+
+* This means that contributed add-on packages can lean really hard on that infrastructure and build upon it. 
+
+* The problem in R and python is that those stable foundations are largely missing, which causes issues.
+
+* That's one of the things I really like about this language.
+
+## Final (Opinionated) Advice
+
+::: {.fragment}
+* It's a good idea to learn a bit of `C++`. Much is based upon it, so you will see things differently. Don't overinvest (do some quick tutorials).
+:::
+
+::: {.fragment}
+* Avoid learning `FORTRAN` unless you need to use legacy code.
+:::
+
+::: {.fragment}
+* Learn `julia` and `R` or `python`.
+:::
+
+::: {.fragment}
+* Stata is dominated by `R`.
+:::

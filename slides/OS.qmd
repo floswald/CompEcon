@@ -1,0 +1,507 @@
+---
+title: What is an OS?
+subtitle: OS means Operating System
+format:
+  revealjs:
+    theme: _extensions/clean/clean.scss
+author:
+  - name: Florian Oswald
+    url: https://floswald.github.io
+    email: florian.oswald@unito.it
+    orcid: 0000-0001-7737-2038
+    affiliations:
+      - University of Turin
+      - Collegio Carlo Alberto
+      - JPE Data Editor
+date: last-modified
+execute: 
+  cache: true
+---
+
+## What is an Operating System?
+
+**Definition**: Software layer between hardware and applications that manages computer resources.
+
+**Core Functions**:
+
+- Process Management
+- Memory Management
+- File System
+- Device Drivers
+- User Interface
+- Security
+
+:::{.notes}
+An operating system is the software layer that sits between your computer's hardware and the applications you run. It manages all the computer's resources.
+
+Process Management: Runs multiple programs at once, decides which program gets CPU time. Memory Management: Allocates RAM to programs, implements virtual memory. File System: Organizes files on disk, handles reading/writing data. Device Drivers: Communicates with hardware like disks, network cards, GPUs. User Interface: Provides shell (command line) or graphical interface. Security: Controls access, authenticates users, isolates processes.
+:::
+
+---
+
+## OS Types - Desktop & Mobile
+
+**Desktop/Workstation**
+
+- Windows: ~75% market share
+- macOS: ~15%
+- Linux: ~3%
+
+**Mobile & Embedded**
+
+- Android (Linux-based): ~70% of smartphones
+- iOS: ~27% of smartphones
+- Embedded Linux
+
+:::{.notes}
+Desktop: Windows dominates business and gaming. macOS is popular for creative work and software development. Linux is used by developers and power users.
+
+Mobile & Embedded: Android is Linux-based and has about 70% of smartphones. iOS has about 27%. Embedded Linux runs IoT devices, routers, appliances, and smart TVs.
+:::
+
+---
+
+## OS Types - Servers & HPC
+
+**Servers**
+
+- Linux: ~96% of web servers
+- Windows Server
+- Unix variants (Solaris, AIX, HP-UX)
+
+**Supercomputers & HPC**
+
+- Linux: 100% of Top500 supercomputers (even the ones owned by Microsoft.)
+
+
+
+:::{.notes}
+Servers: Linux dominates with about 96% of web servers and cloud infrastructure. Windows Server is common in enterprise IT environments. Unix variants like Solaris, AIX, and HP-UX are found in legacy enterprise systems.
+
+Supercomputers: Linux powers 100% of the Top500 supercomputers and dominates all HPC clusters globally.
+
+For Scientific Computing: Overwhelmingly Linux-based in university clusters, national laboratories, and cloud HPC platforms.
+:::
+
+---
+
+## Scientific Computing - Workflow & Practicalities
+
+
+::: {.incremental}
+
+::: {.columns}
+::: {.column}
+
+**Remote Access**
+
+- Linux: SSH on terminal
+- macOS: SSH
+- Windows: SSH (Windows 10+), RDP, WSL2
+
+**Software Availability**
+
+- Linux: Most scientific software developed first
+- macOS: Good support for many tools
+- Windows: WSL2 or containers often needed
+
+:::
+::: {.column}
+
+**Reproducibility**
+
+- Unix tools built-in.
+- Windows requires more effort.
+
+**Cost**
+
+- Linux: Free
+- macOS: Locked to Apple
+- Windows: Licensing costs
+
+:::
+::: 
+
+
+:::
+
+:::{.notes}
+Remote Access: Linux has SSH built-in with X11 forwarding that works seamlessly. macOS has SSH built-in with X11 via XQuartz. Windows now has SSH built-in (Windows 10+), uses RDP for graphical access, and WSL2 provides a full Linux environment.
+
+Software Availability: Linux has most scientific software developed for it first (or only). macOS has good support for many tools, though some HPC software requires compilation. Windows often lacks native Windows builds; WSL2 or containers fill the gap.
+
+Reproducibility: All platforms have excellent reproducibility with containers (Docker, Singularity) and environment managers (conda, venv). Container and environment specifications work identically across OSes - this is platform-independent.
+
+Cost: Linux is free and open source. macOS is locked to Apple hardware. Windows has licensing costs for server/cluster use, though it's often free for education.
+
+Bottom line: Linux dominates scientific computing due to software ecosystem and cluster infrastructure, but modern tools (WSL2, containers) make Windows viable for local development.
+:::
+
+
+# Unix {background-color="#40666e"}
+
+## {background-image="https://upload.wikimedia.org/wikipedia/commons/7/77/Unix_history-simple.svg"}
+
+
+## How Does this Unix thing work?
+
+::: {.columns}
+::: {.column}
+
+* Unix is industry standard for over 40 years.
+* Scientific Stack runs on unix.
+* Watch this [video](https://www.youtube.com/watch?v=tc4ROCJYbm0)
+
+:::
+::: {.column}
+* Unix is based on small programs...
+* ... which can be connected into a *pipeline*
+* Many small helpers glued together
+
+:::
+::: 
+
+
+![Kernel, Shell and Application](images/kernel.png)
+
+
+
+## The Shell
+
+::: {.columns}
+::: {.column}
+* Terminal, command line, console...
+* You type commands
+* GUI vs shell
+:::
+::: {.column}
+
+
+* Author of GNU BASH (Bourne Again SHell) [Brian Fox](https://en.wikipedia.org/wiki/Brian_Fox_(programmer))
+* Collaborator with [Richard Stallman](https://en.wikipedia.org/wiki/Richard_Stallman) on the [Free Software Foundation](https://en.wikipedia.org/wiki/Free_Software_Foundation)
+
+:::
+:::
+
+::: {.fragment}
+
+::: {layout-ncol="2"}
+
+![Brian Fox](https://upload.wikimedia.org/wikipedia/commons/3/35/BrianJFox.png){width=60%}
+
+![Richard Stallman](https://upload.wikimedia.org/wikipedia/commons/3/38/Richard_Stallman_Bologna_2024_abc1.jpg){width=60%}
+
+::: 
+::: 
+
+
+
+# The Shell 💻 <br> (Open Your Terminals!) {background-color="#40666e"}
+
+## Shell 101
+
+* This [https://floswald.github.io/IntroProgramming/](https://floswald.github.io/IntroProgramming/).
+* Session 1-3 will be tested via quiz.
+* Here is the full [software carpentry](https://swcarpentry.github.io/shell-novice/) tutorial.
+* Let's breeze through a few simple things together.
+
+## Unix Shell 1
+
+
+
+```bash
+# where am i?
+pwd 
+
+# takes you home
+cd 
+
+# makes a new directory
+mkdir my-new-dir 
+
+# goes there
+cd my-new-dir 
+
+# creates an empty text file
+touch new-file.txt
+
+# creates an empty...pdf file?
+touch new-doc.pdf
+# try to open this in your pdf viewer
+
+# lists
+ls new-file.txt 
+ls *  # star means anything
+ls -la  # things after - are "flags", i.e. options
+
+# echos (repeats back to your screen)
+echo hi dude  # prints to screen
+
+# echos into a File
+echo hi dude > echo-file.txt  # notice: no output to screen.
+
+# there are 2 files now!
+ls .  # the dot is "this directory"
+
+ls -la # more info
+```
+
+(scroll down)
+
+## Unix Shell 2: Permissions
+
+* A key feature of Unix is a transparent permissions system.
+* `u-g-o`: user - group - others
+* Each file has a *mode*: `rwx` - read, write, execute
+
+```bash
+floswald@PTL11077 ~/my-new-dir> ls -lah
+total 8
+drwxr-xr-x    4 floswald  staff   128B Jan 23 17:18 ./
+drwxr-x---+ 277 floswald  staff   8.7K Jan 23 17:16 ../
+-rw-r--r--    1 floswald  staff     8B Jan 23 17:18 echo-file.txt
+-rw-r--r--    1 floswald  staff     0B Jan 23 17:16 new-file.txt
+```
+
+
+## Unix Shell 3: Automation
+
+* The shell is great to create work pipelines
+
+```bash
+1. go there
+2. run program number 1
+3. take it's output and give to program number 2
+4. make a table from output
+5. compile a latex document to pdf
+```
+::: {.fragment}
+
+* in other words:
+
+```bash
+# go there
+cd path/to/my/project 
+# run program number 1
+stata-mp -b step1.do # makes step1-out.csv
+# take it's output and give to program number 2
+julia run-step2.jl step1-out.csv > table1.tex
+# compile a latex document to pdf
+latex-mk -pdf -c paper.tex
+```
+:::
+
+
+
+
+# Your Text Editor ⌨️ <br> {background-color="#40666e"}
+
+## What is a *Text Editor*
+
+* A program that allows you to edit text. 🤦‍♂️
+* **Not** Microsoft Word. (Why not?)
+* There are many powerful options. Choose carefully. Indeed...
+
+::: {.fragment}
+
+::: {.callout-caution}
+
+# Harry J. Paarsch 
+
+Choose your editor with more care than you would your spouse because you will spend more time with
+your editor, even after the spouse is gone.
+
+(Quote from Jesus' slides. [Harry's website](https://sites.google.com/view/hjpaarsch/))
+:::
+:::
+
+
+::: {.fragment}
+
+::: {.columns}
+::: {.column}
+### Options
+
+1. VScode
+2. Sublime Text
+3. Vim
+4. Emacs
+:::
+::: {.column}
+5. Notepad++
+6. TextEdit
+7. many more... choose your location on the comfort vs bare metal scale
+:::
+::: 
+
+
+:::
+
+## Text Editor Features
+
+Modern alternatives share those features:
+
+1. Integration with open package system: extensions
+2. Web integration (same editor running online)
+3. Easy collaboration ("Live Share")
+4. REPL integration, i.e. run code inside editor
+
+### IDE: Integrated Development Environment
+
+* Additionally to editing and running code, can debug, view plots and data etc...
+* VScode, JetBrains, XCode, Eclipse,...
+* RStudio, Positron, Matlab, ...
+
+
+
+
+# Version Control {background-color="#40666e"}
+
+
+## 
+
+![“Piled Higher and Deeper” by Jorge Cham, http://www.phdcomics.com](images/phd101212s.png)
+
+
+## What's the Problem 1?
+
+* Your code evolves over time. You add and substract things.
+* You often try out new things. Some you keep, some you don't.
+* Sometimes you realize later that what you did was wrong.
+* What do you do then?
+
+::: {.fragment}
+
+👉 Then you want to *undo* what you did in order to restore the previous state of your project. How could that work?
+
+You need a system that remembers *what* you did *when*, *where*, and - ideally - *why*.
+
+In a world with collaboration (our world), you also want to know *who* did all of the above.
+
+:::
+
+
+## What's the Problem 2?
+
+* In a project with several collaborators, how to make sure everybody works on the correct file?
+* The *correct file* being not only the correct name - `script.R`, say - but also the *correct version* of the file.
+* Notice this is not always the *latest* version. (Maybe your collaborator was just trying out something and introduced a bug).
+
+::: {.fragment}
+* Code Syncing via Dropbox or similar is *not* the solution.
+* Cannot *rewind* history beyond 30 days
+* By default, there is only one (the latest) version.
+* It's not clear who added what to the that version, when and why.
+:::
+
+## A Poor Man's Solution
+
+::: {.columns}
+::: {.column}
+* Many researchers swear on the YYYYMMDD system
+* You just insert the date into the filename.
+* What could possibly go wrong?
+
+::: {.fragment}
+1. People insert wrong dates
+:::
+
+::: {.fragment}
+2. You may remember last week. But 4 months ago?
+:::
+
+::: {.fragment}
+3. What is `20221121-appendixA.tex` vs `20221121-appendix-former-B.tex`?
+:::
+
+
+
+:::
+::: {.column}
+![](images/which-version.png)
+:::
+::: 
+<!-- 
+::: {.fragment}
+How do professional developers deal with this problem? 🤔
+
+::: -->
+
+## A Real Solution: `git`
+
+* Professional software development without version control does not exist. [93% of developers](https://stackoverflow.blog/2023/01/09/beyond-git-the-other-version-control-systems-developers-use/) use `git`, the rest uses `svn` or other tools.
+* If the pros use this tool, and you write code to do empirical research, then you are handicapping yourself if you don't use it.
+
+::: {.fragment}
+
+* Dropbox works to simply sync files. But fails for:
+  * Tracking why changes were made (commit messages)
+  * Branching to try different specifications without breaking your main analysis
+  * Merging contributions from co-authors working on different sections
+  * Rolling back to exactly the state your code was in when you got that result 6 months agos
+
+:::
+
+
+## So: How does `git` work?!
+
+* Fully decentralized system. You sync with a remote server when you want.
+* You track *incremental changes* on your files on disk.
+* Each snapshot (*commit*) you take is another data point that you can go back to.
+* `git` works like a foto camera: you make repeated pictures of the same object(s), you label each foto with a unique id, so that you can go back to a precise version later on.
+
+::: {.fragment}
+* This is a system which requires you to take *action*. No automatic syncing.
+* You preserve the state of your full project at time `t`.
+:::
+
+## Here is `git` in one image
+
+![](images/git_staging.svg)
+
+## The Man: Linus Torvalds
+
+![[https://en.wikipedia.org/wiki/Linus_Torvalds](https://en.wikipedia.org/wiki/Linus_Torvalds)](https://upload.wikimedia.org/wikipedia/commons/e/e8/Lc3_2018_%28263682303%29_%28cropped%29.jpeg)
+
+# Notebooks / Dynamic Reports 📝 {background-color="#40666e"}
+
+## Notebooks
+
+* Embedding code with output (text, images, tables) is part of *literate programming*
+* Write code and documentation *together* (Donald Knuth 1984)
+* Code needs to be readable to humans first, to machines second
+
+::: {.fragment}
+### Implementations
+
+* R: `sweave`, `knitr`, `Rmarkdown`
+* `jupyter`: language agnostic notebook
+* `quarto`: `pandoc` based "scientific publishing system"
+* `Pluto.jl`: pure julia reactive notebook
+
+:::
+
+## Donald Knuth
+
+![[https://en.wikipedia.org/wiki/Donald_Knuth](https://en.wikipedia.org/wiki/Donald_Knuth)](https://upload.wikimedia.org/wikipedia/commons/a/a5/Donald_Ervin_Knuth_%28cropped%29.jpg)
+
+
+## What are Notebooks good for?
+
+Situations where you want to show code and output next to each other.
+
+1. Teaching
+2. Sharing results with coauthors/supervisors
+3. Quick prototyping: like a script that keeps/displays output nicely
+
+::: {.fragment}
+
+### Not Good for
+
+* Performace critical work
+* Realistic collaboration (notebooks are difficult for version control - except `Pluto.jl`)
+
+:::
+
+
+
