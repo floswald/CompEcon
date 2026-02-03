@@ -408,7 +408,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "9 - Dynamic Programming"
+      "10 - Dynamic Programming"
     ]
   },
   {
@@ -420,7 +420,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "10 - Data"
+      "9 - Data"
     ]
   },
   {
@@ -432,7 +432,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "10 - Data"
+      "9 - Data"
     ]
   },
   {
@@ -444,7 +444,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "10 - Data"
+      "9 - Data"
     ]
   },
   {
@@ -456,7 +456,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "10 - Data"
+      "9 - Data"
     ]
   },
   {
@@ -468,7 +468,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "6 - Examples"
+      "6 - Intro to `julia` 2"
     ]
   },
   {
@@ -480,7 +480,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "6 - Examples"
+      "6 - Intro to `julia` 2"
     ]
   },
   {
@@ -492,7 +492,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "5 - Why `julia`?"
+      "5 - Intro to `julia` 1"
     ]
   },
   {
@@ -504,7 +504,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "5 - Why `julia`?"
+      "5 - Intro to `julia` 1"
     ]
   },
   {
@@ -516,7 +516,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "5 - Why `julia`?"
+      "5 - Intro to `julia` 1"
     ]
   },
   {
@@ -528,7 +528,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "5 - Why `julia`?"
+      "5 - Intro to `julia` 1"
     ]
   },
   {
@@ -788,7 +788,7 @@
     "href": "slides/weapon-of-choice.html#c-sum",
     "title": "Why julia?",
     "section": "C sum",
-    "text": "C sum\n\nDefining the function: C     #include &lt;stddef.h&gt;     double c_sum(size_t n, double *X) {         double s = 0.0;         for (size_t i = 0; i &lt; n; ++i) {             s += X[i];         }         return s;     }\nplace in main(), compile and run as above.",
+    "text": "C sum\n\nDefining the function:\n#include &lt;stddef.h&gt;\n#include &lt;stdio.h&gt;\ndouble c_sum(size_t n, double *X) {\n    double s = 0.0;\n    for (size_t i = 0; i &lt; n; ++i) {\n        s += X[i];\n    }\n    return s;\n}\n\n//main\nint main(void) {\n    double x[] = {1, 2, 3, 4, 5};\n    size_t n = sizeof(x) / sizeof(x[0]);\n\n    double result = c_sum(n, x);\n\n    printf(\"C-computed Sum = %.2f\\n\", result);\n    return 0;\n}",
     "crumbs": [
       "Home",
       "Lectures",
@@ -824,7 +824,7 @@
     "href": "slides/weapon-of-choice.html#python-sum",
     "title": "Why julia?",
     "section": "python sum",
-    "text": "python sum\n\nwe just use the built-in sum: python     a = [1,2,3,4,5]     sum(a)\nthat’s it!",
+    "text": "python sum\n\nwe just use the built-in sum:\na = [1,2,3,4,5]\nsum(a)\nthat’s it!",
     "crumbs": [
       "Home",
       "Lectures",
@@ -872,7 +872,7 @@
     "href": "slides/weapon-of-choice.html#r-sum",
     "title": "Why julia?",
     "section": "R sum",
-    "text": "R sum\n\nwe just use the built-in sum: R     a = 1:5     sum(a)\nthat’s (again) it!",
+    "text": "R sum\n\nwe just use the built-in sum:\na = 1:5\nsum(a)\nthat’s (again) it!",
     "crumbs": [
       "Home",
       "Lectures",
@@ -884,7 +884,7 @@
     "href": "slides/weapon-of-choice.html#r-proscons",
     "title": "Why julia?",
     "section": "R Pros/Cons",
-    "text": "R Pros/Cons\n\n\nPros\n\nExcellent IDE Rstudio\nThousands of high quality packages. tidyverse is a sensation in itself.\nMany many econometrics-related packages.\nWide community.\nRcpp is good to connect to C++\nUnbeatable for spatial data: the sf package.\nVery good for data processing.\n\n\n\nCons\n\nBase R is slow.\nNot a modern language. Some quite arcane behaviours.\nRcpp means you end up writing C++ code.\nNot straightforward to write performant low-level code close to the math (i.e.: loops)",
+    "text": "R Pros/Cons\n\n\nPros\n\nExcellent IDEs Rstudio, positron\nThousands of high quality packages. tidyverse is a sensation in itself.\nMany many econometrics-related packages.\nWide community.\nRcpp is good to connect to C++\nUnbeatable for spatial data: the sf package.\nVery good for data processing.\n\n\n\nCons\n\nBase R is slow.\nNot a modern language. Some quite arcane behaviours.\nRcpp means you end up writing C++ code.\nNot straightforward to write performant low-level code close to the math (i.e.: loops)",
     "crumbs": [
       "Home",
       "Lectures",
@@ -908,7 +908,7 @@
     "href": "slides/weapon-of-choice.html#fortran-example",
     "title": "Why julia?",
     "section": "Fortran Example",
-    "text": "Fortran Example\n\ncreate a text file test.f90: fortran     program sumit         implicit none         double precision a(5)   ! allocate an array with 5 slots         a = (/1,2,3,4,5/)       ! fill with values         print *,\"result is \", sum(a)     end program sumit\ncompile it and run it: bash     $ gfortran test.f90 -o test     $ ./test      result is    15.000000000000000",
+    "text": "Fortran Example\n\ncreate a text file test.f90:\nprogram sumit\n    implicit none\n    double precision a(5)   ! allocate an array with 5 slots\n    a = (/1,2,3,4,5/)       ! fill with values\n    print *,\"result is \", sum(a)\nend program sumit\ncompile it and run it:\n$ gfortran test.f90 -o test\n$ ./test\n result is    15.000000000000000",
     "crumbs": [
       "Home",
       "Lectures",
@@ -1534,7 +1534,7 @@
     "href": "index.html#outline-of-topics",
     "title": "Computational Economics",
     "section": "Outline of Topics",
-    "text": "Outline of Topics\n\n\n\nSection\nTopic\n\n\n\n\n1\nWhy worry about computation in Economics?\n\n\n2\nWhat is an OS?\n\n\n3\nDoes it matter how one writes code?\n\n\n4\nProgramming Languages - Weapon of Choice\n\n\n5\njulia crash course 1\n\n\n6\njulia crash course 2\n\n\n7\nOptimization 1: Recap of theory, Automatic Differentiation, setting up an optimizer\n\n\n8\nOptimization 2: Algorithms\n\n\n9\nOptimization 3: Constraints\n\n\n10\nParallel Computing\n\n\n11\nData and Machine Learning\n\n\n12\nDynamic Programming 1: Basics\n\n\n13\nDynamic Programming 2: Aiyagari and Shimer+Smith Models\n\n\n14\nDiscrete and Continous Choice Problems\n\n\n15\nDynamic Discrete Choice Models"
+    "text": "Outline of Topics\n\n\n\nSection\nTopic\n\n\n\n\n1\nWhy worry about computation in Economics?\n\n\n2\nWhat is an OS?\n\n\n3\nDoes it matter how one writes code?\n\n\n4\nProgramming Languages - Weapon of Choice\n\n\n5\njulia crash course 1\n\n\n6\njulia crash course 2\n\n\n7\nOptimization 1: Recap of theory, Automatic Differentiation, setting up an optimizer\n\n\n8\nOptimization 2: Algorithms\n\n\n9\nOptimization 3: Constraints\n\n\n10\nData and Machine Learning\n\n\n11\nDynamic Programming\n\n\n12\nParallel Computing\n\n\n13\nFunction Approximation\n\n\n14\nNumerical Integration\n\n\n15\nDynamic Discrete Choice Models"
   },
   {
     "objectID": "index.html#prerequisites",
@@ -2007,7 +2007,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "7 - Optimization"
+      "7 - Optimization 1"
     ]
   },
   {
@@ -2019,7 +2019,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "7 - Optimization"
+      "7 - Optimization 1"
     ]
   },
   {
@@ -2031,7 +2031,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "7 - Optimization"
+      "7 - Optimization 1"
     ]
   },
   {
@@ -2043,7 +2043,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "7 - Optimization"
+      "7 - Optimization 1"
     ]
   },
   {
@@ -2055,7 +2055,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "7 - Optimization"
+      "7 - Optimization 1"
     ]
   },
   {
@@ -2067,7 +2067,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "7 - Optimization"
+      "7 - Optimization 1"
     ]
   },
   {
@@ -2271,7 +2271,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "8 - Optimization 2"
+      "8 - Optimization 2 and 3"
     ]
   },
   {
