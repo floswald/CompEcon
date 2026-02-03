@@ -2,3 +2,4 @@
 /_site/
 /_freeze/
 Manifest.toml
+**/*.quarto_ipynb

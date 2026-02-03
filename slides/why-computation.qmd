@@ -1,0 +1,202 @@
+---
+title: Why Do We Care about Computation?
+subtitle: We're economists in the end, no?
+format:
+  revealjs:
+    theme: _extensions/clean/clean.scss
+    self-contained: true
+author:
+  - name: Florian Oswald
+    url: https://floswald.github.io
+    email: florian.oswald@unito.it
+    orcid: 0000-0001-7737-2038
+    affiliations:
+      - University of Turin
+      - Collegio Carlo Alberto
+      - JPE Data Editor
+date: last-modified
+execute: 
+  cache: true
+---
+
+
+## Today's Agenda
+
+1. Logistics.
+
+::: {.fragment}
+2. Why Economists Must Talk About Computing.
+:::
+
+
+## Who Am I?
+
+<br>
+
+::: {.columns}
+::: {.column width="50%"}
+![](https://media.giphy.com/media/Q7LP0tm86sBWIqjFCL/giphy.gif){fig-align="center" width="60%"}
+:::
+
+::: {.column width="50%"}
+::: {.fragment}
+
+- Associate Prof at ESOMAS Unito
+
+- Urban, Macro, IO, Computation
+
+- Experience with HPC systems, AWS and google cloud
+
+- Research projects in `fortran`, `C++`,  `R`, `julia`, `python` and `PostgreSQL`
+
+- I am the JPE Data Editor.
+:::
+:::
+:::
+
+
+## Logistics and Course Structure
+
+* Meetings: Every Monday and Wednesday
+
+::: {.fragment}
+* Communication: Slack
+:::
+
+::: {.fragment}
+* Materials: All online via [course website](https://floswald.github.io/CompEcon)
+:::
+
+::: {.fragment}
+* Grades: 60% homeworks, 40% term project
+    * You should do all homeworks in teams of 2 or 3.
+    * Term project in teams of 2.
+:::
+
+::: {.fragment}
+* Term Project: Replicate a published paper with computational content.
+    * More info [on syllabus](https://floswald.github.io/CompEcon/#term_project)
+    * Deadline for hand in: end of term.
+:::
+
+
+
+## Economists and Computation I
+
+::: {.callout-note}
+This part borrows heavily from [Jesus Fernandez-Villaverde's lectures. Thanks Jesus!](https://www.sas.upenn.edu/~jesusfv/teaching.html)
+:::
+
+Computation has become an important tool in Economics: 
+
+1. Macro: Solution of DSGE models, forecasting models, ...
+2. Micro: Agent-based models, games, life-cycle models, high-dimensional fixed effects models ...
+3. Econometrics: Simulation-based estimators and large datasets, ...
+4. Trade and spatial economics: multi-country-firm-type models, with dynamics, ...
+5. Finance: Asset Pricing, Value at Risk models, ...
+
+## Economists and Computation II
+
+* [Ken Judd](https://web.stanford.edu/~judd/): Computation often *complements*, rather than substitutes, theory. 
+  
+> If theory shows that some partial derivative of interest is *positive*, computation can tell us *how positive*.
+
+::: {.columns}
+::: {.column}
+
+::: {.fragment}
+* Economics is not different from many other fields. 
+    - Computational Biology (e.g. `R` Bioconductor)
+    - Computational Chemistry
+    - Physics, Engineering, Applied Maths
+    - Comparative Literature
+    - Astronomy
+:::
+:::
+
+::: {.column}
+
+::: {.fragment}
+* [Research is now fundamentally connected to software](https://www.nature.com/articles/d41586-021-00075-2)
+:::
+:::
+:::
+
+
+
+## What Does This Mean for You?
+
+1. You (will) spend a considerable amount of your time writing code.
+
+::: {.fragment}
+2. You (will) collaborate with coauthors and colleagues on code.
+:::
+
+::: {.fragment}
+3. You (will) read and evaluate papers that use computational methods.
+:::
+
+::: {.fragment}
+4. (Hopefully you will be supplied with the paper's code for your evaluation.)
+:::
+
+::: {.fragment}
+5. For all practical purposes, **you are a research software engineer**. 👷‍♀️ 👷🏽‍♂️ Carefully choose the best methods for software engineering at any time. 
+:::
+
+
+## A Brief History of Computing in Economics
+
+::: {.incremental}
+
+1. 1800-1960: Economics is about intuition. And maths. Computation done by hand.
+2. 1960-1990: Computing on large mainframe computers. Cost per error is huge. (each run takes a lot of time)
+3. 1990-2010: PC arrives, cost declines.
+4. Citation from 2010: *Software just happens* (We'll hire an RA to write the code.)  
+5. 2010-2025: *The vast majority of research software is single use and poor quality*. We have 19 (!) econ journals signed up to the [Data and Code Availability Standard (DCAS)](https://datacodestandard.org)
+6. 2026- *That's you guys!* 💪
+:::
+
+
+
+
+## Gentzkow and Shapiro
+
+>Here is a good rule of thumb: If you are trying to solve a problem, and there are multi-billion dollar firms whose entire business model depends on solving the same problem, and there are whole courses at your university devoted to how to solve that problem, you might want to figure out what the experts do and see if you can't learn something from it.
+
+::: {.fragment}
+* [Gentzkow and Shapiro: Code and Data](https://web.stanford.edu/%7Egentzkow/research/CodeAndData.pdf)
+* [GSLab-econ](https://github.com/gslab-econ)
+* [RA-manual](https://github.com/gslab-econ/ra-manual/wiki)
+* Whatever you do: don't reinvent the wheel. ☸️
+
+* [A Gentle Introduction to Effective Computing in Quantitative Research](https://mitpress.mit.edu/books/gentle-introduction-effective-computing-quantitative-research)
+:::
+
+
+
+## Aim of This Course
+
+
+::: {.columns}
+::: {.column}
+
+::: {.incremental}
+* Take the *fear* out of computation.
+* Provide you with a set of tools based on which you can learn to tackle frontier computational problems.
+* Teach you some best practices from Open Source Software (OSS)
+* Have some fun! 🎉
+:::
+
+:::
+::: {.column}
+
+![](images/fortranmanual.png)
+
+:::
+:::
+<!-- end columns -->
+
+
+
+
