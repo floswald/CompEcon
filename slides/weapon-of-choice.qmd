@@ -96,8 +96,10 @@ g++ sumvec.cpp -o sum.x
 ## `C sum`
 
 * Defining the function:
+  
     ```C
     #include <stddef.h>
+    #include <stdio.h>
     double c_sum(size_t n, double *X) {
         double s = 0.0;
         for (size_t i = 0; i < n; ++i) {
@@ -105,8 +107,18 @@ g++ sumvec.cpp -o sum.x
         }
         return s;
     }
+
+    //main
+    int main(void) {
+        double x[] = {1, 2, 3, 4, 5};
+        size_t n = sizeof(x) / sizeof(x[0]);
+
+        double result = c_sum(n, x);
+
+        printf("C-computed Sum = %.2f\n", result);
+        return 0;
+    }
     ```
-* place in `main()`, compile and run as above.
 
 ## `C++`: Pros and Cons
 
@@ -150,6 +162,7 @@ g++ sumvec.cpp -o sum.x
 ## `python sum`
 
 * we just use the built-in `sum`:
+  
     ```python
     a = [1,2,3,4,5]
     sum(a)
@@ -206,10 +219,12 @@ g++ sumvec.cpp -o sum.x
 ## `R sum`
 
 * we just use the built-in `sum`:
+  
     ```R
     a = 1:5
     sum(a)
     ```
+
 * that's (again) it!
 
 ## `R` Pros/Cons
@@ -217,7 +232,7 @@ g++ sumvec.cpp -o sum.x
 ::: {.columns}
 ::: {.column width="50%"}
 ### Pros
-* Excellent IDE [Rstudio](https://rstudio.com)
+* Excellent IDEs [Rstudio](https://rstudio.com), [positron](http://positron.posit.co)
 * Thousands of high quality packages. `tidyverse` is a sensation in itself.
 * *Many many* [econometrics-related packages](https://cran.r-project.org/web/views/Econometrics.html).
 * Wide community.
@@ -256,6 +271,7 @@ g++ sumvec.cpp -o sum.x
 ## Fortran Example
 
 * create a text file `test.f90`:
+  
     ```fortran
     program sumit
         implicit none
@@ -266,6 +282,7 @@ g++ sumvec.cpp -o sum.x
     ```
 
 * compile it and run it:
+  
     ```bash
     $ gfortran test.f90 -o test
     $ ./test

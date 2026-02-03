@@ -40,21 +40,22 @@ True to that motto, there will be homeworks for you to try out what you learned 
 
 Section | Topic
 ------ | ------
-1      | Why worry about computation in Economics?
-2      | What is an OS?
-3      | Does it matter how one writes code?
-4      | Programming Languages - Weapon of Choice
-5      | `julia` [crash course 1](https://floswald.github.io/julia-bootcamp/)
-6      | `julia` [crash course 2](https://floswald.github.io/julia-bootcamp/)
-7      | Optimization 1: Recap of theory, Automatic Differentiation, setting up an optimizer
-8      | Optimization 2: Algorithms
-9      | Optimization 3: Constraints
-10     | Parallel Computing
-11     | Data and Machine Learning
-12     | Dynamic Programming 1: Basics
-13     | Dynamic Programming 2: Aiyagari and Shimer+Smith Models
-14     | Discrete and Continous Choice Problems
-15     | Dynamic Discrete Choice Models
+[1](slides/why-computation.qmd)      | Why worry about computation in Economics?
+[2 ](slides/OS.qmd)     | What is an OS?
+[3 ](slides/research-software-engineering.qmd)     | Does it matter how one writes code?
+[4 ](slides/weapon-of-choice.qmd)     | Programming Languages - Weapon of Choice
+[5 ](lectures/lecture1.qmd)     | `julia` [crash course 1](https://floswald.github.io/julia-bootcamp/)
+[6 ](lectures/lecture2.qmd)     | `julia` [crash course 2](https://floswald.github.io/julia-bootcamp/)
+[7 ](lectures/lecture3.qmd)     | Optimization 1: Recap of theory, Automatic Differentiation, setting up an optimizer
+[8 ](lectures/lecture4.qmd)     | Optimization 2: Algorithms
+[9 ](lectures/lecture4.qmd)     | Optimization 3: Constraints
+[10](lectures/lecture6.qmd)     | Data and Machine Learning
+[11](lectures/lecture5.qmd)     | Dynamic Programming
+[12](lectures/lecture7.qmd)     | Parallel Computing
+[13](lectures/lecture8.qmd)     | Function Approximation
+[14](lectures/lecture9.qmd)     | Numerical Integration
+[15](lectures/lecture10.qmd)     | Dynamic Discrete Choice Models
+
 
 
 

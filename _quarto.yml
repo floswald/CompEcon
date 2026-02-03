@@ -35,17 +35,17 @@ website:
         - href: slides/weapon-of-choice.qmd
           text: 4 - Programming Languages
         - href: lectures/lecture1.qmd
-          text: 5 - Why `julia`?
+          text: 5 - Intro to `julia` 1
         - href: lectures/lecture2.qmd
-          text: 6 - Examples
+          text: 6 - Intro to `julia` 2
         - href: lectures/lecture3.qmd
-          text: 7 - Optimization
+          text: 7 - Optimization 1
         - href: lectures/lecture4.qmd
-          text: 8 - Optimization 2
-        - href: lectures/lecture5.qmd
-          text: 9 - Dynamic Programming
+          text: 8 - Optimization 2 and 3
         - href: lectures/lecture6.qmd
-          text: 10 - Data
+          text: 9 - Data
+        - href: lectures/lecture5.qmd
+          text: 10 - Dynamic Programming
         - href: lectures/lecture7.qmd
           text: 11 - Parallel Computing
         - href: lectures/lecture8.qmd
