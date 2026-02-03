@@ -10,6 +10,15 @@ Make sure to check out the [installation](/installation.qmd) page on this websit
 
 :::
 
+
+## Introduction and: Why Julia?
+
+In this section we want to understand why julia is a good choice for computational tasks - for Economists and others.
+
+[Slides for intro:](/why-julia/dist/why-julia.html) Why Julia? *(does not run in my safari browser! 🤷🏻‍♂️)*
+
+
+
 ## Basics: REPL, VSCode, Notebooks
 
 We will repeat the basics of julia in a very condensed manner by going through steps 1-7 of [MoJuWo](https://modernjuliaworkflows.org) live in class.
@@ -25,12 +34,6 @@ VScode:
 
 Notice how there is a julia REPL running _as part of_ the VSCode editor. This is called an _integrated development environment_ (IDE). Very similar to an `R` session connected to `RStudio`, or the `python` interpreter being run through `PyCharm` etc.
 
-
-## Introduction and: Why Julia?
-
-In this section we want to understand why julia is a good choice for computational tasks - for Economists and others.
-
-[Slides for intro:](/why-julia/dist/why-julia.html) Why Julia? *(does not run in my safari browser! 🤷🏻‍♂️)*
 
 
 ## Notebooks

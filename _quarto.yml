@@ -1,14 +1,14 @@
 project:
   type: website
-  post-render:
-  - "cp -rv _external/. _site/"
+  # post-render:
+  # - "cp -rv _external/. _site/"
 
 website:
   title: "Computational Economics"
   body-footer: © Florian Oswald, 2026
   favicon: /images/cca.png
   twitter-card: true
-  cookie-consent: true
+  cookie-consent: false
   google-analytics: 
     tracking-id: "G-YG2MPSR1Q2"
     storage: cookies
@@ -26,26 +26,34 @@ website:
           text: Syllabus (pdf)
     - section: Lectures
       contents: 
+        - href: slides/why-computation.qmd
+          text: 1 - Why *computation*?
+        - href: slides/OS.qmd
+          text: 2 - What is an *OS*?
+        - href: slides/research-software-engineering.qmd
+          text: 3 - Software Engineering
+        - href: slides/weapon-of-choice.qmd
+          text: 4 - Programming Languages
         - href: lectures/lecture1.qmd
-          text: 1 - Why `julia`?
+          text: 5 - Why `julia`?
         - href: lectures/lecture2.qmd
-          text: 2 - Examples
+          text: 6 - Examples
         - href: lectures/lecture3.qmd
-          text: 3 - Optimization
+          text: 7 - Optimization
         - href: lectures/lecture4.qmd
-          text: 4 - Optimization 2
+          text: 8 - Optimization 2
         - href: lectures/lecture5.qmd
-          text: 5 - Dynamic Programming
+          text: 9 - Dynamic Programming
         - href: lectures/lecture6.qmd
-          text: 6 - Data
+          text: 10 - Data
         - href: lectures/lecture7.qmd
-          text: 7 - Parallel Computing
+          text: 11 - Parallel Computing
         - href: lectures/lecture8.qmd
-          text: 8 - Function Approximation
+          text: 12 - Function Approximation
         - href: lectures/lecture9.qmd
-          text: 9 - Numerical Integration
+          text: 13 - Numerical Integration
         - href: lectures/lecture10.qmd
-          text: 10 - Dynamic Discrete Choice
+          text: 14 - Dynamic Discrete Choice
         - href: lectures/plotting.qmd
           text: Makie.jl Plotting
         - href: lectures/absorbing-mc.qmd

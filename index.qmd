@@ -1,5 +1,5 @@
 ---
-title: "Computational Economics for PhDs"
+title: "Computational Economics"
 author: "[Florian Oswald](https://floswald.github.io)"
 subtitle: "Collegio Carlo Alberto, 2026"
 ---
@@ -8,7 +8,7 @@ subtitle: "Collegio Carlo Alberto, 2026"
 
 ::: {.column width="70%"}
 * **Teacher:** Florian Oswald, [florian.oswald@unito.it](mailto:florian.oswald@unito.it)
-* **Class Times:** tbc
+* **Class Times:** Monday 13:30-15:30, Wednesday 17:30-19:00
 * **Class Location:** Collegio Carlo Alberto
 * **Slack**: There will be a slack channel for all communication
 :::
@@ -30,7 +30,7 @@ subtitle: "Collegio Carlo Alberto, 2026"
 
 ## Course Overview
 
-This is a course for PhD and Allievi students at Collegio Carlo Alberto in Computational Economics. You will learn about some commonly used methods in Computational Economics and Structural Econometrics. These methods are being used in *all* fields of Economics. The course has a clear focus on applying what you learn. We will cover the theoretical concepts that underlie each topic, but you should expect a fair amount of *hands on* action required on your behalf. In the words of the great [Che-Lin Su](https://scholar.google.com/citations?user=6AZSMiwAAAAJ&hl=en):
+This is a course for **PhD and Allievi students** at Collegio Carlo Alberto in Computational Economics. You will learn about some commonly used methods in Computational Economics and Structural Econometrics. These methods are being used in *all* fields of Economics. The course has a clear focus on applying what you learn. We will cover the theoretical concepts that underlie each topic, but you should expect a fair amount of *hands on* action required on your behalf. In the words of the great [Che-Lin Su](https://scholar.google.com/citations?user=6AZSMiwAAAAJ&hl=en):
 
 > Doing Computation is the only way to learn Computation. Doing Computation is the only way to learn Computation. Doing Computation is the only way to learn Computation.
 
@@ -39,19 +39,22 @@ True to that motto, there will be homeworks for you to try out what you learned 
 ## Outline of Topics
 
 Section | Topic
-------- | ------
-1       | Introduction, *Why Julia*
-2       | `julia` [crash course 1](https://floswald.github.io/julia-bootcamp/)
-3       | `julia` [crash course 2](https://floswald.github.io/julia-bootcamp/)
-4       | Optimization 1: Recap of theory, Automatic Differentiation, setting up an optimizer
-5       | Optimization 2: Algorithms
-6       | Optimization 3: Constraints
-7       | Parallel Computing
-8       | Data and Machine Learning
-9       | Dynamic Programming 1: Basics
-9       | Dynamic Programming 2: Aiyagari and Shimer+Smith Models
-10      | Discrete and Continous Choice Problems
-11      | Dynamic Discrete Choice Models
+------ | ------
+1      | Why worry about computation in Economics?
+2      | What is an OS?
+3      | Does it matter how one writes code?
+4      | Programming Languages - Weapon of Choice
+5      | `julia` [crash course 1](https://floswald.github.io/julia-bootcamp/)
+6      | `julia` [crash course 2](https://floswald.github.io/julia-bootcamp/)
+7      | Optimization 1: Recap of theory, Automatic Differentiation, setting up an optimizer
+8      | Optimization 2: Algorithms
+9      | Optimization 3: Constraints
+10     | Parallel Computing
+11     | Data and Machine Learning
+12     | Dynamic Programming 1: Basics
+13     | Dynamic Programming 2: Aiyagari and Shimer+Smith Models
+14     | Discrete and Continous Choice Problems
+15     | Dynamic Discrete Choice Models
 
 
 
