@@ -408,7 +408,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "5 - Dynamic Programming"
+      "9 - Dynamic Programming"
     ]
   },
   {
@@ -420,7 +420,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "6 - Data"
+      "10 - Data"
     ]
   },
   {
@@ -432,7 +432,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "6 - Data"
+      "10 - Data"
     ]
   },
   {
@@ -444,7 +444,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "6 - Data"
+      "10 - Data"
     ]
   },
   {
@@ -456,7 +456,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "6 - Data"
+      "10 - Data"
     ]
   },
   {
@@ -468,7 +468,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "2 - Examples"
+      "6 - Examples"
     ]
   },
   {
@@ -480,7 +480,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "2 - Examples"
+      "6 - Examples"
     ]
   },
   {
@@ -492,19 +492,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "1 - Why `julia`?"
-    ]
-  },
-  {
-    "objectID": "lectures/lecture1.html#basics-repl-vscode-notebooks",
-    "href": "lectures/lecture1.html#basics-repl-vscode-notebooks",
-    "title": "Programming Languages and - Why Julia?",
-    "section": "Basics: REPL, VSCode, Notebooks",
-    "text": "Basics: REPL, VSCode, Notebooks\nWe will repeat the basics of julia in a very condensed manner by going through steps 1-7 of MoJuWo live in class.\njulia REPL:\n\n\n\nThis is the julia REPL\n\n\nVScode:\n\n\n\nThis is VSCode\n\n\nNotice how there is a julia REPL running as part of the VSCode editor. This is called an integrated development environment (IDE). Very similar to an R session connected to RStudio, or the python interpreter being run through PyCharm etc.",
-    "crumbs": [
-      "Home",
-      "Lectures",
-      "1 - Why `julia`?"
+      "5 - Why `julia`?"
     ]
   },
   {
@@ -516,7 +504,19 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "1 - Why `julia`?"
+      "5 - Why `julia`?"
+    ]
+  },
+  {
+    "objectID": "lectures/lecture1.html#basics-repl-vscode-notebooks",
+    "href": "lectures/lecture1.html#basics-repl-vscode-notebooks",
+    "title": "Programming Languages and - Why Julia?",
+    "section": "Basics: REPL, VSCode, Notebooks",
+    "text": "Basics: REPL, VSCode, Notebooks\nWe will repeat the basics of julia in a very condensed manner by going through steps 1-7 of MoJuWo live in class.\njulia REPL:\n\n\n\nThis is the julia REPL\n\n\nVScode:\n\n\n\nThis is VSCode\n\n\nNotice how there is a julia REPL running as part of the VSCode editor. This is called an integrated development environment (IDE). Very similar to an R session connected to RStudio, or the python interpreter being run through PyCharm etc.",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "5 - Why `julia`?"
     ]
   },
   {
@@ -528,7 +528,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "1 - Why `julia`?"
+      "5 - Why `julia`?"
     ]
   },
   {
@@ -540,7 +540,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "8 - Function Approximation"
+      "12 - Function Approximation"
     ]
   },
   {
@@ -552,7 +552,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "8 - Function Approximation"
+      "12 - Function Approximation"
     ]
   },
   {
@@ -564,7 +564,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "8 - Function Approximation"
+      "12 - Function Approximation"
     ]
   },
   {
@@ -576,7 +576,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "8 - Function Approximation"
+      "12 - Function Approximation"
     ]
   },
   {
@@ -588,7 +588,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "8 - Function Approximation"
+      "12 - Function Approximation"
     ]
   },
   {
@@ -600,7 +600,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "8 - Function Approximation"
+      "12 - Function Approximation"
     ]
   },
   {
@@ -612,7 +612,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "8 - Function Approximation"
+      "12 - Function Approximation"
     ]
   },
   {
@@ -624,7 +624,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "8 - Function Approximation"
+      "12 - Function Approximation"
     ]
   },
   {
@@ -636,7 +636,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "8 - Function Approximation"
+      "12 - Function Approximation"
     ]
   },
   {
@@ -712,67 +712,1111 @@
     ]
   },
   {
+    "objectID": "slides/weapon-of-choice.html#choosing-a-language",
+    "href": "slides/weapon-of-choice.html#choosing-a-language",
+    "title": "Why julia?",
+    "section": "Choosing a Language",
+    "text": "Choosing a Language\n\nYou are an economics grad student and need to choose your weapon of choice.\n\n\n\nYou will use more than one language. (This is a good thing.)\n\n\n\n\nAll Languages have pros and cons. I will give some opinionated advice.\n\n\n\n\nThen I will force you to use a certain language to complete homeworks 😜",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "4 - Programming Languages"
+    ]
+  },
+  {
+    "objectID": "slides/weapon-of-choice.html#taxonomy-of-languages",
+    "href": "slides/weapon-of-choice.html#taxonomy-of-languages",
+    "title": "Why julia?",
+    "section": "Taxonomy of Languages",
+    "text": "Taxonomy of Languages",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "4 - Programming Languages"
+    ]
+  },
+  {
+    "objectID": "slides/weapon-of-choice.html#the-proscons-rundown",
+    "href": "slides/weapon-of-choice.html#the-proscons-rundown",
+    "title": "Why julia?",
+    "section": "The Pros/Cons Rundown",
+    "text": "The Pros/Cons Rundown",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "4 - Programming Languages"
+    ]
+  },
+  {
+    "objectID": "slides/weapon-of-choice.html#hello-world",
+    "href": "slides/weapon-of-choice.html#hello-world",
+    "title": "Why julia?",
+    "section": "Hello, World?",
+    "text": "Hello, World?\n\n\nIt’s good custom to first print hello world when introducing a language. It’s fun, but pretty uninformative. Like, what’s the performance of printing “hello, world”?\n\n\n\n\nInstead, we will show in each language how to implement the function sum over an array of values a: \\[\\text{sum}(a) = \\sum_{i=1}^n a_i\\] where \\(n\\) is the number of elements in \\(a\\)\nLater, we will then benchmark each language to see tradeoff between high- and low level languages.",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "4 - Programming Languages"
+    ]
+  },
+  {
+    "objectID": "slides/weapon-of-choice.html#cc",
+    "href": "slides/weapon-of-choice.html#cc",
+    "title": "Why julia?",
+    "section": "C/C++",
+    "text": "C/C++\n\nThe world pretty much runs on C++.\n\n\n\nIf you now some C++ and some Unix you know a lot already.\n\n\n\n\nDeveloped at Bell Labs in 1980s.\n\n\n\n\nAll C programs are valid C++, not other way around.",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "4 - Programming Languages"
+    ]
+  },
+  {
+    "objectID": "slides/weapon-of-choice.html#c-code-example",
+    "href": "slides/weapon-of-choice.html#c-code-example",
+    "title": "Why julia?",
+    "section": "C++ Code Example",
+    "text": "C++ Code Example\n//sumvec.cpp\n#include &lt;iostream&gt;\n#include &lt;vector&gt;\nint main(){\n    std::vector&lt;int&gt; x;\n    for (int i=1;i&lt;5;i++){\n        x.push_back(i);\n    }\n    int sum = 0;\n    for (std::vector&lt;int&gt;::iterator i=x.begin();i!=x.end();i++){\n        sum += *i;\n    }\n    std::cout &lt;&lt; \"sum is \" &lt;&lt; sum &lt;&lt; std::endl;\n}\n//compile\ng++ sumvec.cpp -o sum.x",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "4 - Programming Languages"
+    ]
+  },
+  {
+    "objectID": "slides/weapon-of-choice.html#c-sum",
+    "href": "slides/weapon-of-choice.html#c-sum",
+    "title": "Why julia?",
+    "section": "C sum",
+    "text": "C sum\n\nDefining the function: C     #include &lt;stddef.h&gt;     double c_sum(size_t n, double *X) {         double s = 0.0;         for (size_t i = 0; i &lt; n; ++i) {             s += X[i];         }         return s;     }\nplace in main(), compile and run as above.",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "4 - Programming Languages"
+    ]
+  },
+  {
+    "objectID": "slides/weapon-of-choice.html#c-pros-and-cons",
+    "href": "slides/weapon-of-choice.html#c-pros-and-cons",
+    "title": "Why julia?",
+    "section": "C++: Pros and Cons",
+    "text": "C++: Pros and Cons\n\n\nPros\n\nVery versatile.\nContinuously Evolving. C++ 2020 standard is current.\nVery performant.\nExcellent open source compilers.\nVery stable and widely used.\nLarge community.\n\n\n\nCons\n\nHard to learn. Pointers, Classes, OOP in general.\nSome find it hard to work with Compiled languages.\nIt’s easy to overcomplicate things for novices.",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "4 - Programming Languages"
+    ]
+  },
+  {
+    "objectID": "slides/weapon-of-choice.html#python",
+    "href": "slides/weapon-of-choice.html#python",
+    "title": "Why julia?",
+    "section": "Python",
+    "text": "Python\n\nThe general purpose language out there. Swiss Army Knife. All Terrain. 🚙\n\n\n\nOpen Source\n\n\n\n\nDesigned by Guido von Rossum.\n\n\n\n\nElegant, intuitive, full OOP support (Classes etc).",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "4 - Programming Languages"
+    ]
+  },
+  {
+    "objectID": "slides/weapon-of-choice.html#python-sum",
+    "href": "slides/weapon-of-choice.html#python-sum",
+    "title": "Why julia?",
+    "section": "python sum",
+    "text": "python sum\n\nwe just use the built-in sum: python     a = [1,2,3,4,5]     sum(a)\nthat’s it!",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "4 - Programming Languages"
+    ]
+  },
+  {
+    "objectID": "slides/weapon-of-choice.html#python-proscons",
+    "href": "slides/weapon-of-choice.html#python-proscons",
+    "title": "Why julia?",
+    "section": "Python Pros/Cons",
+    "text": "Python Pros/Cons\n\n\nPros\n\nConsole: good for exploration.\nMany useful libraries (NumPy, SciPy, Pandas, matplotlib)\nEasy Unit Testing\nVery Performant String Manipulation\nLarge community\n\n\n\nCons\n\nSlow.\nVersion 2.7 or 3.6? Huge problem.\nHigh performance routes use annoted Python code. Numba: JIT compiler,Pypy: JIT compiler, Cython: compile to C++\nAll feel a bit like a 78-liter 3,500hp V18 truck engine on a Mini Chassis.",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "4 - Programming Languages"
+    ]
+  },
+  {
+    "objectID": "slides/weapon-of-choice.html#python-performance-analogy",
+    "href": "slides/weapon-of-choice.html#python-performance-analogy",
+    "title": "Why julia?",
+    "section": "Python Performance Analogy",
+    "text": "Python Performance Analogy",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "4 - Programming Languages"
+    ]
+  },
+  {
+    "objectID": "slides/weapon-of-choice.html#r",
+    "href": "slides/weapon-of-choice.html#r",
+    "title": "Why julia?",
+    "section": "R",
+    "text": "R\n\nHigh level open source language for statistical computing.\n\n\n\nRoss Ihaka and Robert Gentleman developed R as a successor to John Chambers’ S\n\n\n\n\nR went open source quickly via http://cran.r-project.org/\n\n\n\n\nTremendously rich add-on packages environment.\n\n\n\n\nHas basic OOP support via S4 classes and methods.",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "4 - Programming Languages"
+    ]
+  },
+  {
+    "objectID": "slides/weapon-of-choice.html#r-sum",
+    "href": "slides/weapon-of-choice.html#r-sum",
+    "title": "Why julia?",
+    "section": "R sum",
+    "text": "R sum\n\nwe just use the built-in sum: R     a = 1:5     sum(a)\nthat’s (again) it!",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "4 - Programming Languages"
+    ]
+  },
+  {
+    "objectID": "slides/weapon-of-choice.html#r-proscons",
+    "href": "slides/weapon-of-choice.html#r-proscons",
+    "title": "Why julia?",
+    "section": "R Pros/Cons",
+    "text": "R Pros/Cons\n\n\nPros\n\nExcellent IDE Rstudio\nThousands of high quality packages. tidyverse is a sensation in itself.\nMany many econometrics-related packages.\nWide community.\nRcpp is good to connect to C++\nUnbeatable for spatial data: the sf package.\nVery good for data processing.\n\n\n\nCons\n\nBase R is slow.\nNot a modern language. Some quite arcane behaviours.\nRcpp means you end up writing C++ code.\nNot straightforward to write performant low-level code close to the math (i.e.: loops)",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "4 - Programming Languages"
+    ]
+  },
+  {
+    "objectID": "slides/weapon-of-choice.html#fortran",
+    "href": "slides/weapon-of-choice.html#fortran",
+    "title": "Why julia?",
+    "section": "Fortran",
+    "text": "Fortran\n\nThe Grandfather of all languages 👴🏽\n\n\n\nFORTRAN (Formula Translation) was developed in 1957.\n\n\n\n\nStill used by many economists, for example Mitman-Kaplan-Violante JPE 2020\n\n\n\n\nStill used for many scientific problems (nuclear bombs design, wheather forecasts, phyical experiments, etc) 💣 🌦",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "4 - Programming Languages"
+    ]
+  },
+  {
+    "objectID": "slides/weapon-of-choice.html#fortran-example",
+    "href": "slides/weapon-of-choice.html#fortran-example",
+    "title": "Why julia?",
+    "section": "Fortran Example",
+    "text": "Fortran Example\n\ncreate a text file test.f90: fortran     program sumit         implicit none         double precision a(5)   ! allocate an array with 5 slots         a = (/1,2,3,4,5/)       ! fill with values         print *,\"result is \", sum(a)     end program sumit\ncompile it and run it: bash     $ gfortran test.f90 -o test     $ ./test      result is    15.000000000000000",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "4 - Programming Languages"
+    ]
+  },
+  {
+    "objectID": "slides/weapon-of-choice.html#fortran-proscons",
+    "href": "slides/weapon-of-choice.html#fortran-proscons",
+    "title": "Why julia?",
+    "section": "FORTRAN Pros/Cons",
+    "text": "FORTRAN Pros/Cons\n\n\nPros\n\nRelatively easy to learn.\nGood array support built in.\nGood parallelization support via MPI.\nFast.\n\n\n\nCons\n\nDifferent compilers implement different standards (Intel Fortran vs GFORTRAN array constructor, e.g.)\nSmall user community.\nNot very many tutorials.\nNot faster than C++ (used to be true).\nHard to automatize unit testing via e.g. pfunit.\nLanguage is very bare-bone.\nHard to process data.",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "4 - Programming Languages"
+    ]
+  },
+  {
+    "objectID": "slides/weapon-of-choice.html#victims-of-speed-vs-productivity-tradeoff",
+    "href": "slides/weapon-of-choice.html#victims-of-speed-vs-productivity-tradeoff",
+    "title": "Why julia?",
+    "section": "Victims of Speed vs Productivity Tradeoff?",
+    "text": "Victims of Speed vs Productivity Tradeoff?\n\nWe have seen high-level langs (R, python etc) are good for productivity: Iterate fast on try, fail, repeat\n\n\n\nWe have seen that low level languages run fast, but are worse for productivity.\n\n\n\n\nSo we cannot have both speed and productivity.\n\n\n\n\nOr can we?",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "4 - Programming Languages"
+    ]
+  },
+  {
+    "objectID": "slides/weapon-of-choice.html#can-we-have-both",
+    "href": "slides/weapon-of-choice.html#can-we-have-both",
+    "title": "Why julia?",
+    "section": "Can We Have Both?",
+    "text": "Can We Have Both?",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "4 - Programming Languages"
+    ]
+  },
+  {
+    "objectID": "slides/weapon-of-choice.html#case-study",
+    "href": "slides/weapon-of-choice.html#case-study",
+    "title": "Why julia?",
+    "section": "Case Study",
+    "text": "Case Study\n🔥🔥 Our Time is Running Out 🔥🔥\nOswald (QE 2019): Homeownership and Location Choice\n\n\n\n\n\n\n\n\n\nI wanted to compute this model of housing and location choice on US micro data.\nLarge state space. 🚫 R, 🚫 python\nNon-trivial estimation exercise.\nI had no code to build upon. And only a vague idea of how to do this.",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "4 - Programming Languages"
+    ]
+  },
+  {
+    "objectID": "slides/weapon-of-choice.html#when-the-clock-is-ticking",
+    "href": "slides/weapon-of-choice.html#when-the-clock-is-ticking",
+    "title": "Why julia?",
+    "section": "When the Clock is Ticking ⏰",
+    "text": "When the Clock is Ticking ⏰\n\n\n\n\n\n\n\n\n\nrepo starts with C++ (Blitz++)\nGiven my C++ level, this was taking too much time to develop!\nNo chance to finish in time. 😟",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "4 - Programming Languages"
+    ]
+  },
+  {
+    "objectID": "slides/weapon-of-choice.html#when-the-clock-is-ticking-1",
+    "href": "slides/weapon-of-choice.html#when-the-clock-is-ticking-1",
+    "title": "Why julia?",
+    "section": "When the Clock is Ticking ⏰",
+    "text": "When the Clock is Ticking ⏰\n\n\n\n\n\n\n\n\n\nrepo starts with C++ (Blitz++)\nGiven my C++ level, this was taking too much time to develop!\nNo chance to finish in time. 😟\nEnter julia! 🚀",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "4 - Programming Languages"
+    ]
+  },
+  {
+    "objectID": "slides/weapon-of-choice.html#why-we-created-julia---2012-blogpost",
+    "href": "slides/weapon-of-choice.html#why-we-created-julia---2012-blogpost",
+    "title": "Why julia?",
+    "section": "Why We Created Julia - 2012 blogpost",
+    "text": "Why We Created Julia - 2012 blogpost\n\nWe are power Matlab users. Some of us are Lisp hackers. Some are Pythonistas, others Rubyists, still others Perl hackers. There are those of us who used Mathematica before we could grow facial hair. There are those who still can’t grow facial hair. We’ve generated more R plots than any sane person should. C is our desert island programming language. We are greedy: we want more.\nWe want a language that’s open source, with a liberal license. We want the speed of C with the dynamism of Ruby. We want a language that’s homoiconic, with true macros like Lisp, but with obvious, familiar mathematical notation like Matlab. We want something as usable for general programming as Python, as easy for statistics as R, as natural for string processing as Perl, as powerful for linear algebra as Matlab, as good at gluing programs together as the shell. Something that is dirt simple to learn, yet keeps the most serious hackers happy. We want it interactive and we want it compiled.",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "4 - Programming Languages"
+    ]
+  },
+  {
+    "objectID": "slides/weapon-of-choice.html#julia-history-of-success",
+    "href": "slides/weapon-of-choice.html#julia-history-of-success",
+    "title": "Why julia?",
+    "section": "Julia History of Success",
+    "text": "Julia History of Success\n\nThat proposal was very bold.\nNot the first time that a new language arrives. It’s hard to carve out some market share.\nDevelopment started in 2009\nVersion 1.0 released in 2018\nFunding model to preserve language development (JuliaComputing Inc)\n\n\nTiobe Index\nLet’s browse the Thiobe Index!",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "4 - Programming Languages"
+    ]
+  },
+  {
+    "objectID": "slides/weapon-of-choice.html#what-is-julia",
+    "href": "slides/weapon-of-choice.html#what-is-julia",
+    "title": "Why julia?",
+    "section": "What is Julia?",
+    "text": "What is Julia?\n\nModern language\n\n\n\nBuilt for high performance and parallel: LLVM-JIT\n\n\n\n\nDynamically typed: good interactive use\n\n\n\n\nRich data type system\n\n\n\n\nMany Packages.\n\n\n\n\nGood Interoperability with other languages.",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "4 - Programming Languages"
+    ]
+  },
+  {
+    "objectID": "slides/weapon-of-choice.html#benchmarks",
+    "href": "slides/weapon-of-choice.html#benchmarks",
+    "title": "Why julia?",
+    "section": "Benchmarks",
+    "text": "Benchmarks",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "4 - Programming Languages"
+    ]
+  },
+  {
+    "objectID": "slides/weapon-of-choice.html#which-problem-does-julia-want-to-solve",
+    "href": "slides/weapon-of-choice.html#which-problem-does-julia-want-to-solve",
+    "title": "Why julia?",
+    "section": "Which problem does Julia want to solve?",
+    "text": "Which problem does Julia want to solve?\n\nJulia cofounder Stefan Karpinski talks about the 2 languages problem",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "4 - Programming Languages"
+    ]
+  },
+  {
+    "objectID": "slides/weapon-of-choice.html#which-problem-does-julia-want-to-solve-1",
+    "href": "slides/weapon-of-choice.html#which-problem-does-julia-want-to-solve-1",
+    "title": "Why julia?",
+    "section": "Which problem does Julia want to solve?",
+    "text": "Which problem does Julia want to solve?\n\n\nKey: Wall in scientific software stack creates a social barrier. Developer and User are different people. (Basically: who knows C++/fortran?)",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "4 - Programming Languages"
+    ]
+  },
+  {
+    "objectID": "slides/weapon-of-choice.html#scientific-software-stacks",
+    "href": "slides/weapon-of-choice.html#scientific-software-stacks",
+    "title": "Why julia?",
+    "section": "Scientific Software Stacks",
+    "text": "Scientific Software Stacks\n\n\nPast: At least 4 langs!\n\nProcess messy data. String manipulation, plotting, data wrangling. R or python.\nPrototype a numerical model. matlab\nWork around speed bottlneck: rewrite (parts) in C++\nTry to test (combo of googletest and R/python)\nAnalyse output data: R or python\nTie it all together with bash scripts or ruby etc.\n\n\n\nPresent: one lang only.\n\nProcess messy data. String manipulation, plotting, data wrangling. julia.\nPrototype a numerical model. julia\nWork around speed bottlneck: rewrite (parts) in julia\nTest : julia\nAnalyse output data: julia\nTie it all together with julia.",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "4 - Programming Languages"
+    ]
+  },
+  {
+    "objectID": "slides/weapon-of-choice.html#comparing-programming-languages-in-economics",
+    "href": "slides/weapon-of-choice.html#comparing-programming-languages-in-economics",
+    "title": "Why julia?",
+    "section": "Comparing Programming Languages in Economics",
+    "text": "Comparing Programming Languages in Economics\n\nS. Boragoan Aruoba and Jesus Fernandez-Villaverde compare performance of languages on an Industry Standard Growth Model.\n\n\n\nConceptually difficult to write identical code in different languages. Authors do a good job. (How many tricks is one allowed to use before an implementation is no longer comparable? Wouldn’t users use all available tricks?)\n\n\n\n\nI’ll show you the results from an updated version of the paper",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "4 - Programming Languages"
+    ]
+  },
+  {
+    "objectID": "slides/weapon-of-choice.html#results",
+    "href": "slides/weapon-of-choice.html#results",
+    "title": "Why julia?",
+    "section": "Results",
+    "text": "Results",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "4 - Programming Languages"
+    ]
+  },
+  {
+    "objectID": "slides/weapon-of-choice.html#not-mentioned",
+    "href": "slides/weapon-of-choice.html#not-mentioned",
+    "title": "Why julia?",
+    "section": "Not Mentioned",
+    "text": "Not Mentioned\nThere are many other languages out there. We have not mentioned\n\nMatlab: widely used in economics, but clearly inferior to julia (Expensive + license block)\nStata: very popular in microeconometrics, old design, commercial software.\nJava\nRust\nScala\nGo",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "4 - Programming Languages"
+    ]
+  },
+  {
+    "objectID": "slides/weapon-of-choice.html#whats-so-cool-about-base-julia",
+    "href": "slides/weapon-of-choice.html#whats-so-cool-about-base-julia",
+    "title": "Why julia?",
+    "section": "What’s so cool about base julia?",
+    "text": "What’s so cool about base julia?\nBuilt-in Memory Mapping: BIG DATA\n\nBig Data is everywhere, and all the cool kids do it.\nTypical Out-of-core (OOC) computing on large systems is important and useful, but a bit more involved. E.g. spark.\nA proper database will go a long way. See our duckdb tutorial\nIn julia we can do out-of-core computation without any external libraires.",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "4 - Programming Languages"
+    ]
+  },
+  {
+    "objectID": "slides/weapon-of-choice.html#got-some-big-data-yeah",
+    "href": "slides/weapon-of-choice.html#got-some-big-data-yeah",
+    "title": "Why julia?",
+    "section": "Got Some Big Data, yeah?",
+    "text": "Got Some Big Data, yeah?\nBuilt-in Memory Mapping: BIG DATA\n\nSuppose you have this binary file on your laptop, containing Float64 numbers.\nfloswald@PTL11077 &gt; ls -lh large.bin\n-rw-r--r--  1 floswald  staff    32G Jan 29 15:31 large.bin\nSuppose your laptop has 32GB of RAM.\nSuppose you don’t want to set up on a huge cluster to do you work.\nYou just want to compute a single mean from that data - maybe to decide whether it’s worth to pursue that particular research strategy.\nHow hard can it be?",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "4 - Programming Languages"
+    ]
+  },
+  {
+    "objectID": "slides/weapon-of-choice.html#what-r-you-going-to-do",
+    "href": "slides/weapon-of-choice.html#what-r-you-going-to-do",
+    "title": "Why julia?",
+    "section": "What R you going to do?",
+    "text": "What R you going to do?\nBuilt-in Memory Mapping: BIG DATA\n\nCome here R, my old friend.\nLet’s see if we can compute that mean.\n\n&gt; (n_elements &lt;- file.size(\"large.bin\") / 8) # bytes per number\n[1] 4.25e+09  # 4.25 billion numbers\n&gt; (GB_RAM_required_for_data &lt;- file.size(\"large.bin\") / 1e9)\n[1] 34\n&gt; x &lt;- readBin(\"large.bin\", \"numeric\", n = n_elements)\n\n\n\n\nWow, this actually worked!\nHowever, my OS put most of this data into swap memory.\n\n\n\nThat is - onto my storage device (an SSD disk)\nWhat does that mean?",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "4 - Programming Languages"
+    ]
+  },
+  {
+    "objectID": "slides/weapon-of-choice.html#what-r-you-going-to-do-1",
+    "href": "slides/weapon-of-choice.html#what-r-you-going-to-do-1",
+    "title": "Why julia?",
+    "section": "What R you going to do?",
+    "text": "What R you going to do?\nBuilt-in Memory Mapping: BIG DATA\n\n\n\n\n\n\nswap used: 20GB\n\n\n\n\n\n\n\n\n\ndisk IO during computation of mean(x)",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "4 - Programming Languages"
+    ]
+  },
+  {
+    "objectID": "slides/weapon-of-choice.html#what-r-you-going-to-do-2",
+    "href": "slides/weapon-of-choice.html#what-r-you-going-to-do-2",
+    "title": "Why julia?",
+    "section": "What R you going to do?",
+    "text": "What R you going to do?\nBuilt-in Memory Mapping: BIG DATA\n\nWhile this actually worked because my OS was bending backwards…\n…it’s not a good solution:\n&gt; (n_elements &lt;- file.size(\"large.bin\") / 8)\n[1] 4.25e+09\n&gt; x &lt;- readBin(\"large.bin\", \"numeric\", n = n_elements)\n&gt; system.time(mean(x))\n    user  system elapsed \n    9.163  37.625 233.907 \n&gt; 233 / 60\n[1] 3.883333\nthat took almost 4 minutes and put a huge strain on my system.",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "4 - Programming Languages"
+    ]
+  },
+  {
+    "objectID": "slides/weapon-of-choice.html#out-of-core-compute-with-julia",
+    "href": "slides/weapon-of-choice.html#out-of-core-compute-with-julia",
+    "title": "Why julia?",
+    "section": "Out-of-core compute with julia?",
+    "text": "Out-of-core compute with julia?\nBuilt-in Memory Mapping: BIG DATA\njulia&gt; using SharedArrays  # part of base julia\n\njulia&gt; @time s = SharedArray{Float64}(\n    \"/Users/floswald/git/CompEcon/large.bin\",(Int(4.25e+09),)\n    );\n  0.585849 seconds (1.84 M allocations: 90.189 MiB, 11.90% gc time, 97.76% compilation time)\n\nThat allocated only 90 megabytes (!) of memory 🤯\n\n\n\nOk, and the mean?\n\n\n\njulia&gt; @time mean(s)\n 54.721824 seconds (140.13 k allocations: 6.873 MiB, 0.07% compilation time)\n0.4999939011980801\n\n\n\n54 seconds, i.e more than a 4x speedup compared to R.\nThis worked because julia can map memory very efficiently.",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "4 - Programming Languages"
+    ]
+  },
+  {
+    "objectID": "slides/weapon-of-choice.html#parallel-computation-out-of-the-box",
+    "href": "slides/weapon-of-choice.html#parallel-computation-out-of-the-box",
+    "title": "Why julia?",
+    "section": "Parallel Computation Out-of-the-box",
+    "text": "Parallel Computation Out-of-the-box\nBoostrapping…\n\n\n\n…great for parallel demo - fully independent tasks\nproblem: each process needs their own copy of the data (think base R)\n\n\n\njulia can share data across workers.\n\n\n# started julia with the -p flag:\n# $ julia -p auto\nusing Distributed  # distributed computing functions\nnworkers()  # like that one\n8  # julia processes running\n\nusing SharedArrays\ns = SharedArray{Float64}((10^5,)); \n# put 100K random numbers into s\ns .= rand(10^5);",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "4 - Programming Languages"
+    ]
+  },
+  {
+    "objectID": "slides/weapon-of-choice.html#parallel-computation-out-of-the-box-1",
+    "href": "slides/weapon-of-choice.html#parallel-computation-out-of-the-box-1",
+    "title": "Why julia?",
+    "section": "Parallel Computation Out-of-the-box",
+    "text": "Parallel Computation Out-of-the-box\nBoostrapping…\n@everywhere using Statistics\n@everywhere n_bs_samples = 10_000  # num bootstrap samples\n\n# a model...\n@everywhere my_model(x) = rand(x, length(x))\n\n# bootstrap sampling. heavy workload.\n# creates an array of length n_bs_samples\n@everywhere bs_means(x) = [mean(my_model(x)) for i in 1:n_bs_samples]\n\n# single core version.\nfunction f_1core(x)\n    # compute the variance of those means\n    # split over 8 independent batches\n    var(vcat([bs_means(x) for i in 1:8]...))\nend\n\n# multi-core version\nfunction f_multicore(x)\n    # split a `promise` over 8 independent batches\n    promise = [@spawn bs_means(x) for i in 1:8]\n    # `fetch` triggers execution\n    var(vcat([fetch(pr) for pr in promise]...))\nend",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "4 - Programming Languages"
+    ]
+  },
+  {
+    "objectID": "slides/weapon-of-choice.html#parallel-computation-out-of-the-box-2",
+    "href": "slides/weapon-of-choice.html#parallel-computation-out-of-the-box-2",
+    "title": "Why julia?",
+    "section": "Parallel Computation Out-of-the-box",
+    "text": "Parallel Computation Out-of-the-box\nBoostrapping…\nfloswald@PTL11077 &gt; julia -p auto _snippets/bootstrap.jl\n\n 31.704981 seconds (431.35 k allocations: 61.050 GiB, 6.51% gc time, 0.13% compilation time)\n\n  4.879901 seconds (611.59 k allocations: 31.086 MiB, 0.06% gc time, 1.89% compilation time)\n\nInfo: result 1core = 8.387862736845913e-7\nInfo: result multicore = 8.295566662153075e-7\n\n\nThat’s a 6.5x speedup, almost linear with the 8 cores we had.\nGiven the effort required, I’ll take that any day.\nAlways Check the numbers on the output! (Why are they different?)",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "4 - Programming Languages"
+    ]
+  },
+  {
+    "objectID": "slides/weapon-of-choice.html#so-what",
+    "href": "slides/weapon-of-choice.html#so-what",
+    "title": "Why julia?",
+    "section": "So What?",
+    "text": "So What?\n\nThis is cool because it is part of the core language. Not an add-on package.\nThis means that contributed add-on packages can lean really hard on that infrastructure and build upon it.\nThe problem in R and python is that those stable foundations are largely missing, which causes issues.\nThat’s one of the things I really like about this language.",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "4 - Programming Languages"
+    ]
+  },
+  {
+    "objectID": "slides/weapon-of-choice.html#final-opinionated-advice",
+    "href": "slides/weapon-of-choice.html#final-opinionated-advice",
+    "title": "Why julia?",
+    "section": "Final (Opinionated) Advice",
+    "text": "Final (Opinionated) Advice\n\n\nIt’s a good idea to learn a bit of C++. Much is based upon it, so you will see things differently. Don’t overinvest (do some quick tutorials).\n\n\n\n\nAvoid learning FORTRAN unless you need to use legacy code.\n\n\n\n\nLearn julia and R or python.\n\n\n\n\nStata is dominated by R.",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "4 - Programming Languages"
+    ]
+  },
+  {
+    "objectID": "slides/OS.html#what-is-an-operating-system",
+    "href": "slides/OS.html#what-is-an-operating-system",
+    "title": "What is an OS?",
+    "section": "What is an Operating System?",
+    "text": "What is an Operating System?\nDefinition: Software layer between hardware and applications that manages computer resources.\nCore Functions:\n\nProcess Management\nMemory Management\nFile System\nDevice Drivers\nUser Interface\nSecurity\n\n\nAn operating system is the software layer that sits between your computer’s hardware and the applications you run. It manages all the computer’s resources.\nProcess Management: Runs multiple programs at once, decides which program gets CPU time. Memory Management: Allocates RAM to programs, implements virtual memory. File System: Organizes files on disk, handles reading/writing data. Device Drivers: Communicates with hardware like disks, network cards, GPUs. User Interface: Provides shell (command line) or graphical interface. Security: Controls access, authenticates users, isolates processes.",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "2 - What is an *OS*?"
+    ]
+  },
+  {
+    "objectID": "slides/OS.html#os-types---desktop-mobile",
+    "href": "slides/OS.html#os-types---desktop-mobile",
+    "title": "What is an OS?",
+    "section": "OS Types - Desktop & Mobile",
+    "text": "OS Types - Desktop & Mobile\nDesktop/Workstation\n\nWindows: ~75% market share\nmacOS: ~15%\nLinux: ~3%\n\nMobile & Embedded\n\nAndroid (Linux-based): ~70% of smartphones\niOS: ~27% of smartphones\nEmbedded Linux\n\n\nDesktop: Windows dominates business and gaming. macOS is popular for creative work and software development. Linux is used by developers and power users.\nMobile & Embedded: Android is Linux-based and has about 70% of smartphones. iOS has about 27%. Embedded Linux runs IoT devices, routers, appliances, and smart TVs.",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "2 - What is an *OS*?"
+    ]
+  },
+  {
+    "objectID": "slides/OS.html#os-types---servers-hpc",
+    "href": "slides/OS.html#os-types---servers-hpc",
+    "title": "What is an OS?",
+    "section": "OS Types - Servers & HPC",
+    "text": "OS Types - Servers & HPC\nServers\n\nLinux: ~96% of web servers\nWindows Server\nUnix variants (Solaris, AIX, HP-UX)\n\nSupercomputers & HPC\n\nLinux: 100% of Top500 supercomputers (even the ones owned by Microsoft.)\n\n\nServers: Linux dominates with about 96% of web servers and cloud infrastructure. Windows Server is common in enterprise IT environments. Unix variants like Solaris, AIX, and HP-UX are found in legacy enterprise systems.\nSupercomputers: Linux powers 100% of the Top500 supercomputers and dominates all HPC clusters globally.\nFor Scientific Computing: Overwhelmingly Linux-based in university clusters, national laboratories, and cloud HPC platforms.",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "2 - What is an *OS*?"
+    ]
+  },
+  {
+    "objectID": "slides/OS.html#scientific-computing---workflow-practicalities",
+    "href": "slides/OS.html#scientific-computing---workflow-practicalities",
+    "title": "What is an OS?",
+    "section": "Scientific Computing - Workflow & Practicalities",
+    "text": "Scientific Computing - Workflow & Practicalities\n\n\nRemote Access\n\nLinux: SSH on terminal\nmacOS: SSH\nWindows: SSH (Windows 10+), RDP, WSL2\n\nSoftware Availability\n\nLinux: Most scientific software developed first\nmacOS: Good support for many tools\nWindows: WSL2 or containers often needed\n\n\nReproducibility\n\nUnix tools built-in.\nWindows requires more effort.\n\nCost\n\nLinux: Free\nmacOS: Locked to Apple\nWindows: Licensing costs\n\n\n\nRemote Access: Linux has SSH built-in with X11 forwarding that works seamlessly. macOS has SSH built-in with X11 via XQuartz. Windows now has SSH built-in (Windows 10+), uses RDP for graphical access, and WSL2 provides a full Linux environment.\nSoftware Availability: Linux has most scientific software developed for it first (or only). macOS has good support for many tools, though some HPC software requires compilation. Windows often lacks native Windows builds; WSL2 or containers fill the gap.\nReproducibility: All platforms have excellent reproducibility with containers (Docker, Singularity) and environment managers (conda, venv). Container and environment specifications work identically across OSes - this is platform-independent.\nCost: Linux is free and open source. macOS is locked to Apple hardware. Windows has licensing costs for server/cluster use, though it’s often free for education.\nBottom line: Linux dominates scientific computing due to software ecosystem and cluster infrastructure, but modern tools (WSL2, containers) make Windows viable for local development.",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "2 - What is an *OS*?"
+    ]
+  },
+  {
+    "objectID": "slides/OS.html#how-does-this-unix-thing-work",
+    "href": "slides/OS.html#how-does-this-unix-thing-work",
+    "title": "What is an OS?",
+    "section": "How Does this Unix thing work?",
+    "text": "How Does this Unix thing work?\n\n\n\nUnix is industry standard for over 40 years.\nScientific Stack runs on unix.\nWatch this video\n\n\n\nUnix is based on small programs…\n… which can be connected into a pipeline\nMany small helpers glued together\n\n\n\nKernel, Shell and Application",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "2 - What is an *OS*?"
+    ]
+  },
+  {
+    "objectID": "slides/OS.html#the-shell",
+    "href": "slides/OS.html#the-shell",
+    "title": "What is an OS?",
+    "section": "The Shell",
+    "text": "The Shell\n\n\n\nTerminal, command line, console…\nYou type commands\nGUI vs shell\n\n\n\nAuthor of GNU BASH (Bourne Again SHell) Brian Fox\nCollaborator with Richard Stallman on the Free Software Foundation\n\n\n\n\n\n\n\n\n\nBrian Fox\n\n\n\n\n\n\n\nRichard Stallman",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "2 - What is an *OS*?"
+    ]
+  },
+  {
+    "objectID": "slides/OS.html#shell-101",
+    "href": "slides/OS.html#shell-101",
+    "title": "What is an OS?",
+    "section": "Shell 101",
+    "text": "Shell 101\n\nThis https://floswald.github.io/IntroProgramming/.\nSession 1-3 will be tested via quiz.\nHere is the full software carpentry tutorial.\nLet’s breeze through a few simple things together.",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "2 - What is an *OS*?"
+    ]
+  },
+  {
+    "objectID": "slides/OS.html#unix-shell-1",
+    "href": "slides/OS.html#unix-shell-1",
+    "title": "What is an OS?",
+    "section": "Unix Shell 1",
+    "text": "Unix Shell 1\n# where am i?\npwd \n\n# takes you home\ncd \n\n# makes a new directory\nmkdir my-new-dir \n\n# goes there\ncd my-new-dir \n\n# creates an empty text file\ntouch new-file.txt\n\n# creates an empty...pdf file?\ntouch new-doc.pdf\n# try to open this in your pdf viewer\n\n# lists\nls new-file.txt \nls *  # star means anything\nls -la  # things after - are \"flags\", i.e. options\n\n# echos (repeats back to your screen)\necho hi dude  # prints to screen\n\n# echos into a File\necho hi dude &gt; echo-file.txt  # notice: no output to screen.\n\n# there are 2 files now!\nls .  # the dot is \"this directory\"\n\nls -la # more info\n(scroll down)",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "2 - What is an *OS*?"
+    ]
+  },
+  {
+    "objectID": "slides/OS.html#unix-shell-2-permissions",
+    "href": "slides/OS.html#unix-shell-2-permissions",
+    "title": "What is an OS?",
+    "section": "Unix Shell 2: Permissions",
+    "text": "Unix Shell 2: Permissions\n\nA key feature of Unix is a transparent permissions system.\nu-g-o: user - group - others\nEach file has a mode: rwx - read, write, execute\n\nfloswald@PTL11077 ~/my-new-dir&gt; ls -lah\ntotal 8\ndrwxr-xr-x    4 floswald  staff   128B Jan 23 17:18 ./\ndrwxr-x---+ 277 floswald  staff   8.7K Jan 23 17:16 ../\n-rw-r--r--    1 floswald  staff     8B Jan 23 17:18 echo-file.txt\n-rw-r--r--    1 floswald  staff     0B Jan 23 17:16 new-file.txt",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "2 - What is an *OS*?"
+    ]
+  },
+  {
+    "objectID": "slides/OS.html#unix-shell-3-automation",
+    "href": "slides/OS.html#unix-shell-3-automation",
+    "title": "What is an OS?",
+    "section": "Unix Shell 3: Automation",
+    "text": "Unix Shell 3: Automation\n\nThe shell is great to create work pipelines\n\n1. go there\n2. run program number 1\n3. take it's output and give to program number 2\n4. make a table from output\n5. compile a latex document to pdf\n\n\nin other words:\n\n# go there\ncd path/to/my/project \n# run program number 1\nstata-mp -b step1.do # makes step1-out.csv\n# take it's output and give to program number 2\njulia run-step2.jl step1-out.csv &gt; table1.tex\n# compile a latex document to pdf\nlatex-mk -pdf -c paper.tex",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "2 - What is an *OS*?"
+    ]
+  },
+  {
+    "objectID": "slides/OS.html#what-is-a-text-editor",
+    "href": "slides/OS.html#what-is-a-text-editor",
+    "title": "What is an OS?",
+    "section": "What is a Text Editor",
+    "text": "What is a Text Editor\n\nA program that allows you to edit text. 🤦‍♂️\nNot Microsoft Word. (Why not?)\nThere are many powerful options. Choose carefully. Indeed…\n\n\n\n\n\n\n\n\nHarry J. Paarsch\n\n\nChoose your editor with more care than you would your spouse because you will spend more time with your editor, even after the spouse is gone.\n(Quote from Jesus’ slides. Harry’s website)\n\n\n\n\n\n\n\nOptions\n\nVScode\nSublime Text\nVim\nEmacs\n\n\n\nNotepad++\nTextEdit\nmany more… choose your location on the comfort vs bare metal scale",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "2 - What is an *OS*?"
+    ]
+  },
+  {
+    "objectID": "slides/OS.html#text-editor-features",
+    "href": "slides/OS.html#text-editor-features",
+    "title": "What is an OS?",
+    "section": "Text Editor Features",
+    "text": "Text Editor Features\nModern alternatives share those features:\n\nIntegration with open package system: extensions\nWeb integration (same editor running online)\nEasy collaboration (“Live Share”)\nREPL integration, i.e. run code inside editor\n\nIDE: Integrated Development Environment\n\nAdditionally to editing and running code, can debug, view plots and data etc…\nVScode, JetBrains, XCode, Eclipse,…\nRStudio, Positron, Matlab, …",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "2 - What is an *OS*?"
+    ]
+  },
+  {
+    "objectID": "slides/OS.html#section-1",
+    "href": "slides/OS.html#section-1",
+    "title": "What is an OS?",
+    "section": "",
+    "text": "“Piled Higher and Deeper” by Jorge Cham, http://www.phdcomics.com",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "2 - What is an *OS*?"
+    ]
+  },
+  {
+    "objectID": "slides/OS.html#whats-the-problem-1",
+    "href": "slides/OS.html#whats-the-problem-1",
+    "title": "What is an OS?",
+    "section": "What’s the Problem 1?",
+    "text": "What’s the Problem 1?\n\nYour code evolves over time. You add and substract things.\nYou often try out new things. Some you keep, some you don’t.\nSometimes you realize later that what you did was wrong.\nWhat do you do then?\n\n\n👉 Then you want to undo what you did in order to restore the previous state of your project. How could that work?\nYou need a system that remembers what you did when, where, and - ideally - why.\nIn a world with collaboration (our world), you also want to know who did all of the above.",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "2 - What is an *OS*?"
+    ]
+  },
+  {
+    "objectID": "slides/OS.html#whats-the-problem-2",
+    "href": "slides/OS.html#whats-the-problem-2",
+    "title": "What is an OS?",
+    "section": "What’s the Problem 2?",
+    "text": "What’s the Problem 2?\n\nIn a project with several collaborators, how to make sure everybody works on the correct file?\nThe correct file being not only the correct name - script.R, say - but also the correct version of the file.\nNotice this is not always the latest version. (Maybe your collaborator was just trying out something and introduced a bug).\n\n\n\nCode Syncing via Dropbox or similar is not the solution.\nCannot rewind history beyond 30 days\nBy default, there is only one (the latest) version.\nIt’s not clear who added what to the that version, when and why.",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "2 - What is an *OS*?"
+    ]
+  },
+  {
+    "objectID": "slides/OS.html#a-poor-mans-solution",
+    "href": "slides/OS.html#a-poor-mans-solution",
+    "title": "What is an OS?",
+    "section": "A Poor Man’s Solution",
+    "text": "A Poor Man’s Solution\n\n\n\nMany researchers swear on the YYYYMMDD system\nYou just insert the date into the filename.\nWhat could possibly go wrong?\n\n\n\nPeople insert wrong dates\n\n\n\n\nYou may remember last week. But 4 months ago?\n\n\n\n\nWhat is 20221121-appendixA.tex vs 20221121-appendix-former-B.tex?",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "2 - What is an *OS*?"
+    ]
+  },
+  {
+    "objectID": "slides/OS.html#a-real-solution-git",
+    "href": "slides/OS.html#a-real-solution-git",
+    "title": "What is an OS?",
+    "section": "A Real Solution: git",
+    "text": "A Real Solution: git\n\nProfessional software development without version control does not exist. 93% of developers use git, the rest uses svn or other tools.\nIf the pros use this tool, and you write code to do empirical research, then you are handicapping yourself if you don’t use it.\n\n\n\nDropbox works to simply sync files. But fails for:\n\nTracking why changes were made (commit messages)\nBranching to try different specifications without breaking your main analysis\nMerging contributions from co-authors working on different sections\nRolling back to exactly the state your code was in when you got that result 6 months agos",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "2 - What is an *OS*?"
+    ]
+  },
+  {
+    "objectID": "slides/OS.html#so-how-does-git-work",
+    "href": "slides/OS.html#so-how-does-git-work",
+    "title": "What is an OS?",
+    "section": "So: How does git work?!",
+    "text": "So: How does git work?!\n\nFully decentralized system. You sync with a remote server when you want.\nYou track incremental changes on your files on disk.\nEach snapshot (commit) you take is another data point that you can go back to.\ngit works like a foto camera: you make repeated pictures of the same object(s), you label each foto with a unique id, so that you can go back to a precise version later on.\n\n\n\nThis is a system which requires you to take action. No automatic syncing.\nYou preserve the state of your full project at time t.",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "2 - What is an *OS*?"
+    ]
+  },
+  {
+    "objectID": "slides/OS.html#here-is-git-in-one-image",
+    "href": "slides/OS.html#here-is-git-in-one-image",
+    "title": "What is an OS?",
+    "section": "Here is git in one image",
+    "text": "Here is git in one image",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "2 - What is an *OS*?"
+    ]
+  },
+  {
+    "objectID": "slides/OS.html#the-man-linus-torvalds",
+    "href": "slides/OS.html#the-man-linus-torvalds",
+    "title": "What is an OS?",
+    "section": "The Man: Linus Torvalds",
+    "text": "The Man: Linus Torvalds\n\nhttps://en.wikipedia.org/wiki/Linus_Torvalds",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "2 - What is an *OS*?"
+    ]
+  },
+  {
+    "objectID": "slides/OS.html#notebooks",
+    "href": "slides/OS.html#notebooks",
+    "title": "What is an OS?",
+    "section": "Notebooks",
+    "text": "Notebooks\n\nEmbedding code with output (text, images, tables) is part of literate programming\nWrite code and documentation together (Donald Knuth 1984)\nCode needs to be readable to humans first, to machines second\n\n\nImplementations\n\nR: sweave, knitr, Rmarkdown\njupyter: language agnostic notebook\nquarto: pandoc based “scientific publishing system”\nPluto.jl: pure julia reactive notebook",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "2 - What is an *OS*?"
+    ]
+  },
+  {
+    "objectID": "slides/OS.html#donald-knuth",
+    "href": "slides/OS.html#donald-knuth",
+    "title": "What is an OS?",
+    "section": "Donald Knuth",
+    "text": "Donald Knuth\n\nhttps://en.wikipedia.org/wiki/Donald_Knuth",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "2 - What is an *OS*?"
+    ]
+  },
+  {
+    "objectID": "slides/OS.html#what-are-notebooks-good-for",
+    "href": "slides/OS.html#what-are-notebooks-good-for",
+    "title": "What is an OS?",
+    "section": "What are Notebooks good for?",
+    "text": "What are Notebooks good for?\nSituations where you want to show code and output next to each other.\n\nTeaching\nSharing results with coauthors/supervisors\nQuick prototyping: like a script that keeps/displays output nicely\n\n\nNot Good for\n\nPerformace critical work\nRealistic collaboration (notebooks are difficult for version control - except Pluto.jl)",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "2 - What is an *OS*?"
+    ]
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Computational Economics for PhDs",
+    "title": "Computational Economics",
     "section": "",
-    "text": "Teacher: Florian Oswald, florian.oswald@unito.it\nClass Times: tbc\nClass Location: Collegio Carlo Alberto\nSlack: There will be a slack channel for all communication\n© Florian Oswald, 2026"
+    "text": "Teacher: Florian Oswald, florian.oswald@unito.it\nClass Times: Monday 13:30-15:30, Wednesday 17:30-19:00\nClass Location: Collegio Carlo Alberto\nSlack: There will be a slack channel for all communication\n© Florian Oswald, 2026"
   },
   {
     "objectID": "index.html#course-overview",
     "href": "index.html#course-overview",
-    "title": "Computational Economics for PhDs",
+    "title": "Computational Economics",
     "section": "Course Overview",
     "text": "Course Overview\nThis is a course for PhD and Allievi students at Collegio Carlo Alberto in Computational Economics. You will learn about some commonly used methods in Computational Economics and Structural Econometrics. These methods are being used in all fields of Economics. The course has a clear focus on applying what you learn. We will cover the theoretical concepts that underlie each topic, but you should expect a fair amount of hands on action required on your behalf. In the words of the great Che-Lin Su:\n\nDoing Computation is the only way to learn Computation. Doing Computation is the only way to learn Computation. Doing Computation is the only way to learn Computation.\n\nTrue to that motto, there will be homeworks for you to try out what you learned in class. There will also be a term project."
   },
   {
     "objectID": "index.html#outline-of-topics",
     "href": "index.html#outline-of-topics",
-    "title": "Computational Economics for PhDs",
+    "title": "Computational Economics",
     "section": "Outline of Topics",
-    "text": "Outline of Topics\n\n\n\nSection\nTopic\n\n\n\n\n1\nIntroduction, Why Julia\n\n\n2\njulia crash course 1\n\n\n3\njulia crash course 2\n\n\n4\nOptimization 1: Recap of theory, Automatic Differentiation, setting up an optimizer\n\n\n5\nOptimization 2: Algorithms\n\n\n6\nOptimization 3: Constraints\n\n\n7\nParallel Computing\n\n\n8\nData and Machine Learning\n\n\n9\nDynamic Programming 1: Basics\n\n\n9\nDynamic Programming 2: Aiyagari and Shimer+Smith Models\n\n\n10\nDiscrete and Continous Choice Problems\n\n\n11\nDynamic Discrete Choice Models"
+    "text": "Outline of Topics\n\n\n\nSection\nTopic\n\n\n\n\n1\nWhy worry about computation in Economics?\n\n\n2\nWhat is an OS?\n\n\n3\nDoes it matter how one writes code?\n\n\n4\nProgramming Languages - Weapon of Choice\n\n\n5\njulia crash course 1\n\n\n6\njulia crash course 2\n\n\n7\nOptimization 1: Recap of theory, Automatic Differentiation, setting up an optimizer\n\n\n8\nOptimization 2: Algorithms\n\n\n9\nOptimization 3: Constraints\n\n\n10\nParallel Computing\n\n\n11\nData and Machine Learning\n\n\n12\nDynamic Programming 1: Basics\n\n\n13\nDynamic Programming 2: Aiyagari and Shimer+Smith Models\n\n\n14\nDiscrete and Continous Choice Problems\n\n\n15\nDynamic Discrete Choice Models"
   },
   {
     "objectID": "index.html#prerequisites",
     "href": "index.html#prerequisites",
-    "title": "Computational Economics for PhDs",
+    "title": "Computational Economics",
     "section": "Prerequisites",
     "text": "Prerequisites\n\nYou need a laptop.\nYou should be familiar with the material from Introduction to Programming - more below.\nYou must sign up for a free account at github.com. Choose a reasonable user name and upload a profile picture.\nBefore you come the first class, please follow closely the installation instructions.\n\n\nGetting Programming Skills\n\nCheck out what is being taught in the Introduction to Programming course. I want you to read through sessions 1-3 on your own. I will give you a quiz to complete on this before week 3.\nWe will be using Julia for this course.\n\nNoteworthy Differences from Other Languages\nMATLAB, Python, Julia Syntax Comparison"
   },
   {
     "objectID": "index.html#term-project",
     "href": "index.html#term-project",
-    "title": "Computational Economics for PhDs",
+    "title": "Computational Economics",
     "section": "Term Project",
     "text": "Term Project\nThere are two options:\n\nReplicate a published paper.\nDevelop the computational aspects of your own work.\n\n\nReplication\nThe requirements for choice of paper to replicate are:\n\nIt’s an economics paper.\nPublished version and replication kit is available online.\nThe paper to replicate must not use julia.\nYou must use julia for your replication.\n\nIdeally your choice will involve at least some level of computational interest (i.e. more than an IV regression)\nHowever, you can replicate a paper with an IV regression, but you have to go all the way to get the exact same results as in the paper. I.e. if the author typed the stata command ivreg2 lw s expr tenure rns smsa _I* (iq=med kww age), cluster(year) you will have to write (or find) julia code which will match all output from this, including standard errors.\n\nYou need to set up a public github repository where you will build a documentation website of your implementation. You’ll learn how to do this in the course.\nI encourage you to let the world know about your replication effort via social media and/or email to the authors directly. This is independent of whether you were able or not to replicate the results. Replication is not about finding errors in other peoples’ work. If you are able to replicate some result in julia, this may be very interesting for others.\n\n\nReplication Resources\n\nhere is a great list by the AEA\nECTA code and data\nRevEconDynamics codes\nEach issue of RevEconDynamics , e.g. https://www.economicdynamics.org/volume-39-2021/\nThe AEA Data Editor’s website\nThe Restud Data Editor and their zenodo repo of replication kits\nThe Social Science Data Editor’s joint website\n\n\n\n\nDevelop Your Own Work\nYou can develop your own work as well. Requirements:\n\nsetup a github repository which contains the code (your decision whether public or private, in any case you have to share it with me)\nproduce a short document (max 10 pages, ideally much less) which describes\n\nthe aim of the project\nthe computational problem\nyour computational strategy to solve that problem\n\nThe main focus for me will lie on\n\nHow easy is it to use your code?\nHow easy is it to understand your code (code readability and provided documentation)?\nDid you provide unit tests? Can I be convinced that your code does what it is supposed to do?"
   },
   {
     "objectID": "index.html#grade",
     "href": "index.html#grade",
-    "title": "Computational Economics for PhDs",
+    "title": "Computational Economics",
     "section": "Grade",
     "text": "Grade\nYour grade will be 60% homeworks, 40% term project."
   },
   {
     "objectID": "index.html#textbooks",
     "href": "index.html#textbooks",
-    "title": "Computational Economics for PhDs",
+    "title": "Computational Economics",
     "section": "Textbooks",
     "text": "Textbooks\nThere are some excellent references for computational methods out there. This course will use material from\n\nThe Classics\n\nFackler and Miranda (2002), Applied Computational Economics and Finance, MIT Press\nKenneth Judd (1998), Numerical Methods in Economics, MIT Press\nNocedal, Jorge, and Stephen J. Wright (2006): Numerical Optimization, Springer-Verlag\n\n\n\nNewcomers\n\nJulia for Data Analysis (2023), Bogumił Kamiński, Manning Publications.\nAlgorithms for Optimization (2019), Mykel J. Kochenderfer and Tim A. Wheeler, Algorithms for Optimization, MIT Press.\nA Gentle Introduction to Effective Computing in Quantitative Research - What Every Research Assistant Should Know, Harry J. Paarsch and Konstantin Golyaev\nStatistics with Julia (2021), Yoni Nazarathy and Hayden Klok, Springer.\nQuantitative Economics with Julia by Perla, Sargent and Stachurski is a wonderful resource and we use it a lot in this course."
   },
   {
     "objectID": "index.html#code-of-conduct",
     "href": "index.html#code-of-conduct",
-    "title": "Computational Economics for PhDs",
+    "title": "Computational Economics",
     "section": "Code of Conduct",
     "text": "Code of Conduct\nIf you decide to participate in this course, I expect you to abide by the following minimal code of conduct.\n\nBe polite to the other class participants.\nWhile in class, do not spend time on messaging apps, chat rooms, computer games, or similar content.\n\nYou can expect your instructor to abide by the same code of conduct, so this is a matter of mutual respect. If you are found in breach of the above you will be given a single warning, and I will ask you to no longer join the course after a second time. Your grade will be “fail”."
   },
   {
     "objectID": "index.html#license",
     "href": "index.html#license",
-    "title": "Computational Economics for PhDs",
+    "title": "Computational Economics",
     "section": "License",
     "text": "License\nThe copyright notice to be included in any copies and other derivative work of this material is:\nCopyright 2026 Florian Oswald, florian.oswald@gmail.com\nThank you.\n This is licensed under Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License"
+  },
+  {
+    "objectID": "slides/why-computation.html#todays-agenda",
+    "href": "slides/why-computation.html#todays-agenda",
+    "title": "Why Do We Care about Computation?",
+    "section": "Today’s Agenda",
+    "text": "Today’s Agenda\n\nLogistics.\n\n\n\nWhy Economists Must Talk About Computing.",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "1 - Why *computation*?"
+    ]
+  },
+  {
+    "objectID": "slides/why-computation.html#who-am-i",
+    "href": "slides/why-computation.html#who-am-i",
+    "title": "Why Do We Care about Computation?",
+    "section": "Who Am I?",
+    "text": "Who Am I?\n\n\n\n\n\n\n\n\n\n\n\nAssociate Prof at ESOMAS Unito\nUrban, Macro, IO, Computation\nExperience with HPC systems, AWS and google cloud\nResearch projects in fortran, C++, R, julia, python and PostgreSQL\nI am the JPE Data Editor.",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "1 - Why *computation*?"
+    ]
+  },
+  {
+    "objectID": "slides/why-computation.html#logistics-and-course-structure",
+    "href": "slides/why-computation.html#logistics-and-course-structure",
+    "title": "Why Do We Care about Computation?",
+    "section": "Logistics and Course Structure",
+    "text": "Logistics and Course Structure\n\nMeetings: Every Monday and Wednesday\n\n\n\nCommunication: Slack\n\n\n\n\nMaterials: All online via course website\n\n\n\n\nGrades: 60% homeworks, 40% term project\n\nYou should do all homeworks in teams of 2 or 3.\nTerm project in teams of 2.\n\n\n\n\n\nTerm Project: Replicate a published paper with computational content.\n\nMore info on syllabus\nDeadline for hand in: end of term.",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "1 - Why *computation*?"
+    ]
+  },
+  {
+    "objectID": "slides/why-computation.html#economists-and-computation-i",
+    "href": "slides/why-computation.html#economists-and-computation-i",
+    "title": "Why Do We Care about Computation?",
+    "section": "Economists and Computation I",
+    "text": "Economists and Computation I\n\n\n\n\n\n\nNote\n\n\nThis part borrows heavily from Jesus Fernandez-Villaverde’s lectures. Thanks Jesus!\n\n\n\nComputation has become an important tool in Economics:\n\nMacro: Solution of DSGE models, forecasting models, …\nMicro: Agent-based models, games, life-cycle models, high-dimensional fixed effects models …\nEconometrics: Simulation-based estimators and large datasets, …\nTrade and spatial economics: multi-country-firm-type models, with dynamics, …\nFinance: Asset Pricing, Value at Risk models, …",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "1 - Why *computation*?"
+    ]
+  },
+  {
+    "objectID": "slides/why-computation.html#economists-and-computation-ii",
+    "href": "slides/why-computation.html#economists-and-computation-ii",
+    "title": "Why Do We Care about Computation?",
+    "section": "Economists and Computation II",
+    "text": "Economists and Computation II\n\nKen Judd: Computation often complements, rather than substitutes, theory.\n\n\nIf theory shows that some partial derivative of interest is positive, computation can tell us how positive.\n\n\n\n\n\nEconomics is not different from many other fields.\n\nComputational Biology (e.g. R Bioconductor)\nComputational Chemistry\nPhysics, Engineering, Applied Maths\nComparative Literature\nAstronomy\n\n\n\n\n\n\nResearch is now fundamentally connected to software",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "1 - Why *computation*?"
+    ]
+  },
+  {
+    "objectID": "slides/why-computation.html#what-does-this-mean-for-you",
+    "href": "slides/why-computation.html#what-does-this-mean-for-you",
+    "title": "Why Do We Care about Computation?",
+    "section": "What Does This Mean for You?",
+    "text": "What Does This Mean for You?\n\nYou (will) spend a considerable amount of your time writing code.\n\n\n\nYou (will) collaborate with coauthors and colleagues on code.\n\n\n\n\nYou (will) read and evaluate papers that use computational methods.\n\n\n\n\n(Hopefully you will be supplied with the paper’s code for your evaluation.)\n\n\n\n\nFor all practical purposes, you are a research software engineer. 👷‍♀️ 👷🏽‍♂️ Carefully choose the best methods for software engineering at any time.",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "1 - Why *computation*?"
+    ]
+  },
+  {
+    "objectID": "slides/why-computation.html#a-brief-history-of-computing-in-economics",
+    "href": "slides/why-computation.html#a-brief-history-of-computing-in-economics",
+    "title": "Why Do We Care about Computation?",
+    "section": "A Brief History of Computing in Economics",
+    "text": "A Brief History of Computing in Economics\n\n1800-1960: Economics is about intuition. And maths. Computation done by hand.\n1960-1990: Computing on large mainframe computers. Cost per error is huge. (each run takes a lot of time)\n1990-2010: PC arrives, cost declines.\nCitation from 2010: Software just happens (We’ll hire an RA to write the code.)\n\n2010-2025: The vast majority of research software is single use and poor quality. We have 19 (!) econ journals signed up to the Data and Code Availability Standard (DCAS)\n2026- That’s you guys! 💪",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "1 - Why *computation*?"
+    ]
+  },
+  {
+    "objectID": "slides/why-computation.html#gentzkow-and-shapiro",
+    "href": "slides/why-computation.html#gentzkow-and-shapiro",
+    "title": "Why Do We Care about Computation?",
+    "section": "Gentzkow and Shapiro",
+    "text": "Gentzkow and Shapiro\n\nHere is a good rule of thumb: If you are trying to solve a problem, and there are multi-billion dollar firms whose entire business model depends on solving the same problem, and there are whole courses at your university devoted to how to solve that problem, you might want to figure out what the experts do and see if you can’t learn something from it.\n\n\n\nGentzkow and Shapiro: Code and Data\nGSLab-econ\nRA-manual\nWhatever you do: don’t reinvent the wheel. ☸️\nA Gentle Introduction to Effective Computing in Quantitative Research",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "1 - Why *computation*?"
+    ]
+  },
+  {
+    "objectID": "slides/why-computation.html#aim-of-this-course",
+    "href": "slides/why-computation.html#aim-of-this-course",
+    "title": "Why Do We Care about Computation?",
+    "section": "Aim of This Course",
+    "text": "Aim of This Course\n\n\n\nTake the fear out of computation.\nProvide you with a set of tools based on which you can learn to tackle frontier computational problems.\nTeach you some best practices from Open Source Software (OSS)\nHave some fun! 🎉",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "1 - Why *computation*?"
+    ]
+  },
+  {
+    "objectID": "slides/research-software-engineering.html#research-software-engineering",
+    "href": "slides/research-software-engineering.html#research-software-engineering",
+    "title": "(Research) Software Engineering",
+    "section": "(Research?) Software Engineering",
+    "text": "(Research?) Software Engineering\n\nYou will spend a large fraction of your time writing code.\nPeople who write a lot of code are software engineers.\nYou write code for research, so you are a research software engineer.\n\n\n\n\n\n\n\n\nResearch Software Engineer (RES)\n\n\nAn RSE is a professional who combines software engineering expertise with research domain knowledge to develop, maintain, and optimize software tools and infrastructure that enable scientific research.\n\n\n\n\n… Sounds a bit like yourself, not? 🤔 The Software Sustainability Institute created the term RSE in 2012.\n\n\n\n\ntypical academic: code because they must\n\nvs\n\nRSE: empasizes software quality, version control, testing, documentation.",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "3 - Software Engineering"
+    ]
+  },
+  {
+    "objectID": "slides/research-software-engineering.html#what-do-we-want-from-our-code",
+    "href": "slides/research-software-engineering.html#what-do-we-want-from-our-code",
+    "title": "(Research) Software Engineering",
+    "section": "What Do We Want From our Code?",
+    "text": "What Do We Want From our Code?\n\nResults are Correct. Incorrect answers are at best useless, and at worst dangerous.\nEfficiently computed.\nMaintainable.\nScalable.\nReproducible:\n\nDocumented\nPortable\n\n\n\n\n\n\n\n\n\nNote\n\n\nThis classification is from Jesus.",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "3 - Software Engineering"
+    ]
+  },
+  {
+    "objectID": "slides/research-software-engineering.html#what-do-we-want-from-our-code-1",
+    "href": "slides/research-software-engineering.html#what-do-we-want-from-our-code-1",
+    "title": "(Research) Software Engineering",
+    "section": "What Do We Want From our Code?",
+    "text": "What Do We Want From our Code?\nCorrect Results\nAriane 5 Flight 501 (1996)",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "3 - Software Engineering"
+    ]
+  },
+  {
+    "objectID": "slides/research-software-engineering.html#what-do-we-want-from-our-code-2",
+    "href": "slides/research-software-engineering.html#what-do-we-want-from-our-code-2",
+    "title": "(Research) Software Engineering",
+    "section": "What Do We Want From our Code?",
+    "text": "What Do We Want From our Code?\nCorrect Results\nAriane 5 Flight 501 (1996)\n\nRocket exploded 37 seconds after launch due to an integer overflow error.\nThe software tried to convert a 64-bit floating-point number representing velocity ( 65536, say) into a 16-bit signed integer ([-32768 , +32767])\n16-bit was fine on Ariane 4: was much slower.\nAriane 5 accelerated much faster. The conversion failed, triggering an exception that crashed the guidance system. Cost: $370 million and 10 years of work destroyed.\n\nThe bug: Reusing old Ariane 4 code without checking if the new rocket’s flight characteristics would exceed the original assumptions.",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "3 - Software Engineering"
+    ]
+  },
+  {
+    "objectID": "slides/research-software-engineering.html#what-do-we-want-from-our-code-3",
+    "href": "slides/research-software-engineering.html#what-do-we-want-from-our-code-3",
+    "title": "(Research) Software Engineering",
+    "section": "What Do We Want From our Code?",
+    "text": "What Do We Want From our Code?\nCorrect Results\nMars Climate Orbiter (1999)\n\nNASA’s $125 million spacecraft burned up in Mars’ atmosphere\nOne team used imperial units (pound-force) while another used metric units (newtons) for thruster calculations.\nThe navigation software expected metric inputs but received imperial values, causing the spacecraft to fly 170 km too close to Mars instead of entering a safe orbit.\n\nThe bug: No unit conversion between two software components, and insufficient integration testing to catch the mismatch.",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "3 - Software Engineering"
+    ]
+  },
+  {
+    "objectID": "slides/research-software-engineering.html#what-do-we-want-from-our-code-4",
+    "href": "slides/research-software-engineering.html#what-do-we-want-from-our-code-4",
+    "title": "(Research) Software Engineering",
+    "section": "What Do We Want From our Code?",
+    "text": "What Do We Want From our Code?\nCorrect Results\nAnd in Economics Research?\nMistakes happen. My prior is that the vast majority of those are unintentional. But negligence is bad enough.\n\nReinhart and Rogoff (2010) used Excel and selected rows 30-44 instead of 30-49. Caught by Herndon, Ash, and Pollin (2013).\nDonohue and Levitt (2001) had several coding errors which meant that effect sizes changed. Found by Foote and Goetz (2008)\nThere are many more examples.\n\n\n\n\n\n\n\nDon’t Jump To Conclusions\n\n\nMost of those cases are very messy. Despite that, they get publicized aggressively on social media. It’s important to keep those cases at the level of scholarly debate, not sleaze match.",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "3 - Software Engineering"
+    ]
+  },
+  {
+    "objectID": "slides/research-software-engineering.html#what-do-we-want-from-our-code-5",
+    "href": "slides/research-software-engineering.html#what-do-we-want-from-our-code-5",
+    "title": "(Research) Software Engineering",
+    "section": "What Do We Want From our Code?",
+    "text": "What Do We Want From our Code?\nEfficiently Computed Results\n\nSuppose we are happy that our code is correct now.\nWhat if it takes 10 days to get one set of results? Not overly practical.\nTypically we iterate many times over a model in order to understand it better, so long waits are costly.\nSome model specifications (more than 4 state variables, say) might not finish solving in finite time - some questions cannot be answered given prevalent computing power.\nCorrect results which take forever to compute are useless, too.\n\n\n\n\n\n\n\n\nThe Development Time vs Running Time Tradeoff\n\n\nPeople focus excessively on how fast the code runs, without enough attention on how long it took to develop it. We shall return on that.",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "3 - Software Engineering"
+    ]
+  },
+  {
+    "objectID": "slides/research-software-engineering.html#what-do-we-want-from-our-code-6",
+    "href": "slides/research-software-engineering.html#what-do-we-want-from-our-code-6",
+    "title": "(Research) Software Engineering",
+    "section": "What Do We Want From our Code?",
+    "text": "What Do We Want From our Code?\nMaintainable\n\nNo paper gets accepted in the first round. You will have to go back to it and change it. Your code is alive and it evolves.\nIn practice: force yourself to develop code packages - with given structure (R packages etc)\nModular code is crucial. You can leave some modules unchanged, add others, have them interact correctly, etc\n\nYou can test each module (and each part of a module) in isolation.\n\nUnit testing, Test-driven development and continuous integration (CI) are key concepts for maintainable code.\nIf you want others to help and collaborate on your package, it has to be maintainable.",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "3 - Software Engineering"
+    ]
+  },
+  {
+    "objectID": "slides/research-software-engineering.html#what-do-we-want-from-our-code-7",
+    "href": "slides/research-software-engineering.html#what-do-we-want-from-our-code-7",
+    "title": "(Research) Software Engineering",
+    "section": "What Do We Want From our Code?",
+    "text": "What Do We Want From our Code?\nScalable\n\nWe often (always?) start from a small prototype for a larger project.\nYou want to allow for ways to make your prototype larger without too much effort.\nThis is crucial in machine learning applications\n\nwe often prototype an algorithm on our CPU, i.e. standard serial code execution\nbut then we need to run the model on a more powerful device (e.g. a GPU)\nYou want to avoid having to rewrite your code for that step.\nIn leading AI/ML julia libraries, you can just set device=gpu for instance, same code.",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "3 - Software Engineering"
+    ]
+  },
+  {
+    "objectID": "slides/research-software-engineering.html#what-do-we-want-from-our-code-8",
+    "href": "slides/research-software-engineering.html#what-do-we-want-from-our-code-8",
+    "title": "(Research) Software Engineering",
+    "section": "What Do We Want From our Code?",
+    "text": "What Do We Want From our Code?\nReproducible\n\nIdeally, any researcher should be able to reproduce your results.\nDocumentation is key.\n\nData access, computing environment, instructions for execution, known limitations to reproducibility\n\nPortability is a concern.\n\nDifferent versions of a program/library\nDifferent OS\nDifferent machines\n\nCan easily fill a full workshop.",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "3 - Software Engineering"
+    ]
+  },
+  {
+    "objectID": "slides/research-software-engineering.html#references",
+    "href": "slides/research-software-engineering.html#references",
+    "title": "(Research) Software Engineering",
+    "section": "References",
+    "text": "References\n\n\n\n\nDonohue, III, John J., and Steven D. Levitt. 2001. “The Impact of Legalized Abortion on Crime.” The Quarterly Journal of Economics 116 (2): 379–420. https://doi.org/10.1162/00335530151144050.\n\n\nFoote, Christopher L., and Christopher F. Goetz. 2008. “The Impact of Legalized Abortion on Crime: Comment.” The Quarterly Journal of Economics 123 (1): 407–23. http://www.jstor.org/stable/25098902.\n\n\nHerndon, Thomas, Michael Ash, and Robert Pollin. 2013. “Does High Public Debt Consistently Stifle Economic Growth? A Critique of Reinhart and Rogoff.” Cambridge Journal of Economics 38 (2): 257–79. https://doi.org/10.1093/cje/bet075.\n\n\nReinhart, Carmen M, and Kenneth S Rogoff. 2010. “Growth in a Time of Debt.” American Economic Review 100 (2): 573–78.",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "3 - Software Engineering"
+    ]
   },
   {
     "objectID": "homeworks/hw0.html",
@@ -855,7 +1899,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "9 - Numerical Integration"
+      "13 - Numerical Integration"
     ]
   },
   {
@@ -867,7 +1911,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "9 - Numerical Integration"
+      "13 - Numerical Integration"
     ]
   },
   {
@@ -879,7 +1923,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "9 - Numerical Integration"
+      "13 - Numerical Integration"
     ]
   },
   {
@@ -891,7 +1935,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "9 - Numerical Integration"
+      "13 - Numerical Integration"
     ]
   },
   {
@@ -903,7 +1947,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "9 - Numerical Integration"
+      "13 - Numerical Integration"
     ]
   },
   {
@@ -915,7 +1959,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "9 - Numerical Integration"
+      "13 - Numerical Integration"
     ]
   },
   {
@@ -927,7 +1971,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "9 - Numerical Integration"
+      "13 - Numerical Integration"
     ]
   },
   {
@@ -939,7 +1983,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "10 - Dynamic Discrete Choice"
+      "14 - Dynamic Discrete Choice"
     ]
   },
   {
@@ -951,7 +1995,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "10 - Dynamic Discrete Choice"
+      "14 - Dynamic Discrete Choice"
     ]
   },
   {
@@ -963,7 +2007,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "3 - Optimization"
+      "7 - Optimization"
     ]
   },
   {
@@ -975,7 +2019,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "3 - Optimization"
+      "7 - Optimization"
     ]
   },
   {
@@ -987,7 +2031,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "3 - Optimization"
+      "7 - Optimization"
     ]
   },
   {
@@ -999,7 +2043,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "3 - Optimization"
+      "7 - Optimization"
     ]
   },
   {
@@ -1011,7 +2055,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "3 - Optimization"
+      "7 - Optimization"
     ]
   },
   {
@@ -1023,7 +2067,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "3 - Optimization"
+      "7 - Optimization"
     ]
   },
   {
@@ -1119,7 +2163,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "7 - Parallel Computing"
+      "11 - Parallel Computing"
     ]
   },
   {
@@ -1131,7 +2175,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "7 - Parallel Computing"
+      "11 - Parallel Computing"
     ]
   },
   {
@@ -1143,7 +2187,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "7 - Parallel Computing"
+      "11 - Parallel Computing"
     ]
   },
   {
@@ -1155,7 +2199,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "7 - Parallel Computing"
+      "11 - Parallel Computing"
     ]
   },
   {
@@ -1167,7 +2211,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "7 - Parallel Computing"
+      "11 - Parallel Computing"
     ]
   },
   {
@@ -1179,7 +2223,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "7 - Parallel Computing"
+      "11 - Parallel Computing"
     ]
   },
   {
@@ -1191,7 +2235,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "7 - Parallel Computing"
+      "11 - Parallel Computing"
     ]
   },
   {
@@ -1203,7 +2247,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "7 - Parallel Computing"
+      "11 - Parallel Computing"
     ]
   },
   {
@@ -1215,7 +2259,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "7 - Parallel Computing"
+      "11 - Parallel Computing"
     ]
   },
   {
@@ -1227,7 +2271,7 @@
     "crumbs": [
       "Home",
       "Lectures",
-      "4 - Optimization 2"
+      "8 - Optimization 2"
     ]
   },
   {
