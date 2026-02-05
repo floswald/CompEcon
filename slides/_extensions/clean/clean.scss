@@ -119,7 +119,7 @@ $presentation-heading-color: $jet !default;
 
 // inline
 .reveal code {
-	font-size: 90%;
+	font-size: 85%;
 	background-color: $code-background-color;
 	color: $code-color;
 	padding: 4px;
@@ -127,7 +127,7 @@ $presentation-heading-color: $jet !default;
 }
 
 .reveal .sourceCode {
-  font-size: 90%;
+  font-size: 80%;
   // padding-bottom: 20px;
 }
 
@@ -168,6 +168,11 @@ $presentation-heading-color: $jet !default;
   border-radius: 5px;
   display: inline-block;
 }
+
+.reveal .callout-body {
+  font-size: 130% !important;  /* Adjust as needed */
+}
+
 
 // lists
 
