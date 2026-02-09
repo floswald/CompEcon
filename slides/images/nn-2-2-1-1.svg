@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="550 280 1300 350" style="cursor: move;"><g transform="translate(-1788.3398882031152,-941.3009973890066) scale(2.932233514378482)"><path class="link" marker-end="" d="M849.3333333333334,437.5, 958.3333333333334,437.5" style="stroke-width: 1.59; stroke-opacity: 1; stroke: rgb(80, 80, 80); fill: none;"></path><path class="link" marker-end="" d="M849.3333333333334,489.5, 958.3333333333334,437.5" style="stroke-width: 1.59; stroke-opacity: 1; stroke: rgb(80, 80, 80); fill: none;"></path><path class="link" marker-end="" d="M849.3333333333334,437.5, 958.3333333333334,489.5" style="stroke-width: 1.59; stroke-opacity: 1; stroke: rgb(80, 80, 80); fill: none;"></path><path class="link" marker-end="" d="M849.3333333333334,489.5, 958.3333333333334,489.5" style="stroke-width: 1.59; stroke-opacity: 1; stroke: rgb(80, 80, 80); fill: none;"></path><path class="link" marker-end="" d="M958.3333333333334,437.5, 1067.3333333333333,463.5" style="stroke-width: 1.59; stroke-opacity: 1; stroke: rgb(80, 80, 80); fill: none;"></path><path class="link" marker-end="" d="M958.3333333333334,489.5, 1067.3333333333333,463.5" style="stroke-width: 1.59; stroke-opacity: 1; stroke: rgb(80, 80, 80); fill: none;"></path><path class="link" marker-end="" d="M1067.3333333333333,463.5, 1176.3333333333333,463.5" style="stroke-width: 1.59; stroke-opacity: 1; stroke: rgb(80, 80, 80); fill: none;"></path>
+<circle r="16" class="node" id="0_0" cx="849.3333333333334" cy="437.5" style="fill: rgb(255, 255, 255); stroke: rgb(51, 51, 51);"></circle>
+<text x="849.3333333333334" y="437.5" text-anchor="middle" dominant-baseline="middle" style="font-size: 12px; fill: black;">x₂</text>
+
+<text class="text" dy=".35em" x="814.3333333333334" y="521.5" style="font-size: 12px;">Input Layer ∈ ℝ²</text>
+
+<circle r="16" class="node" id="0_1" cx="849.3333333333334" cy="489.5" style="fill: rgb(255, 255, 255); stroke: rgb(51, 51, 51);"></circle>
+<text x="849.3333333333334" y="489.5" text-anchor="middle" dominant-baseline="middle" style="font-size: 12px; fill: black;">x₁</text>
+<circle r="16" class="node" id="1_0" cx="958.3333333333334" cy="437.5" style="fill: rgb(255, 255, 255); stroke: rgb(51, 51, 51);"></circle>
+<text x="958.3333333333334" y="437.5" text-anchor="middle" dominant-baseline="middle" style="font-size: 12px; fill: black;">h₂⁽¹⁾</text>
+
+<text class="text" dy=".35em" x="923.3333333333334" y="521.5" style="font-size: 12px;">Hidden Layer 1</text>
+<circle r="16" class="node" id="1_1" cx="958.3333333333334" cy="489.5" style="fill: rgb(255, 255, 255); stroke: rgb(51, 51, 51);"></circle>
+<text x="958.3333333333334" y="489.5" text-anchor="middle" dominant-baseline="middle" style="font-size: 12px; fill: black;">h₁⁽¹⁾</text>
+
+
+<circle r="16" class="node" id="2_0" cx="1067.3333333333333" cy="463.5" style="fill: rgb(255, 255, 255); stroke: rgb(51, 51, 51);"></circle>
+<text x="1067.33" y="463.5" text-anchor="middle" dominant-baseline="middle" style="font-size: 12px; fill: black;">h⁽²⁾</text>
+
+
+<text class="text" dy=".35em" x="1032.3333333333333" y="521.5" style="font-size: 12px;">Hidden Layer 2</text>
+
+<circle r="16" class="node" id="3_0" cx="1176.3333333333333" cy="463.5" style="fill: rgb(255, 255, 255); stroke: rgb(51, 51, 51);"></circle>
+<text x="1176.33" y="463.5" text-anchor="middle" dominant-baseline="middle" style="font-size: 12px; fill: black;">y</text>
+
+
+<text class="text" dy=".35em" x="1158.3333333333333" y="521.5" style="font-size: 12px;">Output</text></g><defs><marker id="arrow" viewBox="0 -5 10 10" markerWidth="7" markerHeight="7" orient="auto" refX="56.8"><path d="M0,-5L10,0L0,5" style="stroke: rgb(80, 80, 80); fill: none;"></path></marker></defs></svg>

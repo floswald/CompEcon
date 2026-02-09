@@ -1240,6 +1240,293 @@
     ]
   },
   {
+    "objectID": "slides/DNN-intro.html#purpose",
+    "href": "slides/DNN-intro.html#purpose",
+    "title": "Very Short Intro Deep Learning",
+    "section": "Purpose",
+    "text": "Purpose\n\nI want to give you a crash course in Deep Learning with Julia\nWe don’t have the time to give a full overview of this huge field.\nI recommend the interested reader to consult\n\nhttp://statlearning.com/\nhttps://bio322.epfl.ch/\n\nJulia Tools:\n\nhttps://juliaml.ai\nhttps://fluxml.ai\nDataScienceTutorials.jl/"
+  },
+  {
+    "objectID": "slides/DNN-intro.html#what-are-machine-learning-ml-ai-and-deep-learning",
+    "href": "slides/DNN-intro.html#what-are-machine-learning-ml-ai-and-deep-learning",
+    "title": "Very Short Intro Deep Learning",
+    "section": "What are Machine Learning (ML), AI and Deep Learning?",
+    "text": "What are Machine Learning (ML), AI and Deep Learning?\n\nML is a branch of AI concerned with algo development.\nWe want to generalise models to unseen data.\nAI wants to develop algos that do not need to be programmed - they learn how to improve themselves.\nDeep Learning is a form of an Artificial Neural Network with layers.\n\n(Deep) Neural Networks?\n\nTake a \\(p\\) dimensional input vector \\(X\\) and build a nonlinear function \\(f(X)\\) to predict output \\(Y\\).\n\\(f\\) obeys a certain structure, which - importantly - allows automatic differentiation during optimization and parameter search."
+  },
+  {
+    "objectID": "slides/DNN-intro.html#taxonomy",
+    "href": "slides/DNN-intro.html#taxonomy",
+    "title": "Very Short Intro Deep Learning",
+    "section": "Taxonomy",
+    "text": "Taxonomy\n\nsupervised\nunsupervised\nRL"
+  },
+  {
+    "objectID": "slides/DNN-intro.html#taxonomy-details",
+    "href": "slides/DNN-intro.html#taxonomy-details",
+    "title": "Very Short Intro Deep Learning",
+    "section": "Taxonomy details",
+    "text": "Taxonomy details"
+  },
+  {
+    "objectID": "slides/DNN-intro.html#taxonomy-examples",
+    "href": "slides/DNN-intro.html#taxonomy-examples",
+    "title": "Very Short Intro Deep Learning",
+    "section": "Taxonomy examples",
+    "text": "Taxonomy examples"
+  },
+  {
+    "objectID": "slides/DNN-intro.html#deep-learning---artificial-neural-networks-ann",
+    "href": "slides/DNN-intro.html#deep-learning---artificial-neural-networks-ann",
+    "title": "Very Short Intro Deep Learning",
+    "section": "Deep learning - Artificial Neural Networks (ANN)",
+    "text": "Deep learning - Artificial Neural Networks (ANN)\nComponents of an ANN:\n\nArtificial Neurons: each neuron gets an input signal, processes it and outputs another signal (think: one number in, one number out)\nEdges: connections between neurons (undirected, because can we want to go back and forwards)\n\n\n\n\n\n\n\nReal Neurons\n\n\nReal neurons in a human brain have many more ways of computing, calling this neurons is a stretch of imagination. Marketing."
+  },
+  {
+    "objectID": "slides/DNN-intro.html#example-a-single-layer-ann",
+    "href": "slides/DNN-intro.html#example-a-single-layer-ann",
+    "title": "Very Short Intro Deep Learning",
+    "section": "Example: A Single Layer ANN",
+    "text": "Example: A Single Layer ANN\n\ninput \\(x\\) (often a vector) which gets transformed to an\noutput \\(y\\) (can also be a vector). We apply an activation function \\(\\phi\\) to a linear transformation of the input:\n\n\n\n\n\\[ x =\n\\left(\n\\begin{align}\nx_{1} \\\\\nx_{2} \\\\\nx_{3}\n\\end{align}\n\\right)\n\\]\n\n\n\n\n\n\\[\\begin{align}\n  z &= w'x + b \\\\  \n  y &= \\phi(z)\n  \\end{align}\n\\]\n\n\n\n\n\n\n\n\n\nNote\n\n\n\\(w\\) is a vector or weights, \\(b\\) is an intercept or bias term. \\(\\phi\\) is (in general) a nonlinear function. This example has a 3-dim input and a 1-dim output, and a single layer (i.e. just the output layer)."
+  },
+  {
+    "objectID": "slides/DNN-intro.html#bias-why-bias",
+    "href": "slides/DNN-intro.html#bias-why-bias",
+    "title": "Very Short Intro Deep Learning",
+    "section": "Bias? Why Bias?",
+    "text": "Bias? Why Bias?\n\\[\\begin{align}\n  z &= w'x + b \\\\  \n  y &= \\phi(z)\n  \\end{align}\n\\]\n\nWell we know that \\(b\\) is just the intercept. \\(z\\) is nothing but a linear transformation.\nWe economists call \\(z\\) “a regression”. The intercept shifts the line/hyperplane up and down, else it passes through the origin.\nSo, this just takes a linear transform of \\(x\\) and sticks it into a nonlinear function \\(\\phi\\)."
+  },
+  {
+    "objectID": "slides/DNN-intro.html#what-are-those-phi-functions-then",
+    "href": "slides/DNN-intro.html#what-are-those-phi-functions-then",
+    "title": "Very Short Intro Deep Learning",
+    "section": "What are those \\(\\phi\\) functions then?",
+    "text": "What are those \\(\\phi\\) functions then?\n\nIt’s key that they are nonlinear.\nTypical choices are\n\nsigmoid: \\(\\phi(x) = \\frac{1}{1 + \\exp(-x)}\\)\nReLU (rectified linear unit): \\(\\phi(x) = \\begin{cases} 0 & \\text{if } x&lt;0\\\\x & \\text{else.} \\end{cases}\\)\n\nmany others (softmax, tanh, Leaky ReLU, GELU,…)"
+  },
+  {
+    "objectID": "slides/DNN-intro.html#deep-neural-networks-dnns",
+    "href": "slides/DNN-intro.html#deep-neural-networks-dnns",
+    "title": "Very Short Intro Deep Learning",
+    "section": "Deep Neural Networks (DNNs)",
+    "text": "Deep Neural Networks (DNNs)\nSingle input layer, multiple hidden layers, single output layer"
+  },
+  {
+    "objectID": "slides/DNN-intro.html#dnns",
+    "href": "slides/DNN-intro.html#dnns",
+    "title": "Very Short Intro Deep Learning",
+    "section": "DNNs",
+    "text": "DNNs\n\n\nNotice: each neuron towards the right depends on entire network left of it.\n\\(y\\) depends on \\(h^{(2)}\\), which depends on \\(h_1^{(1)}\\) and \\(h_2^{(1)}\\)."
+  },
+  {
+    "objectID": "slides/DNN-intro.html#dnns-1",
+    "href": "slides/DNN-intro.html#dnns-1",
+    "title": "Very Short Intro Deep Learning",
+    "section": "DNNs",
+    "text": "DNNs\n\n\n\n\\[\\begin{align}\nh_1^{(1)} &= \\phi(w_{11}^{(1)} x_1 + w_{12}^{(1)} x_2 + b_1^{(1)}) \\\\\nh_2^{(1)} &= \\phi(w_{21}^{(1)} x_1 + w_{22}^{(1)} x_2 + b_2^{(1)})\\\\\nh^{(2)} &= \\phi(w_1^{(2)} h_1^{(1)} + w_2^{(2)} h_2^{(1)} + b^{(2)}) \\\\\ny &= \\phi(w^{(3)} h^{(2)} + b^{(3)})\n\\end{align}\\]\n\n\n\\(w_{12}^{(1)}\\) strength of \\(x_2 \\rightarrow h_1^{(1)}\\)\n\\(\\phi\\) typically constant in layer\n\\(\\phi\\) can change across layers\n\n\n\n\nexample of calculations and how the input to each subsequent layer are all the outputs of the preceding layer"
+  },
+  {
+    "objectID": "slides/DNN-intro.html#simplest-problem-detect-vs",
+    "href": "slides/DNN-intro.html#simplest-problem-detect-vs",
+    "title": "Very Short Intro Deep Learning",
+    "section": "Simplest Problem: Detect / vs \\",
+    "text": "Simplest Problem: Detect / vs \\\n\n\n\n\nSuppose we have 4 pixels of data, arranged as a square\nEach pixel can be white (on, 1) or black (off, 0).\n\n\n\n\n\n    \n\n\n\n\n\nImagine this is a very low quality digital photograph of somebody’s handwritten /\nlike, 4 pixels of information only.\nYou can see why we chose / for this exercise, any other digit is too complex for this. More on that later."
+  },
+  {
+    "objectID": "slides/DNN-intro.html#simplest-problem-detect-vs-1",
+    "href": "slides/DNN-intro.html#simplest-problem-detect-vs-1",
+    "title": "Very Short Intro Deep Learning",
+    "section": "Simplest Problem: Detect / vs \\",
+    "text": "Simplest Problem: Detect / vs \\\n\n\n\n\nSuppose we have 4 pixels of data, arranged as a square\nEach pixel can be white (on, 1) or black (off, 0).\n\n\n\n\n\n    \n\n\n\n\n\n\nWe want to recognize from those a white forward slash\nor white backward slash\nThose represent handwriting in this example.\n\n\n\n\n\n ⟋"
+  },
+  {
+    "objectID": "slides/DNN-intro.html#section",
+    "href": "slides/DNN-intro.html#section",
+    "title": "Very Short Intro Deep Learning",
+    "section": "",
+    "text": "⟋\n\n\n\n\n\n\n    \n\n\n\n\n\n\n\n ⟍"
+  },
+  {
+    "objectID": "slides/DNN-intro.html#simplest-problem-detect-vs-2",
+    "href": "slides/DNN-intro.html#simplest-problem-detect-vs-2",
+    "title": "Very Short Intro Deep Learning",
+    "section": "Simplest Problem: Detect / vs \\",
+    "text": "Simplest Problem: Detect / vs \\\nHow does supervised learning work with NNs?\n\nWe provide the algo with pairs of values: input, output \\((X,Y)\\)\nWe train it on those pairs.\nThen we give it a new \\(X\\) and want a new \\(Y\\) back.\n\n\n\nFor regression tasks that’s ok. Vector \\(x\\) in, number \\(y\\) out.\nBut classification (is this picture / or \\?) needs a tweak.\n\n\n\nWe need to encode classes (/ or \\) into numbers somehow."
+  },
+  {
+    "objectID": "slides/DNN-intro.html#simplest-problem-detect-vs-3",
+    "href": "slides/DNN-intro.html#simplest-problem-detect-vs-3",
+    "title": "Very Short Intro Deep Learning",
+    "section": "Simplest Problem: Detect / vs \\",
+    "text": "Simplest Problem: Detect / vs \\\nInput Encoding\nLet’s go down column-wise in each box of squares and record 0 for black and 1 for white. Each square is \\(x_1,\\dots,x_4 \\in \\{0,1\\}\\)\n\n\n\n\n    \n\n\n\n  \n\n\n(0,1,1,0)\n\n\n\n\n\n\n\n\n\n    \n\n\n\n  \n\n\n(1,0,0,1)"
+  },
+  {
+    "objectID": "slides/DNN-intro.html#simplest-problem-detect-vs-4",
+    "href": "slides/DNN-intro.html#simplest-problem-detect-vs-4",
+    "title": "Very Short Intro Deep Learning",
+    "section": "Simplest Problem: Detect / vs \\",
+    "text": "Simplest Problem: Detect / vs \\\nOutput encoding\nSame for output \\(Y\\). We use a one-hot encoding with a 2-dimensional vector \\((y_{1}, y_{2})\\).\n\n\n\n\n\n\n\nOne hot encoding vs dummy variables\n\n\n\nDummy vars typically have a reference category. For K levels you need K-1 columns. Like red,green,blue is K=3.\nOne-hot encodes all categories."
+  },
+  {
+    "objectID": "slides/DNN-intro.html#simplest-problem-detect-vs-5",
+    "href": "slides/DNN-intro.html#simplest-problem-detect-vs-5",
+    "title": "Very Short Intro Deep Learning",
+    "section": "Simplest Problem: Detect / vs \\",
+    "text": "Simplest Problem: Detect / vs \\\nOutput encoding\nSame for output \\(Y\\). We use a one-hot encoding with a 2-dimensional vector \\((y_{1}, y_{2})\\).\n\n\nDummy Variables\ngreen blue\n  0     0\n  1     0\n  0     1\n  0     0\n  0     1\n\nOne-hot Encoding\nred green blue\n 1    0     0\n 0    1     0\n 0    0     1\n 1    0     0\n 0    0     1"
+  },
+  {
+    "objectID": "slides/DNN-intro.html#simplest-problem-detect-vs-6",
+    "href": "slides/DNN-intro.html#simplest-problem-detect-vs-6",
+    "title": "Very Short Intro Deep Learning",
+    "section": "Simplest Problem: Detect / vs \\",
+    "text": "Simplest Problem: Detect / vs \\\nOutput encoding: One-hot\nLet’s go with the following. You can see that this is arbitrary (we could easily have inverted this without consequences.)\n\n\n\n\n ⟋\n\n\n\n  \n\n\n(1,0)\n\n\n\n\n\n ⟍\n\n\n\n  \n\n\n(0,1)"
+  },
+  {
+    "objectID": "slides/DNN-intro.html#simplest-problem-detect-vs-7",
+    "href": "slides/DNN-intro.html#simplest-problem-detect-vs-7",
+    "title": "Very Short Intro Deep Learning",
+    "section": "Simplest Problem: Detect / vs \\",
+    "text": "Simplest Problem: Detect / vs \\\n\n\n\n\\[ x =\n\\left(\n\\begin{align}\nx_{1} \\\\\nx_{2} \\\\\nx_{3} \\\\\nx_{4}\n\\end{align}\n\\right)\n\\]\n\n\n\n\n\n\\[\\left(\n  \\begin{align}\n  y_{1} \\\\  \n  y_{2}\n  \\end{align} \\right) =\n  y\\]\n\n\n\n\n\n\n\n\n\nComputing parameters\n\n\nWe need \\(y = \\phi(z)\\) and \\(z=Wx + b\\).\n\n\\(W\\) is a \\((2,4)\\) matrix of weights\n\\(b\\) is a \\((2,1)\\) vector of biases"
+  },
+  {
+    "objectID": "slides/DNN-intro.html#simplest-problem-detect-vs-8",
+    "href": "slides/DNN-intro.html#simplest-problem-detect-vs-8",
+    "title": "Very Short Intro Deep Learning",
+    "section": "Simplest Problem: Detect / vs \\",
+    "text": "Simplest Problem: Detect / vs \\\nLinear Activation Function (for Teaching only)\n\nLet’s assume that \\(\\phi(x)=x\\) so we can compute the coefficients.\n\n\\[y = \\phi(Wx + b) = Wx + b\\]\n\nWhich, written out is\n\n\\[\\left( \\begin{array}{c} y_{1} \\\\ y_{2}  \\end{array} \\right) = \\left( \\begin{array}{cccc} w_{1,1} & w_{1,2} & w_{1,3} & w_{1,4} \\\\ w_{2,1} & w_{2,2} & w_{2,3} & w_{2,4}  \\end{array} \\right) \\left( \\begin{array}{c} x_{1} \\\\ x_{2} \\\\ x_{3} \\\\ x_{4} \\end{array} \\right) + \\left( \\begin{array}{c} b_{1} \\\\ b_{2}  \\end{array} \\right)\\]"
+  },
+  {
+    "objectID": "slides/DNN-intro.html#section-1",
+    "href": "slides/DNN-intro.html#section-1",
+    "title": "Very Short Intro Deep Learning",
+    "section": "",
+    "text": "There are 2 relevant cases, and we need to find values for \\(W\\) and \\(b\\) such that a certain tuple of x values results in a certain y output.\n\\[\\left( \\begin{array}{cccc} w_{1,1} & w_{1,2} & w_{1,3} & w_{1,4} \\\\ w_{2,1} & w_{2,2} & w_{2,3} & w_{2,4}  \\end{array} \\right) \\left( \\begin{array}{c} 0 \\\\ 1\\\\ 1\\\\ 0 \\end{array} \\right) + \\left( \\begin{array}{c} b_{1} \\\\ b_{2}  \\end{array} \\right) = \\left( \\begin{array}{c} 1 \\\\ 0  \\end{array} \\right)\\]\n\\[\\left( \\begin{array}{cccc} w_{1,1} & w_{1,2} & w_{1,3} & w_{1,4} \\\\ w_{2,1} & w_{2,2} & w_{2,3} & w_{2,4}  \\end{array} \\right) \\left( \\begin{array}{c} 1 \\\\ 0\\\\ 0\\\\ 1 \\end{array} \\right) + \\left( \\begin{array}{c} b_{1} \\\\ b_{2}  \\end{array} \\right) = \\left( \\begin{array}{c} 0 \\\\ 1  \\end{array} \\right)\\]"
+  },
+  {
+    "objectID": "slides/DNN-intro.html#section-2",
+    "href": "slides/DNN-intro.html#section-2",
+    "title": "Very Short Intro Deep Learning",
+    "section": "",
+    "text": "There are 2 relevant cases, and we need to find values for \\(W\\) and \\(b\\) such that a certain tuple of x values results in a certain y output.\n\\[\\left( \\begin{array}{c} w_{1,2} + w_{1,3}  \\\\ w_{2,2} + w_{2,3}   \\end{array} \\right) + \\left( \\begin{array}{c} b_{1} \\\\ b_{2}  \\end{array} \\right) = \\left( \\begin{array}{c} 1 \\\\ 0  \\end{array} \\right)\\]\n\\[\\left( \\begin{array}{c} w_{1,1} + w_{1,4}  \\\\ w_{2,1} + w_{2,4}   \\end{array} \\right) + \\left( \\begin{array}{c} b_{1} \\\\ b_{2}  \\end{array} \\right) = \\left( \\begin{array}{c} 1 \\\\ 0  \\end{array} \\right)\\]"
+  },
+  {
+    "objectID": "slides/DNN-intro.html#section-3",
+    "href": "slides/DNN-intro.html#section-3",
+    "title": "Very Short Intro Deep Learning",
+    "section": "",
+    "text": "There are 2 relevant cases, and we need to find values for \\(W\\) and \\(b\\) such that a certain tuple of x values results in a certain y output.\n\\[\\begin{aligned}\nw_{1,2} + w_{1,3} + b_{1} &= 1 \\\\\nw_{2,2} + w_{2,3} + b_{2} &= 0 \\\\\nw_{1,1} + w_{1,4} + b_{1} &= 1 \\\\\nw_{2,1} + w_{2,4} + b_{2} &= 0\n\\end{aligned}\\]\nIf we can find values \\(W\\) and \\(b\\) such that this holds, our NN will perfectly recognize / and \\.\n\n\n\n\n\n\nNote\n\n\nSolving 4 equations with 10 variables: we have 6 degrees of freedom too many. Can just choose an arbitrary number for those and solve system for the remaining four."
+  },
+  {
+    "objectID": "slides/DNN-intro.html#computed-weights-and-biases",
+    "href": "slides/DNN-intro.html#computed-weights-and-biases",
+    "title": "Very Short Intro Deep Learning",
+    "section": "Computed weights and biases",
+    "text": "Computed weights and biases\nI set \\(b=0\\) and \\(w_{11},w_{12},w_{21},w_{23}=0.5\\). This gives\n\\[\\left( \\begin{array}{cccc} 0.5 & 0.5 & 0.5 & -0.5 \\\\ 0.5 & 0.5 & -0.5 & 0.5  \\end{array} \\right) \\left( \\begin{array}{c} 0 \\\\ 1\\\\ 1\\\\ 0 \\end{array} \\right) + \\left( \\begin{array}{c} 0 \\\\ 0  \\end{array} \\right) = \\left( \\begin{array}{c} 1 \\\\ 0  \\end{array} \\right)\\]\n\\[\\left( \\begin{array}{cccc} 0.5 & 0.5 & 0.5 & -0.5 \\\\ 0.5 & 0.5 & -0.5 & 0.5 \\end{array} \\right) \\left( \\begin{array}{c} 1 \\\\ 0\\\\ 0\\\\ 1 \\end{array} \\right) + \\left( \\begin{array}{c} 0 \\\\ 0  \\end{array} \\right) = \\left( \\begin{array}{c} 0 \\\\ 1  \\end{array} \\right)\\]"
+  },
+  {
+    "objectID": "slides/DNN-intro.html#simplest-problem-detect-vs-9",
+    "href": "slides/DNN-intro.html#simplest-problem-detect-vs-9",
+    "title": "Very Short Intro Deep Learning",
+    "section": "Simplest Problem: Detect / vs \\",
+    "text": "Simplest Problem: Detect / vs \\\n\n\nA very simple NN with a linear activation function was perfectly able to recognize those characters from colored (black or white) pixels\n4 input neurons\n2 output neurons\n\n\n\nIncreasing pixels: increasing resolution of the image\nmore variables to deal with, and nonlinear activations: cannot solve by hand."
+  },
+  {
+    "objectID": "slides/DNN-intro.html#demo-setup",
+    "href": "slides/DNN-intro.html#demo-setup",
+    "title": "Very Short Intro Deep Learning",
+    "section": "Demo Setup",
+    "text": "Demo Setup\n\nfunction demo(x=nothing)\n    println(\"Simple Neural Network Demo\")\n    println(\"=\"^40)\n    if x === nothing\n        x = rand(4)\n    elseif !(isa(x, Vector{&lt;:Real}) && length(x) == 4)\n        error(\"Input 'x' must be a vector of 4 real numbers\")\n    end\n    \n    # Input\n    # Weights and biases\n    W = [0.5  0.5  0.5 -0.5;\n         0.5  0.5 -0.5  0.5]\n    b = [0, 0]\n    \n    # Output    \n    y = W * x + b\n    \n    println(\"Input:\")\n    println(\"┌─────┬─────┐\")\n    println(\"│ $(round(x[1], digits=1)) │ $(round(x[2], digits=1)) │\")\n    println(\"├─────┼─────┤\")\n    println(\"│ $(round(x[3], digits=1)) │ $(round(x[4], digits=1)) │\")\n    println(\"└─────┴─────┘\")\n    \n    # simple rule: (1,0) means `/`\n    # so let's say any (q,r) means `/` as long as q &gt; r\n    println(\"Output:\")\n    if y[1] &gt;= y[2]\n        println(\"┌───┐\")\n        println(\"│ ⟋ │\")\n        println(\"└───┘\")\n    end\n    if y[1] ≈ y[2]\n        println(\"or\")\n    end\n    if y[2] &gt;= y[1]\n        println(\"┌───┐\")\n        println(\"│ ⟍ │\")\n        println(\"└───┘\")\n    end\n    \n    return y\nend\n\ndemo (generic function with 2 methods)"
+  },
+  {
+    "objectID": "slides/DNN-intro.html#run-demo",
+    "href": "slides/DNN-intro.html#run-demo",
+    "title": "Very Short Intro Deep Learning",
+    "section": "Run Demo",
+    "text": "Run Demo\n\n\ndemo([0,1,1,0])  # should give `/`\n\nSimple Neural Network Demo\n========================================\nInput:\n┌─────┬─────┐\n│ 0.0 │ 1.0 │\n├─────┼─────┤\n│ 1.0 │ 0.0 │\n└─────┴─────┘\nOutput:\n┌───┐\n│ ⟋ │\n└───┘\n\n\n2-element Vector{Float64}:\n 1.0\n 0.0"
+  },
+  {
+    "objectID": "slides/DNN-intro.html#run-demo-1",
+    "href": "slides/DNN-intro.html#run-demo-1",
+    "title": "Very Short Intro Deep Learning",
+    "section": "Run Demo",
+    "text": "Run Demo\n\n\ndemo([1,0,0,1])  # should give `\\`\n\nSimple Neural Network Demo\n========================================\nInput:\n┌─────┬─────┐\n│ 1.0 │ 0.0 │\n├─────┼─────┤\n│ 0.0 │ 1.0 │\n└─────┴─────┘\nOutput:\n┌───┐\n│ ⟍ │\n└───┘\n\n\n2-element Vector{Float64}:\n 0.0\n 1.0"
+  },
+  {
+    "objectID": "slides/DNN-intro.html#run-demo-on-unseen-data",
+    "href": "slides/DNN-intro.html#run-demo-on-unseen-data",
+    "title": "Very Short Intro Deep Learning",
+    "section": "Run Demo on unseen data",
+    "text": "Run Demo on unseen data\nHow does this NN generalize to test data?\n\n\ndemo([0.5,0.1,0.2,0.4])  # square with shades of grey\n\nSimple Neural Network Demo\n========================================\nInput:\n┌─────┬─────┐\n│ 0.5 │ 0.1 │\n├─────┼─────┤\n│ 0.2 │ 0.4 │\n└─────┴─────┘\nOutput:\n┌───┐\n│ ⟍ │\n└───┘\n\n\n2-element Vector{Float64}:\n 0.2\n 0.4"
+  },
+  {
+    "objectID": "slides/DNN-intro.html#an-even-simpler-example-a-line",
+    "href": "slides/DNN-intro.html#an-even-simpler-example-a-line",
+    "title": "Very Short Intro Deep Learning",
+    "section": "An even simpler example: A Line",
+    "text": "An even simpler example: A Line\n\nExtreme case: 1 input, 1 output.\n(Of course we don’t need a neural network for that)"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Computational Economics",
+    "section": "",
+    "text": "Teacher: Florian Oswald, florian.oswald@unito.it\nClass Times: Monday 13:30-15:30, Wednesday 17:30-19:00\nClass Location: Collegio Carlo Alberto\nSlack: There will be a slack channel for all communication\n© Florian Oswald, 2026"
+  },
+  {
+    "objectID": "index.html#course-overview",
+    "href": "index.html#course-overview",
+    "title": "Computational Economics",
+    "section": "Course Overview",
+    "text": "Course Overview\nThis is a course for PhD and Allievi students at Collegio Carlo Alberto in Computational Economics. You will learn about some commonly used methods in Computational Economics and Structural Econometrics. These methods are being used in all fields of Economics. The course has a clear focus on applying what you learn. We will cover the theoretical concepts that underlie each topic, but you should expect a fair amount of hands on action required on your behalf. In the words of the great Che-Lin Su:\n\nDoing Computation is the only way to learn Computation. Doing Computation is the only way to learn Computation. Doing Computation is the only way to learn Computation.\n\nTrue to that motto, there will be homeworks for you to try out what you learned in class. There will also be a term project."
+  },
+  {
+    "objectID": "index.html#outline-of-topics",
+    "href": "index.html#outline-of-topics",
+    "title": "Computational Economics",
+    "section": "Outline of Topics",
+    "text": "Outline of Topics\n\n\n\nSection\nTopic\n\n\n\n\n1\nWhy worry about computation in Economics?\n\n\n2\nWhat is an OS?\n\n\n3\nDoes it matter how one writes code?\n\n\n4\nProgramming Languages - Weapon of Choice\n\n\n5\njulia crash course 1\n\n\n6\njulia crash course 2\n\n\n7\nOptimization 1: Recap of theory, Automatic Differentiation, setting up an optimizer\n\n\n8\nOptimization 2: Algorithms\n\n\n9\nOptimization 3: Constraints\n\n\n10\nData and Machine Learning\n\n\n11\nDynamic Programming\n\n\n12\nParallel Computing\n\n\n13\nFunction Approximation\n\n\n14\nNumerical Integration\n\n\n15\nDynamic Discrete Choice Models"
+  },
+  {
+    "objectID": "index.html#prerequisites",
+    "href": "index.html#prerequisites",
+    "title": "Computational Economics",
+    "section": "Prerequisites",
+    "text": "Prerequisites\n\nYou need a laptop.\nYou should be familiar with the material from Introduction to Programming - more below.\nYou must sign up for a free account at github.com. Choose a reasonable user name and upload a profile picture.\nBefore you come the first class, please follow closely the installation instructions.\n\n\nGetting Programming Skills\n\nCheck out what is being taught in the Introduction to Programming course. I want you to read through sessions 1-3 on your own. I will give you a quiz to complete on this before week 3.\nWe will be using Julia for this course.\n\nNoteworthy Differences from Other Languages\nMATLAB, Python, Julia Syntax Comparison"
+  },
+  {
+    "objectID": "index.html#term-project",
+    "href": "index.html#term-project",
+    "title": "Computational Economics",
+    "section": "Term Project",
+    "text": "Term Project\nThere are two options:\n\nReplicate a published paper.\nDevelop the computational aspects of your own work.\n\n\nReplication\nThe requirements for choice of paper to replicate are:\n\nIt’s an economics paper.\nPublished version and replication kit is available online.\nThe paper to replicate must not use julia.\nYou must use julia for your replication.\n\nIdeally your choice will involve at least some level of computational interest (i.e. more than an IV regression)\nHowever, you can replicate a paper with an IV regression, but you have to go all the way to get the exact same results as in the paper. I.e. if the author typed the stata command ivreg2 lw s expr tenure rns smsa _I* (iq=med kww age), cluster(year) you will have to write (or find) julia code which will match all output from this, including standard errors.\n\nYou need to set up a public github repository where you will build a documentation website of your implementation. You’ll learn how to do this in the course.\nI encourage you to let the world know about your replication effort via social media and/or email to the authors directly. This is independent of whether you were able or not to replicate the results. Replication is not about finding errors in other peoples’ work. If you are able to replicate some result in julia, this may be very interesting for others.\n\n\nReplication Resources\n\nhere is a great list by the AEA\nECTA code and data\nRevEconDynamics codes\nEach issue of RevEconDynamics , e.g. https://www.economicdynamics.org/volume-39-2021/\nThe AEA Data Editor’s website\nThe Restud Data Editor and their zenodo repo of replication kits\nThe Social Science Data Editor’s joint website\n\n\n\n\nDevelop Your Own Work\nYou can develop your own work as well. Requirements:\n\nsetup a github repository which contains the code (your decision whether public or private, in any case you have to share it with me)\nproduce a short document (max 10 pages, ideally much less) which describes\n\nthe aim of the project\nthe computational problem\nyour computational strategy to solve that problem\n\nThe main focus for me will lie on\n\nHow easy is it to use your code?\nHow easy is it to understand your code (code readability and provided documentation)?\nDid you provide unit tests? Can I be convinced that your code does what it is supposed to do?"
+  },
+  {
+    "objectID": "index.html#grade",
+    "href": "index.html#grade",
+    "title": "Computational Economics",
+    "section": "Grade",
+    "text": "Grade\nYour grade will be 60% homeworks, 40% term project."
+  },
+  {
+    "objectID": "index.html#textbooks",
+    "href": "index.html#textbooks",
+    "title": "Computational Economics",
+    "section": "Textbooks",
+    "text": "Textbooks\nThere are some excellent references for computational methods out there. This course will use material from\n\nThe Classics\n\nFackler and Miranda (2002), Applied Computational Economics and Finance, MIT Press\nKenneth Judd (1998), Numerical Methods in Economics, MIT Press\nNocedal, Jorge, and Stephen J. Wright (2006): Numerical Optimization, Springer-Verlag\n\n\n\nNewcomers\n\nJulia for Data Analysis (2023), Bogumił Kamiński, Manning Publications.\nAlgorithms for Optimization (2019), Mykel J. Kochenderfer and Tim A. Wheeler, Algorithms for Optimization, MIT Press.\nA Gentle Introduction to Effective Computing in Quantitative Research - What Every Research Assistant Should Know, Harry J. Paarsch and Konstantin Golyaev\nStatistics with Julia (2021), Yoni Nazarathy and Hayden Klok, Springer.\nQuantitative Economics with Julia by Perla, Sargent and Stachurski is a wonderful resource and we use it a lot in this course."
+  },
+  {
+    "objectID": "index.html#code-of-conduct",
+    "href": "index.html#code-of-conduct",
+    "title": "Computational Economics",
+    "section": "Code of Conduct",
+    "text": "Code of Conduct\nIf you decide to participate in this course, I expect you to abide by the following minimal code of conduct.\n\nBe polite to the other class participants.\nWhile in class, do not spend time on messaging apps, chat rooms, computer games, or similar content.\n\nYou can expect your instructor to abide by the same code of conduct, so this is a matter of mutual respect. If you are found in breach of the above you will be given a single warning, and I will ask you to no longer join the course after a second time. Your grade will be “fail”."
+  },
+  {
+    "objectID": "index.html#license",
+    "href": "index.html#license",
+    "title": "Computational Economics",
+    "section": "License",
+    "text": "License\nThe copyright notice to be included in any copies and other derivative work of this material is:\nCopyright 2026 Florian Oswald, florian.oswald@gmail.com\nThank you.\n This is licensed under Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License"
+  },
+  {
     "objectID": "slides/OS.html#what-is-an-operating-system",
     "href": "slides/OS.html#what-is-an-operating-system",
     "title": "What is an OS?",
@@ -1280,7 +1567,7 @@
     "href": "slides/OS.html#scientific-computing---workflow-practicalities",
     "title": "What is an OS?",
     "section": "Scientific Computing - Workflow & Practicalities",
-    "text": "Scientific Computing - Workflow & Practicalities\n\n\nRemote Access\n\nLinux: SSH on terminal\nmacOS: SSH\nWindows: SSH (Windows 10+), RDP, WSL2\n\nSoftware Availability\n\nLinux: Most scientific software developed first\nmacOS: Good support for many tools\nWindows: WSL2 or containers often needed\n\n\nReproducibility\n\nUnix tools built-in.\nWindows requires more effort.\n\nCost\n\nLinux: Free\nmacOS: Locked to Apple\nWindows: Licensing costs\n\n\n\nRemote Access: Linux has SSH built-in with X11 forwarding that works seamlessly. macOS has SSH built-in with X11 via XQuartz. Windows now has SSH built-in (Windows 10+), uses RDP for graphical access, and WSL2 provides a full Linux environment.\nSoftware Availability: Linux has most scientific software developed for it first (or only). macOS has good support for many tools, though some HPC software requires compilation. Windows often lacks native Windows builds; WSL2 or containers fill the gap.\nReproducibility: All platforms have excellent reproducibility with containers (Docker, Singularity) and environment managers (conda, venv). Container and environment specifications work identically across OSes - this is platform-independent.\nCost: Linux is free and open source. macOS is locked to Apple hardware. Windows has licensing costs for server/cluster use, though it’s often free for education.\nBottom line: Linux dominates scientific computing due to software ecosystem and cluster infrastructure, but modern tools (WSL2, containers) make Windows viable for local development.",
+    "text": "Scientific Computing - Workflow & Practicalities\n\n\nRemote Access\n\nLinux: SSH on terminal\nmacOS: SSH\nWindows: SSH (Windows 10+), RDP, WSL2\n\nSoftware Availability\n\nLinux: Most scientific software developed first\nmacOS: Good support for many tools\nWindows: WSL2 or containers\n\n\nReproducibility\n\nUnix tools built-in.\nWindows requires more effort.\n\nCost\n\nLinux: Free\nmacOS: Locked to Apple\nWindows: Licensing costs\n\n\n\nRemote Access: Linux has SSH built-in with X11 forwarding that works seamlessly. macOS has SSH built-in with X11 via XQuartz. Windows now has SSH built-in (Windows 10+), uses RDP for graphical access, and WSL2 provides a full Linux environment.\nSoftware Availability: Linux has most scientific software developed for it first (or only). macOS has good support for many tools, though some HPC software requires compilation. Windows often lacks native Windows builds; WSL2 or containers fill the gap.\nReproducibility: All platforms have excellent reproducibility with containers (Docker, Singularity) and environment managers (conda, venv). Container and environment specifications work identically across OSes - this is platform-independent.\nCost: Linux is free and open source. macOS is locked to Apple hardware. Windows has licensing costs for server/cluster use, though it’s often free for education.\nBottom line: Linux dominates scientific computing due to software ecosystem and cluster infrastructure, but modern tools (WSL2, containers) make Windows viable for local development.",
     "crumbs": [
       "Home",
       "Lectures",
@@ -1364,7 +1651,7 @@
     "href": "slides/OS.html#what-is-a-text-editor",
     "title": "What is an OS?",
     "section": "What is a Text Editor",
-    "text": "What is a Text Editor\n\nA program that allows you to edit text. 🤦‍♂️\nNot Microsoft Word. (Why not?)\nThere are many powerful options. Choose carefully. Indeed…\n\n\n\n\n\n\n\n\nHarry J. Paarsch\n\n\nChoose your editor with more care than you would your spouse because you will spend more time with your editor, even after the spouse is gone.\n(Quote from Jesus’ slides. Harry’s website)\n\n\n\n\n\n\n\nOptions\n\nVScode\nSublime Text\nVim\nEmacs\n\n\n\nNotepad++\nTextEdit\nmany more… choose your location on the comfort vs bare metal scale",
+    "text": "What is a Text Editor\n\nA program that allows you to edit text. 🤦‍♂️\nNot Microsoft Word. (Why not?)\nThere are many powerful options. Choose carefully. Indeed…\n\n\n\n\n\n\n\n\nHarry J. Paarsch\n\n\nChoose your editor with more care than you would your spouse because you will spend more time with your editor, even after the spouse is gone.\n(Quote from Jesus’ slides. Harry’s website)\n\n\n\n\n\n\n\n\nVScode\nSublime Text\nVim\nEmacs\n\n\n\nNotepad++\nTextEdit\nmany more…your pick!",
     "crumbs": [
       "Home",
       "Lectures",
@@ -1424,7 +1711,7 @@
     "href": "slides/OS.html#a-poor-mans-solution",
     "title": "What is an OS?",
     "section": "A Poor Man’s Solution",
-    "text": "A Poor Man’s Solution\n\n\n\nMany researchers swear on the YYYYMMDD system\nYou just insert the date into the filename.\nWhat could possibly go wrong?\n\n\n\nPeople insert wrong dates\n\n\n\n\nYou may remember last week. But 4 months ago?\n\n\n\n\nWhat is 20221121-appendixA.tex vs 20221121-appendix-former-B.tex?",
+    "text": "A Poor Man’s Solution\n\n\n\nMany researchers swear on the YYYYMMDD system\nYou just insert the date into the filename.\nWhat could possibly go wrong?\n\n\n\nPeople insert wrong dates\n\n\n\n\nYou may remember last week. But 4 months ago?\n\n\n\n\nWhat is 20221121-appendixB.tex vs 20221121-appendix-former-B.tex?",
     "crumbs": [
       "Home",
       "Lectures",
@@ -1436,7 +1723,7 @@
     "href": "slides/OS.html#a-real-solution-git",
     "title": "What is an OS?",
     "section": "A Real Solution: git",
-    "text": "A Real Solution: git\n\nProfessional software development without version control does not exist. 93% of developers use git, the rest uses svn or other tools.\nIf the pros use this tool, and you write code to do empirical research, then you are handicapping yourself if you don’t use it.\n\n\n\nDropbox works to simply sync files. But fails for:\n\nTracking why changes were made (commit messages)\nBranching to try different specifications without breaking your main analysis\nMerging contributions from co-authors working on different sections\nRolling back to exactly the state your code was in when you got that result 6 months agos",
+    "text": "A Real Solution: git\n\nProfessional software development without version control does not exist. 93% of developers use git, the rest uses svn or other tools.\nIf the pros use this tool, and you write code to do empirical research, then you are handicapping yourself if you don’t use it.\n\n\n\nDropbox works to simply sync files. But fails for:\n\nTracking why changes were made (commit messages)\nBranching to try different specifications without breaking your main analysis\nMerging contributions from co-authors working on different sections\nRolling back to exactly the state your code was in when you got that result 6 months ago",
     "crumbs": [
       "Home",
       "Lectures",
@@ -1514,69 +1801,6 @@
       "Lectures",
       "2 - What is an *OS*?"
     ]
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Computational Economics",
-    "section": "",
-    "text": "Teacher: Florian Oswald, florian.oswald@unito.it\nClass Times: Monday 13:30-15:30, Wednesday 17:30-19:00\nClass Location: Collegio Carlo Alberto\nSlack: There will be a slack channel for all communication\n© Florian Oswald, 2026"
-  },
-  {
-    "objectID": "index.html#course-overview",
-    "href": "index.html#course-overview",
-    "title": "Computational Economics",
-    "section": "Course Overview",
-    "text": "Course Overview\nThis is a course for PhD and Allievi students at Collegio Carlo Alberto in Computational Economics. You will learn about some commonly used methods in Computational Economics and Structural Econometrics. These methods are being used in all fields of Economics. The course has a clear focus on applying what you learn. We will cover the theoretical concepts that underlie each topic, but you should expect a fair amount of hands on action required on your behalf. In the words of the great Che-Lin Su:\n\nDoing Computation is the only way to learn Computation. Doing Computation is the only way to learn Computation. Doing Computation is the only way to learn Computation.\n\nTrue to that motto, there will be homeworks for you to try out what you learned in class. There will also be a term project."
-  },
-  {
-    "objectID": "index.html#outline-of-topics",
-    "href": "index.html#outline-of-topics",
-    "title": "Computational Economics",
-    "section": "Outline of Topics",
-    "text": "Outline of Topics\n\n\n\nSection\nTopic\n\n\n\n\n1\nWhy worry about computation in Economics?\n\n\n2\nWhat is an OS?\n\n\n3\nDoes it matter how one writes code?\n\n\n4\nProgramming Languages - Weapon of Choice\n\n\n5\njulia crash course 1\n\n\n6\njulia crash course 2\n\n\n7\nOptimization 1: Recap of theory, Automatic Differentiation, setting up an optimizer\n\n\n8\nOptimization 2: Algorithms\n\n\n9\nOptimization 3: Constraints\n\n\n10\nData and Machine Learning\n\n\n11\nDynamic Programming\n\n\n12\nParallel Computing\n\n\n13\nFunction Approximation\n\n\n14\nNumerical Integration\n\n\n15\nDynamic Discrete Choice Models"
-  },
-  {
-    "objectID": "index.html#prerequisites",
-    "href": "index.html#prerequisites",
-    "title": "Computational Economics",
-    "section": "Prerequisites",
-    "text": "Prerequisites\n\nYou need a laptop.\nYou should be familiar with the material from Introduction to Programming - more below.\nYou must sign up for a free account at github.com. Choose a reasonable user name and upload a profile picture.\nBefore you come the first class, please follow closely the installation instructions.\n\n\nGetting Programming Skills\n\nCheck out what is being taught in the Introduction to Programming course. I want you to read through sessions 1-3 on your own. I will give you a quiz to complete on this before week 3.\nWe will be using Julia for this course.\n\nNoteworthy Differences from Other Languages\nMATLAB, Python, Julia Syntax Comparison"
-  },
-  {
-    "objectID": "index.html#term-project",
-    "href": "index.html#term-project",
-    "title": "Computational Economics",
-    "section": "Term Project",
-    "text": "Term Project\nThere are two options:\n\nReplicate a published paper.\nDevelop the computational aspects of your own work.\n\n\nReplication\nThe requirements for choice of paper to replicate are:\n\nIt’s an economics paper.\nPublished version and replication kit is available online.\nThe paper to replicate must not use julia.\nYou must use julia for your replication.\n\nIdeally your choice will involve at least some level of computational interest (i.e. more than an IV regression)\nHowever, you can replicate a paper with an IV regression, but you have to go all the way to get the exact same results as in the paper. I.e. if the author typed the stata command ivreg2 lw s expr tenure rns smsa _I* (iq=med kww age), cluster(year) you will have to write (or find) julia code which will match all output from this, including standard errors.\n\nYou need to set up a public github repository where you will build a documentation website of your implementation. You’ll learn how to do this in the course.\nI encourage you to let the world know about your replication effort via social media and/or email to the authors directly. This is independent of whether you were able or not to replicate the results. Replication is not about finding errors in other peoples’ work. If you are able to replicate some result in julia, this may be very interesting for others.\n\n\nReplication Resources\n\nhere is a great list by the AEA\nECTA code and data\nRevEconDynamics codes\nEach issue of RevEconDynamics , e.g. https://www.economicdynamics.org/volume-39-2021/\nThe AEA Data Editor’s website\nThe Restud Data Editor and their zenodo repo of replication kits\nThe Social Science Data Editor’s joint website\n\n\n\n\nDevelop Your Own Work\nYou can develop your own work as well. Requirements:\n\nsetup a github repository which contains the code (your decision whether public or private, in any case you have to share it with me)\nproduce a short document (max 10 pages, ideally much less) which describes\n\nthe aim of the project\nthe computational problem\nyour computational strategy to solve that problem\n\nThe main focus for me will lie on\n\nHow easy is it to use your code?\nHow easy is it to understand your code (code readability and provided documentation)?\nDid you provide unit tests? Can I be convinced that your code does what it is supposed to do?"
-  },
-  {
-    "objectID": "index.html#grade",
-    "href": "index.html#grade",
-    "title": "Computational Economics",
-    "section": "Grade",
-    "text": "Grade\nYour grade will be 60% homeworks, 40% term project."
-  },
-  {
-    "objectID": "index.html#textbooks",
-    "href": "index.html#textbooks",
-    "title": "Computational Economics",
-    "section": "Textbooks",
-    "text": "Textbooks\nThere are some excellent references for computational methods out there. This course will use material from\n\nThe Classics\n\nFackler and Miranda (2002), Applied Computational Economics and Finance, MIT Press\nKenneth Judd (1998), Numerical Methods in Economics, MIT Press\nNocedal, Jorge, and Stephen J. Wright (2006): Numerical Optimization, Springer-Verlag\n\n\n\nNewcomers\n\nJulia for Data Analysis (2023), Bogumił Kamiński, Manning Publications.\nAlgorithms for Optimization (2019), Mykel J. Kochenderfer and Tim A. Wheeler, Algorithms for Optimization, MIT Press.\nA Gentle Introduction to Effective Computing in Quantitative Research - What Every Research Assistant Should Know, Harry J. Paarsch and Konstantin Golyaev\nStatistics with Julia (2021), Yoni Nazarathy and Hayden Klok, Springer.\nQuantitative Economics with Julia by Perla, Sargent and Stachurski is a wonderful resource and we use it a lot in this course."
-  },
-  {
-    "objectID": "index.html#code-of-conduct",
-    "href": "index.html#code-of-conduct",
-    "title": "Computational Economics",
-    "section": "Code of Conduct",
-    "text": "Code of Conduct\nIf you decide to participate in this course, I expect you to abide by the following minimal code of conduct.\n\nBe polite to the other class participants.\nWhile in class, do not spend time on messaging apps, chat rooms, computer games, or similar content.\n\nYou can expect your instructor to abide by the same code of conduct, so this is a matter of mutual respect. If you are found in breach of the above you will be given a single warning, and I will ask you to no longer join the course after a second time. Your grade will be “fail”."
-  },
-  {
-    "objectID": "index.html#license",
-    "href": "index.html#license",
-    "title": "Computational Economics",
-    "section": "License",
-    "text": "License\nThe copyright notice to be included in any copies and other derivative work of this material is:\nCopyright 2026 Florian Oswald, florian.oswald@gmail.com\nThank you.\n This is licensed under Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License"
   },
   {
     "objectID": "slides/why-computation.html#todays-agenda",
