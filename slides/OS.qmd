@@ -103,7 +103,7 @@ For Scientific Computing: Overwhelmingly Linux-based in university clusters, nat
 
 - Linux: Most scientific software developed first
 - macOS: Good support for many tools
-- Windows: WSL2 or containers often needed
+- Windows: WSL2 or containers
 
 :::
 ::: {.column}
@@ -187,9 +187,9 @@ Bottom line: Linux dominates scientific computing due to software ecosystem and 
 
 ::: {layout-ncol="2"}
 
-![Brian Fox](https://upload.wikimedia.org/wikipedia/commons/3/35/BrianJFox.png){width=60%}
+![Brian Fox](https://upload.wikimedia.org/wikipedia/commons/3/35/BrianJFox.png){width=40%}
 
-![Richard Stallman](https://upload.wikimedia.org/wikipedia/commons/3/38/Richard_Stallman_Bologna_2024_abc1.jpg){width=60%}
+![Richard Stallman](https://upload.wikimedia.org/wikipedia/commons/3/38/Richard_Stallman_Bologna_2024_abc1.jpg){width=40%}
 
 ::: 
 ::: 
@@ -320,7 +320,6 @@ your editor, even after the spouse is gone.
 
 ::: {.columns}
 ::: {.column}
-### Options
 
 1. VScode
 2. Sublime Text
@@ -328,9 +327,9 @@ your editor, even after the spouse is gone.
 4. Emacs
 :::
 ::: {.column}
-5. Notepad++
-6. TextEdit
-7. many more... choose your location on the comfort vs bare metal scale
+1. Notepad++
+2. TextEdit
+3. many more...your pick!
 :::
 ::: 
 
@@ -372,7 +371,7 @@ Modern alternatives share those features:
 
 ::: {.fragment}
 
-👉 Then you want to *undo* what you did in order to restore the previous state of your project. How could that work?
+👉 Then you want to **undo** what you did in order to restore the previous state of your project. How could that work?
 
 You need a system that remembers *what* you did *when*, *where*, and - ideally - *why*.
 
@@ -411,14 +410,14 @@ In a world with collaboration (our world), you also want to know *who* did all o
 :::
 
 ::: {.fragment}
-3. What is `20221121-appendixA.tex` vs `20221121-appendix-former-B.tex`?
+3. What is `20221121-appendixB.tex` vs `20221121-appendix-former-B.tex`?
 :::
 
 
 
 :::
 ::: {.column}
-![](images/which-version.png)
+![](images/which-version.png){width="60%"}
 :::
 ::: 
 <!-- 
@@ -438,7 +437,7 @@ How do professional developers deal with this problem? 🤔
   * Tracking why changes were made (commit messages)
   * Branching to try different specifications without breaking your main analysis
   * Merging contributions from co-authors working on different sections
-  * Rolling back to exactly the state your code was in when you got that result 6 months agos
+  * Rolling back to exactly the state your code was in when you got that result 6 months ago
 
 :::
 
@@ -505,3 +504,4 @@ Situations where you want to show code and output next to each other.
 
 
 
+# End {background-color="#40666e"}

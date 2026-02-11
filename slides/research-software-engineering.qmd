@@ -202,4 +202,7 @@ People focus excessively on how fast *the code* runs, without enough attention o
 * Can easily fill a [full workshop](https://res-reproducibility.github.io/CCA-Torino-2025/).
 
 
+# End {background-color="#40666e"}
+
+
 ## References

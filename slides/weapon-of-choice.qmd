@@ -40,7 +40,7 @@ execute:
 
 ![](images/stack.png){fig-align="center" width="95%"}
 
-## The Pros/Cons Rundown {.impact}
+# The Pros/Cons Rundown {background-color="#107895"}
 
 ## Hello, World?
 
@@ -796,3 +796,6 @@ Info: result multicore = 8.295566662153075e-7
 ::: {.fragment}
 * Stata is dominated by `R`.
 :::
+
+
+# End {background-color="#40666e"}
