@@ -476,7 +476,7 @@
     "href": "lectures/lecture2.html#notebooks",
     "title": "Week 2 - Examples",
     "section": "Notebooks",
-    "text": "Notebooks\n\n\n\nTopic\nrendered Notebook\nsource of notebook\n\n\n\n\nDefining Types\nclick\nclick\n\n\nDifferential Equations\nclick\nclick\n\n\nArrays\nclick\nget source from rendered",
+    "text": "Notebooks\n\n\n\nTopic\nrendered Notebook\nsource of notebook\n\n\n\n\nDefining Types\nclick\nclick\n\n\nDifferential Equations\nclick\nclick\n\n\nArrays\nclick\nclick",
     "crumbs": [
       "Home",
       "Lectures",
@@ -489,18 +489,6 @@
     "title": "Programming Languages and - Why Julia?",
     "section": "",
     "text": "TipInstallation\n\n\n\nMake sure to check out the installation page on this website before you come to class.\n© Florian Oswald, 2026",
-    "crumbs": [
-      "Home",
-      "Lectures",
-      "5 - Intro to `julia` 1"
-    ]
-  },
-  {
-    "objectID": "lectures/lecture1.html#introduction-and-why-julia",
-    "href": "lectures/lecture1.html#introduction-and-why-julia",
-    "title": "Programming Languages and - Why Julia?",
-    "section": "Introduction and: Why Julia?",
-    "text": "Introduction and: Why Julia?\nIn this section we want to understand why julia is a good choice for computational tasks - for Economists and others.\nSlides for intro: Why Julia? (does not run in my safari browser! 🤷🏻‍♂️)",
     "crumbs": [
       "Home",
       "Lectures",
@@ -524,7 +512,7 @@
     "href": "lectures/lecture1.html#notebooks",
     "title": "Programming Languages and - Why Julia?",
     "section": "Notebooks",
-    "text": "Notebooks\nWe use several Pluto.jl notebooks in this lecture. Here are four rendered ones:\n\n\n\nTopic\nrendered Notebook\nsource of notebook\n\n\n\n\nVariables\nclick\nclick\n\n\nFunctions\nclick\nclick\n\n\n\nPlease download and run the 00-fast.jl notebook on your own computer for the benchmarks! (Right click and copy link, then insert into a Pluto browser!)🏎️\n\nResources\n\nModern Julia Workflow\nStartHere.jl\nAruoba and Fernandez-Villaverde\nJesus’ Julia Tutorial\nChapter 1 of Julia for Data Analysis",
+    "text": "Notebooks\nWe use several Pluto.jl notebooks in this lecture.\n\n\n\nTopic\nrendered Notebook\nsource of notebook\n\n\n\n\nVariables\nclick\nclick\n\n\nFunctions\nclick\nclick\n\n\nJulia is 🏎️ fast\nclick\nclick\n\n\n\nNotice for the last one you need a suitable installation of C and fortran compilers on your system installed.\n\nResources\n\nModern Julia Workflow\nStartHere.jl\nAruoba and Fernandez-Villaverde\nJesus’ Julia Tutorial\nChapter 1 of Julia for Data Analysis",
     "crumbs": [
       "Home",
       "Lectures",
@@ -729,18 +717,6 @@
     "title": "Why julia?",
     "section": "Taxonomy of Languages",
     "text": "Taxonomy of Languages",
-    "crumbs": [
-      "Home",
-      "Lectures",
-      "4 - Programming Languages"
-    ]
-  },
-  {
-    "objectID": "slides/weapon-of-choice.html#the-proscons-rundown",
-    "href": "slides/weapon-of-choice.html#the-proscons-rundown",
-    "title": "Why julia?",
-    "section": "The Pros/Cons Rundown",
-    "text": "The Pros/Cons Rundown",
     "crumbs": [
       "Home",
       "Lectures",
