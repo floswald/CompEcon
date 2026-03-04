@@ -11,14 +11,6 @@ Make sure to check out the [installation](/installation.qmd) page on this websit
 :::
 
 
-## Introduction and: Why Julia?
-
-In this section we want to understand why julia is a good choice for computational tasks - for Economists and others.
-
-[Slides for intro:](/why-julia/dist/why-julia.html) Why Julia? *(does not run in my safari browser! 🤷🏻‍♂️)*
-
-
-
 ## Basics: REPL, VSCode, Notebooks
 
 We will repeat the basics of julia in a very condensed manner by going through steps 1-7 of [MoJuWo](https://modernjuliaworkflows.org) live in class.
@@ -38,15 +30,15 @@ Notice how there is a julia REPL running _as part of_ the VSCode editor. This is
 
 ## Notebooks
 
-We use several Pluto.jl notebooks in this lecture. Here are four rendered ones:
+We use several Pluto.jl notebooks in this lecture. 
 
 Topic | rendered Notebook | source of notebook
 :-----: | :--------: | :-------:
-Variables | [click](https://floswald.github.io/julia-bootcamp/01-variables.html) | [click](https://github.com/floswald/CompEcon/raw/refs/heads/main/notebooks/week1/01-variables.jl)
-Functions | [click](https://floswald.github.io/julia-bootcamp/02-functions.html) | [click](https://github.com/floswald/CompEcon/raw/refs/heads/main/notebooks/week1/02-functions.jl)
+Variables | [click](https://pluto.land/n/8lkdfpkp) | [click](https://github.com/floswald/CompEcon/raw/refs/heads/main/notebooks/week1/01-variables.jl)
+Functions | [click](https://pluto.land/n/8upgr929) | [click](https://github.com/floswald/CompEcon/raw/refs/heads/main/notebooks/week1/02-functions.jl)
+Julia is 🏎️ fast | [click](https://pluto.land/n/bfqj5h7n) | [click](https://github.com/floswald/CompEcon/raw/refs/heads/main/notebooks/week1/00-fast.jl)
 
-Please download and run the [00-fast.jl](https://github.com/floswald/CompEcon/raw/refs/heads/main/notebooks/week1/00-fast.jl) notebook on your own computer for the benchmarks! (Right click and copy link, then insert into a Pluto browser!)🏎️
-
+Notice for the last one you need a suitable installation of C and fortran compilers on your system installed.
 
 ### Resources
 

@@ -4,14 +4,27 @@
 using Markdown
 using InteractiveUtils
 
-# ╔═╡ 88e9b04a-5b31-11eb-3a16-6d89211bf227
-begin
-	using DifferentialEquations
-	using Plots
-	using PlutoUI
+# This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
+macro bind(def, element)
+    #! format: off
+    return quote
+        local iv = try Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value catch; b -> missing; end
+        local el = $(esc(element))
+        global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : iv(el)
+        el
+    end
+    #! format: on
 end
 
-# ╔═╡ ef7851fa-0515-48a7-82ac-1f01a071525e
+# ╔═╡ 9a0cec14-08db-11eb-3cfa-4d1c327c63f1
+begin
+	using Plots
+	using PlutoUI
+	using Statistics
+	using DifferentialEquations
+end
+
+# ╔═╡ 1d21860b-698d-467c-8364-7ed0a807be28
 html"""
 <style>
 	main {
@@ -24,188 +37,558 @@ html"""
 </style>
 """
 
-# ╔═╡ ecd792d0-4aa6-477c-a898-187dc1145e44
+# ╔═╡ d6260e60-66fa-11eb-367b-d3b1d324cdf6
 html"<button onclick='present()'>present</button>"
 
-# ╔═╡ ff6f5c49-ec3f-403d-ad07-5a803f26d233
+# ╔═╡ a3b2accc-0845-11eb-229a-e97bc3943016
 md"""
+
+# Differential Equations and SIR Models
+
+> Florian Oswald, 2026
+
+In this notebook we talk about Growth models, Differential Equations, and how to solve them. For a further look at *population* growth models, you may want to check out [this notebook](https://floswald.github.io/julia-bootcamp/08-popgrowth.html)
+
+## Deriving a SIR epidemiological model
+
+In this notebook we will go from a discrete epidemiological model to its continuous  counterpart. We will go from a (discrete) system of difference equiations to a system of (continuous) differential equations. But first: *SIR*.
+
+### Susceptible, Infected, Recovered (SIR)
+
+In this workhorse of epidemiology we model agents as belonging to a certain class, or *compartment*. Either they are 
+
+* *susceptible* to get infected, 
+* *infected*, or
+* *removed/recovered*
+
+The models you may have heard about during the COVID19 pandemic are more sophisticated versions of what we will see here, but they share some important common features. At the end of this notebook, we will want to generate the following plot. It shows the number of agents belonging to each class at a certain point in time after the outbreak of the disease:
+
 #
 """
 
-# ╔═╡ e8d12a53-4431-4b41-9b72-82ab925ee5c0
+# ╔═╡ f9a75ac4-08d9-11eb-3167-011eb698a32c
 md"""
+#
+
+We will make this very simple. Instead of trying to model in great detail which type of agent (old, young, where, what time of the day, doing which activity etc) is likely to get infected, we will try to condense the overall probability of infection into a single number.
+Let's start to model the recovery from an infection $I \to R$:
+
+> we have $N$ people infected at time $0$. If each has probability $p$ to recover each day, how many are still infected at day number $t$?
+
+For any given person in $I$ state, the probability to recover in a certain time step (i.e. each day) is
+
 #
 """
 
-# ╔═╡ f467c124-5b31-11eb-0302-450f032789c1
+# ╔═╡ ba7ffe78-0845-11eb-2847-851a407dd2ec
+bernoulli(p) = rand() < p 
+
+# ╔═╡ e2d764d0-0845-11eb-0031-e74d2f5acaf9
+# the ! appended to a function name is a julia convention to mean that
+# this is a function that modifies its input argument (usually the first arg).
+function step!(infectious, p)
+	for i in 1:length(infectious)
+		# if i is infectious, and i is lucky (bernoulli), i recovers
+		if infectious[i] && bernoulli(p)
+			infectious[i] = false # i.e. no longer infectuous
+		end
+	end
+	
+	return infectious
+end
+
+# ╔═╡ 428fe6b6-66fb-11eb-370c-c1e0dfd1a702
 md"
-# Intro to DifferentialEquations.jl
-
-This notebook follows closely the material [here](https://tutorials.sciml.ai/html/introduction/01-ode_introduction.html)
-
-We have seen in the SIR notebook that an ordinary differential equation (ODE) looks in general somewhat like
-
-$$u(t) = f(u,p,t)$$
+#
 "
 
+# ╔═╡ d088ed2e-0845-11eb-0697-310f374effbc
+N = 200
 
-# ╔═╡ 3b926010-5b33-11eb-07e4-bb9ee7167f7a
+# ╔═╡ 9282eca0-08db-11eb-2e36-d761594b427c
+T = 100
+
+# ╔═╡ 58d8542c-08db-11eb-193a-398ce01b8635
+# try this out: all are infected on day one.
+# let's record how many are in each state I or R after i days
+begin
+	infected = trues(N)  # all infected on first day
+	p = 0.05
+	results = [copy(step!(infected, p)) for i in 1:T]
+	# we `copy` here because we keep modifying the same array throughout
+	pushfirst!(results, trues(N))
+end
+
+# ╔═╡ 8d6c0c06-08db-11eb-3790-c98fdc545352
+@bind i Slider(1:T, show_value=true, default = 0)
+
+# ╔═╡ 7e1b61ac-08db-11eb-209e-1d6c328f5113
+begin
+	scatter(results[i], 
+		alpha=0.5, size=(300, 200), leg=false, c=Int.(results[i]))
+	
+	annotate!(N, 0.9, text("$(count(results[i]))", 10))
+	annotate!(N, 0.1, text("$(N - count(results[i]))", 10))
+	
+	ylims!(-0.1, 1.1)
+	
+	xlabel!("i")
+	ylabel!("X_i(t)")
+
+end
+
+# ╔═╡ d57e1b8c-5b25-11eb-059d-279b5de0894e
 md"
-with
+#
 
-* the variable of interest: $u$ 
-* a nonlinear model of how we think it changes over time: $f$ 
-* a set of parameters: $p$ 
-* time $t$ 
+ok great, now we know how many are $I$ or $R$ after $t$ days with a certain probability $p$. Let's just condense this plot above and `count` how many infected there are each day! Here's how:"
 
-Given an initial value $u(0) = u_0$, we can use the above model to predict $u(t)$ at each point in time.
+# ╔═╡ 33f9fc36-0846-11eb-18c2-77f92fca3176
+function simulate_recovery(p, T)
+	infectious = trues(N)   # a vector or `true`
+	num_infectious = [N]
+	
+	for t in 1:T
+		step!(infectious, p)  # infected people recover with prob p
+		push!(num_infectious, count(infectious))
+	end
+	
+	return num_infectious
+end
+
+# ╔═╡ 704b68dc-66fb-11eb-3112-2ff0bdca286f
+md"#"
+
+# ╔═╡ b5b9c6a1-5a85-4779-81c3-30ca41799097
+md"""
+Let's do 100 periods, two times over:
+"""
+
+# ╔═╡ cb278624-08dd-11eb-3375-276bfe8d7b3a
+begin
+	pp = 0.05
+	
+	plot(simulate_recovery(pp, T), label="run 1", alpha=0.5, lw=2, m=:o)
+	plot!(simulate_recovery(pp, T), label="run 2", alpha=0.5, lw=2, m=:o)
+	
+	xlabel!("time t")
+	ylabel!("number infectious")
+end
+
+# ╔═╡ 7c040b20-66fb-11eb-37c8-470a35574d7e
+md"#"
+
+# ╔═╡ f3c85814-0846-11eb-1266-63f31f351a51
+all_data = [simulate_recovery(pp, T) for i in 1:30];  # do 30 runs
+
+# ╔═╡ 01dbe272-0847-11eb-1331-4360a575ff14
+begin
+	plot(all_data, alpha=0.1, leg=false, m=:o, ms=1,
+		size=(500, 400), label="")
+	xlabel!("time t")
+	ylabel!("number infectious")
+end
+
+# ╔═╡ 7228cde1-4ad6-47e3-aece-a3a0f950d903
+md"""
+Let's look at that object and then compute the mean across all time periods. Notice this is a vector or vectors. Could convert to a matrix? 
+"""
+
+# ╔═╡ 82cefdac-66fb-11eb-0429-7d186f270dc3
+md"#"
+
+# ╔═╡ 85057772-66fb-11eb-1e55-cf145fa97178
+md"#"
+
+# ╔═╡ 56414eae-0ac5-43f5-9b99-7bfd28012079
+md"""
+🤔 This red line looks almost...like a line! There seems to be a deterministic relationship between time and log number of infected.
+"""
+
+# ╔═╡ caa3faa2-08e5-11eb-33fe-cbbc00cfd459
+md"""
+## Deterministic dynamics for the mean: Intuitive derivation
+
+The mean seems to behave in a rather predictable way over time. Can we derive this?
+
+Let $I_t$ be the number of infectious people at time $t$. This decreases because some people recover. Since people recover with probability $p$, the number of people that recover at time $t$ is, on average, $p I_t$. [Note that one time unit corresponds to one *sweep* of the simulation.]
+
+So, on average, this relationship should hold:
+
+$$I_{t+1} = I_t - p \, I_t$$
+
+or, rearranging
+
+$$I_{t+1} = I_t (1 - p).$$
+
+"""
+
+# ╔═╡ 7e89f992-0847-11eb-3155-c5313575f767
+md"""
+#
+
+At time $t$ there are $I_t$ infectious.
+How many recover? Each infected recovers with probability $p$, so on average $p I_t$ recover, and are removed from the number of infectious, giving the change in infectuous as:
+
+$$\Delta I_t = I_{t+1} - I_t = -p \, I_t$$
+"""
+
+# ╔═╡ f5756dd6-0847-11eb-0870-fd06ad10b6c7
+md"""
+#
+We can rearrange and solve the recurrence relation:
+
+$$I_{t+1} = (1 - p) I_t. $$
+
+so
+
+$$I_{t+1} = (1 - p) (1 - p) I_{t-1} = (1 - p)^2 I_{t-1}$$
+
+
+and hence solve the recurrence relation:
+
+$$I_t = (1-p)^t \, I_0.$$
+
+Let's call that relation the *analytical mean* and compare to our numerical results from before:
+
+#
+"""
+
+# ╔═╡ 6a545268-0846-11eb-3861-c3d5f52c061b
+exact = [N * (1-pp)^t for t in 0:T];
+
+# ╔═╡ 4c8827b8-0847-11eb-0fd1-cfbdbdcf392e
+begin
+	plot(mean(all_data), m=:o, label="numerical mean")
+	plot!(exact, lw=3, label="analytical mean")
+end
+	
+
+# ╔═╡ 01b768fe-c617-4f63-992c-a72ff7bdb191
+md"""
+That's pretty close!
+"""
+
+# ╔═╡ 2f980870-0848-11eb-3edb-0d4cd1ed5b3d
+md"""
+#
+
+## Continuous time
+
+If we look at the graph of the mean as a function of time, it seems to follow a smooth curve. Indeed it makes sense to ask not only how many people have recovered each *day*, but to aim for finer granularity.
+
+Suppose we instead increment time in steps of $\delta t$; the above analysis was for $\delta t = 1$.
+
+Then we will need to adjust the probability of recovery in each time step. 
+It turns out that to make sense in the limit $\delta t \to 0$, we need to choose the probability $p(\delta t)$ to recover in time $t$ to be proportional to $\delta t$:
+
+$$p(\delta t) \simeq \lambda \, \delta t,$$
+
+where $\lambda$ is the recovery **rate**. Note that a rate is a probability *per unit time*.
+
+##
+
+We get
+
+$$I(t + \delta t) - I(t) \simeq -\lambda \,\delta t \, I(t)$$
+"""
+
+# ╔═╡ 6af30142-08b4-11eb-3759-4d2505faf5a0
+md"""
+$$I(t + \delta t) - I(t) \simeq -\lambda \,\delta t \, I(t)$$
+
+Dividing by $\delta t$ gives
+
+$$\frac{I(t + \delta t) - I(t)}{\delta t} \simeq -\lambda \, I(t)$$
+
+We recognise the left-hand side as the definition of the **derivative** when $\delta t \to 0$. Taking that limit finally gives
+
+$$\frac{dI(t)}{dt} = -\lambda \, I(t)$$
+
+#
+
+$$\frac{dI(t)}{dt} = -\lambda \, I(t)$$
+
+We recognise the left-hand side as the definition of the **derivative** when $\delta t \to 0$. Taking that limit finally gives
+
+$$\frac{dI(t)}{dt} = -\lambda \, I(t)$$
+
+That is, we obtain an **ordinary differential equation** that gives the solution implicitly. We know this has a general solution of the form
+
+$$I(t) = C \exp(-\lambda t),$$
+
+and together with an initial value of $I(0) = I_0$ we get (just set $t=0$ and use the given value)
+
+#
+
+$$I(t) = I_0 \exp(-\lambda \, t).$$
+
+Starting at time zero ($t=0$) and at a number of $I_0$ infected, this is *exponential decay at rate $\lambda$*. Of course with a positive number (i.e. no minus sign, as here), we get *exponential growth*.
+
+"""
+
+# ╔═╡ c5f2bb6d-a4bb-4724-8a0b-3e5e350a14a5
+md"""
+# Differential Equations
+
+Those are useful tools in several parts of economics. Let's start with the prototypical growth process. The following is called an *ordinary differential equation* (ODE):
+
+So, we have a variable $y$ that evolves over time $t$. Suppose we can describe the so-called *time derivative*, i.e. how $y$ goes from $t$ to $t+\Delta$, as follows:
+
+$$\begin{align}
+\frac{dy}{dt} &= ky\\
+\end{align}$$
+
+That is, in each instant $t$ the increase in $y$ (the *growth in $y$*) is *proportional* to the level of $y$ with a factor $k$. 
+"""
+
+# ╔═╡ 1c8004c8-8c63-40eb-8097-839f49a863aa
+md"""
+Ok, now how to solve this equation? It's quite easy in a few steps:
+
+$$\begin{align}
+\frac{dy}{dt} &= ky\\
+\frac{dy}{dy} &= k dt\\
+\int \frac{dy}{dy} &= \int k dt\\
+\ln y &= k t + C\\
+\end{align}$$
+
+It's common to write $y$ now as a function of time. Take exponentials on both sides:
+
+$$\begin{align}
+y(t) &= \exp(kt + C)\\
+y(t) &= \exp(kt) \exp(C)\\
+y(t) &= \exp(kt) y_0\\
+\end{align}$$
+
+where the convention is that the starting point is equal to the exponential of the constant of integration, $y_0 = \exp(C)$.
+
+That's it!
+"""
+
+# ╔═╡ bba9b4cd-1a9e-4076-9513-88c87792019e
+md"
+## Solving Exponential Growth on Computer
+
+* From above, we got this ODE:
+$$\frac{dI(t)}{dt} = -\lambda \, I(t)$$
+
+* or
+$$I' = -\lambda \, I$$
+
+Let's say $\lambda = 0.05$ i.e. the infected decrease by a rate of 5% in each time step. In `DifferentialEquations`:
 "
 
-# ╔═╡ c25bdb3e-5b32-11eb-1db9-09d03e2e62ca
-md"
-## 
-
-* We have also seen that only the simplest ODEs can actually be solved by hand.
-* Our simple SIR model (system of 3 ODEs) does not admit an analytic solution.
-* Let's see how to use the `DifferentialEquations.jl` package to solve ODEs.
-"
-
-# ╔═╡ 1e7d3210-5b34-11eb-3400-ede033573e9b
+# ╔═╡ 8d8e4b2d-f741-4625-8850-56271fe639cc
 f(I,p,t) = -0.05I
 
-# ╔═╡ 377448f8-5b34-11eb-05f4-cf92609b1764
-md"
-Let's say with start with $I(0) = 100$ infected people. We'd set
-"
-
-# ╔═╡ 49698884-5b34-11eb-3989-b19fbbd1a945
+# ╔═╡ 4f1980a9-d6f5-4a8f-b0a1-9aba03e2e1c1
 begin
 	I0 = 100.0
 	timespan = (0.0,100.0)
 	problem = ODEProblem(f,I0,timespan)
 end
 
-# ╔═╡ 6cf56d2c-5b34-11eb-0dd7-07308273248f
+# ╔═╡ 36f5dec9-a7d9-4f6a-84be-2f29699ae320
 solution = solve(problem);
 
-# ╔═╡ 75d3e45a-5b34-11eb-2908-dfc019e3105f
-md"
-## Looking at Solutions
-
-* There is a [dedicated manual page](https://diffeq.sciml.ai/dev/basics/solution/)
-* Let's plot the time path of $I(t)$!
-"
-
-# ╔═╡ b7923bfa-5b34-11eb-23ed-6db7fad7de6b
+# ╔═╡ 19d0e88a-6c7f-446c-8ca7-54e7b8fe8b7a
 plot(solution, label = "rate of decay 5%") 
 
-# ╔═╡ adc210f0-119a-497a-adce-ec75f87d9985
-solution
+# ╔═╡ d74bace6-08f4-11eb-2a6b-891e52952f57
+md"""
+## SIR model
 
-# ╔═╡ c3d5d1e2-5b34-11eb-0e7f-d1bd22bd5626
-md"
-## Systems of ODEs: The Lorenz Attractor
+Now let's extend the procedure to the full SIR model, $S \to I \to R$. Since we already know how to deal with recovery, consider just the SI model, where susceptible agents are infected via contact, with a certain probability.
+"""
 
-* The [Lorenz equation](https://en.wikipedia.org/wiki/Lorenz_system) is a famous example from chaos theory.
-* It's defined as a system of 3 ODEs:
+# ╔═╡ 238f0716-0903-11eb-1595-df71600f5de7
+md"""
+## Setup
 
+Let's denote by $S_t$ and $I_t$ be the number of susceptible and infectious people at time $t$, respectively, and by $N$ the total number of people.
+
+On average, in each sweep each infectious individual has the chance to interact with one other individual. That individual is chosen uniformly at random from the total population of size $N$. But a new infection occurs *only if that chosen individual is susceptible*, which happens with probability $S_t / N$. Then, upon meeting a susceptible person, the infection is transmitted only with a certain probability, $b$ say.
+
+Hence the change in the number of infectious people after that step is:
+
+
+$$\Delta I_t = I_{t+1} - I_t = b \, I_t \, \left(\frac{S_t}{N} \right)$$
+
+It is useful to normalize by $N$, so we define
+
+$$s_t := \frac{S_t}{N}; \quad i_t := \frac{I_t}{N}; \quad r_t := \frac{R_t}{N}$$
+
+#
+
+Including recovery with probability $g$ we obtain the **discrete-time SIR model**:
 
 $$\begin{align}
-\frac{dx}{dt} &= σ(y-x) \\
-\frac{dy}{dt} &= x(ρ-z) - y \\
-\frac{dz}{dt} &= xy - βz \\
+s_{t+1} &= s_t - b \, s_t \, i_t \\
+i_{t+1} &= i_t + b \, s_t \, i_t - g \, i_t\\
+r_{t+1} &= r_t + g \, i_t
+\end{align}$$
+"""
+
+# ╔═╡ 4e3c7e62-090d-11eb-3d16-e921405a6b16
+md"""
+#
+
+And again we can allow the processes to occur in steps of length $\delta t$ and take the limit $\delta t \to 0$. With rates $\beta$ and $\gamma$ we obtain the standard (continuous-time) **SIR model**:
+
+$$\begin{align}
+\textstyle \frac{ds(t)}{dt} &= -\beta \, s(t) \, i(t) \\
+\textstyle \frac{di(t)}{dt} &= +\beta \, s(t) \, i(t) &- \gamma \, i(t)\\
+\textstyle \frac{dr(t)}{dt} &= &+ \gamma \, i(t)
 \end{align}$$
 
-In `DifferentialEquations.jl` we just have to define our `f` accordingly to take a vector as input:
-"
+Note that no analytical solutions of these (simple) nonlinear ODEs are known as a function of time!
+"""
 
-# ╔═╡ f0dcc160-5b36-11eb-363e-1f6688533764
-function lorenz!(du,u,p,t)  # modify du in-place
-	σ,ρ,β = p
-    du[1] = σ*(u[2]-u[1])
-    du[2] = u[1]*(ρ-u[3]) - u[2]
-    du[3] = u[1]*u[2] - β*u[3]
+# ╔═╡ f8a28ba0-0915-11eb-12d1-336f291e1d84
+md"""
+#
+
+Below is a simulation of the discrete-time model. Note that the simplest numerical method to solve (approximately) the system of ODEs, the **Euler method**, basically reduces to solving the discrete-time model!  A whole suite of more advanced ODE solvers is provided in the [Julia `DiffEq` ecosystem](https://diffeq.sciml.ai/dev/). We will in another notebook introduce that package, together with a *continuous* version of the SIR model.
+"""
+
+# ╔═╡ d994e972-090d-11eb-1b77-6d5ddb5daeab
+begin
+	NN = 100
+	
+	SS = NN - 1
+	II = 1
+	RR = 0
 end
 
-# ╔═╡ d81ee810-5b36-11eb-0fbf-93ed0cf4466d
-md"
-let's start at initial condition $u_0 = (1,0,0)$ and set parameters $(\sigma,\rho,\beta) = (10,28,8/3)$
-"
+# ╔═╡ 050bffbc-0915-11eb-2925-ad11b3f67030
+ss, ii, rr = SS/NN, II/NN, RR/NN
 
-# ╔═╡ 3a29cebc-5b37-11eb-0a0c-cfe7ec83caa7
-begin
-	u0 = [1.0,0.0,0.0]
-	p = (σ = 10, ρ = 28, β = 8/3)
-	tspan = (0.0,100.0)
-	prob = ODEProblem(lorenz!, u0, tspan, p)
+# ╔═╡ 1d0baf98-0915-11eb-2f1e-8176d14c06ad
+p_infection, p_recovery = 0.1, 0.01
+
+# ╔═╡ 349eb1b6-0915-11eb-36e3-1b9459c38a95
+function discrete_SIR(s0, i0, r0, T=1000)
+
+	s, i, r = s0, i0, r0
+	
+	results = [(s=s, i=i, r=r)]
+	
+	for t in 1:T
+
+		Δi = p_infection * s * i
+		Δr = p_recovery * i
+		
+		s_new = s - Δi
+		i_new = i + Δi - Δr
+		r_new = r      + Δr
+
+		push!(results, (s=s_new, i=i_new, r=r_new))
+
+		s, i, r = s_new, i_new, r_new
+	end
+	
+	return results
 end
 
-# ╔═╡ 65a89438-5b37-11eb-3d9a-91f15f1cc87e
-sol = solve(prob);
+# ╔═╡ 39c24ef0-0915-11eb-1a0e-c56f7dd01235
+SIR = discrete_SIR(ss, ii, rr)
 
-# ╔═╡ 9a0226cc-5b37-11eb-0e3e-9de93b5479ae
-md"now `sol` has the solution paths for all 3 equations, stored at each time step. We can conveniently plot those paths:
-"
-
-# ╔═╡ adeb9308-5b37-11eb-1acc-6957376d8dbd
-plot(sol)
-
-# ╔═╡ b02cf2c2-5b37-11eb-29b8-a5f7105d5154
-md"
-and we can also plot their values against each other ,instead of over time, by setting a keyword argument on the `plot` method."
-
-# ╔═╡ d49abf42-5b37-11eb-1581-3b7eaf72552e
-plot(sol, vars = (1,2,3) )
-
-# ╔═╡ e42e9a6e-5b37-11eb-2d3a-69681981e8c1
-md"
-The docs of the Plots.jl package have a very cool animation of this object, which we can easily reproduce here.
-"
-
-# ╔═╡ 36ecad18-5b38-11eb-0fc9-3593cb2f5084
+# ╔═╡ 442035a6-0915-11eb-21de-e11cf950f230
 begin
-	Base.@kwdef mutable struct Lorenz
-		dt::Float64 = 0.02
-		σ::Float64 = 10
-		ρ::Float64 = 28
-		β::Float64 = 8/3
-		x::Float64 = 1
-		y::Float64 = 1
-		z::Float64 = 1
+	ts = 1:length(SIR)
+	discrete_time_SIR_plot = plot(ts, [x.s for x in SIR], 
+		m=:o, label="S", alpha=0.2, linecolor=:blue, leg=:right, size=(400, 300))
+	plot!(ts, [x.i for x in SIR], m=:o, label="I", alpha=0.2)
+	plot!(ts, [x.r for x in SIR], m=:o, label="R", alpha=0.2)
+	
+	xlims!(0, 500)
+end
+
+# ╔═╡ 5f4516fe-098c-11eb-3abe-418aac994cc3
+discrete_time_SIR_plot
+
+# ╔═╡ b54787d8-66fe-11eb-1efe-cdf92fe2148f
+md"function library"
+
+# ╔═╡ a480df46-66fc-11eb-1e49-4bd078962d93
+begin
+	struct TwoColumn{L, R}
+		left::L
+		right::R
 	end
 
-	function step!(l::Lorenz)
-		dx = l.σ * (l.y - l.x);         l.x += l.dt * dx
-		dy = l.x * (l.ρ - l.z) - l.y;   l.y += l.dt * dy
-		dz = l.x * l.y - l.β * l.z;     l.z += l.dt * dz
+	function Base.show(io, mime::MIME"text/html", tc::TwoColumn)
+		write(io, """<div style="display: flex;"><div style="flex: 50%;">""")
+		show(io, mime, tc.left)
+		write(io, """</div><div style="flex: 50%;">""")
+		show(io, mime, tc.right)
+		write(io, """</div></div>""")
 	end
-
-	attractor = Lorenz()
-
-
-	# initialize a 3D plot with 1 empty series
-	plt = plot3d(
-		1,
-		xlim = (-30, 30),
-		ylim = (-30, 30),
-		zlim = (0, 60),
-		title = "Lorenz Attractor",
-		marker = 2,
-	)
-
-	# build an animated gif by pushing new points to the plot, saving every 10th frame
-	@gif for i=1:1500
-		step!(attractor)
-		push!(plt, attractor.x, attractor.y, attractor.z)
-	end every 10
 end
 
-# ╔═╡ 480d27da-5b38-11eb-2e7b-7ff4c9faf028
+# ╔═╡ be8e4ac2-08dd-11eb-2f72-a9da5a750d32
+TwoColumn(
+md"""
+Here we add to the previous plot with `plot!`:
+
+```julia
+plot!(
+	mean(all_data), 
+	leg=true, 
+	label="mean",
+	lw=3, 
+	c=:red, 
+	m=:o, 
+	alpha=0.5)
+```
+	
+""",
+	plot!(mean(all_data), leg=true, label="mean",
+		lw=3, c=:red, m=:o, alpha=0.5, 
+		size=(500, 400)))
+
+# ╔═╡ 8bc52d58-0848-11eb-3487-ef0d06061042
+TwoColumn(
+md"""
+	Same on a log-scale:
+```julia
+begin
+plot(replace.(all_data, 0.0 => NaN), 
+	yscale=:log10, alpha=0.3, leg=false, m=:o, ms=1,
+	size=(500, 400))
+
+plot!(mean(all_data), yscale=:log10, lw=3, c=:red, m=:o, label="mean", alpha=0.5)
+
+xlabel!("time t")
+ylabel!("number infectious")
+end)
+```
+""",
+	begin
+	plot(replace.(all_data, 0.0 => NaN), 
+		yscale=:log10, alpha=0.3, leg=false, m=:o, ms=1,
+		size=(500, 400))
+	
+	plot!(mean(all_data), yscale=:log10, lw=3, c=:red, m=:o, label="mean", alpha=0.5)
+	
+	xlabel!("time t")
+	ylabel!("number infectious")
+	end)
+
+
+# ╔═╡ d4b60ae9-a782-4593-b12e-df6ff244f27e
 begin
 	q(text) = Markdown.MD(Markdown.Admonition("tip", "Question", [text]));
 	info(text) = Markdown.MD(Markdown.Admonition("info", "Info", [text]));
 	danger(text) = Markdown.MD(Markdown.Admonition("danger", "Caution", [text]));
 end
+
+# ╔═╡ 3fe91661-6701-4935-9ca8-0a6cbefd59b9
+q(md"Quickly imagine a table with 2 columns, `y` and `growth_y`, for `k = 3`. How would you describe the growth pattern here - i.e. what you see in your column `growth_y`?")
+
+# ╔═╡ 78af2501-86c3-411a-a3f9-a53e9a507c14
+
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -213,6 +596,12 @@ PLUTO_PROJECT_TOML_CONTENTS = """
 DifferentialEquations = "0c46a032-eb83-5123-abaf-570d42b7fbaa"
 Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
 PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
+Statistics = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
+
+[compat]
+DifferentialEquations = "~7.17.0"
+Plots = "~1.41.6"
+PlutoUI = "~0.7.79"
 """
 
 # ╔═╡ 00000000-0000-0000-0000-000000000002
@@ -221,7 +610,7 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.12.5"
 manifest_format = "2.0"
-project_hash = "f85794d56215cea4803e7a2866a0c4b4c291c445"
+project_hash = "02adcf359f7452ff328cc21d0cfe91a461d98441"
 
 [[deps.ADTypes]]
 git-tree-sha1 = "f7304359109c768cf32dc5fa2d371565bb63b68a"
@@ -2992,32 +3381,63 @@ version = "1.13.0+0"
 """
 
 # ╔═╡ Cell order:
-# ╟─ef7851fa-0515-48a7-82ac-1f01a071525e
-# ╟─ecd792d0-4aa6-477c-a898-187dc1145e44
-# ╟─ff6f5c49-ec3f-403d-ad07-5a803f26d233
-# ╟─e8d12a53-4431-4b41-9b72-82ab925ee5c0
-# ╟─f467c124-5b31-11eb-0302-450f032789c1
-# ╟─3b926010-5b33-11eb-07e4-bb9ee7167f7a
-# ╟─c25bdb3e-5b32-11eb-1db9-09d03e2e62ca
-# ╠═88e9b04a-5b31-11eb-3a16-6d89211bf227
-# ╠═1e7d3210-5b34-11eb-3400-ede033573e9b
-# ╟─377448f8-5b34-11eb-05f4-cf92609b1764
-# ╠═49698884-5b34-11eb-3989-b19fbbd1a945
-# ╠═6cf56d2c-5b34-11eb-0dd7-07308273248f
-# ╟─75d3e45a-5b34-11eb-2908-dfc019e3105f
-# ╠═b7923bfa-5b34-11eb-23ed-6db7fad7de6b
-# ╠═adc210f0-119a-497a-adce-ec75f87d9985
-# ╟─c3d5d1e2-5b34-11eb-0e7f-d1bd22bd5626
-# ╠═f0dcc160-5b36-11eb-363e-1f6688533764
-# ╠═d81ee810-5b36-11eb-0fbf-93ed0cf4466d
-# ╠═3a29cebc-5b37-11eb-0a0c-cfe7ec83caa7
-# ╠═65a89438-5b37-11eb-3d9a-91f15f1cc87e
-# ╟─9a0226cc-5b37-11eb-0e3e-9de93b5479ae
-# ╟─adeb9308-5b37-11eb-1acc-6957376d8dbd
-# ╟─b02cf2c2-5b37-11eb-29b8-a5f7105d5154
-# ╟─d49abf42-5b37-11eb-1581-3b7eaf72552e
-# ╟─e42e9a6e-5b37-11eb-2d3a-69681981e8c1
-# ╠═36ecad18-5b38-11eb-0fc9-3593cb2f5084
-# ╠═480d27da-5b38-11eb-2e7b-7ff4c9faf028
+# ╟─1d21860b-698d-467c-8364-7ed0a807be28
+# ╟─d6260e60-66fa-11eb-367b-d3b1d324cdf6
+# ╠═9a0cec14-08db-11eb-3cfa-4d1c327c63f1
+# ╟─a3b2accc-0845-11eb-229a-e97bc3943016
+# ╠═5f4516fe-098c-11eb-3abe-418aac994cc3
+# ╟─f9a75ac4-08d9-11eb-3167-011eb698a32c
+# ╠═ba7ffe78-0845-11eb-2847-851a407dd2ec
+# ╠═e2d764d0-0845-11eb-0031-e74d2f5acaf9
+# ╟─428fe6b6-66fb-11eb-370c-c1e0dfd1a702
+# ╠═d088ed2e-0845-11eb-0697-310f374effbc
+# ╠═9282eca0-08db-11eb-2e36-d761594b427c
+# ╠═58d8542c-08db-11eb-193a-398ce01b8635
+# ╟─8d6c0c06-08db-11eb-3790-c98fdc545352
+# ╟─7e1b61ac-08db-11eb-209e-1d6c328f5113
+# ╟─d57e1b8c-5b25-11eb-059d-279b5de0894e
+# ╠═33f9fc36-0846-11eb-18c2-77f92fca3176
+# ╟─704b68dc-66fb-11eb-3112-2ff0bdca286f
+# ╟─b5b9c6a1-5a85-4779-81c3-30ca41799097
+# ╟─cb278624-08dd-11eb-3375-276bfe8d7b3a
+# ╟─7c040b20-66fb-11eb-37c8-470a35574d7e
+# ╠═f3c85814-0846-11eb-1266-63f31f351a51
+# ╟─01dbe272-0847-11eb-1331-4360a575ff14
+# ╠═7228cde1-4ad6-47e3-aece-a3a0f950d903
+# ╟─82cefdac-66fb-11eb-0429-7d186f270dc3
+# ╟─be8e4ac2-08dd-11eb-2f72-a9da5a750d32
+# ╟─85057772-66fb-11eb-1e55-cf145fa97178
+# ╟─8bc52d58-0848-11eb-3487-ef0d06061042
+# ╟─56414eae-0ac5-43f5-9b99-7bfd28012079
+# ╟─caa3faa2-08e5-11eb-33fe-cbbc00cfd459
+# ╟─7e89f992-0847-11eb-3155-c5313575f767
+# ╟─f5756dd6-0847-11eb-0870-fd06ad10b6c7
+# ╟─6a545268-0846-11eb-3861-c3d5f52c061b
+# ╟─4c8827b8-0847-11eb-0fd1-cfbdbdcf392e
+# ╟─01b768fe-c617-4f63-992c-a72ff7bdb191
+# ╟─2f980870-0848-11eb-3edb-0d4cd1ed5b3d
+# ╟─6af30142-08b4-11eb-3759-4d2505faf5a0
+# ╟─c5f2bb6d-a4bb-4724-8a0b-3e5e350a14a5
+# ╟─3fe91661-6701-4935-9ca8-0a6cbefd59b9
+# ╟─1c8004c8-8c63-40eb-8097-839f49a863aa
+# ╟─bba9b4cd-1a9e-4076-9513-88c87792019e
+# ╠═8d8e4b2d-f741-4625-8850-56271fe639cc
+# ╠═4f1980a9-d6f5-4a8f-b0a1-9aba03e2e1c1
+# ╠═36f5dec9-a7d9-4f6a-84be-2f29699ae320
+# ╠═19d0e88a-6c7f-446c-8ca7-54e7b8fe8b7a
+# ╟─d74bace6-08f4-11eb-2a6b-891e52952f57
+# ╟─238f0716-0903-11eb-1595-df71600f5de7
+# ╟─4e3c7e62-090d-11eb-3d16-e921405a6b16
+# ╟─f8a28ba0-0915-11eb-12d1-336f291e1d84
+# ╠═442035a6-0915-11eb-21de-e11cf950f230
+# ╠═d994e972-090d-11eb-1b77-6d5ddb5daeab
+# ╠═050bffbc-0915-11eb-2925-ad11b3f67030
+# ╠═1d0baf98-0915-11eb-2f1e-8176d14c06ad
+# ╠═349eb1b6-0915-11eb-36e3-1b9459c38a95
+# ╠═39c24ef0-0915-11eb-1a0e-c56f7dd01235
+# ╟─b54787d8-66fe-11eb-1efe-cdf92fe2148f
+# ╠═a480df46-66fc-11eb-1e49-4bd078962d93
+# ╠═d4b60ae9-a782-4593-b12e-df6ff244f27e
+# ╠═78af2501-86c3-411a-a3f9-a53e9a507c14
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
