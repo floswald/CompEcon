@@ -404,7 +404,7 @@
     "href": "lectures/lecture5.html",
     "title": "Lecture 5: Dynamic Programming",
     "section": "",
-    "text": "We introduced the Dynamic Programming technique by means of the well known cake eating problem. We showed probably the simplest way to solve for the optimal decision rule, on a discrete grid. We also showed that this can lead to really poor results, so implementation details matter here. We introduced uncertainty and we looked at an Euler Equation solver for a consumption savings problem.\n\n\n\nTopic\nNotebook\n\n\n\n\nDynamic Programming 1\ndownload notebook\n\n\nDynamic Programming 2\ndownload notebook\n\n\nEndogenous Grid Method (EGM)\ndownload notebook\n\n\nThe Shimer-Smith Model\ndownload notebook\n\n\nThe Ayiagari Model\ndownload notebook\n\n\n\n\n\n\n© Florian Oswald, 2026",
+    "text": "We introduced the Dynamic Programming technique by means of the well known cake eating problem. We showed probably the simplest way to solve for the optimal decision rule, on a discrete grid. We also showed that this can lead to really poor results, so implementation details matter here. We introduced uncertainty and we looked at an Euler Equation solver for a consumption savings problem.\n\n\n\nTopic\nNotebook\n\n\n\n\nDynamic Programming 1\ndownload notebook\n\n\nDynamic Programming 2\ndownload notebook\n\n\nEndogenous Grid Method (EGM)\ndownload notebook\n\n\nThe Shimer-Smith Model\ndownload notebook, rendered notebook\n\n\nThe Ayiagari Model\ndownload notebook\n\n\n\n\n\n\n© Florian Oswald, 2026",
     "crumbs": [
       "Home",
       "Lectures",
