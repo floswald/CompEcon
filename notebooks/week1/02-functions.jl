@@ -10,6 +10,9 @@ using Dates
 # ╔═╡ 88b27144-068b-42ed-b4b0-d12f5ca8c53c
 using PlutoUI
 
+# ╔═╡ bbae73dc-5c88-4b0f-9276-28b8bcf0adad
+using Random
+
 # ╔═╡ 91562a82-8741-11ec-1332-7db3016c8b30
 md"""
 # Julia Bootcamp - Programming Constructs
@@ -65,6 +68,11 @@ for itervar in iterable
 end
 ```
 """
+
+# ╔═╡ 59d56009-5409-498d-bae3-a5d1df916ffa
+for i in 1:3
+	println(i)
+end
 
 # ╔═╡ 312e4383-3c67-4ec0-9f5b-7fbee4c237e5
 for i ∈ 1:3
@@ -450,7 +458,6 @@ function winsorized_mean(x,k)
 		y[k-i+1] = y[k + 1]
 		y[end - i + 1] = y[end - k]
 	end
-	println(y)
 	s = 0
 	for v in y
 		s += v
@@ -477,7 +484,7 @@ Julia will always use the most appropriate version (*method*) of a function. Not
 
 
 # ╔═╡ 1b4be433-4e34-4b8c-91cd-7548e7377333
-A = rand(2,2)
+A = [1 2; 3 4]
 
 # ╔═╡ b2faa599-d962-4479-97b9-98aacac6c209
 g(A)
@@ -569,11 +576,23 @@ v2 === v # egal
 # ╔═╡ bfa6b7c7-d2f8-44f6-8f51-30cd73a58efc
 v3 = copy(v)
 
-# ╔═╡ 7a064adf-e9ba-42ba-b08a-343b7dd5054a
-y
+# ╔═╡ d1170e54-db33-4eb9-8742-5e34aff6292c
+rng = MersenneTwister()
 
-# ╔═╡ b7bc5672-bb76-43d3-a8ee-3caa7c0e7f4d
-y3 = y
+# ╔═╡ 09c80ca6-5870-4a39-b194-2ac5d60d8fbd
+Random.seed!(rng,33333)
+
+# ╔═╡ 0649955e-e2fd-4064-a68c-8ccbe8c67c83
+rand(2)
+
+# ╔═╡ 1875b7e3-9cca-435d-99f9-32aa90cac948
+Random.seed!(rng,33333)
+
+# ╔═╡ 4f24b15b-8413-4931-9910-0a9e26d7ec1d
+Random.seed!()
+
+# ╔═╡ 9f0f39bc-f0ef-4eae-ab4c-895ac890c0a3
+rand(2)
 
 # ╔═╡ 04edb9d7-7ddd-4e04-aa97-7daafc5a01e4
 md"""
@@ -691,9 +710,10 @@ PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
 Dates = "ade2ca70-3891-5945-98fb-dc099432e06a"
 PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
+Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 
 [compat]
-PlutoUI = "~0.7.34"
+PlutoUI = "~0.7.61"
 """
 
 # ╔═╡ 00000000-0000-0000-0000-000000000002
@@ -702,7 +722,7 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.12.5"
 manifest_format = "2.0"
-project_hash = "0ea47602218944927343a4fa9bc424492dcf3f24"
+project_hash = "802d643f7855d1d8d23d4927664a75adac47fa34"
 
 [[deps.AbstractPlutoDingetjes]]
 deps = ["Pkg"]
@@ -998,6 +1018,7 @@ version = "17.7.0+0"
 # ╠═05eda001-588f-49e0-b589-a22a6195994e
 # ╠═b780b7ed-7b0c-4464-a8aa-23b3a4180f64
 # ╟─bb502134-a506-4c86-898b-f84a74f0c1a5
+# ╠═59d56009-5409-498d-bae3-a5d1df916ffa
 # ╠═312e4383-3c67-4ec0-9f5b-7fbee4c237e5
 # ╠═ac4917fe-446a-40b1-a6ca-ba00e4428e40
 # ╟─e281b82e-e99e-4f70-a6bd-b675f4944bc0
@@ -1093,8 +1114,13 @@ version = "17.7.0+0"
 # ╠═971a0406-d84f-44ee-be02-9675328bd790
 # ╠═2df8f30b-1798-49cd-957b-1aeb6f70fde3
 # ╠═bfa6b7c7-d2f8-44f6-8f51-30cd73a58efc
-# ╠═7a064adf-e9ba-42ba-b08a-343b7dd5054a
-# ╠═b7bc5672-bb76-43d3-a8ee-3caa7c0e7f4d
+# ╠═bbae73dc-5c88-4b0f-9276-28b8bcf0adad
+# ╠═d1170e54-db33-4eb9-8742-5e34aff6292c
+# ╠═09c80ca6-5870-4a39-b194-2ac5d60d8fbd
+# ╠═0649955e-e2fd-4064-a68c-8ccbe8c67c83
+# ╠═1875b7e3-9cca-435d-99f9-32aa90cac948
+# ╠═4f24b15b-8413-4931-9910-0a9e26d7ec1d
+# ╠═9f0f39bc-f0ef-4eae-ab4c-895ac890c0a3
 # ╟─04edb9d7-7ddd-4e04-aa97-7daafc5a01e4
 # ╟─b7960f1b-93ed-4bf5-85d5-3e37aa0297a4
 # ╠═982c1fee-5f3e-45bf-97b5-443d00a25e2b
