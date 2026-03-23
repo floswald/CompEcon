@@ -354,7 +354,7 @@ julia> Mypkg.econ_model(startval = 0.3)
 
 Topic | Notebook
 :-----: | :--------:
-Intro to Macros | [click for notebook](https://floswald.github.io/julia-bootcamp/10-intro-to-macros.html)
+Intro to Macros | [click for notebook](/notebooks/week3/macros.jl)
 Intro to Differential Equations | [click for notebook](https://floswald.github.io/julia-bootcamp/08-popgrowth.html)
 Plotting with Plots.jl | [click for notebook](https://floswald.github.io/julia-bootcamp/06-plotting.html)
 Plotting with Makie.jl | [click for website](plotting.qmd)
