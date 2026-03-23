@@ -181,6 +181,9 @@ md"#"
 # ╔═╡ f3c85814-0846-11eb-1266-63f31f351a51
 all_data = [simulate_recovery(pp, T) for i in 1:30];  # do 30 runs
 
+# ╔═╡ 6419cbc9-1fa5-45be-9de4-c34ff65c0991
+all_data
+
 # ╔═╡ 01dbe272-0847-11eb-1331-4360a575ff14
 begin
 	plot(all_data, alpha=0.1, leg=false, m=:o, ms=1,
@@ -348,8 +351,8 @@ Ok, now how to solve this equation? It's quite easy in a few steps:
 
 $$\begin{align}
 \frac{dy}{dt} &= ky\\
-\frac{dy}{dy} &= k dt\\
-\int \frac{dy}{dy} &= \int k dt\\
+\frac{dy}{y} &= k dt\\
+\int \frac{dy}{y} &= \int k dt\\
 \ln y &= k t + C\\
 \end{align}$$
 
@@ -1241,7 +1244,7 @@ uuid = "c87230d0-a227-11e9-1b43-d7ebe4e7570a"
 version = "0.4.5"
 
 [[deps.FFMPEG_jll]]
-deps = ["Artifacts", "Bzip2_jll", "FreeType2_jll", "FriBidi_jll", "JLLWrappers", "LAME_jll", "Libdl", "Ogg_jll", "OpenSSL_jll", "Opus_jll", "PCRE2_jll", "Zlib_jll", "libaom_jll", "libass_jll", "libfdk_aac_jll", "libvorbis_jll", "x264_jll", "x265_jll"]
+deps = ["Artifacts", "Bzip2_jll", "FreeType2_jll", "FriBidi_jll", "JLLWrappers", "LAME_jll", "Libdl", "Ogg_jll", "OpenSSL_jll", "Opus_jll", "PCRE2_jll", "Zlib_jll", "libaom_jll", "libass_jll", "libfdk_aac_jll", "libva_jll", "libvorbis_jll", "x264_jll", "x265_jll"]
 git-tree-sha1 = "01ba9d15e9eae375dc1eb9589df76b3572acd3f2"
 uuid = "b22a6f82-2f65-5046-a5b2-351ab43fb4e5"
 version = "8.0.1+0"
@@ -3197,6 +3200,12 @@ git-tree-sha1 = "7ed9347888fac59a618302ee38216dd0379c480d"
 uuid = "ea2f1a96-1ddc-540d-b46f-429655e07cfa"
 version = "0.9.12+0"
 
+[[deps.Xorg_libpciaccess_jll]]
+deps = ["Artifacts", "JLLWrappers", "Libdl", "Zlib_jll"]
+git-tree-sha1 = "4909eb8f1cbf6bd4b1c30dd18b2ead9019ef2fad"
+uuid = "a65dc6b1-eb27-53a1-bb3e-dea574b5389e"
+version = "0.18.1+0"
+
 [[deps.Xorg_libxcb_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Xorg_libXau_jll", "Xorg_libXdmcp_jll"]
 git-tree-sha1 = "bfcaf7ec088eaba362093393fe11aa141fa15422"
@@ -3309,6 +3318,12 @@ git-tree-sha1 = "9bf7903af251d2050b467f76bdbe57ce541f7f4f"
 uuid = "1183f4f0-6f2a-5f1a-908b-139f9cdfea6f"
 version = "0.2.2+0"
 
+[[deps.libdrm_jll]]
+deps = ["Artifacts", "JLLWrappers", "Libdl", "Xorg_libpciaccess_jll"]
+git-tree-sha1 = "63aac0bcb0b582e11bad965cef4a689905456c03"
+uuid = "8e53e030-5e6c-5a89-a30b-be5b7263a166"
+version = "2.4.125+1"
+
 [[deps.libevdev_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
 git-tree-sha1 = "56d643b57b188d30cccc25e331d416d3d358e557"
@@ -3332,6 +3347,12 @@ deps = ["Artifacts", "JLLWrappers", "Libdl", "Zlib_jll"]
 git-tree-sha1 = "e015f211ebb898c8180887012b938f3851e719ac"
 uuid = "b53b4c65-9356-5827-b1ea-8c7a1a84506f"
 version = "1.6.55+0"
+
+[[deps.libva_jll]]
+deps = ["Artifacts", "JLLWrappers", "Libdl", "Xorg_libX11_jll", "Xorg_libXext_jll", "Xorg_libXfixes_jll", "libdrm_jll"]
+git-tree-sha1 = "7dbf96baae3310fe2fa0df0ccbb3c6288d5816c9"
+uuid = "9a156e7d-b971-5f62-b2c9-67348b8fb97c"
+version = "2.23.0+0"
 
 [[deps.libvorbis_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Ogg_jll"]
@@ -3402,8 +3423,9 @@ version = "1.13.0+0"
 # ╟─cb278624-08dd-11eb-3375-276bfe8d7b3a
 # ╟─7c040b20-66fb-11eb-37c8-470a35574d7e
 # ╠═f3c85814-0846-11eb-1266-63f31f351a51
+# ╠═6419cbc9-1fa5-45be-9de4-c34ff65c0991
 # ╟─01dbe272-0847-11eb-1331-4360a575ff14
-# ╠═7228cde1-4ad6-47e3-aece-a3a0f950d903
+# ╟─7228cde1-4ad6-47e3-aece-a3a0f950d903
 # ╟─82cefdac-66fb-11eb-0429-7d186f270dc3
 # ╟─be8e4ac2-08dd-11eb-2f72-a9da5a750d32
 # ╟─85057772-66fb-11eb-1e55-cf145fa97178
