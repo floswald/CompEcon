@@ -289,6 +289,9 @@ function minimal_EGM(;ny=5,na=100,nT=25,M=10,σ=0.25,μ=0.0,R=1.05,β=0.95,cbar 
     pl
 end
 
+# ╔═╡ 949ea03c-fef7-4d43-87ae-3ac6f686a4a9
+minimal_EGM()
+
 # ╔═╡ de96aaa1-d2c8-48e5-8617-5070b1b2b2ee
 md"""
 library
@@ -2951,9 +2954,9 @@ version = "1.13.0+0"
 # ╠═c71ab949-3a59-49b6-8a1a-2242b9cdf809
 # ╠═34dcd915-fb39-4c91-821b-692991438995
 # ╠═b6a83924-7ad9-4878-91b6-3798df28f483
-# ╠═f3adace3-00ce-4bd1-b86a-5d3eaa993df4
 # ╠═5c8016fb-1ec4-45c3-ba92-1ab8b51e14de
 # ╠═0aa8199d-217a-4bd9-95db-7dcde0e916e2
+# ╠═f3adace3-00ce-4bd1-b86a-5d3eaa993df4
 # ╠═16322c95-d013-4c03-81c3-39f89709fcda
 # ╟─b4e88cf4-3799-43e1-ba33-b63ddb14f88a
 # ╟─9b1d140b-5f39-45f3-b618-7c2211f0dba9
@@ -2966,6 +2969,7 @@ version = "1.13.0+0"
 # ╠═7d767bd7-5c36-4384-afa2-95ad35247d39
 # ╟─86c012db-35e8-4554-a3d8-2639909ecf8a
 # ╟─7a35a917-71ec-45a1-b8bd-207d1e41e6de
+# ╠═949ea03c-fef7-4d43-87ae-3ac6f686a4a9
 # ╠═bd40d513-7458-4e6a-a4b2-2d52cd2e6365
 # ╟─de96aaa1-d2c8-48e5-8617-5070b1b2b2ee
 # ╠═51239be4-f476-4a40-b4ed-55b65aaf93a9

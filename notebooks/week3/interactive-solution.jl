@@ -73,8 +73,8 @@ md"""
 Parameter   | value 
 -----       | -----
 ``\sigma``     | $(@bind σ PlutoUI.Slider(0.01:0.01:1; show_value=true, default=0.25))
-``R`` | $(@bind R Slider(1.0:0.01:2, show_value = true, default = 1.05))
-``\beta`` | $(@bind β Slider(0.5:0.01:1.0, show_value = true, default = 0.95))
+``R``          | $(@bind R Slider(1.0:0.01:2, show_value = true, default = 1.05))
+``\beta``      | $(@bind β Slider(0.5:0.01:1.0, show_value = true, default = 0.95))
 """
 
 # ╔═╡ 48956b37-f87d-4a71-893b-2cf9aff8c518
