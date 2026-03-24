@@ -2481,7 +2481,7 @@
     "href": "lectures/lecture4.html",
     "title": "Lecture 4: Optimization 2 and 3",
     "section": "",
-    "text": "We continued our exploration of optimization algorithms. We also talked about how to solve systems of equations arising in many economic models, and we showcased an integer programming problem based on my research with Marleen where we reallocate buses across garages in London. 🚌\n\n\n\nTopic\nNotebook\n\n\n\n\nAlgorithms, and JuMP\ndownload notebook\n\n\nConstraints, (Mixed) Integer Problems\ndownload notebook\n\n\nSolving Systems of equations\ndownload notebook\n\n\nMIP Bus reallocation\ndownload notebook\n\n\n\n\n\n\n© Florian Oswald, 2026",
+    "text": "We continued our exploration of optimization algorithms. We also talked about how to solve systems of equations arising in many economic models, and we showcased an integer programming problem based on my research with Marleen where we reallocate buses across garages in London. 🚌\n\n\n\nTopic\nNotebook\n\n\n\n\nAlgorithms and applications\ndownload notebook, rendered\n\n\nConstraints, (Mixed) Integer Problems\ndownload notebook\n\n\nSolving Systems of equations\ndownload notebook\n\n\nMIP Bus reallocation\ndownload notebook\n\n\n\n\n\n\n© Florian Oswald, 2026",
     "crumbs": [
       "Home",
       "Lectures",
