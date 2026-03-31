@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.26">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="">
+<meta name="dcterms.date" content="2026-03-31">
+
+<title>Train Network Optimisation: A Linear Programming Approach – Computational Economics</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="..//images/cca.png" rel="icon" type="image/png">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-597958c53c93a607afca12fd375c57ed.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-3bbbbd466991e281563892c5dce73c3d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-YG2MPSR1Q2"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-YG2MPSR1Q2', { 'anonymize_ip': true});
+</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles.css">
+<meta name="twitter:title" content="Train Network Optimisation: A Linear Programming Approach – Computational Economics">
+<meta name="twitter:description" content="Homework — Operations Research / Linear Programming">
+<meta name="twitter:card" content="summary">
+</head>
+
+<body class="nav-sidebar floating nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../images/cca-julia.png" alt="" class="navbar-logo light-content">
+    <img src="../images/cca-julia.png" alt="" class="navbar-logo dark-content">
+    </a>
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Computational Economics</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+    <div class="dropdown">
+      <a href="" title="" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label=""><i class="bi bi-github"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item quarto-navbar-tools-item" href="https://github.com/floswald/CompEcon">
+            Source Code
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item quarto-navbar-tools-item" href="https://github.com/floswald/CompEcon/issues/new">
+            Report a Bug
+            </a>
+          </li>
+      </ul>
+    </div>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Train Network Optimisation: A Linear Programming Approach</li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
+ <span class="menu-text">Setup</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../installation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Installation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../cheatsheets.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cheatsheets</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../syllabus.pdf" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Syllabus (pdf)</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+ <span class="menu-text">Lectures</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../slides/why-computation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1 - Why <em>computation</em>?</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../slides/OS.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2 - What is an <em>OS</em>?</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../slides/research-software-engineering.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3 - Software Engineering</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../slides/weapon-of-choice.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4 - Programming Languages</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lectures/lecture1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">5 - Intro to <code>julia</code> 1</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lectures/lecture2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">6 - Intro to <code>julia</code> 2</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lectures/lecture3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">7 - Optimization 1</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lectures/lecture4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">8 - Optimization 2 and 3</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lectures/lecture6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">9 - Data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lectures/lecture5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">10 - Dynamic Programming</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lectures/lecture7.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">11 - Parallel Computing</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lectures/lecture8.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">12 - Function Approximation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lectures/lecture9.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">13 - Numerical Integration</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lectures/lecture10.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">14 - Dynamic Discrete Choice</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lectures/plotting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Makie.jl Plotting</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lectures/absorbing-mc.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Absorbing Markov Chains</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
+ <span class="menu-text">Homeworks</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../homeworks/hw0.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Homework 0 (zero)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../homeworks/hw1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Homework 1</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../homeworks/hw2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Homework 2</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../homeworks/hw3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Homework 3</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../homeworks/hw4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Homework 4</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../homeworks/hw5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Homework 5</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction-and-motivation" id="toc-introduction-and-motivation" class="nav-link active" data-scroll-target="#introduction-and-motivation"><span class="header-section-number">1</span> Introduction and Motivation</a></li>
+  <li><a href="#part-i-the-static-one-shot-problem" id="toc-part-i-the-static-one-shot-problem" class="nav-link" data-scroll-target="#part-i-the-static-one-shot-problem"><span class="header-section-number">2</span> Part I: The Static (One-Shot) Problem</a>
+  <ul class="collapse">
+  <li><a href="#setup" id="toc-setup" class="nav-link" data-scroll-target="#setup"><span class="header-section-number">2.1</span> Setup</a></li>
+  <li><a href="#notation" id="toc-notation" class="nav-link" data-scroll-target="#notation"><span class="header-section-number">2.2</span> Notation</a></li>
+  <li><a href="#decision-variables" id="toc-decision-variables" class="nav-link" data-scroll-target="#decision-variables"><span class="header-section-number">2.3</span> Decision Variables</a></li>
+  <li><a href="#model" id="toc-model" class="nav-link" data-scroll-target="#model"><span class="header-section-number">2.4</span> Model</a></li>
+  <li><a href="#a-numerical-example" id="toc-a-numerical-example" class="nav-link" data-scroll-target="#a-numerical-example"><span class="header-section-number">2.5</span> A Numerical Example</a></li>
+  <li><a href="#dual-interpretation" id="toc-dual-interpretation" class="nav-link" data-scroll-target="#dual-interpretation"><span class="header-section-number">2.6</span> Dual Interpretation</a></li>
+  </ul></li>
+  <li><a href="#part-ii-the-dynamic-24-hour-problem" id="toc-part-ii-the-dynamic-24-hour-problem" class="nav-link" data-scroll-target="#part-ii-the-dynamic-24-hour-problem"><span class="header-section-number">3</span> Part II: The Dynamic (24-Hour) Problem</a>
+  <ul class="collapse">
+  <li><a href="#motivation" id="toc-motivation" class="nav-link" data-scroll-target="#motivation"><span class="header-section-number">3.1</span> Motivation</a></li>
+  <li><a href="#time-structure" id="toc-time-structure" class="nav-link" data-scroll-target="#time-structure"><span class="header-section-number">3.2</span> Time Structure</a></li>
+  <li><a href="#notation-additions-to-part-i" id="toc-notation-additions-to-part-i" class="nav-link" data-scroll-target="#notation-additions-to-part-i"><span class="header-section-number">3.3</span> Notation (additions to Part I)</a></li>
+  <li><a href="#flow-balance" id="toc-flow-balance" class="nav-link" data-scroll-target="#flow-balance"><span class="header-section-number">3.4</span> Flow Balance</a></li>
+  <li><a href="#initial-conditions" id="toc-initial-conditions" class="nav-link" data-scroll-target="#initial-conditions"><span class="header-section-number">3.5</span> Initial Conditions</a></li>
+  <li><a href="#full-model" id="toc-full-model" class="nav-link" data-scroll-target="#full-model"><span class="header-section-number">3.6</span> Full Model</a></li>
+  <li><a href="#a-numerical-example-sketch" id="toc-a-numerical-example-sketch" class="nav-link" data-scroll-target="#a-numerical-example-sketch"><span class="header-section-number">3.7</span> A Numerical Example (Sketch)</a></li>
+  </ul></li>
+  <li><a href="#discussion" id="toc-discussion" class="nav-link" data-scroll-target="#discussion"><span class="header-section-number">4</span> Discussion</a>
+  <ul class="collapse">
+  <li><a href="#relationship-between-the-two-parts" id="toc-relationship-between-the-two-parts" class="nav-link" data-scroll-target="#relationship-between-the-two-parts"><span class="header-section-number">4.1</span> Relationship Between the Two Parts</a></li>
+  <li><a href="#integrality-and-total-unimodularity" id="toc-integrality-and-total-unimodularity" class="nav-link" data-scroll-target="#integrality-and-total-unimodularity"><span class="header-section-number">4.2</span> Integrality and Total Unimodularity</a></li>
+  <li><a href="#extensions" id="toc-extensions" class="nav-link" data-scroll-target="#extensions"><span class="header-section-number">4.3</span> Extensions</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">5</span> Conclusion</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Train Network Optimisation: A Linear Programming Approach</h1>
+<p class="subtitle lead">Homework — Operations Research / Linear Programming</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">March 31, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="introduction-and-motivation" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="introduction-and-motivation"><span class="header-section-number">1</span> Introduction and Motivation</h2>
+<p>The operator of a regional commuter rail network faces a fundamental daily planning problem: trains are physical objects that must be <em>somewhere</em> at all times, and getting them to the right place at the right time — given a fixed timetable and constrained infrastructure — is far from trivial.</p>
+<p>We use the Milanese commuter rail network as motivation. Milan (<em>Milano Centrale</em>) is the hub of a dense commuter network serving several large satellite cities:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>City</th>
+<th>Approx. distance</th>
+<th>Morning commuter flow</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Bergamo</td>
+<td>50 km</td>
+<td>High</td>
+</tr>
+<tr class="even">
+<td>Brescia</td>
+<td>90 km</td>
+<td>High</td>
+</tr>
+<tr class="odd">
+<td>Como</td>
+<td>45 km</td>
+<td>High</td>
+</tr>
+<tr class="even">
+<td>Pavia</td>
+<td>35 km</td>
+<td>Moderate</td>
+</tr>
+<tr class="odd">
+<td>Novara</td>
+<td>50 km</td>
+<td>Moderate</td>
+</tr>
+</tbody>
+</table>
+<p>Each morning, thousands of commuters travel toward Milan; in the evening, the flows reverse. The operator must decide, given the overnight parking configuration of the fleet, how to assign trains to services so as to maximise coverage — or equivalently, minimise delays and cancellations.</p>
+<p>We study this problem in two parts. Part I abstracts away from time entirely and studies a single-period snapshot. Part II introduces a 24-hour horizon and time-indexed flow balance.</p>
+<hr>
+</section>
+<section id="part-i-the-static-one-shot-problem" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="part-i-the-static-one-shot-problem"><span class="header-section-number">2</span> Part I: The Static (One-Shot) Problem</h2>
+<section id="setup" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="setup"><span class="header-section-number">2.1</span> Setup</h3>
+<p>We consider a single time period — say, the morning peak. There is a set of <strong>stations</strong> and a set of <strong>services</strong> (scheduled trips between pairs of stations) that the operator wishes to cover. Each service requires exactly one train to operate it.</p>
+<p>Trains are already parked at stations from the previous night. The operator must decide how many trains to dispatch along each line, subject to capacity constraints on the infrastructure.</p>
+</section>
+<section id="notation" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="notation"><span class="header-section-number">2.2</span> Notation</h3>
+<p>Let:</p>
+<ul>
+<li><span class="math inline">\(\mathcal{I}\)</span> = set of stations, indexed by <span class="math inline">\(i\)</span></li>
+<li><span class="math inline">\(\mathcal{A}\)</span> = set of directed arcs (lines), <span class="math inline">\((i,j) \in \mathcal{A}\)</span></li>
+<li><span class="math inline">\(\mathcal{R}\)</span> = set of scheduled services, each service <span class="math inline">\(r \in \mathcal{R}\)</span> associated with an arc <span class="math inline">\((i(r), j(r))\)</span></li>
+<li><span class="math inline">\(k_i \geq 0\)</span> = number of trains initially parked at station <span class="math inline">\(i\)</span> (given data)</li>
+<li><span class="math inline">\(c_{ij} \geq 0\)</span> = capacity of line <span class="math inline">\((i,j)\)</span>: maximum trains that can travel from <span class="math inline">\(i\)</span> to <span class="math inline">\(j\)</span> in the period</li>
+<li><span class="math inline">\(w_r &gt; 0\)</span> = weight (e.g.&nbsp;passenger volume) of service <span class="math inline">\(r\)</span></li>
+</ul>
+</section>
+<section id="decision-variables" class="level3" data-number="2.3">
+<h3 data-number="2.3" class="anchored" data-anchor-id="decision-variables"><span class="header-section-number">2.3</span> Decision Variables</h3>
+<p><span class="math display">\[
+x_{ij} \geq 0, \quad (i,j) \in \mathcal{A}
+\]</span></p>
+<p>number of trains dispatched from station <span class="math inline">\(i\)</span> to station <span class="math inline">\(j\)</span> during the period.</p>
+<p><span class="math display">\[
+\delta_r \geq 0, \quad r \in \mathcal{R}
+\]</span></p>
+<p>shortfall for service <span class="math inline">\(r\)</span>: the extent to which service <span class="math inline">\(r\)</span> is not covered. We can think of <span class="math inline">\(\delta_r \in [0,1]\)</span> as the fraction of the service left uncovered (with the LP relaxation allowing fractional values).</p>
+</section>
+<section id="model" class="level3" data-number="2.4">
+<h3 data-number="2.4" class="anchored" data-anchor-id="model"><span class="header-section-number">2.4</span> Model</h3>
+<p><span class="math display">\[
+\begin{aligned}
+\min_{x, \delta} \quad &amp; \sum_{r \in \mathcal{R}} w_r \, \delta_r \\[6pt]
+\text{subject to} \quad
+&amp; \sum_{j \,:\, (i,j) \in \mathcal{A}} x_{ij} \leq k_i &amp;&amp; \forall\, i \in \mathcal{I} \tag{1}\\[4pt]
+&amp; x_{r} + \delta_r \geq 1 &amp;&amp; \forall\, r \in \mathcal{R} \tag{2}\\[4pt]
+&amp; x_{ij} \leq c_{ij} &amp;&amp; \forall\, (i,j) \in \mathcal{A} \tag{3}\\[4pt]
+&amp; x_{ij} \geq 0, \quad \delta_r \geq 0
+\end{aligned}
+\]</span></p>
+<p>where in constraint (2), <span class="math inline">\(x_r \equiv x_{i(r),j(r)}\)</span> denotes the number of trains assigned to the arc of service <span class="math inline">\(r\)</span>.</p>
+<p><strong>Constraint (1)</strong> — <em>fleet availability</em>: you cannot dispatch more trains from a station than are parked there. This encodes the overnight parking configuration as a hard constraint.</p>
+<p><strong>Constraint (2)</strong> — <em>service coverage</em>: each service must be covered by at least one train, or else a shortfall <span class="math inline">\(\delta_r &gt; 0\)</span> is incurred and penalised in the objective.</p>
+<p><strong>Constraint (3)</strong> — <em>line capacity</em>: the number of trains on any arc cannot exceed infrastructure capacity. Without this constraint, the operator would trivially send all available trains to every destination, making the problem degenerate.</p>
+</section>
+<section id="a-numerical-example" class="level3" data-number="2.5">
+<h3 data-number="2.5" class="anchored" data-anchor-id="a-numerical-example"><span class="header-section-number">2.5</span> A Numerical Example</h3>
+<p>We instantiate the model with five stations: Milan (M), Bergamo (B), Brescia (E), Como (C), Pavia (P). All services run toward Milan (the morning peak direction).</p>
+<p><strong>Initial parking configuration</strong> (trains parked overnight):</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Station</th>
+<th><span class="math inline">\(k_i\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Milan (M)</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td>Bergamo (B)</td>
+<td>4</td>
+</tr>
+<tr class="odd">
+<td>Brescia (E)</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<td>Como (C)</td>
+<td>3</td>
+</tr>
+<tr class="odd">
+<td>Pavia (P)</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td><strong>Total</strong></td>
+<td><strong>14</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Scheduled services</strong> (all inbound to Milan, morning peak):</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Service <span class="math inline">\(r\)</span></th>
+<th>Arc</th>
+<th><span class="math inline">\(w_r\)</span> (passengers, 00s)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>B → M</td>
+<td>8</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>B → M</td>
+<td>6</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>E → M</td>
+<td>7</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>C → M</td>
+<td>5</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>C → M</td>
+<td>5</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>P → M</td>
+<td>4</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Line capacities</strong> <span class="math inline">\(c_{ij}\)</span>:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Arc</th>
+<th><span class="math inline">\(c_{ij}\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>B → M</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<td>E → M</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td>C → M</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td>P → M</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Observations:</strong></p>
+<ul>
+<li>Bergamo has 4 trains parked and 2 services requiring trains, but the B→M line can carry at most 3 trains. So at most 3 trains can depart from Bergamo — one service is guaranteed coverage, the second competes for the remaining capacity.</li>
+<li>Brescia has 3 trains parked but the E→M line carries at most 2. One Brescia train cannot be used for the morning peak inbound service.</li>
+<li>Como has 3 trains but the C→M line carries only 2 — again one train is stranded.</li>
+<li>Total services: 6. Total fleet: 14. Total line capacity into Milan: <span class="math inline">\(3+2+2+2 = 9\)</span>. The <strong>binding constraint is infrastructure</strong>, not fleet size. Some services will be uncovered even though trains are available.</li>
+</ul>
+<p>This illustrates the key insight: scarcity in a rail network is often about <strong>topology and capacity</strong>, not aggregate fleet size.</p>
+</section>
+<section id="dual-interpretation" class="level3" data-number="2.6">
+<h3 data-number="2.6" class="anchored" data-anchor-id="dual-interpretation"><span class="header-section-number">2.6</span> Dual Interpretation</h3>
+<p>The shadow price on constraint (3) for arc <span class="math inline">\((i,j)\)</span> measures the reduction in weighted uncovered services from adding one unit of capacity on that line. This is the <strong>value of infrastructure investment</strong> on that arc — a quantity of direct policy interest. Arcs with high shadow prices are the bottlenecks where capacity expansion yields the greatest operational benefit.</p>
+<hr>
+</section>
+</section>
+<section id="part-ii-the-dynamic-24-hour-problem" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="part-ii-the-dynamic-24-hour-problem"><span class="header-section-number">3</span> Part II: The Dynamic (24-Hour) Problem</h2>
+<section id="motivation" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="motivation"><span class="header-section-number">3.1</span> Motivation</h3>
+<p>The static model captures one snapshot, but rail operations unfold over time. A train that covers a morning inbound service from Bergamo arrives at Milan and must be repositioned for later services. Whether it can make an afternoon outbound departure from Milan to Como depends on the travel times involved.</p>
+<p>The dynamic model tracks the <strong>trajectory</strong> of train positions across the day, with flow balance constraints linking consecutive periods.</p>
+</section>
+<section id="time-structure" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="time-structure"><span class="header-section-number">3.2</span> Time Structure</h3>
+<p>Divide the 24-hour day into <span class="math inline">\(T\)</span> discrete periods, <span class="math inline">\(t = 1, \ldots, T\)</span>. Periods correspond naturally to the timetable slots — for instance, each period might represent one hour, giving <span class="math inline">\(T = 24\)</span>, or alternatively periods are defined by the scheduled departure times.</p>
+</section>
+<section id="notation-additions-to-part-i" class="level3" data-number="3.3">
+<h3 data-number="3.3" class="anchored" data-anchor-id="notation-additions-to-part-i"><span class="header-section-number">3.3</span> Notation (additions to Part I)</h3>
+<ul>
+<li><span class="math inline">\(t \in \{0, 1, \ldots, T\}\)</span> = time index; <span class="math inline">\(t=0\)</span> is the initial state</li>
+<li><span class="math inline">\(s_i^t \geq 0\)</span> = trains stocked (parked) at station <span class="math inline">\(i\)</span> at the end of period <span class="math inline">\(t\)</span></li>
+<li><span class="math inline">\(x_{ij}^t \geq 0\)</span> = trains departing from <span class="math inline">\(i\)</span> to <span class="math inline">\(j\)</span> in period <span class="math inline">\(t\)</span></li>
+<li><span class="math inline">\(\tau_{ij} \in \mathbb{Z}_{&gt;0}\)</span> = travel time (in periods) from <span class="math inline">\(i\)</span> to <span class="math inline">\(j\)</span></li>
+<li><span class="math inline">\(d_{ij}^t \geq 0\)</span> = scheduled service requirement on arc <span class="math inline">\((i,j)\)</span> in period <span class="math inline">\(t\)</span> (typically 0 or 1)</li>
+<li><span class="math inline">\(\delta_{ij}^t \geq 0\)</span> = shortfall on service <span class="math inline">\((i,j,t)\)</span></li>
+</ul>
+</section>
+<section id="flow-balance" class="level3" data-number="3.4">
+<h3 data-number="3.4" class="anchored" data-anchor-id="flow-balance"><span class="header-section-number">3.4</span> Flow Balance</h3>
+<p>The central constraint of the dynamic model is <strong>flow balance</strong> at every station and every time period:</p>
+<p><span class="math display">\[
+s_i^t = s_i^{t-1} + \sum_{j \,:\, (j,i) \in \mathcal{A}} x_{ji}^{t - \tau_{ji}} - \sum_{j \,:\, (i,j) \in \mathcal{A}} x_{ij}^t \qquad \forall\, i \in \mathcal{I},\; t = 1, \ldots, T \tag{4}
+\]</span></p>
+<p>This is a <strong>pure accounting identity</strong>: trains at station <span class="math inline">\(i\)</span> at end of period <span class="math inline">\(t\)</span> equal those present at <span class="math inline">\(t-1\)</span>, plus those arriving from other stations (having departed <span class="math inline">\(\tau_{ji}\)</span> periods ago), minus those departing in period <span class="math inline">\(t\)</span>.</p>
+<p><strong>What flow balance does and does not imply:</strong></p>
+<ul>
+<li>It does <em>not</em> require as many trains in as out at each station. Stocks <span class="math inline">\(s_i^t\)</span> can grow or shrink freely over time.</li>
+<li>It does <em>not</em> require station stocks to be constant. Trains accumulate at destinations during peak inbound periods and drain back during peak outbound periods.</li>
+<li>It <em>does</em> imply a global invariant: the total fleet size is conserved, <span class="math display">\[
+\sum_{i \in \mathcal{I}} s_i^t + \sum_{(i,j) \in \mathcal{A}} \sum_{t'} x_{ij}^{t'} \cdot \mathbf{1}[\text{train in transit at } t] = N \quad \forall\, t
+\]</span> where <span class="math inline">\(N = \sum_i k_i\)</span> is the total fleet. Trains are neither created nor destroyed.</li>
+</ul>
+</section>
+<section id="initial-conditions" class="level3" data-number="3.5">
+<h3 data-number="3.5" class="anchored" data-anchor-id="initial-conditions"><span class="header-section-number">3.5</span> Initial Conditions</h3>
+<p><span class="math display">\[
+s_i^0 = k_i \qquad \forall\, i \in \mathcal{I} \tag{5}
+\]</span></p>
+<p>The overnight parking configuration from Part I is now the <strong>initial condition</strong> of the dynamic problem. Crucially, one could extend the model to include an additional “planning” stage at <span class="math inline">\(t=0\)</span> where overnight parking is itself a decision variable — the dynamic model then endogenises what Part I took as given.</p>
+</section>
+<section id="full-model" class="level3" data-number="3.6">
+<h3 data-number="3.6" class="anchored" data-anchor-id="full-model"><span class="header-section-number">3.6</span> Full Model</h3>
+<p><span class="math display">\[
+\begin{aligned}
+\min_{x, s, \delta} \quad &amp; \sum_{t=1}^{T} \sum_{(i,j) \in \mathcal{A}} w_{ij}^t \, \delta_{ij}^t \\[6pt]
+\text{subject to} \quad
+&amp; s_i^t = s_i^{t-1} + \sum_j x_{ji}^{t-\tau_{ji}} - \sum_j x_{ij}^t &amp;&amp; \forall\, i,\, t \tag{4}\\[4pt]
+&amp; s_i^0 = k_i &amp;&amp; \forall\, i \tag{5}\\[4pt]
+&amp; x_{ij}^t + \delta_{ij}^t \geq d_{ij}^t &amp;&amp; \forall\, (i,j),\, t \tag{6}\\[4pt]
+&amp; x_{ij}^t \leq c_{ij} &amp;&amp; \forall\, (i,j),\, t \tag{7}\\[4pt]
+&amp; s_i^t \leq p_i &amp;&amp; \forall\, i,\, t \tag{8}\\[4pt]
+&amp; x_{ij}^t,\; s_i^t,\; \delta_{ij}^t \geq 0
+\end{aligned}
+\]</span></p>
+<p>Constraint (8) adds <strong>platform/depot capacity</strong> <span class="math inline">\(p_i\)</span>: stations have finite space to stock trains overnight or between services.</p>
+</section>
+<section id="a-numerical-example-sketch" class="level3" data-number="3.7">
+<h3 data-number="3.7" class="anchored" data-anchor-id="a-numerical-example-sketch"><span class="header-section-number">3.7</span> A Numerical Example (Sketch)</h3>
+<p>We use the same five-station network with <span class="math inline">\(T = 4\)</span> periods representing: (1) morning peak inbound, (2) midday, (3) afternoon peak outbound, (4) evening/overnight repositioning.</p>
+<p><strong>Travel times</strong> <span class="math inline">\(\tau_{ij}\)</span> (in periods):</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Arc</th>
+<th><span class="math inline">\(\tau_{ij}\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>B ↔︎ M</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>E ↔︎ M</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td>C ↔︎ M</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>P ↔︎ M</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Service schedule</strong> <span class="math inline">\(d_{ij}^t\)</span> (selected entries):</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Period</th>
+<th>Arc</th>
+<th><span class="math inline">\(d_{ij}^t\)</span></th>
+<th><span class="math inline">\(w_{ij}^t\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1 (morning)</td>
+<td>B→M</td>
+<td>2</td>
+<td>8</td>
+</tr>
+<tr class="even">
+<td>1 (morning)</td>
+<td>E→M</td>
+<td>1</td>
+<td>7</td>
+</tr>
+<tr class="odd">
+<td>1 (morning)</td>
+<td>C→M</td>
+<td>2</td>
+<td>5</td>
+</tr>
+<tr class="even">
+<td>1 (morning)</td>
+<td>P→M</td>
+<td>1</td>
+<td>4</td>
+</tr>
+<tr class="odd">
+<td>3 (afternoon)</td>
+<td>M→B</td>
+<td>2</td>
+<td>7</td>
+</tr>
+<tr class="even">
+<td>3 (afternoon)</td>
+<td>M→E</td>
+<td>1</td>
+<td>6</td>
+</tr>
+<tr class="odd">
+<td>3 (afternoon)</td>
+<td>M→C</td>
+<td>2</td>
+<td>5</td>
+</tr>
+<tr class="even">
+<td>3 (afternoon)</td>
+<td>M→P</td>
+<td>1</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Key dynamic constraint illustrated:</strong> A train departing Bergamo in period 1 arrives at Milan at the end of period 1 (since <span class="math inline">\(\tau_{BM} = 1\)</span>). It is then available at Milan from period 2 onward — in time for period 3 outbound services. By contrast, a train from Brescia (<span class="math inline">\(\tau_{EM} = 2\)</span>) departs in period 1 but only arrives at Milan at the end of period 2, making it available for period 3 outbound services only if period 2 is long enough.</p>
+<p>This illustrates why static feasibility period-by-period does not imply dynamic feasibility: the sequencing of travel times creates binding constraints invisible to the one-shot model.</p>
+<hr>
+</section>
+</section>
+<section id="discussion" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="discussion"><span class="header-section-number">4</span> Discussion</h2>
+<section id="relationship-between-the-two-parts" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="relationship-between-the-two-parts"><span class="header-section-number">4.1</span> Relationship Between the Two Parts</h3>
+<p>Part I is a <strong>cross-section</strong> of Part II at a single <span class="math inline">\(t\)</span>, with stocks <span class="math inline">\(s_i^{t-1} = k_i\)</span> taken as fixed. The dynamic model is the full trajectory. This has a natural implication: the optimal overnight parking configuration in Part I — the <span class="math inline">\(k_i\)</span> that minimises morning shortfalls — can itself be found by extending the dynamic model to include a <span class="math inline">\(t=0\)</span> repositioning stage. The two-part structure of this homework thus mirrors the actual two-stage planning problem faced by the operator.</p>
+</section>
+<section id="integrality-and-total-unimodularity" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="integrality-and-total-unimodularity"><span class="header-section-number">4.2</span> Integrality and Total Unimodularity</h3>
+<p>In practice, trains are indivisible, so the natural formulation is an <strong>integer linear programme</strong> (ILP). However, the constraint matrix of the pure network flow subproblem (constraints 4–5 and 7, ignoring service coverage) is <strong>totally unimodular</strong>: every square submatrix has determinant <span class="math inline">\(\in \{-1, 0, 1\}\)</span>. This guarantees that the LP relaxation has an integer optimal solution at the vertices of the feasible polytope — the operator can solve the LP and obtain an integer solution for free, without branch-and-bound.</p>
+<p>Adding the service coverage constraints (6) with the <span class="math inline">\(\delta\)</span> variables preserves this structure when the right-hand sides <span class="math inline">\(d_{ij}^t\)</span> are integer, which they are by assumption. This is a strong and operationally useful result.</p>
+</section>
+<section id="extensions" class="level3" data-number="4.3">
+<h3 data-number="4.3" class="anchored" data-anchor-id="extensions"><span class="header-section-number">4.3</span> Extensions</h3>
+<p>Several natural extensions are worth noting:</p>
+<ol type="1">
+<li><strong>Stochastic demand</strong>: replace <span class="math inline">\(d_{ij}^t\)</span> with a random variable and formulate a stochastic LP or robust counterpart.</li>
+<li><strong>Maintenance</strong>: add constraints requiring each train to visit a depot for servicing within every <span class="math inline">\(K\)</span> periods.</li>
+<li><strong>Crew scheduling</strong>: couple the train assignment problem with a crew rostering problem — trains need drivers too.</li>
+<li><strong>Heterogeneous fleet</strong>: distinguish train types (e.g.&nbsp;regional vs.&nbsp;high-speed) with different capacities and operating costs.</li>
+</ol>
+<hr>
+</section>
+</section>
+<section id="conclusion" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">5</span> Conclusion</h2>
+<p>We have developed a two-part linear programming model for commuter rail network optimisation. The static model (Part I) captures the essential tension between fleet availability, line capacity, and service coverage in a single period. The dynamic model (Part II) extends this to a full day, with flow balance constraints linking periods and travel times creating genuine intertemporal constraints. Both models admit clean dual interpretations — shadow prices on capacity constraints reveal the economic value of infrastructure investment, a quantity of direct relevance to the operator and to the regulator.</p>
+
+
+</section>
+
+<p>© Florian Oswald, 2026</p></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/floswald\.github\.io\/CompEcon\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
