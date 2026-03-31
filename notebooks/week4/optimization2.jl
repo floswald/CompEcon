@@ -473,7 +473,7 @@ function runanim(f,g,x0, α)
 end
 
 # ╔═╡ 44479374-3d7f-4073-a046-21e3ba7a2a71
-z1 = runanim(fsgd,gsgd,[-3; -1],0.15)
+z1 = runanim(fsgd,gsgd,[-3; -1],0.1)
 
 # ╔═╡ 00aa155d-0986-46ab-abf0-4038c6cab42d
 z1[2]
@@ -2711,7 +2711,7 @@ version = "1.13.0+0"
 # ╟─3b1c0e0a-a9b8-4ae8-9b31-a5d70e077201
 # ╟─2cd50a99-f3d5-442d-9beb-cad56362ae1e
 # ╟─5e9ce511-f89b-437d-be55-5b0d390e3bae
-# ╠═28726ab6-747c-4537-94fd-df4f69ff0df5
+# ╟─28726ab6-747c-4537-94fd-df4f69ff0df5
 # ╟─ca9fd4bb-f934-48df-8daf-f786013b6d69
 # ╟─7728ef9f-c84d-48b0-a25d-eb534f126d65
 # ╟─08339a83-73b6-4cb4-8b59-e30324fdfc8f

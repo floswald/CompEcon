@@ -1,0 +1,267 @@
+---
+title: "Train Network Optimisation: A Linear Programming Approach"
+subtitle: "Homework — Operations Research / Linear Programming"
+author: ""
+date: today
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    theme: cosmo
+    highlight-style: github
+  pdf:
+    toc: true
+    number-sections: true
+    geometry: margin=2.5cm
+    fontsize: 11pt
+---
+
+## Introduction and Motivation
+
+The operator of a regional commuter rail network faces a fundamental daily planning problem: trains are physical objects that must be *somewhere* at all times, and getting them to the right place at the right time — given a fixed timetable and constrained infrastructure — is far from trivial.
+
+We use the Milanese commuter rail network as motivation. Milan (*Milano Centrale*) is the hub of a dense commuter network serving several large satellite cities:
+
+| City | Approx. distance | Morning commuter flow |
+|---|---|---|
+| Bergamo | 50 km | High |
+| Brescia | 90 km | High |
+| Como | 45 km | High |
+| Pavia | 35 km | Moderate |
+| Novara | 50 km | Moderate |
+
+Each morning, thousands of commuters travel toward Milan; in the evening, the flows reverse. The operator must decide, given the overnight parking configuration of the fleet, how to assign trains to services so as to maximise coverage — or equivalently, minimise delays and cancellations.
+
+We study this problem in two parts. Part I abstracts away from time entirely and studies a single-period snapshot. Part II introduces a 24-hour horizon and time-indexed flow balance.
+
+---
+
+## Part I: The Static (One-Shot) Problem
+
+### Setup
+
+We consider a single time period — say, the morning peak. There is a set of **stations** and a set of **services** (scheduled trips between pairs of stations) that the operator wishes to cover. Each service requires exactly one train to operate it.
+
+Trains are already parked at stations from the previous night. The operator must decide how many trains to dispatch along each line, subject to capacity constraints on the infrastructure.
+
+### Notation
+
+Let:
+
+- $\mathcal{I}$ = set of stations, indexed by $i$
+- $\mathcal{A}$ = set of directed arcs (lines), $(i,j) \in \mathcal{A}$
+- $\mathcal{R}$ = set of scheduled services, each service $r \in \mathcal{R}$ associated with an arc $(i(r), j(r))$
+- $k_i \geq 0$ = number of trains initially parked at station $i$ (given data)
+- $c_{ij} \geq 0$ = capacity of line $(i,j)$: maximum trains that can travel from $i$ to $j$ in the period
+- $w_r > 0$ = weight (e.g. passenger volume) of service $r$
+
+### Decision Variables
+
+$$
+x_{ij} \geq 0, \quad (i,j) \in \mathcal{A}
+$$
+
+number of trains dispatched from station $i$ to station $j$ during the period.
+
+$$
+\delta_r \geq 0, \quad r \in \mathcal{R}
+$$
+
+shortfall for service $r$: the extent to which service $r$ is not covered. We can think of $\delta_r \in [0,1]$ as the fraction of the service left uncovered (with the LP relaxation allowing fractional values).
+
+### Model
+
+$$
+\begin{aligned}
+\min_{x, \delta} \quad & \sum_{r \in \mathcal{R}} w_r \, \delta_r \\[6pt]
+\text{subject to} \quad
+& \sum_{j \,:\, (i,j) \in \mathcal{A}} x_{ij} \leq k_i && \forall\, i \in \mathcal{I} \tag{1}\\[4pt]
+& x_{r} + \delta_r \geq 1 && \forall\, r \in \mathcal{R} \tag{2}\\[4pt]
+& x_{ij} \leq c_{ij} && \forall\, (i,j) \in \mathcal{A} \tag{3}\\[4pt]
+& x_{ij} \geq 0, \quad \delta_r \geq 0
+\end{aligned}
+$$
+
+where in constraint (2), $x_r \equiv x_{i(r),j(r)}$ denotes the number of trains assigned to the arc of service $r$.
+
+**Constraint (1)** — *fleet availability*: you cannot dispatch more trains from a station than are parked there. This encodes the overnight parking configuration as a hard constraint.
+
+**Constraint (2)** — *service coverage*: each service must be covered by at least one train, or else a shortfall $\delta_r > 0$ is incurred and penalised in the objective.
+
+**Constraint (3)** — *line capacity*: the number of trains on any arc cannot exceed infrastructure capacity. Without this constraint, the operator would trivially send all available trains to every destination, making the problem degenerate.
+
+### A Numerical Example
+
+We instantiate the model with five stations: Milan (M), Bergamo (B), Brescia (E), Como (C), Pavia (P). All services run toward Milan (the morning peak direction).
+
+**Initial parking configuration** (trains parked overnight):
+
+| Station | $k_i$ |
+|---|---|
+| Milan (M) | 2 |
+| Bergamo (B) | 4 |
+| Brescia (E) | 3 |
+| Como (C) | 3 |
+| Pavia (P) | 2 |
+| **Total** | **14** |
+
+**Scheduled services** (all inbound to Milan, morning peak):
+
+| Service $r$ | Arc | $w_r$ (passengers, 00s) |
+|---|---|---|
+| 1 | B → M | 8 |
+| 2 | B → M | 6 |
+| 3 | E → M | 7 |
+| 4 | C → M | 5 |
+| 5 | C → M | 5 |
+| 6 | P → M | 4 |
+
+**Line capacities** $c_{ij}$:
+
+| Arc | $c_{ij}$ |
+|---|---|
+| B → M | 3 |
+| E → M | 2 |
+| C → M | 2 |
+| P → M | 2 |
+
+**Observations:**
+
+- Bergamo has 4 trains parked and 2 services requiring trains, but the B→M line can carry at most 3 trains. So at most 3 trains can depart from Bergamo — one service is guaranteed coverage, the second competes for the remaining capacity.
+- Brescia has 3 trains parked but the E→M line carries at most 2. One Brescia train cannot be used for the morning peak inbound service.
+- Como has 3 trains but the C→M line carries only 2 — again one train is stranded.
+- Total services: 6. Total fleet: 14. Total line capacity into Milan: $3+2+2+2 = 9$. The **binding constraint is infrastructure**, not fleet size. Some services will be uncovered even though trains are available.
+
+This illustrates the key insight: scarcity in a rail network is often about **topology and capacity**, not aggregate fleet size.
+
+### Dual Interpretation
+
+The shadow price on constraint (3) for arc $(i,j)$ measures the reduction in weighted uncovered services from adding one unit of capacity on that line. This is the **value of infrastructure investment** on that arc — a quantity of direct policy interest. Arcs with high shadow prices are the bottlenecks where capacity expansion yields the greatest operational benefit.
+
+---
+
+## Part II: The Dynamic (24-Hour) Problem
+
+### Motivation
+
+The static model captures one snapshot, but rail operations unfold over time. A train that covers a morning inbound service from Bergamo arrives at Milan and must be repositioned for later services. Whether it can make an afternoon outbound departure from Milan to Como depends on the travel times involved.
+
+The dynamic model tracks the **trajectory** of train positions across the day, with flow balance constraints linking consecutive periods.
+
+### Time Structure
+
+Divide the 24-hour day into $T$ discrete periods, $t = 1, \ldots, T$. Periods correspond naturally to the timetable slots — for instance, each period might represent one hour, giving $T = 24$, or alternatively periods are defined by the scheduled departure times.
+
+### Notation (additions to Part I)
+
+- $t \in \{0, 1, \ldots, T\}$ = time index; $t=0$ is the initial state
+- $s_i^t \geq 0$ = trains stocked (parked) at station $i$ at the end of period $t$
+- $x_{ij}^t \geq 0$ = trains departing from $i$ to $j$ in period $t$
+- $\tau_{ij} \in \mathbb{Z}_{>0}$ = travel time (in periods) from $i$ to $j$
+- $d_{ij}^t \geq 0$ = scheduled service requirement on arc $(i,j)$ in period $t$ (typically 0 or 1)
+- $\delta_{ij}^t \geq 0$ = shortfall on service $(i,j,t)$
+
+### Flow Balance
+
+The central constraint of the dynamic model is **flow balance** at every station and every time period:
+
+$$
+s_i^t = s_i^{t-1} + \sum_{j \,:\, (j,i) \in \mathcal{A}} x_{ji}^{t - \tau_{ji}} - \sum_{j \,:\, (i,j) \in \mathcal{A}} x_{ij}^t \qquad \forall\, i \in \mathcal{I},\; t = 1, \ldots, T \tag{4}
+$$
+
+This is a **pure accounting identity**: trains at station $i$ at end of period $t$ equal those present at $t-1$, plus those arriving from other stations (having departed $\tau_{ji}$ periods ago), minus those departing in period $t$.
+
+**What flow balance does and does not imply:**
+
+- It does *not* require as many trains in as out at each station. Stocks $s_i^t$ can grow or shrink freely over time.
+- It does *not* require station stocks to be constant. Trains accumulate at destinations during peak inbound periods and drain back during peak outbound periods.
+- It *does* imply a global invariant: the total fleet size is conserved,
+$$
+\sum_{i \in \mathcal{I}} s_i^t + \sum_{(i,j) \in \mathcal{A}} \sum_{t'} x_{ij}^{t'} \cdot \mathbf{1}[\text{train in transit at } t] = N \quad \forall\, t
+$$
+  where $N = \sum_i k_i$ is the total fleet. Trains are neither created nor destroyed.
+
+### Initial Conditions
+
+$$
+s_i^0 = k_i \qquad \forall\, i \in \mathcal{I} \tag{5}
+$$
+
+The overnight parking configuration from Part I is now the **initial condition** of the dynamic problem. Crucially, one could extend the model to include an additional "planning" stage at $t=0$ where overnight parking is itself a decision variable — the dynamic model then endogenises what Part I took as given.
+
+### Full Model
+
+$$
+\begin{aligned}
+\min_{x, s, \delta} \quad & \sum_{t=1}^{T} \sum_{(i,j) \in \mathcal{A}} w_{ij}^t \, \delta_{ij}^t \\[6pt]
+\text{subject to} \quad
+& s_i^t = s_i^{t-1} + \sum_j x_{ji}^{t-\tau_{ji}} - \sum_j x_{ij}^t && \forall\, i,\, t \tag{4}\\[4pt]
+& s_i^0 = k_i && \forall\, i \tag{5}\\[4pt]
+& x_{ij}^t + \delta_{ij}^t \geq d_{ij}^t && \forall\, (i,j),\, t \tag{6}\\[4pt]
+& x_{ij}^t \leq c_{ij} && \forall\, (i,j),\, t \tag{7}\\[4pt]
+& s_i^t \leq p_i && \forall\, i,\, t \tag{8}\\[4pt]
+& x_{ij}^t,\; s_i^t,\; \delta_{ij}^t \geq 0
+\end{aligned}
+$$
+
+Constraint (8) adds **platform/depot capacity** $p_i$: stations have finite space to stock trains overnight or between services.
+
+### A Numerical Example (Sketch)
+
+We use the same five-station network with $T = 4$ periods representing: (1) morning peak inbound, (2) midday, (3) afternoon peak outbound, (4) evening/overnight repositioning.
+
+**Travel times** $\tau_{ij}$ (in periods):
+
+| Arc | $\tau_{ij}$ |
+|---|---|
+| B ↔ M | 1 |
+| E ↔ M | 2 |
+| C ↔ M | 1 |
+| P ↔ M | 1 |
+
+**Service schedule** $d_{ij}^t$ (selected entries):
+
+| Period | Arc | $d_{ij}^t$ | $w_{ij}^t$ |
+|---|---|---|---|
+| 1 (morning) | B→M | 2 | 8 |
+| 1 (morning) | E→M | 1 | 7 |
+| 1 (morning) | C→M | 2 | 5 |
+| 1 (morning) | P→M | 1 | 4 |
+| 3 (afternoon) | M→B | 2 | 7 |
+| 3 (afternoon) | M→E | 1 | 6 |
+| 3 (afternoon) | M→C | 2 | 5 |
+| 3 (afternoon) | M→P | 1 | 3 |
+
+**Key dynamic constraint illustrated:** A train departing Bergamo in period 1 arrives at Milan at the end of period 1 (since $\tau_{BM} = 1$). It is then available at Milan from period 2 onward — in time for period 3 outbound services. By contrast, a train from Brescia ($\tau_{EM} = 2$) departs in period 1 but only arrives at Milan at the end of period 2, making it available for period 3 outbound services only if period 2 is long enough.
+
+This illustrates why static feasibility period-by-period does not imply dynamic feasibility: the sequencing of travel times creates binding constraints invisible to the one-shot model.
+
+---
+
+## Discussion
+
+### Relationship Between the Two Parts
+
+Part I is a **cross-section** of Part II at a single $t$, with stocks $s_i^{t-1} = k_i$ taken as fixed. The dynamic model is the full trajectory. This has a natural implication: the optimal overnight parking configuration in Part I — the $k_i$ that minimises morning shortfalls — can itself be found by extending the dynamic model to include a $t=0$ repositioning stage. The two-part structure of this homework thus mirrors the actual two-stage planning problem faced by the operator.
+
+### Integrality and Total Unimodularity
+
+In practice, trains are indivisible, so the natural formulation is an **integer linear programme** (ILP). However, the constraint matrix of the pure network flow subproblem (constraints 4–5 and 7, ignoring service coverage) is **totally unimodular**: every square submatrix has determinant $\in \{-1, 0, 1\}$. This guarantees that the LP relaxation has an integer optimal solution at the vertices of the feasible polytope — the operator can solve the LP and obtain an integer solution for free, without branch-and-bound.
+
+Adding the service coverage constraints (6) with the $\delta$ variables preserves this structure when the right-hand sides $d_{ij}^t$ are integer, which they are by assumption. This is a strong and operationally useful result.
+
+### Extensions
+
+Several natural extensions are worth noting:
+
+1. **Stochastic demand**: replace $d_{ij}^t$ with a random variable and formulate a stochastic LP or robust counterpart.
+2. **Maintenance**: add constraints requiring each train to visit a depot for servicing within every $K$ periods.
+3. **Crew scheduling**: couple the train assignment problem with a crew rostering problem — trains need drivers too.
+4. **Heterogeneous fleet**: distinguish train types (e.g. regional vs. high-speed) with different capacities and operating costs.
+
+---
+
+## Conclusion
+
+We have developed a two-part linear programming model for commuter rail network optimisation. The static model (Part I) captures the essential tension between fleet availability, line capacity, and service coverage in a single period. The dynamic model (Part II) extends this to a full day, with flow balance constraints linking periods and travel times creating genuine intertemporal constraints. Both models admit clean dual interpretations — shadow prices on capacity constraints reveal the economic value of infrastructure investment, a quantity of direct relevance to the operator and to the regulator.

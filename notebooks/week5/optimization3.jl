@@ -270,6 +270,150 @@ $$\max_\mathbf{a} \min_\mathbf{b} f(\mathbf{a},\mathbf{b}) \leq \min_\mathbf{b} 
 
 """
 
+# ╔═╡ 617f3a33-a7f5-4424-b00f-a2c74c1fa6a0
+md"""
+## Example 1: Budget-Constrained Utility Maximization
+
+Consider a consumer choosing quantities $x_1, x_2 \geq 0$ to maximize log utility subject to a budget constraint. We write it as a minimization problem:
+
+$$\min_{x_1, x_2} \; -\log(x_1) - \log(x_2) \quad \text{s.t.} \quad p_1 x_1 + p_2 x_2 - m \leq 0$$
+
+The Lagrangian is:
+
+$$\mathcal{L}(x_1, x_2, \mu) = -\log(x_1) - \log(x_2) + \mu(p_1 x_1 + p_2 x_2 - m)$$
+
+### KKT Conditions
+
+**1. Primal Feasibility**
+
+$$p_1 x_1^* + p_2 x_2^* \leq m$$
+
+The consumer cannot spend more than their income.
+
+**2. Dual Feasibility**
+
+$$\mu \geq 0$$
+
+The multiplier is non-negative: relaxing the budget (increasing $m$) can only help — it cannot worsen the value of the objective function. The partial derivative of the Lagrangian wrt $m$ is *negative* in this case, i.e. it *reduces* the value of the objective, _which is what we want here_.
+
+**3. Complementary Slackness**
+
+$$\mu (p_1 x_1^* + p_2 x_2^* - m) = 0$$
+
+Either the budget binds ($p_1 x_1^* + p_2 x_2^* = m$) or $\mu = 0$. Since $-\log$ is strictly decreasing, the consumer always prefers more, so the budget will always bind and $\mu > 0$. We can rule out the case $\mu = 0$ by inspection.
+
+**4. Stationarity**
+
+Standard. We are looking for a _flat_ point on the surface of the objective function, i.e. gradient (of $\mathcal{L}$ in our case) equal zero.
+
+$$\frac{\partial \mathcal{L}}{\partial x_1} = -\frac{1}{x_1^*} + \mu p_1 = 0 \implies \mu = \frac{1}{p_1 x_1^*}$$
+
+$$\frac{\partial \mathcal{L}}{\partial x_2} = -\frac{1}{x_2^*} + \mu p_2 = 0 \implies \mu = \frac{1}{p_2 x_2^*}$$
+
+### Solving the System
+
+From stationarity: $p_1 x_1^* = p_2 x_2^* = \frac{1}{\mu}$. Substituting into the binding budget constraint:
+
+$$p_1 x_1^* + p_2 x_2^* = \frac{1}{\mu} + \frac{1}{\mu} = m \implies \mu^* = \frac{2}{m}$$
+
+And therefore:
+
+$$x_1^* = \frac{m}{2p_1}, \qquad x_2^* = \frac{m}{2p_2}$$
+
+The consumer splits income equally between the two goods — the well-known result for symmetric log utility.
+
+### The Shadow Price Interpretation
+
+The multiplier $\mu^* = 2/m$ is the **shadow price of income**: it measures how much the objective (negative utility) decreases — i.e., how much *utility increases* — for a marginal increase in $m$. Indeed:
+
+$$\frac{\partial}{\partial m}\left[-\log\left(\frac{m}{2p_1}\right) - \log\left(\frac{m}{2p_2}\right)\right] = -\frac{1}{m} - \frac{1}{m} = -\frac{2}{m} = -\mu^*$$
+
+So $\mu^*$ is precisely the marginal utility of income — a quantity with immediate economic meaning.
+
+For those of you who are slow with the chain rule - like myself - this last line comes from the fact that
+
+$$\frac{\partial}{\partial m}\left[-\log\left(\frac{m}{2p_1}\right)\right] = \frac{-1}{\frac{m}{2p_1}} \frac{1}{2p_1} = -\frac{1}{m}$$
+"""
+
+# ╔═╡ 27b5da11-b75b-4839-ae15-9e0146933a67
+md"""
+
+
+---
+
+## Example 2: Least Squares with a Norm Constraint (Ridge Regression)
+
+Consider fitting a linear model by minimizing the sum of squared residuals, subject to the coefficients not being too large:
+
+$$\min_{\mathbf{x} \in \mathbb{R}^n} \; \|A\mathbf{x} - \mathbf{b}\|^2 \quad \text{s.t.} \quad \|\mathbf{x}\|^2 - t \leq 0$$
+
+where $A \in \mathbb{R}^{m \times n}$, $\mathbf{b} \in \mathbb{R}^m$, and $t > 0$ is a budget on the coefficient norm. The Lagrangian is:
+
+$$\mathcal{L}(\mathbf{x}, \mu) = \|A\mathbf{x} - \mathbf{b}\|^2 + \mu(\|\mathbf{x}\|^2 - t)$$
+
+### KKT Conditions
+
+**1. Primal Feasibility**
+
+$$\|\mathbf{x}^*\|^2 \leq t$$
+
+The solution must lie within the norm ball of radius $\sqrt{t}$.
+
+**2. Dual Feasibility**
+
+$$\mu \geq 0$$
+
+The multiplier is non-negative: a tighter norm budget ($t$ smaller) can only increase the objective, so relaxing it is weakly beneficial.
+
+**3. Complementary Slackness**
+
+$$\mu(\|\mathbf{x}^*\|^2 - t) = 0$$
+
+This gives two regimes with very different solutions:
+
+- **Inactive constraint** ($\|\mathbf{x}^*\|^2 < t$): then $\mu = 0$, and the constraint is irrelevant.
+- **Active constraint** ($\|\mathbf{x}^*\|^2 = t$): then $\mu > 0$, and the constraint is binding.
+
+**4. Stationarity**
+
+$$\nabla_{\mathbf{x}} \mathcal{L} = 2A^\top(A\mathbf{x}^* - \mathbf{b}) + 2\mu \mathbf{x}^* = 0$$
+
+$$\implies (A^\top A + \mu I)\mathbf{x}^* = A^\top \mathbf{b}$$
+
+### The Two Regimes
+
+**Case 1: Inactive constraint ($\mu = 0$)**
+
+The stationarity condition reduces to:
+
+$$A^\top A \, \mathbf{x}^* = A^\top \mathbf{b}$$
+
+This is the ordinary least squares (OLS) normal equation. The constraint was slack: the unconstrained OLS solution already satisfied $\|\mathbf{x}^*\|^2 \leq t$.
+
+**Case 2: Active constraint ($\mu > 0$)**
+
+The stationarity condition gives:
+
+$$(A^\top A + \mu I)\mathbf{x}^* = A^\top \mathbf{b} \implies \mathbf{x}^* = (A^\top A + \mu I)^{-1} A^\top \mathbf{b}$$
+
+This is the **ridge regression** estimator with penalty parameter $\mu$. The matrix $A^\top A + \mu I$ is always invertible for $\mu > 0$, even when $A^\top A$ is singular — a key practical advantage.
+
+### Complementary Slackness as a Regularization Switch
+
+The two cases show that complementary slackness acts as a **switch between OLS and ridge**:
+
+| | $\mu$ | Solution | Interpretation |
+|---|---|---|---|
+| $\|\mathbf{x}_{OLS}\|^2 \leq t$ | $0$ | OLS | Constraint not binding; no regularization needed |
+| $\|\mathbf{x}_{OLS}\|^2 > t$ | $> 0$ | Ridge | OLS solution too large; shrinkage kicks in |
+
+The shadow price $\mu$ measures how costly the norm constraint is at the margin: a larger $\mu$ means the coefficients are being squeezed harder against the boundary, corresponding to stronger regularization. This is the Lagrangian duality view of the more familiar **Tikhonov regularization** formulation:
+
+$$\min_{\mathbf{x}} \; \|A\mathbf{x} - \mathbf{b}\|^2 + \mu \|\mathbf{x}\|^2$$
+
+which is exactly $\min_x \mathcal{L}(\mathbf{x}, \mu)$ for fixed $\mu$ — the inner problem of the dual.
+"""
+
 # ╔═╡ 9be3cbee-7949-42da-9496-6afc94785f98
 md"""
 ## Penalty Methods
@@ -2235,6 +2379,8 @@ version = "1.4.1+1"
 # ╟─fe6b7d74-1c6f-4253-9254-57d536bb24c5
 # ╟─19d12886-3980-4116-8772-2c1d17b14270
 # ╟─583a5640-adde-4f4f-a344-4e77e04e431d
+# ╟─617f3a33-a7f5-4424-b00f-a2c74c1fa6a0
+# ╟─27b5da11-b75b-4839-ae15-9e0146933a67
 # ╟─9be3cbee-7949-42da-9496-6afc94785f98
 # ╟─91da671d-7602-490c-a94c-bc9ff4eca59a
 # ╠═7e5cedbf-05da-4573-994f-42099fe4b33a
