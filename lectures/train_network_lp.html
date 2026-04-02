@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="">
-<meta name="dcterms.date" content="2026-03-31">
+<meta name="dcterms.date" content="2026-04-02">
 
 <title>Train Network Optimisation: A Linear Programming Approach – Computational Economics</title>
 <style>
@@ -420,7 +420,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">March 31, 2026</p>
+      <p class="date">April 2, 2026</p>
     </div>
   </div>
   
@@ -508,16 +508,14 @@ x_{ij} \geq 0, \quad (i,j) \in \mathcal{A}
 </section>
 <section id="model" class="level3" data-number="2.4">
 <h3 data-number="2.4" class="anchored" data-anchor-id="model"><span class="header-section-number">2.4</span> Model</h3>
-<p><span class="math display">\[
-\begin{aligned}
+<p><span class="math display">\[\begin{align}
 \min_{x, \delta} \quad &amp; \sum_{r \in \mathcal{R}} w_r \, \delta_r \\[6pt]
 \text{subject to} \quad
 &amp; \sum_{j \,:\, (i,j) \in \mathcal{A}} x_{ij} \leq k_i &amp;&amp; \forall\, i \in \mathcal{I} \tag{1}\\[4pt]
 &amp; x_{r} + \delta_r \geq 1 &amp;&amp; \forall\, r \in \mathcal{R} \tag{2}\\[4pt]
 &amp; x_{ij} \leq c_{ij} &amp;&amp; \forall\, (i,j) \in \mathcal{A} \tag{3}\\[4pt]
 &amp; x_{ij} \geq 0, \quad \delta_r \geq 0
-\end{aligned}
-\]</span></p>
+\end{align}\]</span></p>
 <p>where in constraint (2), <span class="math inline">\(x_r \equiv x_{i(r),j(r)}\)</span> denotes the number of trains assigned to the arc of service <span class="math inline">\(r\)</span>.</p>
 <p><strong>Constraint (1)</strong> — <em>fleet availability</em>: you cannot dispatch more trains from a station than are parked there. This encodes the overnight parking configuration as a hard constraint.</p>
 <p><strong>Constraint (2)</strong> — <em>service coverage</em>: each service must be covered by at least one train, or else a shortfall <span class="math inline">\(\delta_r &gt; 0\)</span> is incurred and penalised in the objective.</p>
