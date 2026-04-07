@@ -915,7 +915,7 @@ end
 
 ```{julia}
 #| echo: true
-function gradient_descent(X, Y; η=0.1, tol=1e-3, maxiter=10_000)
+function gradient_descent(X, Y; η=0.1, tol=5e-3, maxiter=10_000)
     W = randn(10, 25) .* 0.1
     b = zeros(Float64, 10)
     losses = Float64[]
@@ -929,8 +929,11 @@ function gradient_descent(X, Y; η=0.1, tol=1e-3, maxiter=10_000)
         ∇W ./= length(X);  ∇b ./= length(X);  L /= length(X)
         push!(losses, L)
         gnorm = norm(vcat(vec(∇W), ∇b))
+        if iter % 2000 == 0
+            println("iter $iter: loss=$(round(L,digits=4))  ‖∇‖=$(round(gnorm,digits=4))")
+        end
         if gnorm < tol
-            println("Converged at iteration $iter  (loss = $(round(L, digits=5)))")
+            println("Converged at iteration $iter  (loss=$(round(L,digits=5)))")
             break
         end
         W .-= η .* ∇W;  b .-= η .* ∇b
