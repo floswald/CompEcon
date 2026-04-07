@@ -6,6 +6,8 @@ format:
 filters:
   - fontawesome
 engine: julia
+execute:
+  fig-format: svg
 ---
 
 ## Purpose
@@ -542,7 +544,7 @@ for i in 1:30
     row, col = divrem(i - 1, 10) .+ (1, 1)
     ax = Axis(fig[row, col], title=string(LABELS[i]), titlesize=11,
               aspect=DataAspect(), yreversed=true)
-    grid = reshape(PIXELS[i,:], 5, 5)'
+    grid = reshape(PIXELS[i,:], 5, 5)  # col-major: M[col,row]=pixel(row,col) ✓ for Makie
     heatmap!(ax, grid, colormap=:grays, colorrange=(0,1))
     hidedecorations!(ax); hidespines!(ax)
 end
@@ -776,7 +778,7 @@ for d in 0:9
     row, col = divrem(d, 5) .+ (1, 1)
     ax = Axis(fig[row, col], title="digit $d", titlesize=10,
               aspect=DataAspect(), yreversed=true)
-    w = reshape(W_opt[d+1, :], 5, 5)'
+    w = reshape(W_opt[d+1, :], 5, 5)  # col-major: M[col,row]=weight(row,col) ✓ for Makie
     heatmap!(ax, w, colormap=:RdBu, colorrange=(-lim, lim))
     hidedecorations!(ax); hidespines!(ax)
 end
