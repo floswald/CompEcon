@@ -64,9 +64,19 @@ Real neurons in a human brain have many more ways of computing, calling this *ne
 -   input $x$ (often a vector) which gets transformed to an
 -   output $y$ (can also be a vector). We apply an *activation function* $\phi$ to a linear transformation of the input:
 
-+-------------------------------------------------------------------------------------------+-----------------------+----------------------------------------------------------------------+
-| \$\$ x = \\left( \\begin{align} x\_{1} \\\\ x\_{2} \\\\ x\_{3} \\end{align} \\right) \$\$ | ![](images/nn3-1.svg) | \$\$\\begin{align} z &= w'x + b \\\\ y &= \\phi(z) \\end{align} \$\$ |
-+-------------------------------------------------------------------------------------------+-----------------------+----------------------------------------------------------------------+
+<table>
+<tr>
+<td>
+$$x = \left( \begin{array}{c} x_{1} \\ x_{2} \\ x_{3} \end{array} \right)$$
+</td>
+<td>
+![](images/nn3-1.svg)
+</td>
+<td>
+$$\begin{align} z &= w'x + b \\ y &= \phi(z) \end{align}$$
+</td>
+</tr>
+</table>
 
 ::: callout-note
 $w$ is a vector or weights, $b$ is an *intercept* or *bias* term. $\phi$ is (in general) a nonlinear function. This example has a 3-dim input and a 1-dim output, and a single layer (i.e. just the output layer).
@@ -308,9 +318,19 @@ Let's go with the following. You can see that this is arbitrary (we could easily
 
 ## Simplest Problem: Detect `/` vs `\`
 
-+-------------------------------------------------------------------------------------------------------+-----------------------+-----------------------------------------------------------------------------+
-| \$\$ x = \\left( \\begin{align} x\_{1} \\\\ x\_{2} \\\\ x\_{3} \\\\ x\_{4} \\end{align} \\right) \$\$ | ![](images/nn4-2.svg) | \$\$\\left( \\begin{align} y\_{1} \\\\ y\_{2} \\end{align} \\right) = y\$\$ |
-+-------------------------------------------------------------------------------------------------------+-----------------------+-----------------------------------------------------------------------------+
+<table>
+<tr>
+<td>
+$$x = \left( \begin{array}{c} x_{1} \\ x_{2} \\ x_{3} \\ x_{4} \end{array} \right)$$
+</td>
+<td>
+![](images/nn4-2.svg)
+</td>
+<td>
+$$\left( \begin{array}{c} y_{1} \\ y_{2} \end{array} \right) = y$$
+</td>
+</tr>
+</table>
 
 ::: callout-tip
 # Computing parameters
@@ -556,19 +576,32 @@ fig
 
 Each 5×5 grid is read **row by row** into $x = (x_1, \ldots, x_{25}) \in \{0,1\}^{25}$:
 
-+---+------------------------+-----------------------------------------------------------------------------------------------------------------------------+
-|   | {{< fa arrow-right >}} | \$\$\\begin{align} ( & 0,0,1,0,0, \\\\ & 0,1,1,0,0, \\\\ & 0,0,1,0,0, \\\\ & 0,0,1,0,0, \\\\ & 0,0,1,0,0 ) \\end{align}\$\$ |
-+---+------------------------+-----------------------------------------------------------------------------------------------------------------------------+
+<table>
+<tr>
+<td></td>
+<td>{{< fa arrow-right >}}</td>
+<td>
+$$\begin{align} ( & 0,0,1,0,0, \\ & 0,1,1,0,0, \\ & 0,0,1,0,0, \\ & 0,0,1,0,0, \\ & 0,0,1,0,0 ) \end{align}$$
+</td>
+</tr>
+</table>
 
 ## Output Encoding
 
 10 classes → **one-hot encoding** $y = (y_0, y_1, \ldots, y_9) \in \{0,1\}^{10}$
 
-+---+------------------------+---------------------------+
-| 1 | {{< fa arrow-right >}} | \$(0,1,0,0,0,0,0,0,0,0)\$ |
-+---+------------------------+---------------------------+
-| 7 | {{< fa arrow-right >}} | \$(0,0,0,0,0,0,0,1,0,0)\$ |
-+---+------------------------+---------------------------+
+<table>
+<tr>
+<td>1</td>
+<td>{{< fa arrow-right >}}</td>
+<td>$(0,1,0,0,0,0,0,0,0,0)$</td>
+</tr>
+<tr>
+<td>7</td>
+<td>{{< fa arrow-right >}}</td>
+<td>$(0,0,0,0,0,0,0,1,0,0)$</td>
+</tr>
+</table>
 
 ## Network Parameters
 
