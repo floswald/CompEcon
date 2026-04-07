@@ -875,6 +875,9 @@ In matrix form with $\delta = 2(\hat{y} - y)$: $\quad \nabla_W \mathcal{L} = \de
 
 ## Julia: Training Data Setup
 
+* We need to reshape the data so that it's useful to our algorithm.
+* We encode classes with one-hot as before
+
 ```{julia}
 #| echo: true
 function one_hot(digit::Int)
@@ -892,11 +895,20 @@ Y_train = [one_hot(LABELS[i]) for i in 1:30];  # 30 one-hot output vectors, each
 
 ## Julia: Predict and Loss
 
+* We need functions to predict the output
+* And to measure to deviation from the true output.
+
 ```{julia}
 #| echo: true
 predict(W, b, x) = W * x + b             # forward pass: 10-dim output
 
 sample_loss(ŷ, y) = sum((ŷ .- y).^2)    # sum of squared errors for one sample
+
+# Example: zero-weight model on digit-0 input
+W0 = zeros(10, 25);  b0 = zeros(10)
+ŷ0 = predict(W0, b0, X_train[1])         # X_train[1] is digit 0 → ŷ0 = [0,…,0]
+println("loss (zero weights): ", sample_loss(ŷ0,  Y_train[1]))  # (0-1)²+(0-0)²×9 = 1
+println("loss (perfect pred): ", sample_loss(Y_train[1], Y_train[1]))  # = 0
 ```
 
 
@@ -911,6 +923,13 @@ function sample_gradients(W, b, x, y)
     ∇b = δ                  # ∂L/∂b  (10-vector)
     return ∇W, ∇b
 end
+
+# Example: same zero-weight model on digit-0 input
+# ŷ=[0,…,0], y=[1,0,…,0]  →  δ = 2*(ŷ-y) = [-2,0,…,0]
+∇W0, ∇b0 = sample_gradients(W0, b0, X_train[1], Y_train[1])
+println("∇W size : ", size(∇W0))           # (10, 25)
+println("∇b[1]   : ", ∇b0[1])             # -2  → W and b for digit 0 must increase
+println("∇b[2]   : ", ∇b0[2])             #  0  → digit-1 neuron unaffected
 ```
 
 
