@@ -645,15 +645,360 @@ How does this NN generalize to *test* data?
 demo([0.5,0.1,0.2,0.4])  # square with shades of grey
 ```
 
-## An even simpler example: A Line
 
-* Extreme case: 1 input, 1 output. 
-* (Of course we don't *need* a neural network for that)
+# 5×5 Pixel Digit Recognition
 
-<!-- ```{julia}
-truth(x) = 3 + 2x  # true DGP
-# x for training and testing
-x_train, x_test = hcat(0:5...), hcat(6:10...)
-# y too
-y_train, y_test = actual.(x_train), actual.(x_test)
-``` -->
+## Scaling Up: From 4 to 25 Pixels
+
+::: {.columns}
+::: {.column}
+**What we had:**
+
+* 4-pixel grid, 2 classes (`/` vs `\`)
+* 10 unknowns, 4 equations → solved analytically
+:::
+::: {.column}
+**What we want now:**
+
+* **25 pixels** (5×5 grid), **10 classes** (digits 0–9)
+* 260 parameters, 300 equations → overdetermined
+* Cannot solve exactly — must **minimize error**
+:::
+:::
+
+::: {.fragment}
+**Solution:** Gradient descent — find $W$, $b$ that minimize average squared error.
+:::
+
+
+## 5×5 Pixel Digits
+
+Three hand-crafted variants (a, b, c) for each digit:
+
+```{julia}
+#| echo: false
+#| fig-align: center
+using Plots
+using LinearAlgebra
+
+# Pixel data: 30 × 25 matrix. Each row = one digit, pixels read row-by-row from the 5×5 grid.
+const PIXELS = Float64[
+    # ——— variant a ———
+    1 1 1 1 1 1 0 0 0 1 1 0 0 0 1 1 0 0 0 1 1 1 1 1 1;
+    0 0 1 0 0 0 1 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0;
+    1 1 1 1 0 0 0 0 0 1 0 1 1 1 0 1 0 0 0 0 1 1 1 1 1;
+    1 1 1 1 1 0 0 0 0 1 0 1 1 1 0 0 0 0 0 1 1 1 1 1 1;
+    0 0 1 1 0 0 1 0 1 0 1 0 0 1 0 1 1 1 1 1 0 0 0 1 0;
+    1 1 1 1 1 1 0 0 0 0 1 1 1 1 0 0 0 0 0 1 1 1 1 1 0;
+    1 1 1 1 1 1 0 0 0 0 1 1 1 1 1 1 0 0 0 1 1 1 1 1 1;
+    1 1 1 1 1 0 0 0 0 1 0 0 0 1 0 0 0 1 0 0 0 0 1 0 0;
+    1 1 1 1 1 1 0 0 0 1 1 1 1 1 1 1 0 0 0 1 1 1 1 1 1;
+    1 1 1 1 1 1 0 0 0 1 1 1 1 1 1 0 0 0 0 1 1 1 1 1 1;
+    # ——— variant b ———
+    1 1 1 1 0 1 0 0 1 0 1 0 0 1 0 1 0 0 1 0 1 1 1 1 0;
+    0 1 0 0 0 1 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0;
+    1 1 1 0 0 0 0 0 1 0 0 1 1 0 0 1 0 0 0 0 1 1 1 1 0;
+    1 1 1 1 0 0 0 0 1 0 0 1 1 0 0 0 0 0 1 0 1 1 1 1 0;
+    0 1 1 0 0 1 0 1 0 0 1 0 1 0 0 1 1 1 1 0 0 0 1 0 0;
+    1 1 1 1 0 1 0 0 0 0 1 1 1 0 0 0 0 0 1 0 1 1 1 0 0;
+    1 1 1 1 0 1 0 0 0 0 1 1 1 1 0 1 0 0 1 0 1 1 1 1 0;
+    1 1 1 1 0 0 0 0 1 0 0 0 1 0 0 0 1 0 0 0 0 1 0 0 0;
+    1 1 1 1 0 1 0 0 1 0 1 1 1 1 0 1 0 0 1 0 1 1 1 1 0;
+    1 1 1 1 0 1 0 0 1 0 1 1 1 1 0 0 0 0 1 0 1 1 1 1 0;
+    # ——— variant c ———
+    0 1 1 1 1 0 1 0 0 1 0 1 0 0 1 0 1 0 0 1 0 1 1 1 1;
+    0 0 0 1 0 0 0 1 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0;
+    0 1 1 1 0 0 0 0 0 1 0 0 1 1 0 0 1 0 0 0 0 1 1 1 1;
+    0 1 1 1 1 0 0 0 0 1 0 0 1 1 0 0 0 0 0 1 0 1 1 1 1;
+    0 0 1 1 0 0 1 0 1 0 0 1 0 1 0 0 1 1 1 1 0 0 0 1 0;
+    0 1 1 1 1 0 1 0 0 0 0 1 1 1 0 0 0 0 0 1 0 1 1 1 0;
+    0 1 1 1 1 0 1 0 0 0 0 1 1 1 1 0 1 0 0 1 0 1 1 1 1;
+    0 1 1 1 1 0 0 0 0 1 0 0 0 1 0 0 0 1 0 0 0 0 1 0 0;
+    0 1 1 1 1 0 1 0 0 1 0 1 1 1 1 0 1 0 0 1 0 1 1 1 1;
+    0 1 1 1 1 0 1 0 0 1 0 1 1 1 1 0 0 0 0 1 0 1 1 1 1;
+]
+const LABELS = [0,1,2,3,4,5,6,7,8,9, 0,1,2,3,4,5,6,7,8,9, 0,1,2,3,4,5,6,7,8,9]
+
+plts = []
+for i in 1:30
+    grid = reshape(PIXELS[i,:], 5, 5)
+    p = heatmap(grid,
+        color=:grays, clim=(0,1),
+        aspect_ratio=1, axis=false, ticks=false,
+        colorbar=false,
+        title=string(LABELS[i]),
+        titlefontsize=10,
+        yflip=true,
+        framestyle=:none)
+    push!(plts, p)
+end
+plot(plts..., layout=(3, 10), size=(700, 240))
+```
+
+
+## Input Encoding
+
+Each 5×5 grid is read **row by row** into $a = (a_1, \ldots, a_{25}) \in \{0,1\}^{25}$:
+
+<table style="table-layout: fixed!important;width:700px;">
+<tr style="border: 0;border-style:hidden;">
+<td style="vertical-align: middle;padding:10px;">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="120" height="120">
+<rect x="0"  y="0"  width="20" height="20" fill="black" stroke="gray" stroke-width="1"/>
+<rect x="20" y="0"  width="20" height="20" fill="black" stroke="gray" stroke-width="1"/>
+<rect x="40" y="0"  width="20" height="20" fill="white" stroke="gray" stroke-width="1"/>
+<rect x="60" y="0"  width="20" height="20" fill="black" stroke="gray" stroke-width="1"/>
+<rect x="80" y="0"  width="20" height="20" fill="black" stroke="gray" stroke-width="1"/>
+<rect x="0"  y="20" width="20" height="20" fill="black" stroke="gray" stroke-width="1"/>
+<rect x="20" y="20" width="20" height="20" fill="white" stroke="gray" stroke-width="1"/>
+<rect x="40" y="20" width="20" height="20" fill="white" stroke="gray" stroke-width="1"/>
+<rect x="60" y="20" width="20" height="20" fill="black" stroke="gray" stroke-width="1"/>
+<rect x="80" y="20" width="20" height="20" fill="black" stroke="gray" stroke-width="1"/>
+<rect x="0"  y="40" width="20" height="20" fill="black" stroke="gray" stroke-width="1"/>
+<rect x="20" y="40" width="20" height="20" fill="black" stroke="gray" stroke-width="1"/>
+<rect x="40" y="40" width="20" height="20" fill="white" stroke="gray" stroke-width="1"/>
+<rect x="60" y="40" width="20" height="20" fill="black" stroke="gray" stroke-width="1"/>
+<rect x="80" y="40" width="20" height="20" fill="black" stroke="gray" stroke-width="1"/>
+<rect x="0"  y="60" width="20" height="20" fill="black" stroke="gray" stroke-width="1"/>
+<rect x="20" y="60" width="20" height="20" fill="black" stroke="gray" stroke-width="1"/>
+<rect x="40" y="60" width="20" height="20" fill="white" stroke="gray" stroke-width="1"/>
+<rect x="60" y="60" width="20" height="20" fill="black" stroke="gray" stroke-width="1"/>
+<rect x="80" y="60" width="20" height="20" fill="black" stroke="gray" stroke-width="1"/>
+<rect x="0"  y="80" width="20" height="20" fill="black" stroke="gray" stroke-width="1"/>
+<rect x="20" y="80" width="20" height="20" fill="black" stroke="gray" stroke-width="1"/>
+<rect x="40" y="80" width="20" height="20" fill="white" stroke="gray" stroke-width="1"/>
+<rect x="60" y="80" width="20" height="20" fill="black" stroke="gray" stroke-width="1"/>
+<rect x="80" y="80" width="20" height="20" fill="black" stroke="gray" stroke-width="1"/>
+</svg>
+</td>
+<td style="vertical-align: middle;padding:0;font-size:50px;width:150px!important;">
+<i style="padding:30px;"> {{< fa arrow-right >}} </i>
+</td>
+<td style="vertical-align: middle;font-size:70%;">
+$$\begin{align}
+( & 0,0,1,0,0, \\
+  & 0,1,1,0,0, \\
+  & 0,0,1,0,0, \\
+  & 0,0,1,0,0, \\
+  & 0,0,1,0,0 )
+\end{align}$$
+</td>
+</tr>
+</table>
+
+
+## Output Encoding
+
+10 classes → **one-hot encoding** $y = (\hat{a}_0, \hat{a}_1, \ldots, \hat{a}_9) \in \{0,1\}^{10}$
+
+<table style="table-layout: fixed!important;width:700px;">
+<tr style="border: 0;border-style:hidden;">
+<td style="vertical-align: middle;padding:0;width:150px!important;">
+<svg width="120" height="120">
+  <rect width="120" height="120" style="fill:black;" />
+  <text x="60" y="100" font-size="120" text-anchor="middle" style="fill:white;stroke:white;">1</text>
+</svg>
+</td>
+<td style="vertical-align: middle;padding:0;font-size:50px;width:150px!important;">
+<i style="padding:30px;"> {{< fa arrow-right >}} </i>
+</td>
+<td style="vertical-align: middle;font-size:70%;">
+$(0,1,0,0,0,0,0,0,0,0)$
+</td>
+</tr>
+<tr style="border: 0;border-style:hidden;">
+<td style="vertical-align: middle;padding:0;width:150px!important;">
+<svg width="120" height="120">
+  <rect width="120" height="120" style="fill:black;" />
+  <text x="60" y="100" font-size="120" text-anchor="middle" style="fill:white;stroke:white;">7</text>
+</svg>
+</td>
+<td style="vertical-align: middle;padding:0;font-size:50px;width:150px!important;">
+<i style="padding:30px;"> {{< fa arrow-right >}} </i>
+</td>
+<td style="vertical-align: middle;font-size:70%;">
+$(0,0,0,0,0,0,0,1,0,0)$
+</td>
+</tr>
+</table>
+
+
+## Network Parameters
+
+$$\hat{a} = Wa + b$$
+
+| | Size | Count |
+|--|--|--|
+| $W$ | $10 \times 25$ | 250 weights |
+| $b$ | $10 \times 1$ | 10 biases |
+| **Total** | | **260 parameters** |
+
+::: {.fragment}
+With **30 training samples**: $30 \times 10 = 300$ equations for 260 unknowns
+
+→ **overdetermined**: no exact solution in general → minimize error
+:::
+
+
+## Loss Function
+
+For one training pair $(a, a^*)$ the **sample loss** is:
+
+$$\mathcal{L}_{(a,a^*)}(W,b) = \sum_{i=0}^{9} \big(\hat{a}_i - a^*_i\big)^2 = \sum_{i=0}^{9} \bigg(\sum_{j=1}^{25} w_{ij}\, a_j + b_i - a^*_i\bigg)^2$$
+
+The **average loss** over the full training set $S$ is:
+
+$$\mathcal{L}(W,b) = \frac{1}{|S|} \sum_{(a,a^*) \in S} \mathcal{L}_{(a,a^*)}(W,b)$$
+
+::: {.callout-note}
+We want to find $W$, $b$ that minimize $\mathcal{L}(W,b)$.
+:::
+
+
+## Gradients
+
+The gradient tells us the direction of **steepest ascent** of the loss. Moving **opposite** to it reduces the loss.
+
+**For weights** $w_{ij}$:
+
+$$\frac{\partial \mathcal{L}_{(a,a^*)}}{\partial w_{ij}} = \frac{\partial \mathcal{L}}{\partial \hat{a}_i} \cdot \frac{\partial \hat{a}_i}{\partial w_{ij}} = 2(\hat{a}_i - a^*_i) \cdot a_j$$
+
+**For biases** $b_i$:
+
+$$\frac{\partial \mathcal{L}_{(a,a^*)}}{\partial b_i} = \frac{\partial \mathcal{L}}{\partial \hat{a}_i} \cdot \frac{\partial \hat{a}_i}{\partial b_i} = 2(\hat{a}_i - a^*_i) \cdot 1$$
+
+::: {.callout-tip}
+In matrix form with $\delta = 2(\hat{a} - a^*)$: $\quad \nabla_W \mathcal{L} = \delta\, a^\top \quad$ and $\quad \nabla_b \mathcal{L} = \delta$
+:::
+
+
+## Julia: Training Data Setup
+
+```{julia}
+#| echo: true
+function one_hot(digit::Int)
+    y = zeros(Float64, 10)
+    y[digit + 1] = 1.0   # digit 0 → index 1, ..., digit 9 → index 10
+    return y
+end
+
+X_train = [PIXELS[i, :] for i in 1:30]        # 30 input vectors, each length 25
+Y_train = [one_hot(LABELS[i]) for i in 1:30]  # 30 one-hot output vectors, each length 10
+```
+
+
+## Julia: Predict and Loss
+
+```{julia}
+#| echo: true
+predict(W, b, x) = W * x + b             # forward pass: 10-dim output
+
+sample_loss(ŷ, y) = sum((ŷ .- y).^2)    # sum of squared errors for one sample
+```
+
+
+## Julia: Gradients
+
+```{julia}
+#| echo: true
+function sample_gradients(W, b, x, y)
+    ŷ = predict(W, b, x)
+    δ = 2.0 .* (ŷ .- y)    # ∂L/∂ŷ  (10-vector)
+    ∇W = δ * x'             # ∂L/∂W  (10×25 outer product)
+    ∇b = δ                  # ∂L/∂b  (10-vector)
+    return ∇W, ∇b
+end
+```
+
+
+## Julia: Gradient Descent
+
+```{julia}
+#| echo: true
+function gradient_descent(X, Y; η=0.1, tol=1e-3, maxiter=10_000)
+    W = randn(10, 25) .* 0.1
+    b = zeros(Float64, 10)
+    losses = Float64[]
+    for iter in 1:maxiter
+        ∇W = zeros(10, 25); ∇b = zeros(10); L = 0.0
+        for (x, y) in zip(X, Y)
+            gW, gb = sample_gradients(W, b, x, y)
+            ∇W .+= gW;  ∇b .+= gb
+            L  += sample_loss(predict(W, b, x), y)
+        end
+        ∇W ./= length(X);  ∇b ./= length(X);  L /= length(X)
+        push!(losses, L)
+        gnorm = norm(vcat(vec(∇W), ∇b))
+        if gnorm < tol
+            println("Converged at iteration $iter  (loss = $(round(L, digits=5)))")
+            break
+        end
+        W .-= η .* ∇W;  b .-= η .* ∇b
+    end
+    return W, b, losses
+end
+```
+
+
+## Training
+
+```{julia}
+#| echo: true
+using Random
+Random.seed!(42)
+W_opt, b_opt, loss_history = gradient_descent(X_train, Y_train)
+```
+
+
+## Loss over Iterations
+
+```{julia}
+#| echo: false
+#| fig-align: center
+plot(loss_history,
+    xlabel = "Iteration",
+    ylabel = "Average Loss",
+    title  = "Gradient Descent Convergence",
+    legend = false,
+    lw = 2,
+    color  = :steelblue,
+    size   = (650, 350))
+```
+
+
+## Training Accuracy
+
+```{julia}
+#| echo: true
+function classify(W, b, x)
+    scores = predict(W, b, x)
+    return argmax(scores) - 1   # convert 1-indexed back to digit label
+end
+
+correct = sum(classify(W_opt, b_opt, x) == LABELS[i] for (i, x) in enumerate(X_train))
+println("Training accuracy: $correct / $(length(X_train)) = $(round(100correct/length(X_train), digits=1))%")
+```
+
+
+## Learned Weights
+
+Each row of $W$ is a 25-dim vector: visualised as a 5×5 "template" for each digit.
+
+```{julia}
+#| echo: false
+#| fig-align: center
+wplts = []
+for d in 0:9
+    w = reshape(W_opt[d+1, :], 5, 5)
+    p = heatmap(w,
+        color=:RdBu, aspect_ratio=1,
+        axis=false, ticks=false,
+        colorbar=false,
+        title="digit $d",
+        titlefontsize=9,
+        yflip=true,
+        framestyle=:none)
+    push!(wplts, p)
+end
+plot(wplts..., layout=(2, 5), size=(650, 280))
+```
