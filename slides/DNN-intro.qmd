@@ -729,6 +729,7 @@ for i in 1:30
         title=string(LABELS[i]),
         titlefontsize=10,
         yflip=true,
+        grid = true,
         framestyle=:none)
     push!(plts, p)
 end
@@ -825,7 +826,7 @@ $(0,0,0,0,0,0,0,1,0,0)$
 
 ## Network Parameters
 
-$$\hat{y} = Wx + b$$
+$$y = Wx + b$$
 
 | | Size | Count |
 |--|--|--|
@@ -882,8 +883,10 @@ function one_hot(digit::Int)
     return y
 end
 
-X_train = [PIXELS[i, :] for i in 1:30]        # 30 input vectors, each length 25
-Y_train = [one_hot(LABELS[i]) for i in 1:30]  # 30 one-hot output vectors, each length 10
+X_train = [PIXELS[i, :] for i in 1:30] ;       # 30 input vectors, each length 25
+Y_train = [one_hot(LABELS[i]) for i in 1:30];  # 30 one-hot output vectors, each length 10
+@show Y_train[2,:] # show row 2 of output
+@show X_train[2,:]; # show row 2 of input
 ```
 
 
@@ -980,6 +983,35 @@ end
 
 correct = sum(classify(W_opt, b_opt, x) == LABELS[i] for (i, x) in enumerate(X_train))
 println("Training accuracy: $correct / $(length(X_train)) = $(round(100correct/length(X_train), digits=1))%")
+```
+
+
+## Prediction Scores
+
+```{julia}
+#| echo: false
+#| fig-align: center
+# Score matrix: one row per training sample, one column per digit class
+all_scores = reduce(vcat, [predict(W_opt, b_opt, x)' for x in X_train])  # 30×10
+
+# Sort samples by true label so each digit group is contiguous
+perm = sortperm(LABELS)
+sorted_scores = all_scores[perm, :]'  # now 10×30: digit on y-axis, sample on x-axis
+
+p = heatmap(sorted_scores,
+    color = :Blues,
+    yticks = (1:10, string.(0:9)),
+    xticks = false,
+    ylabel = "Digit class",
+    xlabel = "Training samples  (3 per digit, grouped left→right: 0…9)",
+    title  = "Prediction scores — correct digit always scores highest",
+    size   = (700, 320))
+
+# White dividers between digit groups
+for i in 1:9
+    vline!([i*3 + 0.5], color=:white, lw=2, label=false)
+end
+p
 ```
 
 
