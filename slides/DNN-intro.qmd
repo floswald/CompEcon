@@ -496,7 +496,7 @@ Three hand-crafted variants (a, b, c) for each digit:
 ```{julia}
 #| echo: false
 #| fig-align: center
-using Plots
+using CairoMakie
 using LinearAlgebra
 
 # Pixel data: 30 × 25 matrix. Each row = one digit, pixels read row-by-row from the 5×5 grid.
@@ -537,21 +537,17 @@ const PIXELS = Float64[
 ]
 const LABELS = [0,1,2,3,4,5,6,7,8,9, 0,1,2,3,4,5,6,7,8,9, 0,1,2,3,4,5,6,7,8,9]
 
-plts = []
+fig = Figure(size=(700, 240))
 for i in 1:30
-    grid = reshape(PIXELS[i,:], 5, 5)'  # transpose: Julia reshape is column-major
-    p = heatmap(grid,
-        color=:grays, clim=(0,1),
-        aspect_ratio=1, axis=false, ticks=false,
-        colorbar=false,
-        title=string(LABELS[i]),
-        titlefontsize=10,
-        yflip=true,
-        grid = true,
-        framestyle=:none)
-    push!(plts, p)
+    row, col = divrem(i - 1, 10) .+ (1, 1)
+    ax = Axis(fig[row, col], title=string(LABELS[i]), titlesize=11,
+              aspect=DataAspect(), yreversed=true)
+    grid = reshape(PIXELS[i,:], 5, 5)'
+    heatmap!(ax, grid, colormap=:grays, colorrange=(0,1))
+    hidedecorations!(ax); hidespines!(ax)
 end
-plot(plts..., layout=(3, 10), size=(700, 240))
+rowgap!(fig.layout, 2); colgap!(fig.layout, 2)
+fig
 ```
 
 ## Input Encoding
@@ -721,14 +717,11 @@ W_opt, b_opt, loss_history = gradient_descent(X_train, Y_train)
 ```{julia}
 #| echo: false
 #| fig-align: center
-plot(loss_history,
-    xlabel = "Iteration",
-    ylabel = "Average Loss",
-    title  = "Gradient Descent Convergence",
-    legend = false,
-    lw = 2,
-    color  = :steelblue,
-    size   = (650, 350))
+fig = Figure(size=(650, 350))
+ax  = Axis(fig[1,1], xlabel="Iteration", ylabel="Average Loss",
+           title="Gradient Descent Convergence")
+lines!(ax, loss_history, color=:steelblue, linewidth=2)
+fig
 ```
 
 ## Training Accuracy
@@ -756,20 +749,17 @@ all_scores = reduce(vcat, [predict(W_opt, b_opt, x)' for x in X_train])  # 30×1
 perm = sortperm(LABELS)
 sorted_scores = all_scores[perm, :]'  # now 10×30: digit on y-axis, sample on x-axis
 
-p = heatmap(sorted_scores,
-    color = :Blues,
-    yticks = (1:10, string.(0:9)),
-    xticks = false,
-    ylabel = "Digit class",
+fig = Figure(size=(700, 320))
+ax  = Axis(fig[1,1],
     xlabel = "Training samples  (3 per digit, grouped left→right: 0…9)",
+    ylabel = "Digit class",
     title  = "Prediction scores — correct digit always scores highest",
-    size   = (700, 320))
-
-# White dividers between digit groups
-for i in 1:9
-    vline!([i*3 + 0.5], color=:white, lw=2, label=false)
-end
-p
+    yticks = (collect(1:10), string.(0:9)))
+hidexdecorations!(ax, label=false, grid=false)   # hide x ticks/labels, keep xlabel
+hm = heatmap!(ax, sorted_scores, colormap=:Blues)
+vlines!(ax, [i*3 + 0.5 for i in 1:9], color=:white, linewidth=2)
+Colorbar(fig[1,2], hm, label="score", width=12)
+fig
 ```
 
 ## Learned Weights
@@ -779,20 +769,19 @@ Each row of $W$ is a 25-dim vector: **red** = positive weight (pixel ON → high
 ```{julia}
 #| echo: false
 #| fig-align: center
-# Use a single symmetric color scale so all 10 digits are comparable
+# Use a single symmetric colour scale so all 10 digits are comparable
 lim = maximum(abs.(W_opt))
-wplts = []
+fig = Figure(size=(650, 280))
 for d in 0:9
-    w = reshape(W_opt[d+1, :], 5, 5)'  # transpose: Julia reshape is column-major
-    p = heatmap(w,
-        color=:RdBu, clim=(-lim, lim),  # symmetric so 0 → white (neutral)
-        aspect_ratio=1, axis=false, ticks=false,
-        colorbar=false,
-        title="digit $d",
-        titlefontsize=9,
-        yflip=true,
-        framestyle=:none)
-    push!(wplts, p)
+    row, col = divrem(d, 5) .+ (1, 1)
+    ax = Axis(fig[row, col], title="digit $d", titlesize=10,
+              aspect=DataAspect(), yreversed=true)
+    w = reshape(W_opt[d+1, :], 5, 5)'
+    heatmap!(ax, w, colormap=:RdBu, colorrange=(-lim, lim))
+    hidedecorations!(ax); hidespines!(ax)
 end
-plot(wplts..., layout=(2, 5), size=(650, 280))
+Colorbar(fig[1:2, 6], colormap=:RdBu, limits=(-lim, lim),
+         label="weight", width=12)
+rowgap!(fig.layout, 4); colgap!(fig.layout, 4)
+fig
 ```
