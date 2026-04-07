@@ -985,17 +985,19 @@ println("Training accuracy: $correct / $(length(X_train)) = $(round(100correct/l
 
 ## Learned Weights
 
-Each row of $W$ is a 25-dim vector: visualised as a 5×5 "template" for each digit.
+Each row of $W$ is a 25-dim vector: **red** = positive weight (pixel ON → higher score), **blue** = negative.
 
 ```{julia}
 #| echo: false
 #| fig-align: center
+# Use a single symmetric color scale so all 10 digits are comparable
+lim = maximum(abs.(W_opt))
 wplts = []
 for d in 0:9
     w = reshape(W_opt[d+1, :], 5, 5)'  # transpose: Julia reshape is column-major
     p = heatmap(w,
-        color=:RdBu, aspect_ratio=1,
-        axis=false, ticks=false,
+        color=:RdBu, clim=(-lim, lim),  # symmetric so 0 → white (neutral)
+        aspect_ratio=1, axis=false, ticks=false,
         colorbar=false,
         title="digit $d",
         titlefontsize=9,
