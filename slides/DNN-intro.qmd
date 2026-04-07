@@ -721,7 +721,7 @@ const LABELS = [0,1,2,3,4,5,6,7,8,9, 0,1,2,3,4,5,6,7,8,9, 0,1,2,3,4,5,6,7,8,9]
 
 plts = []
 for i in 1:30
-    grid = reshape(PIXELS[i,:], 5, 5)
+    grid = reshape(PIXELS[i,:], 5, 5)'  # transpose: Julia reshape is column-major
     p = heatmap(grid,
         color=:grays, clim=(0,1),
         aspect_ratio=1, axis=false, ticks=false,
@@ -738,7 +738,7 @@ plot(plts..., layout=(3, 10), size=(700, 240))
 
 ## Input Encoding
 
-Each 5×5 grid is read **row by row** into $a = (a_1, \ldots, a_{25}) \in \{0,1\}^{25}$:
+Each 5×5 grid is read **row by row** into $x = (x_1, \ldots, x_{25}) \in \{0,1\}^{25}$:
 
 <table style="table-layout: fixed!important;width:700px;">
 <tr style="border: 0;border-style:hidden;">
@@ -789,7 +789,7 @@ $$\begin{align}
 
 ## Output Encoding
 
-10 classes → **one-hot encoding** $y = (\hat{a}_0, \hat{a}_1, \ldots, \hat{a}_9) \in \{0,1\}^{10}$
+10 classes → **one-hot encoding** $y = (y_0, y_1, \ldots, y_9) \in \{0,1\}^{10}$
 
 <table style="table-layout: fixed!important;width:700px;">
 <tr style="border: 0;border-style:hidden;">
@@ -825,7 +825,7 @@ $(0,0,0,0,0,0,0,1,0,0)$
 
 ## Network Parameters
 
-$$\hat{a} = Wa + b$$
+$$\hat{y} = Wx + b$$
 
 | | Size | Count |
 |--|--|--|
@@ -842,13 +842,13 @@ With **30 training samples**: $30 \times 10 = 300$ equations for 260 unknowns
 
 ## Loss Function
 
-For one training pair $(a, a^*)$ the **sample loss** is:
+For one training pair $(x, y)$ the **sample loss** is:
 
-$$\mathcal{L}_{(a,a^*)}(W,b) = \sum_{i=0}^{9} \big(\hat{a}_i - a^*_i\big)^2 = \sum_{i=0}^{9} \bigg(\sum_{j=1}^{25} w_{ij}\, a_j + b_i - a^*_i\bigg)^2$$
+$$\mathcal{L}_{(x,y)}(W,b) = \sum_{i=0}^{9} \big(\hat{y}_i - y_i\big)^2 = \sum_{i=0}^{9} \bigg(\sum_{j=1}^{25} w_{ij}\, x_j + b_i - y_i\bigg)^2$$
 
 The **average loss** over the full training set $S$ is:
 
-$$\mathcal{L}(W,b) = \frac{1}{|S|} \sum_{(a,a^*) \in S} \mathcal{L}_{(a,a^*)}(W,b)$$
+$$\mathcal{L}(W,b) = \frac{1}{|S|} \sum_{(x,y) \in S} \mathcal{L}_{(x,y)}(W,b)$$
 
 ::: {.callout-note}
 We want to find $W$, $b$ that minimize $\mathcal{L}(W,b)$.
@@ -861,14 +861,14 @@ The gradient tells us the direction of **steepest ascent** of the loss. Moving *
 
 **For weights** $w_{ij}$:
 
-$$\frac{\partial \mathcal{L}_{(a,a^*)}}{\partial w_{ij}} = \frac{\partial \mathcal{L}}{\partial \hat{a}_i} \cdot \frac{\partial \hat{a}_i}{\partial w_{ij}} = 2(\hat{a}_i - a^*_i) \cdot a_j$$
+$$\frac{\partial \mathcal{L}_{(x,y)}}{\partial w_{ij}} = \frac{\partial \mathcal{L}}{\partial \hat{y}_i} \cdot \frac{\partial \hat{y}_i}{\partial w_{ij}} = 2(\hat{y}_i - y_i) \cdot x_j$$
 
 **For biases** $b_i$:
 
-$$\frac{\partial \mathcal{L}_{(a,a^*)}}{\partial b_i} = \frac{\partial \mathcal{L}}{\partial \hat{a}_i} \cdot \frac{\partial \hat{a}_i}{\partial b_i} = 2(\hat{a}_i - a^*_i) \cdot 1$$
+$$\frac{\partial \mathcal{L}_{(x,y)}}{\partial b_i} = \frac{\partial \mathcal{L}}{\partial \hat{y}_i} \cdot \frac{\partial \hat{y}_i}{\partial b_i} = 2(\hat{y}_i - y_i) \cdot 1$$
 
 ::: {.callout-tip}
-In matrix form with $\delta = 2(\hat{a} - a^*)$: $\quad \nabla_W \mathcal{L} = \delta\, a^\top \quad$ and $\quad \nabla_b \mathcal{L} = \delta$
+In matrix form with $\delta = 2(\hat{y} - y)$: $\quad \nabla_W \mathcal{L} = \delta\, x^\top \quad$ and $\quad \nabla_b \mathcal{L} = \delta$
 :::
 
 
@@ -992,7 +992,7 @@ Each row of $W$ is a 25-dim vector: visualised as a 5×5 "template" for each dig
 #| fig-align: center
 wplts = []
 for d in 0:9
-    w = reshape(W_opt[d+1, :], 5, 5)
+    w = reshape(W_opt[d+1, :], 5, 5)'  # transpose: Julia reshape is column-major
     p = heatmap(w,
         color=:RdBu, aspect_ratio=1,
         axis=false, ticks=false,
