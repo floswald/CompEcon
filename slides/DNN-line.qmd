@@ -1,0 +1,76 @@
+---
+title: Deep Learning 2
+format:
+  revealjs:
+    theme: _extensions/clean/clean.scss
+filters:
+  - fontawesome
+engine: julia
+---
+
+
+
+
+
+## An even simpler example: A Line
+
+* Extreme case: 1 input, 1 output. 
+* (Of course we don't *need* a neural network for that)
+
+```{julia}
+#| echo: true
+using DataFrames
+truth(x) = 3 + 2x  # true DGP
+# x for training and testing
+# notice: those are row vectors!
+x_train, x_test = hcat(0:5...), hcat(6:10...)
+# y too
+y_train, y_test = truth.(x_train), truth.(x_test)
+# dataframe looks nicer
+```
+
+
+## A line
+
+::: {.columns}
+::: {.column}
+### Training Data
+
+```{julia}
+DataFrame(x_train = x_train[:],y_train = y_train[:])
+```
+:::
+::: {.column}
+### Test Data
+
+```{julia}
+DataFrame(x_test = x_test[:],y_test = y_test[:])
+```
+:::
+:::
+<!-- end columns -->
+
+## A Line
+
+```{julia}
+#| echo: true
+using Flux
+
+# 1 layer, with 1 input and 1 output.
+model = Dense(1 => 1) 
+
+@show model.weight
+@show model.bias
+```
+
+Let's get a second object to predict outputs:
+
+```{julia}
+#| echo: true
+predict = Dense(1 => 1)
+predict(x_train)  # garbage
+```
+
+## A Line - Improving the Quality of Prediction
+
+<!-- https://rajgoel.github.io/course-machine-learning/?topic=02-lecture -->
