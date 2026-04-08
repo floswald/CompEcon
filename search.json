@@ -1474,7 +1474,7 @@
     "href": "slides/DNN-line.html#a-line-1",
     "title": "Deep Learning 2",
     "section": "A Line",
-    "text": "A Line\n\nusing Flux\n\n# 1 layer, with 1 input and 1 output.\nmodel = Dense(1 =&gt; 1) \n\n@show model.weight\n@show model.bias\n\nmodel.weight = Float32[-0.41249368;;]\nmodel.bias = Float32[0.0]\n\n\n1-element Vector{Float32}:\n 0.0\n\n\nLet’s get a second object to predict outputs:\n\npredict = Dense(1 =&gt; 1)\npredict(x_train)  # garbage\n\n1×6 Matrix{Float32}:\n 0.0  -1.51177  -3.02355  -4.53532  -6.0471  -7.55887"
+    "text": "A Line\n\nusing Flux\n\n# 1 layer, with 1 input and 1 output.\nmodel = Dense(1 =&gt; 1) \n\n@show model.weight\n@show model.bias\n\nmodel.weight = Float32[1.4652175;;]\nmodel.bias = Float32[0.0]\n\n\n1-element Vector{Float32}:\n 0.0\n\n\nLet’s get a second object to predict outputs:\n\npredict = Dense(1 =&gt; 1)\npredict(x_train)  # garbage\n\n1×6 Matrix{Float32}:\n 0.0  -0.773287  -1.54657  -2.31986  -3.09315  -3.86644"
   },
   {
     "objectID": "slides/DNN-line.html#a-line---improving-the-quality-of-prediction",
@@ -2343,7 +2343,7 @@
     "href": "lectures/lecture5.html",
     "title": "Dynamic Programming",
     "section": "",
-    "text": "We will start this lecture by studying the famous Job Search Model developed by McCall. We will use Sargent and Stachurski’s excellent slides below.\nWe will then continue with the well known cake eating problem. We showed probably the simplest way to solve for the optimal decision rule, on a discrete grid. We also showed that this can lead to really poor results, so implementation details matter here. We introduced uncertainty and we looked at an Euler Equation solver for a consumption savings problem.\n\n\n\nTopic\nNotebook\n\n\n\n\nMcCall’s Search Model\nSargent+Stachursky Slides Sargent+Stachursky Book\n\n\nDynamic Programming 1\ndownload notebook\n\n\nDynamic Programming 2\ndownload notebook\n\n\nEndogenous Grid Method (EGM)\ndownload notebook\n\n\nThe Shimer-Smith Model\ndownload notebook, rendered notebook\n\n\nThe Ayiagari Model\ndownload notebook\n\n\n\n\n\n\n© Florian Oswald, 2026",
+    "text": "We will start this lecture by studying the famous Job Search Model developed by McCall. We will use Sargent and Stachurski’s excellent slides below.\nWe will then continue with the well known cake eating problem. We showed probably the simplest way to solve for the optimal decision rule, on a discrete grid. We also showed that this can lead to really poor results, so implementation details matter here. We introduced uncertainty and we looked at an Euler Equation solver for a consumption savings problem.\n\n\n\nTopic\nNotebook\n\n\n\n\nMcCall’s Search Model\nSargent+Stachursky Slides Sargent+Stachursky Book notebook\n\n\nDynamic Programming 1\ndownload notebook\n\n\nDynamic Programming 2\ndownload notebook\n\n\nEndogenous Grid Method (EGM)\ndownload notebook\n\n\nThe Shimer-Smith Model\ndownload notebook, rendered notebook\n\n\nThe Ayiagari Model\ndownload notebook\n\n\n\n\n\n\n© Florian Oswald, 2026",
     "crumbs": [
       "Home",
       "Lectures",
