@@ -393,7 +393,7 @@
   {
     "objectID": "lectures/lecture10.html",
     "href": "lectures/lecture10.html",
-    "title": "Lecture 10: Dynamic Discrete Choice Models",
+    "title": "Dynamic Discrete Choice Models",
     "section": "",
     "text": "We gave an overview of discrete choice models on the board (also contained in the first notebook below)\nWe introduced the bus model.\nWe did talk about estimation of dynamic programming models. Here are some slides.\n\nHere are some notebooks!\n\n\n\nTopic\nNotebook\n\n\n\n\nSolving the Model\ndownload notebook\n\n\nEstimating the Model\ndownload notebook\n© Florian Oswald, 2026",
     "crumbs": [
@@ -405,7 +405,7 @@
   {
     "objectID": "lectures/lecture10.html#the-rust-bus-model",
     "href": "lectures/lecture10.html#the-rust-bus-model",
-    "title": "Lecture 10: Dynamic Discrete Choice Models",
+    "title": "Dynamic Discrete Choice Models",
     "section": "",
     "text": "We gave an overview of discrete choice models on the board (also contained in the first notebook below)\nWe introduced the bus model.\nWe did talk about estimation of dynamic programming models. Here are some slides.\n\nHere are some notebooks!\n\n\n\nTopic\nNotebook\n\n\n\n\nSolving the Model\ndownload notebook\n\n\nEstimating the Model\ndownload notebook",
     "crumbs": [
@@ -1138,14 +1138,14 @@
     "href": "slides/DNN-intro.html#taxonomy-details",
     "title": "Very Short Intro Deep Learning",
     "section": "Taxonomy details",
-    "text": "Taxonomy details"
+    "text": "Taxonomy details\n\n\n\n\n\n\n\n\n\n\nSupervised\nUnsupervised\nReinforcement\n\n\n\n\nData\nLabeled \\((x_i, y_i)\\) pairs\nUnlabeled \\(x_i\\) only\nReward signal \\(r_t\\)\n\n\nGoal\nLearn \\(f: x \\mapsto y\\)\nFind structure in \\(x\\)\nLearn policy \\(\\pi(a \\mid s)\\)\n\n\nOutput\nPrediction / class\nCluster / embedding\nAction sequence\n\n\nFeedback\nPrediction error\nNone (self-organized)\nDelayed reward"
   },
   {
     "objectID": "slides/DNN-intro.html#taxonomy-examples",
     "href": "slides/DNN-intro.html#taxonomy-examples",
     "title": "Very Short Intro Deep Learning",
     "section": "Taxonomy examples",
-    "text": "Taxonomy examples"
+    "text": "Taxonomy examples\n\n\nSupervised\n\nRegression: house price from features\nClassification: spam vs. not spam; digit recognition\nSequence: machine translation, speech-to-text\nVision: image classification (ImageNet), object detection\n\n\nUnsupervised\n\nClustering: customer segmentation (k-means)\nDimensionality reduction: PCA, autoencoders, t-SNE\nDensity estimation: GANs, VAEs, normalizing flows\nSelf-supervised: language model pre-training (GPT, BERT)\n\n\nReinforcement\n\nGames: AlphaGo, AlphaZero, Atari DQN\nRobotics: locomotion, manipulation\nEconomics: dynamic programming, optimal stopping\nLLMs: RLHF (fine-tuning with human feedback)"
   },
   {
     "objectID": "slides/DNN-intro.html#deep-learning---artificial-neural-networks-ann",
@@ -1474,7 +1474,7 @@
     "href": "slides/DNN-line.html#a-line-1",
     "title": "Deep Learning 2",
     "section": "A Line",
-    "text": "A Line\n\nusing Flux\n\n# 1 layer, with 1 input and 1 output.\nmodel = Dense(1 =&gt; 1) \n\n@show model.weight\n@show model.bias\n\nmodel.weight = Float32[1.6885177;;]\nmodel.bias = Float32[0.0]\n\n\n1-element Vector{Float32}:\n 0.0\n\n\nLet’s get a second object to predict outputs:\n\npredict = Dense(1 =&gt; 1)\npredict(x_train)  # garbage\n\n1×6 Matrix{Float32}:\n 0.0  -0.650697  -1.30139  -1.95209  -2.60279  -3.25349"
+    "text": "A Line\n\nusing Flux\n\n# 1 layer, with 1 input and 1 output.\nmodel = Dense(1 =&gt; 1) \n\n@show model.weight\n@show model.bias\n\nmodel.weight = Float32[-0.41249368;;]\nmodel.bias = Float32[0.0]\n\n\n1-element Vector{Float32}:\n 0.0\n\n\nLet’s get a second object to predict outputs:\n\npredict = Dense(1 =&gt; 1)\npredict(x_train)  # garbage\n\n1×6 Matrix{Float32}:\n 0.0  -1.51177  -3.02355  -4.53532  -6.0471  -7.55887"
   },
   {
     "objectID": "slides/DNN-line.html#a-line---improving-the-quality-of-prediction",

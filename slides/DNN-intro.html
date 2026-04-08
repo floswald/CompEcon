@@ -254,9 +254,77 @@
 </section>
 <section id="taxonomy-details" class="slide level2">
 <h2>Taxonomy details</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 18%">
+<col style="width: 27%">
+<col style="width: 27%">
+<col style="width: 28%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th><strong>Supervised</strong></th>
+<th><strong>Unsupervised</strong></th>
+<th><strong>Reinforcement</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Data</strong></td>
+<td>Labeled <span class="math inline">\((x_i, y_i)\)</span> pairs</td>
+<td>Unlabeled <span class="math inline">\(x_i\)</span> only</td>
+<td>Reward signal <span class="math inline">\(r_t\)</span></td>
+</tr>
+<tr class="even">
+<td><strong>Goal</strong></td>
+<td>Learn <span class="math inline">\(f: x \mapsto y\)</span></td>
+<td>Find structure in <span class="math inline">\(x\)</span></td>
+<td>Learn policy <span class="math inline">\(\pi(a \mid s)\)</span></td>
+</tr>
+<tr class="odd">
+<td><strong>Output</strong></td>
+<td>Prediction / class</td>
+<td>Cluster / embedding</td>
+<td>Action sequence</td>
+</tr>
+<tr class="even">
+<td><strong>Feedback</strong></td>
+<td>Prediction error</td>
+<td>None (self-organized)</td>
+<td>Delayed reward</td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="taxonomy-examples" class="slide level2">
 <h2>Taxonomy examples</h2>
+<div class="columns">
+<div class="column" style="width:33%;">
+<p><strong>Supervised</strong></p>
+<ul>
+<li><em>Regression:</em> house price from features</li>
+<li><em>Classification:</em> spam vs.&nbsp;not spam; digit recognition</li>
+<li><em>Sequence:</em> machine translation, speech-to-text</li>
+<li><em>Vision:</em> image classification (ImageNet), object detection</li>
+</ul>
+</div><div class="column" style="width:33%;">
+<p><strong>Unsupervised</strong></p>
+<ul>
+<li><em>Clustering:</em> customer segmentation (k-means)</li>
+<li><em>Dimensionality reduction:</em> PCA, autoencoders, t-SNE</li>
+<li><em>Density estimation:</em> GANs, VAEs, normalizing flows</li>
+<li><em>Self-supervised:</em> language model pre-training (GPT, BERT)</li>
+</ul>
+</div><div class="column" style="width:34%;">
+<p><strong>Reinforcement</strong></p>
+<ul>
+<li><em>Games:</em> AlphaGo, AlphaZero, Atari DQN</li>
+<li><em>Robotics:</em> locomotion, manipulation</li>
+<li><em>Economics:</em> dynamic programming, optimal stopping</li>
+<li><em>LLMs:</em> RLHF (fine-tuning with human feedback)</li>
+</ul>
+</div></div>
 </section>
 <section id="deep-learning---artificial-neural-networks-ann" class="slide level2">
 <h2>Deep learning - Artificial Neural Networks (ANN)</h2>
