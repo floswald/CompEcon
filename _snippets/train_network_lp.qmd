@@ -10,11 +10,6 @@ format:
     number-sections: true
     theme: cosmo
     highlight-style: github
-  pdf:
-    toc: true
-    number-sections: true
-    geometry: margin=2.5cm
-    fontsize: 11pt
 ---
 
 ## Introduction and Motivation
@@ -72,16 +67,14 @@ shortfall for service $r$: the extent to which service $r$ is not covered. We ca
 
 ### Model
 
-$$
-\begin{aligned}
+$$\begin{align}
 \min_{x, \delta} \quad & \sum_{r \in \mathcal{R}} w_r \, \delta_r \\[6pt]
 \text{subject to} \quad
 & \sum_{j \,:\, (i,j) \in \mathcal{A}} x_{ij} \leq k_i && \forall\, i \in \mathcal{I} \tag{1}\\[4pt]
 & x_{r} + \delta_r \geq 1 && \forall\, r \in \mathcal{R} \tag{2}\\[4pt]
 & x_{ij} \leq c_{ij} && \forall\, (i,j) \in \mathcal{A} \tag{3}\\[4pt]
 & x_{ij} \geq 0, \quad \delta_r \geq 0
-\end{aligned}
-$$
+\end{align}$$
 
 where in constraint (2), $x_r \equiv x_{i(r),j(r)}$ denotes the number of trains assigned to the arc of service $r$.
 

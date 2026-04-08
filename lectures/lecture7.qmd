@@ -1,5 +1,5 @@
 ---
-title: "Lecture 7: Parallel Computing"
+title: "Parallel Computing"
 engine: julia
 execute:
     freeze: auto  # re-render only when source changes

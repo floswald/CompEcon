@@ -1,5 +1,5 @@
 ---
-title: "Lecture 4: Optimization 2 and 3"
+title: "Optimization 2 and 3"
 ---
 
 We continued our exploration of optimization algorithms. We also talked about how to solve systems of equations arising in many economic models, and we showcased an integer programming problem based on my research with Marleen where we reallocate buses across garages in London. 🚌
