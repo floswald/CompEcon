@@ -8,6 +8,7 @@ filters:
 engine: julia
 execute:
   fig-format: svg
+  cache: true
 ---
 
 ## Purpose
@@ -42,7 +43,43 @@ execute:
 
 ## Taxonomy details
 
+|  | **Supervised** | **Unsupervised** | **Reinforcement** |
+|---|---|---|---|
+| **Data** | Labeled $(x_i, y_i)$ pairs | Unlabeled $x_i$ only | Reward signal $r_t$ |
+| **Goal** | Learn $f: x \mapsto y$ | Find structure in $x$ | Learn policy $\pi(a \mid s)$ |
+| **Output** | Prediction / class | Cluster / embedding | Action sequence |
+| **Feedback** | Prediction error | None (self-organized) | Delayed reward |
+
+: {tbl-colwidths="[18,27,27,28]"}
+
 ## Taxonomy examples
+
+::: {.columns}
+::: {.column width="33%"}
+**Supervised**
+
+- *Regression:* house price from features
+- *Classification:* spam vs. not spam; digit recognition
+- *Sequence:* machine translation, speech-to-text
+- *Vision:* image classification (ImageNet), object detection
+:::
+::: {.column width="33%"}
+**Unsupervised**
+
+- *Clustering:* customer segmentation (k-means)
+- *Dimensionality reduction:* PCA, autoencoders, t-SNE
+- *Density estimation:* GANs, VAEs, normalizing flows
+- *Self-supervised:* language model pre-training (GPT, BERT)
+:::
+::: {.column width="34%"}
+**Reinforcement**
+
+- *Games:* AlphaGo, AlphaZero, Atari DQN
+- *Robotics:* locomotion, manipulation
+- *Economics:* dynamic programming, optimal stopping
+- *LLMs:* RLHF (fine-tuning with human feedback)
+:::
+::::
 
 ## Deep learning - Artificial Neural Networks (ANN)
 

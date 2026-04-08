@@ -6,6 +6,8 @@ format:
 filters:
   - fontawesome
 engine: julia
+execute:
+  cache: true
 ---
 
 

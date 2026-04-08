@@ -9,7 +9,7 @@ We will then continue with the well known _cake eating_ problem. We showed proba
 
 Topic | Notebook 
 :-----: | :--------: 
-McCall's Search Model | [Sargent+Stachursky Slides](/assets/tex/sargent-stachursky1.pdf) [Sargent+Stachursky Book]([/assets/tex/sargent-stachursky1.pdf](https://dp.quantecon.org))
+McCall's Search Model | [Sargent+Stachursky Slides](/assets/tex/sargent-stachursky1.pdf) [Sargent+Stachursky Book]([/assets/tex/sargent-stachursky1.pdf](https://dp.quantecon.org)) [notebook](/notebooks/week6/McCall.jl)
 Dynamic Programming 1 | [download notebook](https://raw.githubusercontent.com/floswald/CompEcon/refs/heads/main/notebooks/week6/dp.jl) 
 Dynamic Programming 2 | [download notebook](https://raw.githubusercontent.com/floswald/CompEcon/refs/heads/main/notebooks/week6/dp2.jl)
 Endogenous Grid Method (EGM) | [download notebook](https://raw.githubusercontent.com/floswald/CompEcon/refs/heads/main/notebooks/week6/EGM.jl)
