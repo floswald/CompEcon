@@ -22,6 +22,7 @@ begin
 	using Plots
 	using LaTeXStrings
 	using PlutoUI
+	using PlutoTeachingTools
 end
 
 # ╔═╡ e03e7c40-2da9-11f1-a10a-9f6de2eed576
@@ -149,13 +150,13 @@ begin
 end
 
 # ╔═╡ a4f54653-14ee-44d4-8142-6909801c955d
-md"""
+aside(md"""
 Parameter | value
 --------- | -----
 β         | $(@bind beta Slider(0.01:0.01:0.99, show_value = true,default = 0.96))
 c         | $(@bind c Slider(0.0:0.1:50, show_value = true,default = 10))
 
-"""
+""")
 
 # ╔═╡ 3984347a-cd81-4daa-8e6b-713ec6f07b79
 let 
@@ -175,12 +176,14 @@ PLUTO_PROJECT_TOML_CONTENTS = """
 Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
 LaTeXStrings = "b964fa9f-0449-5b57-a5c2-d3ea65f4040f"
 Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
+PlutoTeachingTools = "661c6b06-c737-4d37-b85c-46df65de6f69"
 PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
 
 [compat]
 Distributions = "~0.25.123"
 LaTeXStrings = "~1.4.0"
 Plots = "~1.41.6"
+PlutoTeachingTools = "~0.4.7"
 PlutoUI = "~0.7.80"
 """
 
@@ -190,7 +193,7 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.12.5"
 manifest_format = "2.0"
-project_hash = "1fe39b0971fd85209a16cc5efe8592f22e330882"
+project_hash = "b59500e21a638f50048bb3eac56b036971b05a3a"
 
 [[deps.AbstractPlutoDingetjes]]
 deps = ["Pkg"]
@@ -873,6 +876,12 @@ version = "1.41.6"
     ImageInTerminal = "d8c32880-2388-543b-8c61-d9f865259254"
     Unitful = "1986cc42-f94f-5a68-af5c-568840ba703d"
 
+[[deps.PlutoTeachingTools]]
+deps = ["Downloads", "HypertextLiteral", "Latexify", "Markdown", "PlutoUI"]
+git-tree-sha1 = "90b41ced6bacd8c01bd05da8aed35c5458891749"
+uuid = "661c6b06-c737-4d37-b85c-46df65de6f69"
+version = "0.4.7"
+
 [[deps.PlutoUI]]
 deps = ["AbstractPlutoDingetjes", "Base64", "ColorTypes", "Dates", "Downloads", "FixedPointNumbers", "Hyperscript", "HypertextLiteral", "IOCapture", "InteractiveUtils", "Logging", "MIMEs", "Markdown", "Random", "Reexport", "URIs", "UUIDs"]
 git-tree-sha1 = "fbc875044d82c113a9dee6fc14e16cf01fd48872"
@@ -1460,7 +1469,7 @@ version = "1.13.0+0"
 
 # ╔═╡ Cell order:
 # ╟─e03e7c40-2da9-11f1-a10a-9f6de2eed576
-# ╠═62637bac-c8f3-4740-8758-e24751f8721b
+# ╟─62637bac-c8f3-4740-8758-e24751f8721b
 # ╠═bf7bfb2a-b4ef-4721-a164-df35fdad69d3
 # ╠═14f7240d-1b3c-4058-ab39-964d9ef8470c
 # ╠═39ff4a7d-cd3c-4248-8e0b-d04391043a9b
