@@ -243,12 +243,14 @@
 <li><a href="http://statlearning.com/" class="uri">http://statlearning.com/</a></li>
 <li><a href="https://bio322.epfl.ch/" class="uri">https://bio322.epfl.ch/</a></li>
 </ul></li>
+<li>There is a vibrant Econ Literature (see <a href="https://www.nber.org/system/files/working_papers/w34250/w34250.pdf">J Fernandez-Villaverde</a>)</li>
 <li>Julia Tools:
 <ul>
 <li><a href="https://juliaml.ai" class="uri">https://juliaml.ai</a></li>
 <li><a href="https://fluxml.ai" class="uri">https://fluxml.ai</a></li>
 <li><a href="https://juliaai.github.io/DataScienceTutorials.jl/#!">DataScienceTutorials.jl/</a></li>
 </ul></li>
+<li>Parts of this lecture are under copyright of <a href="https://github.com/rajgoel/course-machine-learning">Asvin Goel</a> under an MIT license.</li>
 </ul>
 </section>
 <section id="what-are-machine-learning-ml-ai-and-deep-learning" class="slide level2">
@@ -259,66 +261,151 @@
 <li>AI wants to develop algos that do not need to be programmed - they <em>learn</em> how to improve themselves.</li>
 <li>Deep Learning is a form of an <em>Artificial Neural Network</em> with layers.</li>
 </ul>
-<h3 id="deep-neural-networks">(Deep) Neural Networks?</h3>
+<div class="fragment">
+<h3 id="what-are-deep-neural-networks">What Are (Deep) Neural Networks?</h3>
 <ul>
 <li>Take a <span class="math inline">\(p\)</span> dimensional input vector <span class="math inline">\(X\)</span> and build a nonlinear function <span class="math inline">\(f(X)\)</span> to predict output <span class="math inline">\(Y\)</span>.</li>
 <li><span class="math inline">\(f\)</span> obeys a certain structure, which - <strong>importantly</strong> - allows automatic differentiation during optimization and parameter search.</li>
 </ul>
+</div>
 </section>
-<section id="taxonomy" class="slide level2">
-<h2>Taxonomy</h2>
+<section id="a-taxonomy-of-learning" class="slide level2">
+<h2>A Taxonomy of <em>Learning</em></h2>
 <ol type="1">
-<li>supervised</li>
-<li>unsupervised</li>
-<li>RL</li>
+<li>Supervised Learning</li>
+<li>Unsupervised Learning</li>
+<li>Reinforcement Learning (RL)</li>
 </ol>
+<div class="fragment">
+<p>👉 Look more at the <a href="http://statlearning.com/">statlearning textbook</a> for more details!</p>
+</div>
 </section>
-<section id="taxonomy-details" class="slide level2">
-<h2>Taxonomy details</h2>
-<table class="caption-top">
+<section id="a-taxonomy-of-learning-1" class="slide level2">
+<h2>A Taxonomy of <em>Learning</em></h2>
+<p><br></p>
+<table>
 <colgroup>
-<col style="width: 18%">
-<col style="width: 27%">
-<col style="width: 27%">
-<col style="width: 28%">
+<col style="width:18%">
+<col style="width:27%">
+<col style="width:27%">
+<col style="width:28%">
 </colgroup>
 <thead>
-<tr class="header">
-<th></th>
-<th><strong>Supervised</strong></th>
-<th><strong>Unsupervised</strong></th>
-<th><strong>Reinforcement</strong></th>
+<tr>
+<th>
+</th>
+<th>
+<strong>Supervised</strong>
+</th>
+<th>
+<strong>Unsupervised</strong>
+</th>
+<th>
+<strong>Reinforcement</strong>
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td><strong>Data</strong></td>
-<td>Labeled <span class="math inline">\((x_i, y_i)\)</span> pairs</td>
-<td>Unlabeled <span class="math inline">\(x_i\)</span> only</td>
-<td>Reward signal <span class="math inline">\(r_t\)</span></td>
+<tr class="fragment">
+<td>
+<strong>Data</strong>
+</td>
+<td>
+Labeled <span class="math inline">\((x_i, y_i)\)</span> pairs
+</td>
+<td>
+Unlabeled <span class="math inline">\(x_i\)</span> only
+</td>
+<td>
+Payoff/Utility
+</td>
 </tr>
-<tr class="even">
-<td><strong>Goal</strong></td>
-<td>Learn <span class="math inline">\(f: x \mapsto y\)</span></td>
-<td>Find structure in <span class="math inline">\(x\)</span></td>
-<td>Learn policy <span class="math inline">\(\pi(a \mid s)\)</span></td>
+<tr class="fragment">
+<td>
+<strong>Goal</strong>
+</td>
+<td>
+Learn <span class="math inline">\(f: x \mapsto y\)</span>
+</td>
+<td>
+Find structure in <span class="math inline">\(x\)</span>
+</td>
+<td>
+Learn policy <span class="math inline">\(\pi(a \mid s)\)</span>
+</td>
 </tr>
-<tr class="odd">
-<td><strong>Output</strong></td>
-<td>Prediction / class</td>
-<td>Cluster / embedding</td>
-<td>Action sequence</td>
+<tr class="fragment">
+<td>
+<strong>Output</strong>
+</td>
+<td>
+Prediction / class
+</td>
+<td>
+Cluster / embedding
+</td>
+<td>
+Action sequence
+</td>
 </tr>
-<tr class="even">
-<td><strong>Feedback</strong></td>
-<td>Prediction error</td>
-<td>None (self-organized)</td>
-<td>Delayed reward</td>
+<tr class="fragment">
+<td>
+<strong>Feedback</strong>
+</td>
+<td>
+Prediction error
+</td>
+<td>
+None (self-organized)
+</td>
+<td>
+Lifetime Utility
+</td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="taxonomy-examples" class="slide level2">
+<h2>Taxonomy examples</h2>
+<div class="columns">
+<div class="column" style="width:33%;">
+<p><strong>Supervised</strong></p>
+<ul>
+<li><em>Regression:</em> house price from features</li>
+<li><em>Classification:</em> spam vs.&nbsp;not spam; digit recognition</li>
+<li><em>Sequence:</em> machine translation, speech-to-text</li>
+<li><em>Vision:</em> image classification (ImageNet), object detection</li>
+</ul>
+</div><div class="column" style="width:33%;">
+
+</div><div class="column" style="width:34%;">
+
+</div></div>
+</section>
+<section id="taxonomy-examples-1" class="slide level2">
+<h2>Taxonomy examples</h2>
+<div class="columns">
+<div class="column" style="width:33%;">
+<p><strong>Supervised</strong></p>
+<ul>
+<li><em>Regression:</em> house price from features</li>
+<li><em>Classification:</em> spam vs.&nbsp;not spam; digit recognition</li>
+<li><em>Sequence:</em> machine translation, speech-to-text</li>
+<li><em>Vision:</em> image classification (ImageNet), object detection</li>
+</ul>
+</div><div class="column" style="width:33%;">
+<p><strong>Unsupervised</strong></p>
+<ul>
+<li><em>Clustering:</em> customer segmentation (k-means)</li>
+<li><em>Dimensionality reduction:</em> PCA, autoencoders, t-SNE</li>
+<li><em>Density estimation:</em> GANs, VAEs, normalizing flows</li>
+<li><em>Self-supervised:</em> language model pre-training (GPT, BERT)</li>
+</ul>
+</div><div class="column" style="width:34%;">
+
+</div></div>
+</section>
+<section id="taxonomy-examples-2" class="slide level2">
 <h2>Taxonomy examples</h2>
 <div class="columns">
 <div class="column" style="width:33%;">

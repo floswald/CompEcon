@@ -1117,7 +1117,7 @@
     "href": "slides/DNN-intro.html#purpose",
     "title": "Very Short Intro To Deep Learning",
     "section": "Purpose",
-    "text": "Purpose\n\nI want to give you a crash course in Deep Learning with Julia\nWe don’t have the time to give a full overview of this huge field.\nI recommend the interested reader to consult\n\nhttp://statlearning.com/\nhttps://bio322.epfl.ch/\n\nJulia Tools:\n\nhttps://juliaml.ai\nhttps://fluxml.ai\nDataScienceTutorials.jl/",
+    "text": "Purpose\n\nI want to give you a crash course in Deep Learning with Julia\nWe don’t have the time to give a full overview of this huge field.\nI recommend the interested reader to consult\n\nhttp://statlearning.com/\nhttps://bio322.epfl.ch/\n\nThere is a vibrant Econ Literature (see J Fernandez-Villaverde)\nJulia Tools:\n\nhttps://juliaml.ai\nhttps://fluxml.ai\nDataScienceTutorials.jl/\n\nParts of this lecture are under copyright of Asvin Goel under an MIT license.",
     "crumbs": [
       "Home",
       "Lectures",
@@ -1129,7 +1129,7 @@
     "href": "slides/DNN-intro.html#what-are-machine-learning-ml-ai-and-deep-learning",
     "title": "Very Short Intro To Deep Learning",
     "section": "What are Machine Learning (ML), AI and Deep Learning?",
-    "text": "What are Machine Learning (ML), AI and Deep Learning?\n\nML is a branch of AI concerned with algo development.\nWe want to generalise models to unseen data.\nAI wants to develop algos that do not need to be programmed - they learn how to improve themselves.\nDeep Learning is a form of an Artificial Neural Network with layers.\n\n(Deep) Neural Networks?\n\nTake a \\(p\\) dimensional input vector \\(X\\) and build a nonlinear function \\(f(X)\\) to predict output \\(Y\\).\n\\(f\\) obeys a certain structure, which - importantly - allows automatic differentiation during optimization and parameter search.",
+    "text": "What are Machine Learning (ML), AI and Deep Learning?\n\nML is a branch of AI concerned with algo development.\nWe want to generalise models to unseen data.\nAI wants to develop algos that do not need to be programmed - they learn how to improve themselves.\nDeep Learning is a form of an Artificial Neural Network with layers.\n\n\nWhat Are (Deep) Neural Networks?\n\nTake a \\(p\\) dimensional input vector \\(X\\) and build a nonlinear function \\(f(X)\\) to predict output \\(Y\\).\n\\(f\\) obeys a certain structure, which - importantly - allows automatic differentiation during optimization and parameter search.",
     "crumbs": [
       "Home",
       "Lectures",
@@ -1137,11 +1137,11 @@
     ]
   },
   {
-    "objectID": "slides/DNN-intro.html#taxonomy",
-    "href": "slides/DNN-intro.html#taxonomy",
+    "objectID": "slides/DNN-intro.html#a-taxonomy-of-learning",
+    "href": "slides/DNN-intro.html#a-taxonomy-of-learning",
     "title": "Very Short Intro To Deep Learning",
-    "section": "Taxonomy",
-    "text": "Taxonomy\n\nsupervised\nunsupervised\nRL",
+    "section": "A Taxonomy of Learning",
+    "text": "A Taxonomy of Learning\n\nSupervised Learning\nUnsupervised Learning\nReinforcement Learning (RL)\n\n\n👉 Look more at the statlearning textbook for more details!",
     "crumbs": [
       "Home",
       "Lectures",
@@ -1149,11 +1149,11 @@
     ]
   },
   {
-    "objectID": "slides/DNN-intro.html#taxonomy-details",
-    "href": "slides/DNN-intro.html#taxonomy-details",
+    "objectID": "slides/DNN-intro.html#a-taxonomy-of-learning-1",
+    "href": "slides/DNN-intro.html#a-taxonomy-of-learning-1",
     "title": "Very Short Intro To Deep Learning",
-    "section": "Taxonomy details",
-    "text": "Taxonomy details\n\n\n\n\n\n\n\n\n\n\nSupervised\nUnsupervised\nReinforcement\n\n\n\n\nData\nLabeled \\((x_i, y_i)\\) pairs\nUnlabeled \\(x_i\\) only\nReward signal \\(r_t\\)\n\n\nGoal\nLearn \\(f: x \\mapsto y\\)\nFind structure in \\(x\\)\nLearn policy \\(\\pi(a \\mid s)\\)\n\n\nOutput\nPrediction / class\nCluster / embedding\nAction sequence\n\n\nFeedback\nPrediction error\nNone (self-organized)\nDelayed reward",
+    "section": "A Taxonomy of Learning",
+    "text": "A Taxonomy of Learning\n\n\n\n\n\n\n\n\n\n\n\n\n\nSupervised\n\n\nUnsupervised\n\n\nReinforcement\n\n\n\n\n\n\nData\n\n\nLabeled \\((x_i, y_i)\\) pairs\n\n\nUnlabeled \\(x_i\\) only\n\n\nPayoff/Utility\n\n\n\n\nGoal\n\n\nLearn \\(f: x \\mapsto y\\)\n\n\nFind structure in \\(x\\)\n\n\nLearn policy \\(\\pi(a \\mid s)\\)\n\n\n\n\nOutput\n\n\nPrediction / class\n\n\nCluster / embedding\n\n\nAction sequence\n\n\n\n\nFeedback\n\n\nPrediction error\n\n\nNone (self-organized)\n\n\nLifetime Utility",
     "crumbs": [
       "Home",
       "Lectures",
@@ -1163,6 +1163,30 @@
   {
     "objectID": "slides/DNN-intro.html#taxonomy-examples",
     "href": "slides/DNN-intro.html#taxonomy-examples",
+    "title": "Very Short Intro To Deep Learning",
+    "section": "Taxonomy examples",
+    "text": "Taxonomy examples\n\n\nSupervised\n\nRegression: house price from features\nClassification: spam vs. not spam; digit recognition\nSequence: machine translation, speech-to-text\nVision: image classification (ImageNet), object detection",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "15 - Intro to Deep Learning"
+    ]
+  },
+  {
+    "objectID": "slides/DNN-intro.html#taxonomy-examples-1",
+    "href": "slides/DNN-intro.html#taxonomy-examples-1",
+    "title": "Very Short Intro To Deep Learning",
+    "section": "Taxonomy examples",
+    "text": "Taxonomy examples\n\n\nSupervised\n\nRegression: house price from features\nClassification: spam vs. not spam; digit recognition\nSequence: machine translation, speech-to-text\nVision: image classification (ImageNet), object detection\n\n\nUnsupervised\n\nClustering: customer segmentation (k-means)\nDimensionality reduction: PCA, autoencoders, t-SNE\nDensity estimation: GANs, VAEs, normalizing flows\nSelf-supervised: language model pre-training (GPT, BERT)",
+    "crumbs": [
+      "Home",
+      "Lectures",
+      "15 - Intro to Deep Learning"
+    ]
+  },
+  {
+    "objectID": "slides/DNN-intro.html#taxonomy-examples-2",
+    "href": "slides/DNN-intro.html#taxonomy-examples-2",
     "title": "Very Short Intro To Deep Learning",
     "section": "Taxonomy examples",
     "text": "Taxonomy examples\n\n\nSupervised\n\nRegression: house price from features\nClassification: spam vs. not spam; digit recognition\nSequence: machine translation, speech-to-text\nVision: image classification (ImageNet), object detection\n\n\nUnsupervised\n\nClustering: customer segmentation (k-means)\nDimensionality reduction: PCA, autoencoders, t-SNE\nDensity estimation: GANs, VAEs, normalizing flows\nSelf-supervised: language model pre-training (GPT, BERT)\n\n\nReinforcement\n\nGames: AlphaGo, AlphaZero, Atari DQN\nRobotics: locomotion, manipulation\nEconomics: dynamic programming, optimal stopping\nLLMs: RLHF (fine-tuning with human feedback)",
