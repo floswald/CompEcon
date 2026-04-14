@@ -1,5 +1,15 @@
 ---
 title: Very Short Intro To Deep Learning
+author:
+  - name: Florian Oswald
+    url: https://floswald.github.io
+    email: florian.oswald@unito.it
+    orcid: 0000-0001-7737-2038
+    affiliations:
+      - University of Turin
+      - Collegio Carlo Alberto
+      - JPE Data Editor
+date: last-modified
 format:
   revealjs:
     theme: _extensions/clean/clean.scss
@@ -18,10 +28,12 @@ execute:
 -   I recommend the interested reader to consult
     -   <http://statlearning.com/>
     -   <https://bio322.epfl.ch/>
+-   There is a vibrant Econ Literature (see [J Fernandez-Villaverde](https://www.nber.org/system/files/working_papers/w34250/w34250.pdf))
 -   Julia Tools:
     -   <https://juliaml.ai>
     -   <https://fluxml.ai>
     -   [DataScienceTutorials.jl/](https://juliaai.github.io/DataScienceTutorials.jl/#!)
+- Parts of this lecture are under copyright of [Asvin Goel](https://github.com/rajgoel/course-machine-learning) under an MIT license.
 
 ## What are Machine Learning (ML), AI and Deep Learning?
 
@@ -30,29 +42,125 @@ execute:
 -   AI wants to develop algos that do not need to be programmed - they *learn* how to improve themselves.
 -   Deep Learning is a form of an *Artificial Neural Network* with layers.
 
-### (Deep) Neural Networks?
+:::{.fragment}
+
+### What Are (Deep) Neural Networks?
 
 -   Take a $p$ dimensional input vector $X$ and build a nonlinear function $f(X)$ to predict output $Y$.
 -   $f$ obeys a certain structure, which - **importantly** - allows automatic differentiation during optimization and parameter search.
+  
+:::
 
-## Taxonomy
+## A Taxonomy of *Learning*
 
-1.  supervised
-2.  unsupervised
-3.  RL
 
-## Taxonomy details
 
-|  | **Supervised** | **Unsupervised** | **Reinforcement** |
-|---|---|---|---|
-| **Data** | Labeled $(x_i, y_i)$ pairs | Unlabeled $x_i$ only | Reward signal $r_t$ |
-| **Goal** | Learn $f: x \mapsto y$ | Find structure in $x$ | Learn policy $\pi(a \mid s)$ |
-| **Output** | Prediction / class | Cluster / embedding | Action sequence |
-| **Feedback** | Prediction error | None (self-organized) | Delayed reward |
+1.  Supervised Learning
+2.  Unsupervised Learning
+3.  Reinforcement Learning (RL)
+  
+:::{.fragment}
+👉 Look more at the [statlearning textbook](http://statlearning.com/) for more details!
+:::
 
-: {tbl-colwidths="[18,27,27,28]"}
+## A Taxonomy of *Learning*
+
+<br>
+
+<table>
+<colgroup>
+  <col style="width:18%">
+  <col style="width:27%">
+  <col style="width:27%">
+  <col style="width:28%">
+</colgroup>
+<thead>
+<tr>
+  <th></th>
+  <th>**Supervised**</th>
+  <th>**Unsupervised**</th>
+  <th>**Reinforcement**</th>
+</tr>
+</thead>
+<tbody>
+<tr class="fragment">
+  <td>**Data**</td>
+  <td>Labeled $(x_i, y_i)$ pairs</td>
+  <td>Unlabeled $x_i$ only</td>
+  <td>Payoff/Utility</td>
+</tr>
+<tr class="fragment">
+  <td>**Goal**</td>
+  <td>Learn $f: x \mapsto y$</td>
+  <td>Find structure in $x$</td>
+  <td>Learn policy $\pi(a \mid s)$</td>
+</tr>
+<tr class="fragment">
+  <td>**Output**</td>
+  <td>Prediction / class</td>
+  <td>Cluster / embedding</td>
+  <td>Action sequence</td>
+</tr>
+<tr class="fragment">
+  <td>**Feedback**</td>
+  <td>Prediction error</td>
+  <td>None (self-organized)</td>
+  <td>Lifetime Utility</td>
+</tr>
+</tbody>
+</table>
+
 
 ## Taxonomy examples
+
+
+
+::: {.columns}
+::: {.column width="33%"}
+**Supervised**
+
+- *Regression:* house price from features
+- *Classification:* spam vs. not spam; digit recognition
+- *Sequence:* machine translation, speech-to-text
+- *Vision:* image classification (ImageNet), object detection
+:::
+::: {.column width="33%"}
+
+:::
+::: {.column width="34%"}
+
+:::
+::::
+
+## Taxonomy examples
+
+
+
+::: {.columns}
+::: {.column width="33%"}
+**Supervised**
+
+- *Regression:* house price from features
+- *Classification:* spam vs. not spam; digit recognition
+- *Sequence:* machine translation, speech-to-text
+- *Vision:* image classification (ImageNet), object detection
+:::
+::: {.column width="33%"}
+**Unsupervised**
+
+- *Clustering:* customer segmentation (k-means)
+- *Dimensionality reduction:* PCA, autoencoders, t-SNE
+- *Density estimation:* GANs, VAEs, normalizing flows
+- *Self-supervised:* language model pre-training (GPT, BERT)
+:::
+::: {.column width="34%"}
+
+:::
+::::
+
+## Taxonomy examples
+
+
 
 ::: {.columns}
 ::: {.column width="33%"}
