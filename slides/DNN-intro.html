@@ -12,7 +12,7 @@
 <link href="../site_libs/quarto-contrib/fontawesome6-6.7.2/latex-fontsize.css" rel="stylesheet"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.8.26">
 
-  <title>Computational Economics – Very Short Intro Deep Learning</title>
+  <title>Computational Economics – Very Short Intro To Deep Learning</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -198,7 +198,7 @@
       margin-right: 0; 
     }
   </style>
-<meta name="twitter:title" content="Very Short Intro Deep Learning – Computational Economics">
+<meta name="twitter:title" content="Very Short Intro To Deep Learning – Computational Economics">
 <meta name="twitter:card" content="summary">
 </head>
 <body class="quarto-light">
@@ -206,7 +206,7 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Very Short Intro Deep Learning</h1>
+  <h1 class="title">Very Short Intro To Deep Learning</h1>
 
 <div class="quarto-title-authors">
 </div>
@@ -975,56 +975,119 @@ Output:
 <section id="input-encoding-1" class="slide level2">
 <h2>Input Encoding</h2>
 <p>Each 5×5 grid is read <strong>row by row</strong> into <span class="math inline">\(x = (x_1, \ldots, x_{25}) \in \{0,1\}^{25}\)</span>:</p>
-<table style="table-layout: fixed!important;width:700px;">
-<tbody><tr style="border: 0;border-style:hidden;">
-<td style="vertical-align: middle;padding:10px;">
-<svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 100 100" width="120" height="120">
-<rect x="0" y="0" width="20" height="20" fill="black" stroke="gray" stroke-width="1"></rect> <rect x="20" y="0" width="20" height="20" fill="black" stroke="gray" stroke-width="1"></rect> <rect x="40" y="0" width="20" height="20" fill="white" stroke="gray" stroke-width="1"></rect> <rect x="60" y="0" width="20" height="20" fill="black" stroke="gray" stroke-width="1"></rect> <rect x="80" y="0" width="20" height="20" fill="black" stroke="gray" stroke-width="1"></rect> <rect x="0" y="20" width="20" height="20" fill="black" stroke="gray" stroke-width="1"></rect> <rect x="20" y="20" width="20" height="20" fill="white" stroke="gray" stroke-width="1"></rect> <rect x="40" y="20" width="20" height="20" fill="white" stroke="gray" stroke-width="1"></rect> <rect x="60" y="20" width="20" height="20" fill="black" stroke="gray" stroke-width="1"></rect> <rect x="80" y="20" width="20" height="20" fill="black" stroke="gray" stroke-width="1"></rect> <rect x="0" y="40" width="20" height="20" fill="black" stroke="gray" stroke-width="1"></rect> <rect x="20" y="40" width="20" height="20" fill="black" stroke="gray" stroke-width="1"></rect> <rect x="40" y="40" width="20" height="20" fill="white" stroke="gray" stroke-width="1"></rect> <rect x="60" y="40" width="20" height="20" fill="black" stroke="gray" stroke-width="1"></rect> <rect x="80" y="40" width="20" height="20" fill="black" stroke="gray" stroke-width="1"></rect> <rect x="0" y="60" width="20" height="20" fill="black" stroke="gray" stroke-width="1"></rect> <rect x="20" y="60" width="20" height="20" fill="black" stroke="gray" stroke-width="1"></rect> <rect x="40" y="60" width="20" height="20" fill="white" stroke="gray" stroke-width="1"></rect> <rect x="60" y="60" width="20" height="20" fill="black" stroke="gray" stroke-width="1"></rect> <rect x="80" y="60" width="20" height="20" fill="black" stroke="gray" stroke-width="1"></rect> <rect x="0" y="80" width="20" height="20" fill="black" stroke="gray" stroke-width="1"></rect> <rect x="20" y="80" width="20" height="20" fill="black" stroke="gray" stroke-width="1"></rect> <rect x="40" y="80" width="20" height="20" fill="white" stroke="gray" stroke-width="1"></rect> <rect x="60" y="80" width="20" height="20" fill="black" stroke="gray" stroke-width="1"></rect> <rect x="80" y="80" width="20" height="20" fill="black" stroke="gray" stroke-width="1"></rect>
-</svg>
-</td>
-<td style="vertical-align: middle;padding:0;font-size:50px;width:150px!important;">
-<i style="padding:30px;"> <i class="fa-solid fa-arrow-right" aria-label="arrow-right"></i> </i>
-</td>
-<td style="vertical-align: middle;font-size:70%;">
-<span class="math display">\[\begin{align}
+<div class="columns" style="display: flex; align-items: center;">
+<div class="column" style="width:45%;">
+<div id="12" class="cell" data-execution_count="1">
+<div class="cell-output cell-output-display" data-execution_count="1">
+<div>
+<figure>
+<p><img data-src="DNN-intro_files/figure-revealjs/cell-7-output-1.svg"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column" style="text-align: center;">
+<p><i class="fa-solid fa-arrow-right" aria-label="arrow-right"></i></p>
+</div><div class="column" style="width:45%;">
+<p><span class="math display">\[\begin{align}
 ( &amp; 0,0,1,0,0, \\
   &amp; 0,1,1,0,0, \\
   &amp; 0,0,1,0,0, \\
   &amp; 0,0,1,0,0, \\
   &amp; 0,0,1,0,0 )
-\end{align}\]</span>
-</td>
-</tr>
-</tbody></table>
+\end{align}\]</span></p>
+</div></div>
+<!-- end columns -->
+<div class="fragment">
+<div id="14" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource julia number-lines code-with-copy"><code class="sourceCode julia"><span id="cb14-1"><a></a>PIXELS[<span class="fl">2</span>,<span class="op">:</span>]<span class="ch">'  # transpose so that you can see it</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>1×25 adjoint(::Vector{Float64}) with eltype Float64:
+ 0.0  0.0  1.0  0.0  0.0  0.0  1.0  1.0  …  0.0  0.0  0.0  0.0  1.0  0.0  0.0</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="input-encoding-2" class="slide level2">
+<h2>Input encoding</h2>
+<p>Each 5×5 grid is read <strong>row by row</strong> into <span class="math inline">\(x = (x_1, \ldots, x_{25}) \in \{0,1\}^{25}\)</span>:</p>
+<div style="display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; height: 50vh; gap: 0em;">
+<div>
+<div id="16" class="cell" data-execution_count="1">
+<div class="cell-output cell-output-display" data-execution_count="1">
+<div>
+<figure>
+<p><img data-src="DNN-intro_files/figure-revealjs/cell-9-output-1.svg"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div>
+<div id="18" class="cell" data-execution_count="1">
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>5×5 adjoint(::Matrix{Float64}) with eltype Float64:
+ 1.0  1.0  1.0  0.0  0.0
+ 0.0  0.0  0.0  1.0  0.0
+ 0.0  1.0  1.0  0.0  0.0
+ 1.0  0.0  0.0  0.0  0.0
+ 1.0  1.0  1.0  1.0  0.0</code></pre>
+</div>
+</div>
+</div>
+<div>
+<div id="20" class="cell" data-execution_count="1">
+<div class="cell-output cell-output-display" data-execution_count="1">
+<div>
+<figure>
+<p><img data-src="DNN-intro_files/figure-revealjs/cell-11-output-1.svg"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div>
+<div id="22" class="cell" data-execution_count="1">
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>5×5 adjoint(::Matrix{Float64}) with eltype Float64:
+ 1.0  1.0  1.0  1.0  1.0
+ 1.0  0.0  0.0  0.0  1.0
+ 1.0  1.0  1.0  1.0  1.0
+ 1.0  0.0  0.0  0.0  1.0
+ 1.0  1.0  1.0  1.0  1.0</code></pre>
+</div>
+</div>
+</div>
+</div>
 </section>
 <section id="output-encoding-2" class="slide level2">
 <h2>Output Encoding</h2>
-<p>10 classes → <strong>one-hot encoding</strong> <span class="math inline">\(y = (y_0, y_1, \ldots, y_9) \in \{0,1\}^{10}\)</span></p>
-<table style="table-layout: fixed!important;width:700px;">
+<p>10 classes. <strong>One-hot encoding</strong> for <span class="math inline">\(y = (y_0,y_1,\dots,y_9) \in \{0,1\}^{10}\)</span></p>
+<table style="table-layout: fixed!important; width:700px">
 <tbody><tr style="border: 0;border-style:hidden;">
-<td style="vertical-align: middle;padding:0;width:150px!important;">
-<svg width="120" height="120">
-<rect width="120" height="120" style="fill:black;"></rect> <text x="60" y="100" font-size="120" text-anchor="middle" style="fill:white;stroke:white;">1</text>
+<td style="vertical-align: middle;padding:0;width:200px!important;">
+<svg width="200" height="200">
+<rect width="200" height="200" style="fill:black;"></rect> <text x="100" y="175" font-size="200" text-anchor="middle" style="fill:white;stroke:white;">1</text>
 </svg>
 </td>
-<td style="vertical-align: middle;padding:0;font-size:50px;width:150px!important;">
-<i style="padding:30px;"> <i class="fa-solid fa-arrow-right" aria-label="arrow-right"></i> </i>
+<td style="vertical-align: middle;padding:0;width:300px!important;">
+<i class="fas fa-arrow-right" style="font-size:100px;padding:100px;"></i>
 </td>
-<td style="vertical-align: middle;font-size:70%;">
-<span class="math inline">\((0,1,0,0,0,0,0,0,0,0)\)</span>
+<td style="vertical-align: middle;padding:0;padding:0;width:200px!important;">
+<span class="math display">\[(0,1,0,0,0,0,0,0,0,0)\]</span>
 </td>
 </tr>
 <tr style="border: 0;border-style:hidden;">
-<td style="vertical-align: middle;padding:0;width:150px!important;">
-<svg width="120" height="120">
-<rect width="120" height="120" style="fill:black;"></rect> <text x="60" y="100" font-size="120" text-anchor="middle" style="fill:white;stroke:white;">7</text>
+<td style="vertical-align: middle;padding:0;width:200px!important;">
+<svg width="200" height="200">
+<rect width="200" height="200" style="fill:black;"></rect> <text x="100" y="175" font-size="200" text-anchor="middle" style="fill:white;stroke:white;">3</text>
 </svg>
 </td>
-<td style="vertical-align: middle;padding:0;font-size:50px;width:150px!important;">
-<i style="padding:30px;"> <i class="fa-solid fa-arrow-right" aria-label="arrow-right"></i> </i>
+<td style="vertical-align: middle;padding:0;width:300px!important;">
+<i class="fas fa-arrow-right" style="font-size:100px;padding:100px;"></i>
 </td>
-<td style="vertical-align: middle;font-size:70%;">
-<span class="math inline">\((0,0,0,0,0,0,0,1,0,0)\)</span>
+<td style="vertical-align: middle;padding:0;padding:0;width:200px!important;">
+<span class="math display">\[(0,0,0,1,0,0,0,0,0,0)\]</span>
 </td>
 </tr>
 </tbody></table>
@@ -1066,9 +1129,9 @@ Output:
 <section id="loss-function" class="slide level2">
 <h2>Loss Function</h2>
 <p>For one training pair <span class="math inline">\((x, y)\)</span> the <strong>sample loss</strong> is:</p>
-<p><span class="math display">\[\mathcal{L}_{(x,y)}(W,b) = \sum_{i=0}^{9} \big(\hat{y}_i - y_i\big)^2 = \sum_{i=0}^{9} \bigg(\sum_{j=1}^{25} w_{ij}\, x_j + b_i - y_i\bigg)^2\]</span></p>
+<p><span class="math display">\[\mathbf{L}_{(x,y)}(W,b) = \sum_{i=0}^{9} \big(\hat{y}_i - y_i\big)^2 = \sum_{i=0}^{9} \bigg(\sum_{j=1}^{25} w_{ij}\, x_j + b_i - y_i\bigg)^2\]</span></p>
 <p>The <strong>average loss</strong> over the full training set <span class="math inline">\(S\)</span> is:</p>
-<p><span class="math display">\[\mathcal{L}(W,b) = \frac{1}{|S|} \sum_{(x,y) \in S} \mathcal{L}_{(x,y)}(W,b)\]</span></p>
+<p><span class="math display">\[\mathbf{L}(W,b) = \frac{1}{|S|} \sum_{(x,y) \in S} \mathbf{L}_{(x,y)}(W,b)\]</span></p>
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -1078,7 +1141,7 @@ Output:
 <p><strong>Note</strong></p>
 </div>
 <div class="callout-content">
-<p>We want to find <span class="math inline">\(W\)</span>, <span class="math inline">\(b\)</span> that minimize <span class="math inline">\(\mathcal{L}(W,b)\)</span>.</p>
+<p>We want to find <span class="math inline">\(W\)</span>, <span class="math inline">\(b\)</span> that minimize <span class="math inline">\(\mathbf{L}(W,b)\)</span>.</p>
 </div>
 </div>
 </div>
@@ -1087,9 +1150,9 @@ Output:
 <h2>Gradients</h2>
 <p>The gradient tells us the direction of <strong>steepest ascent</strong> of the loss. Moving <strong>opposite</strong> to it reduces the loss.</p>
 <p><strong>For weights</strong> <span class="math inline">\(w_{ij}\)</span>:</p>
-<p><span class="math display">\[\frac{\partial \mathcal{L}_{(x,y)}}{\partial w_{ij}} = \frac{\partial \mathcal{L}}{\partial \hat{y}_i} \cdot \frac{\partial \hat{y}_i}{\partial w_{ij}} = 2(\hat{y}_i - y_i) \cdot x_j\]</span></p>
+<p><span class="math display">\[\frac{\partial \mathbf{L}_{(x,y)}}{\partial w_{ij}} = \frac{\partial \mathbf{L}}{\partial \hat{y}_i} \cdot \frac{\partial \hat{y}_i}{\partial w_{ij}} = 2(\hat{y}_i - y_i) \cdot x_j\]</span></p>
 <p><strong>For biases</strong> <span class="math inline">\(b_i\)</span>:</p>
-<p><span class="math display">\[\frac{\partial \mathcal{L}_{(x,y)}}{\partial b_i} = \frac{\partial \mathcal{L}}{\partial \hat{y}_i} \cdot \frac{\partial \hat{y}_i}{\partial b_i} = 2(\hat{y}_i - y_i) \cdot 1\]</span></p>
+<p><span class="math display">\[\frac{\partial \mathbf{L}_{(x,y)}}{\partial b_i} = \frac{\partial \mathbf{L}}{\partial \hat{y}_i} \cdot \frac{\partial \hat{y}_i}{\partial b_i} = 2(\hat{y}_i - y_i) \cdot 1\]</span></p>
 </section>
 <section id="gradients-1" class="slide level2">
 <h2>Gradients</h2>
@@ -1106,8 +1169,8 @@ Output:
 <div class="callout-content">
 <p>In matrix form we have <span class="math inline">\(\delta = 2(\hat{y} - y)\)</span> - a vector of <code>length(y) = 10</code> here.</p>
 <ul>
-<li><span class="math inline">\(\nabla_W \mathcal{L} = \delta\, x^\top\)</span> : 10 by 30</li>
-<li><span class="math inline">\(\nabla_b \mathcal{L} = \delta\)</span> : 10</li>
+<li><span class="math inline">\(\nabla_W \mathbf{L} = \delta\, x^\top\)</span> : 10 by 30</li>
+<li><span class="math inline">\(\nabla_b \mathbf{L} = \delta\)</span> : 10</li>
 </ul>
 </div>
 </div>
@@ -1119,17 +1182,17 @@ Output:
 <li>We need to reshape the data so that it’s useful to our algorithm.</li>
 <li>We encode classes with one-hot as before</li>
 </ul>
-<div id="12" class="cell" data-execution_count="1">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource julia number-lines code-with-copy"><code class="sourceCode julia"><span id="cb14-1"><a></a><span class="kw">function</span> <span class="fu">one_hot</span>(digit<span class="op">::</span><span class="dt">Int</span>)</span>
-<span id="cb14-2"><a></a>    y <span class="op">=</span> <span class="fu">zeros</span>(<span class="dt">Float64</span>, <span class="fl">10</span>)</span>
-<span id="cb14-3"><a></a>    y[digit <span class="op">+</span> <span class="fl">1</span>] <span class="op">=</span> <span class="fl">1.0</span>   <span class="co"># digit 0 → index 1, ..., digit 9 → index 10</span></span>
-<span id="cb14-4"><a></a>    <span class="cf">return</span> y</span>
-<span id="cb14-5"><a></a><span class="kw">end</span></span>
-<span id="cb14-6"><a></a></span>
-<span id="cb14-7"><a></a>X_train <span class="op">=</span> [PIXELS[i, <span class="op">:</span>] for i <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">30</span>] ;       <span class="co"># 30 input vectors, each length 25</span></span>
-<span id="cb14-8"><a></a>Y_train <span class="op">=</span> [<span class="fu">one_hot</span>(LABELS[i]) for i <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">30</span>];  <span class="co"># 30 one-hot output vectors, each length 10</span></span>
-<span id="cb14-9"><a></a><span class="pp">@show</span> Y_train[<span class="fl">2</span>,<span class="op">:</span>] <span class="co"># show row 2 of output</span></span>
-<span id="cb14-10"><a></a><span class="pp">@show</span> X_train[<span class="fl">2</span>,<span class="op">:</span>]; <span class="co"># show row 2 of input</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="24" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource julia number-lines code-with-copy"><code class="sourceCode julia"><span id="cb18-1"><a></a><span class="kw">function</span> <span class="fu">one_hot</span>(digit<span class="op">::</span><span class="dt">Int</span>)</span>
+<span id="cb18-2"><a></a>    y <span class="op">=</span> <span class="fu">zeros</span>(<span class="dt">Float64</span>, <span class="fl">10</span>)</span>
+<span id="cb18-3"><a></a>    y[digit <span class="op">+</span> <span class="fl">1</span>] <span class="op">=</span> <span class="fl">1.0</span>   <span class="co"># digit 0 → index 1, ..., digit 9 → index 10</span></span>
+<span id="cb18-4"><a></a>    <span class="cf">return</span> y</span>
+<span id="cb18-5"><a></a><span class="kw">end</span></span>
+<span id="cb18-6"><a></a></span>
+<span id="cb18-7"><a></a>X_train <span class="op">=</span> [PIXELS[i, <span class="op">:</span>] for i <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">30</span>] ;       <span class="co"># 30 input vectors, each length 25</span></span>
+<span id="cb18-8"><a></a>Y_train <span class="op">=</span> [<span class="fu">one_hot</span>(LABELS[i]) for i <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">30</span>];  <span class="co"># 30 one-hot output vectors, each length 10</span></span>
+<span id="cb18-9"><a></a><span class="pp">@show</span> Y_train[<span class="fl">2</span>,<span class="op">:</span>] <span class="co"># show row 2 of output</span></span>
+<span id="cb18-10"><a></a><span class="pp">@show</span> X_train[<span class="fl">2</span>,<span class="op">:</span>]; <span class="co"># show row 2 of input</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Y_train[2, :] = [[0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]]
 X_train[2, :] = [[0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0]]</code></pre>
@@ -1142,16 +1205,16 @@ X_train[2, :] = [[0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.
 <li>We need functions to predict the output</li>
 <li>And to measure to deviation from the true output.</li>
 </ul>
-<div id="14" class="cell" data-execution_count="1">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource julia number-lines code-with-copy"><code class="sourceCode julia"><span id="cb16-1"><a></a><span class="fu">predict</span>(W, b, x) <span class="op">=</span> W <span class="op">*</span> x <span class="op">+</span> b             <span class="co"># forward pass: 10-dim output</span></span>
-<span id="cb16-2"><a></a></span>
-<span id="cb16-3"><a></a><span class="fu">sample_loss</span>(ŷ, y) <span class="op">=</span> <span class="fu">sum</span>((ŷ <span class="op">.-</span> y)<span class="op">.^</span><span class="fl">2</span>)    <span class="co"># sum of squared errors for one sample</span></span>
-<span id="cb16-4"><a></a></span>
-<span id="cb16-5"><a></a><span class="co"># Example: zero-weight model on digit-0 input</span></span>
-<span id="cb16-6"><a></a>W0 <span class="op">=</span> <span class="fu">zeros</span>(<span class="fl">10</span>, <span class="fl">25</span>);  b0 <span class="op">=</span> <span class="fu">zeros</span>(<span class="fl">10</span>)</span>
-<span id="cb16-7"><a></a>ŷ<span class="fl">0</span> <span class="op">=</span> <span class="fu">predict</span>(W0, b0, X_train[<span class="fl">1</span>])         <span class="co"># X_train[1] is digit 0 → ŷ0 = [0,…,0]</span></span>
-<span id="cb16-8"><a></a><span class="fu">println</span>(<span class="st">"loss (zero weights): "</span>, <span class="fu">sample_loss</span>(ŷ<span class="fl">0</span>,  Y_train[<span class="fl">1</span>]))  <span class="co"># (0-1)²+(0-0)²×9 = 1</span></span>
-<span id="cb16-9"><a></a><span class="fu">println</span>(<span class="st">"loss (perfect pred): "</span>, <span class="fu">sample_loss</span>(Y_train[<span class="fl">1</span>], Y_train[<span class="fl">1</span>]))  <span class="co"># = 0</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="26" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource julia number-lines code-with-copy"><code class="sourceCode julia"><span id="cb20-1"><a></a><span class="fu">predict</span>(W, b, x) <span class="op">=</span> W <span class="op">*</span> x <span class="op">+</span> b             <span class="co"># forward pass: 10-dim output</span></span>
+<span id="cb20-2"><a></a></span>
+<span id="cb20-3"><a></a><span class="fu">sample_loss</span>(ŷ, y) <span class="op">=</span> <span class="fu">sum</span>((ŷ <span class="op">.-</span> y)<span class="op">.^</span><span class="fl">2</span>)    <span class="co"># sum of squared errors for one sample</span></span>
+<span id="cb20-4"><a></a></span>
+<span id="cb20-5"><a></a><span class="co"># Example: zero-weight model on digit-0 input</span></span>
+<span id="cb20-6"><a></a>W0 <span class="op">=</span> <span class="fu">zeros</span>(<span class="fl">10</span>, <span class="fl">25</span>);  b0 <span class="op">=</span> <span class="fu">zeros</span>(<span class="fl">10</span>)</span>
+<span id="cb20-7"><a></a>ŷ<span class="fl">0</span> <span class="op">=</span> <span class="fu">predict</span>(W0, b0, X_train[<span class="fl">1</span>])         <span class="co"># X_train[1] is digit 0 → ŷ0 = [0,…,0]</span></span>
+<span id="cb20-8"><a></a><span class="fu">println</span>(<span class="st">"loss (zero weights): "</span>, <span class="fu">sample_loss</span>(ŷ<span class="fl">0</span>,  Y_train[<span class="fl">1</span>]))  <span class="co"># (0-1)²+(0-0)²×9 = 1</span></span>
+<span id="cb20-9"><a></a><span class="fu">println</span>(<span class="st">"loss (perfect pred): "</span>, <span class="fu">sample_loss</span>(Y_train[<span class="fl">1</span>], Y_train[<span class="fl">1</span>]))  <span class="co"># = 0</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>loss (zero weights): 1.0
 loss (perfect pred): 0.0</code></pre>
@@ -1160,23 +1223,23 @@ loss (perfect pred): 0.0</code></pre>
 </section>
 <section id="julia-gradients" class="slide level2">
 <h2>Julia: Gradients</h2>
-<div id="16" class="cell" data-execution_count="1">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource julia number-lines code-with-copy"><code class="sourceCode julia"><span id="cb18-1"><a></a><span class="kw">function</span> <span class="fu">sample_gradients</span>(W, b, x, y)</span>
-<span id="cb18-2"><a></a>    ŷ <span class="op">=</span> <span class="fu">predict</span>(W, b, x)</span>
-<span id="cb18-3"><a></a>    δ <span class="op">=</span> <span class="fl">2.0</span> <span class="op">.*</span> (ŷ <span class="op">.-</span> y)    <span class="co"># ∂L/∂ŷ  (10-vector)</span></span>
-<span id="cb18-4"><a></a>    ∇W <span class="op">=</span> δ <span class="op">*</span> x<span class="op">'</span>             <span class="co"># ∂L/∂W  (10×25 outer product)</span></span>
-<span id="cb18-5"><a></a>    ∇b <span class="op">=</span> δ                  <span class="co"># ∂L/∂b  (10-vector)</span></span>
-<span id="cb18-6"><a></a>    <span class="cf">return</span> ∇W, ∇b</span>
-<span id="cb18-7"><a></a><span class="kw">end</span></span>
-<span id="cb18-8"><a></a></span>
-<span id="cb18-9"><a></a><span class="co"># Example: same zero-weight model on digit-0 input</span></span>
-<span id="cb18-10"><a></a><span class="co"># ŷ=[0,…,0], y=[1,0,…,0]  →  δ = 2*(ŷ-y) = [-2,0,…,0]</span></span>
-<span id="cb18-11"><a></a>∇W0, ∇b0 <span class="op">=</span> <span class="fu">sample_gradients</span>(W0, b0, X_train[<span class="fl">1</span>], Y_train[<span class="fl">1</span>])</span>
-<span id="cb18-12"><a></a><span class="fu">println</span>(<span class="st">"∇W size : "</span>, <span class="fu">size</span>(∇W0))           <span class="co"># (10, 25)</span></span>
-<span id="cb18-13"><a></a><span class="fu">println</span>(<span class="st">"∇W[1,:]   : "</span>, ∇W0[<span class="fl">1</span>,<span class="op">:</span>])          <span class="co"># first output reacts how to this W0?</span></span>
-<span id="cb18-14"><a></a><span class="fu">println</span>(<span class="st">"∇W[2,:]   : "</span>, ∇W0[<span class="fl">2</span>,<span class="op">:</span>])          <span class="co"># second?</span></span>
-<span id="cb18-15"><a></a><span class="fu">println</span>(<span class="st">"∇b[1]   : "</span>, ∇b0[<span class="fl">1</span>])             <span class="co"># -2  → W and b for digit 0 must increase</span></span>
-<span id="cb18-16"><a></a><span class="fu">println</span>(<span class="st">"∇b[2]   : "</span>, ∇b0[<span class="fl">2</span>])             <span class="co">#  0  → digit-1 neuron unaffected</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="28" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource julia number-lines code-with-copy"><code class="sourceCode julia"><span id="cb22-1"><a></a><span class="kw">function</span> <span class="fu">sample_gradients</span>(W, b, x, y)</span>
+<span id="cb22-2"><a></a>    ŷ <span class="op">=</span> <span class="fu">predict</span>(W, b, x)</span>
+<span id="cb22-3"><a></a>    δ <span class="op">=</span> <span class="fl">2.0</span> <span class="op">.*</span> (ŷ <span class="op">.-</span> y)    <span class="co"># ∂L/∂ŷ  (10-vector)</span></span>
+<span id="cb22-4"><a></a>    ∇W <span class="op">=</span> δ <span class="op">*</span> x<span class="op">'</span>             <span class="co"># ∂L/∂W  (10×25 outer product)</span></span>
+<span id="cb22-5"><a></a>    ∇b <span class="op">=</span> δ                  <span class="co"># ∂L/∂b  (10-vector)</span></span>
+<span id="cb22-6"><a></a>    <span class="cf">return</span> ∇W, ∇b</span>
+<span id="cb22-7"><a></a><span class="kw">end</span></span>
+<span id="cb22-8"><a></a></span>
+<span id="cb22-9"><a></a><span class="co"># Example: same zero-weight model on digit-0 input</span></span>
+<span id="cb22-10"><a></a><span class="co"># ŷ=[0,…,0], y=[1,0,…,0]  →  δ = 2*(ŷ-y) = [-2,0,…,0]</span></span>
+<span id="cb22-11"><a></a>∇W0, ∇b0 <span class="op">=</span> <span class="fu">sample_gradients</span>(W0, b0, X_train[<span class="fl">1</span>], Y_train[<span class="fl">1</span>])</span>
+<span id="cb22-12"><a></a><span class="fu">println</span>(<span class="st">"∇W size : "</span>, <span class="fu">size</span>(∇W0))           <span class="co"># (10, 25)</span></span>
+<span id="cb22-13"><a></a><span class="fu">println</span>(<span class="st">"∇W[1,:]   : "</span>, ∇W0[<span class="fl">1</span>,<span class="op">:</span>])          <span class="co"># first output reacts how to this W0?</span></span>
+<span id="cb22-14"><a></a><span class="fu">println</span>(<span class="st">"∇W[2,:]   : "</span>, ∇W0[<span class="fl">2</span>,<span class="op">:</span>])          <span class="co"># second?</span></span>
+<span id="cb22-15"><a></a><span class="fu">println</span>(<span class="st">"∇b[1]   : "</span>, ∇b0[<span class="fl">1</span>])             <span class="co"># -2  → W and b for digit 0 must increase</span></span>
+<span id="cb22-16"><a></a><span class="fu">println</span>(<span class="st">"∇b[2]   : "</span>, ∇b0[<span class="fl">2</span>])             <span class="co">#  0  → digit-1 neuron unaffected</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>∇W size : (10, 25)
 ∇W[1,:]   : [-2.0, -2.0, -2.0, -2.0, -2.0, -2.0, -0.0, -0.0, -0.0, -2.0  …  -2.0, -0.0, -0.0, -0.0, -2.0, -2.0, -2.0, -2.0, -2.0, -2.0]
@@ -1188,37 +1251,37 @@ loss (perfect pred): 0.0</code></pre>
 </section>
 <section id="julia-gradient-descent" class="slide level2">
 <h2>Julia: Gradient Descent</h2>
-<div id="18" class="cell" data-execution_count="1">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource julia number-lines code-with-copy"><code class="sourceCode julia"><span id="cb20-1"><a></a><span class="kw">function</span> <span class="fu">gradient_descent</span>(X, Y; η<span class="op">=</span><span class="fl">0.1</span>, tol<span class="op">=</span><span class="fl">5e-3</span>, maxiter<span class="op">=</span><span class="fl">10_000</span>)</span>
-<span id="cb20-2"><a></a>    W <span class="op">=</span> <span class="fu">randn</span>(<span class="fl">10</span>, <span class="fl">25</span>) <span class="op">.*</span> <span class="fl">0.1</span>  <span class="co"># random starting Weights</span></span>
-<span id="cb20-3"><a></a>    b <span class="op">=</span> <span class="fu">zeros</span>(<span class="dt">Float64</span>, <span class="fl">10</span>)    <span class="co"># zero bias</span></span>
-<span id="cb20-4"><a></a>    losses <span class="op">=</span> <span class="dt">Float64</span>[]</span>
-<span id="cb20-5"><a></a>    <span class="cf">for</span> iter <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span>maxiter</span>
-<span id="cb20-6"><a></a>        <span class="co"># initiate gradients and loss at zero</span></span>
-<span id="cb20-7"><a></a>        ∇W <span class="op">=</span> <span class="fu">zeros</span>(<span class="fl">10</span>, <span class="fl">25</span>); ∇b <span class="op">=</span> <span class="fu">zeros</span>(<span class="fl">10</span>); L <span class="op">=</span> <span class="fl">0.0</span></span>
-<span id="cb20-8"><a></a>        <span class="co"># average sample gradient is average of each point's gradient</span></span>
-<span id="cb20-9"><a></a>        <span class="cf">for</span> (x, y) <span class="kw">in</span> <span class="fu">zip</span>(X, Y)</span>
-<span id="cb20-10"><a></a>            gW, gb <span class="op">=</span> <span class="fu">sample_gradients</span>(W, b, x, y)</span>
-<span id="cb20-11"><a></a>            ∇W <span class="op">.+=</span> gW;  ∇b <span class="op">.+=</span> gb <span class="co"># accumulate sum</span></span>
-<span id="cb20-12"><a></a>            L  <span class="op">+=</span> <span class="fu">sample_loss</span>(<span class="fu">predict</span>(W, b, x), y)</span>
-<span id="cb20-13"><a></a>        <span class="cf">end</span></span>
-<span id="cb20-14"><a></a>        <span class="co"># divide by n to get average</span></span>
-<span id="cb20-15"><a></a>        ∇W <span class="op">./=</span> <span class="fu">length</span>(X);  ∇b <span class="op">./=</span> <span class="fu">length</span>(X);  L <span class="op">/=</span> <span class="fu">length</span>(X)</span>
-<span id="cb20-16"><a></a>        <span class="fu">push!</span>(losses, L)</span>
-<span id="cb20-17"><a></a>        gnorm <span class="op">=</span> <span class="fu">norm</span>(<span class="fu">vcat</span>(<span class="fu">vec</span>(∇W), ∇b))</span>
-<span id="cb20-18"><a></a>        <span class="cf">if</span> iter <span class="op">%</span> <span class="fl">2000</span> <span class="op">==</span> <span class="fl">0</span></span>
-<span id="cb20-19"><a></a>            <span class="fu">println</span>(<span class="st">"iter </span><span class="sc">$</span>iter<span class="st">: loss=</span><span class="sc">$</span>(<span class="fu">round</span>(L,digits<span class="op">=</span><span class="fl">4</span>))<span class="st">  ‖∇‖=</span><span class="sc">$</span>(<span class="fu">round</span>(gnorm,digits<span class="op">=</span><span class="fl">4</span>))<span class="st">"</span>)</span>
-<span id="cb20-20"><a></a>        <span class="cf">end</span></span>
-<span id="cb20-21"><a></a>        <span class="cf">if</span> gnorm <span class="op">&lt;</span> tol</span>
-<span id="cb20-22"><a></a>            <span class="fu">println</span>(<span class="st">"Converged at iteration </span><span class="sc">$</span>iter<span class="st">  (loss=</span><span class="sc">$</span>(<span class="fu">round</span>(L,digits<span class="op">=</span><span class="fl">5</span>))<span class="st">)"</span>)</span>
-<span id="cb20-23"><a></a>            <span class="cf">break</span></span>
-<span id="cb20-24"><a></a>        <span class="cf">end</span></span>
-<span id="cb20-25"><a></a>        <span class="co"># update by the neg of gradient</span></span>
-<span id="cb20-26"><a></a>        <span class="co"># with stepsize η</span></span>
-<span id="cb20-27"><a></a>        W <span class="op">.-=</span> η <span class="op">.*</span> ∇W;  b <span class="op">.-=</span> η <span class="op">.*</span> ∇b</span>
-<span id="cb20-28"><a></a>    <span class="cf">end</span></span>
-<span id="cb20-29"><a></a>    <span class="cf">return</span> W, b, losses</span>
-<span id="cb20-30"><a></a><span class="kw">end</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="30" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource julia number-lines code-with-copy"><code class="sourceCode julia"><span id="cb24-1"><a></a><span class="kw">function</span> <span class="fu">gradient_descent</span>(X, Y; η<span class="op">=</span><span class="fl">0.1</span>, tol<span class="op">=</span><span class="fl">5e-3</span>, maxiter<span class="op">=</span><span class="fl">10_000</span>)</span>
+<span id="cb24-2"><a></a>    W <span class="op">=</span> <span class="fu">randn</span>(<span class="fl">10</span>, <span class="fl">25</span>) <span class="op">.*</span> <span class="fl">0.1</span>  <span class="co"># random starting Weights</span></span>
+<span id="cb24-3"><a></a>    b <span class="op">=</span> <span class="fu">zeros</span>(<span class="dt">Float64</span>, <span class="fl">10</span>)    <span class="co"># zero bias</span></span>
+<span id="cb24-4"><a></a>    losses <span class="op">=</span> <span class="dt">Float64</span>[]</span>
+<span id="cb24-5"><a></a>    <span class="cf">for</span> iter <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span>maxiter</span>
+<span id="cb24-6"><a></a>        <span class="co"># initiate gradients and loss at zero</span></span>
+<span id="cb24-7"><a></a>        ∇W <span class="op">=</span> <span class="fu">zeros</span>(<span class="fl">10</span>, <span class="fl">25</span>); ∇b <span class="op">=</span> <span class="fu">zeros</span>(<span class="fl">10</span>); L <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb24-8"><a></a>        <span class="co"># average sample gradient is average of each point's gradient</span></span>
+<span id="cb24-9"><a></a>        <span class="cf">for</span> (x, y) <span class="kw">in</span> <span class="fu">zip</span>(X, Y)</span>
+<span id="cb24-10"><a></a>            gW, gb <span class="op">=</span> <span class="fu">sample_gradients</span>(W, b, x, y)</span>
+<span id="cb24-11"><a></a>            ∇W <span class="op">.+=</span> gW;  ∇b <span class="op">.+=</span> gb <span class="co"># accumulate sum</span></span>
+<span id="cb24-12"><a></a>            L  <span class="op">+=</span> <span class="fu">sample_loss</span>(<span class="fu">predict</span>(W, b, x), y)</span>
+<span id="cb24-13"><a></a>        <span class="cf">end</span></span>
+<span id="cb24-14"><a></a>        <span class="co"># divide by n to get average</span></span>
+<span id="cb24-15"><a></a>        ∇W <span class="op">./=</span> <span class="fu">length</span>(X);  ∇b <span class="op">./=</span> <span class="fu">length</span>(X);  L <span class="op">/=</span> <span class="fu">length</span>(X)</span>
+<span id="cb24-16"><a></a>        <span class="fu">push!</span>(losses, L)</span>
+<span id="cb24-17"><a></a>        gnorm <span class="op">=</span> <span class="fu">norm</span>(<span class="fu">vcat</span>(<span class="fu">vec</span>(∇W), ∇b))</span>
+<span id="cb24-18"><a></a>        <span class="cf">if</span> iter <span class="op">%</span> <span class="fl">2000</span> <span class="op">==</span> <span class="fl">0</span></span>
+<span id="cb24-19"><a></a>            <span class="fu">println</span>(<span class="st">"iter </span><span class="sc">$</span>iter<span class="st">: loss=</span><span class="sc">$</span>(<span class="fu">round</span>(L,digits<span class="op">=</span><span class="fl">4</span>))<span class="st">  ‖∇‖=</span><span class="sc">$</span>(<span class="fu">round</span>(gnorm,digits<span class="op">=</span><span class="fl">4</span>))<span class="st">"</span>)</span>
+<span id="cb24-20"><a></a>        <span class="cf">end</span></span>
+<span id="cb24-21"><a></a>        <span class="cf">if</span> gnorm <span class="op">&lt;</span> tol</span>
+<span id="cb24-22"><a></a>            <span class="fu">println</span>(<span class="st">"Converged at iteration </span><span class="sc">$</span>iter<span class="st">  (loss=</span><span class="sc">$</span>(<span class="fu">round</span>(L,digits<span class="op">=</span><span class="fl">5</span>))<span class="st">)"</span>)</span>
+<span id="cb24-23"><a></a>            <span class="cf">break</span></span>
+<span id="cb24-24"><a></a>        <span class="cf">end</span></span>
+<span id="cb24-25"><a></a>        <span class="co"># update by the neg of gradient</span></span>
+<span id="cb24-26"><a></a>        <span class="co"># with stepsize η</span></span>
+<span id="cb24-27"><a></a>        W <span class="op">.-=</span> η <span class="op">.*</span> ∇W;  b <span class="op">.-=</span> η <span class="op">.*</span> ∇b</span>
+<span id="cb24-28"><a></a>    <span class="cf">end</span></span>
+<span id="cb24-29"><a></a>    <span class="cf">return</span> W, b, losses</span>
+<span id="cb24-30"><a></a><span class="kw">end</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
 <pre><code>gradient_descent (generic function with 1 method)</code></pre>
 </div>
@@ -1226,35 +1289,32 @@ loss (perfect pred): 0.0</code></pre>
 </section>
 <section id="training" class="slide level2">
 <h2>Training</h2>
-<div id="20" class="cell" data-execution_count="1">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource julia number-lines code-with-copy"><code class="sourceCode julia"><span id="cb22-1"><a></a><span class="im">using</span> <span class="bu">Random</span></span>
-<span id="cb22-2"><a></a><span class="bu">Random</span>.<span class="fu">seed!</span>(<span class="fl">42</span>)</span>
-<span id="cb22-3"><a></a>W_opt, b_opt, loss_history <span class="op">=</span> <span class="fu">gradient_descent</span>(X_train, Y_train)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="32" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource julia number-lines code-with-copy"><code class="sourceCode julia"><span id="cb26-1"><a></a><span class="im">using</span> <span class="bu">Random</span></span>
+<span id="cb26-2"><a></a><span class="bu">Random</span>.<span class="fu">seed!</span>(<span class="fl">42</span>)</span>
+<span id="cb26-3"><a></a>W_opt, b_opt, loss_history <span class="op">=</span> <span class="fu">gradient_descent</span>(X_train, Y_train);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>iter 2000: loss=0.051  ‖∇‖=0.0141
 iter 4000: loss=0.0285  ‖∇‖=0.008
 iter 6000: loss=0.0194  ‖∇‖=0.0057
 Converged at iteration 7105  (loss=0.01625)</code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="1">
-<pre><code>([0.024954405272433488 0.10103462636852445 … -0.009615882737666295 0.04507078899589985; 0.01220164685721495 -0.77494411572306 … 0.039409594009971564 0.11792847222642656; … ; -0.05840757748575216 -1.931417834635634 … -0.7885164579110587 -0.7540274516324795; 0.05753670747711951 1.7906154078888497 … 0.6650841233718201 0.5378077024882855], [-0.7386030929388344, 0.8713808134492664, 1.0479631584891742, -0.4213272342903272, -0.17575059091073758, 0.6909168366728906, 0.5544371885157264, -0.006059710975750204, -0.3858566025349016, -0.5227982978536051], [1.7334900051186315, 1.5099488687177467, 1.337382735891191, 1.20156718691709, 1.0927920912632845, 1.00429541931298, 0.931273406882633, 0.870246979979335, 0.8186503117884977, 0.7745593116688091  …  0.01627498396912141, 0.016272479141710948, 0.016269974888340786, 0.016267471208812122, 0.0162649681029263, 0.01626246557048477, 0.016259963611289074, 0.016257462225140882, 0.016254961411841944, 0.01625246117119416])</code></pre>
-</div>
 </div>
 </section>
 <section id="loss-over-iterations" class="slide level2">
 <h2>Loss over Iterations</h2>
 
-<img data-src="DNN-intro_files/figure-revealjs/cell-12-output-1.svg" class="quarto-figure quarto-figure-center r-stretch"></section>
+<img data-src="DNN-intro_files/figure-revealjs/cell-18-output-1.svg" class="quarto-figure quarto-figure-center r-stretch"></section>
 <section id="training-accuracy" class="slide level2">
 <h2>Training Accuracy</h2>
-<div id="24" class="cell" data-execution_count="1">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource julia number-lines code-with-copy"><code class="sourceCode julia"><span id="cb25-1"><a></a><span class="kw">function</span> <span class="fu">classify</span>(W, b, x)</span>
-<span id="cb25-2"><a></a>    scores <span class="op">=</span> <span class="fu">predict</span>(W, b, x)</span>
-<span id="cb25-3"><a></a>    <span class="cf">return</span> <span class="fu">argmax</span>(scores) <span class="op">-</span> <span class="fl">1</span>   <span class="co"># convert 1-indexed back to digit label</span></span>
-<span id="cb25-4"><a></a><span class="kw">end</span></span>
-<span id="cb25-5"><a></a></span>
-<span id="cb25-6"><a></a>correct <span class="op">=</span> <span class="fu">sum</span>(<span class="fu">classify</span>(W_opt, b_opt, x) <span class="op">==</span> LABELS[i] <span class="cf">for</span> (i, x) <span class="kw">in</span> <span class="fu">enumerate</span>(X_train))</span>
-<span id="cb25-7"><a></a><span class="fu">println</span>(<span class="st">"Training accuracy: </span><span class="sc">$</span>correct<span class="st"> / </span><span class="sc">$</span>(<span class="fu">length</span>(X_train))<span class="st"> = </span><span class="sc">$</span>(<span class="fu">round</span>(<span class="fl">100</span>correct<span class="op">/</span><span class="fu">length</span>(X_train), digits<span class="op">=</span><span class="fl">1</span>))<span class="st">%"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="36" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource julia number-lines code-with-copy"><code class="sourceCode julia"><span id="cb28-1"><a></a><span class="kw">function</span> <span class="fu">classify</span>(W, b, x)</span>
+<span id="cb28-2"><a></a>    scores <span class="op">=</span> <span class="fu">predict</span>(W, b, x)</span>
+<span id="cb28-3"><a></a>    <span class="cf">return</span> <span class="fu">argmax</span>(scores) <span class="op">-</span> <span class="fl">1</span>   <span class="co"># convert 1-indexed back to digit label</span></span>
+<span id="cb28-4"><a></a><span class="kw">end</span></span>
+<span id="cb28-5"><a></a></span>
+<span id="cb28-6"><a></a>correct <span class="op">=</span> <span class="fu">sum</span>(<span class="fu">classify</span>(W_opt, b_opt, x) <span class="op">==</span> LABELS[i] <span class="cf">for</span> (i, x) <span class="kw">in</span> <span class="fu">enumerate</span>(X_train))</span>
+<span id="cb28-7"><a></a><span class="fu">println</span>(<span class="st">"Training accuracy: </span><span class="sc">$</span>correct<span class="st"> / </span><span class="sc">$</span>(<span class="fu">length</span>(X_train))<span class="st"> = </span><span class="sc">$</span>(<span class="fu">round</span>(<span class="fl">100</span>correct<span class="op">/</span><span class="fu">length</span>(X_train), digits<span class="op">=</span><span class="fl">1</span>))<span class="st">%"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Training accuracy: 30 / 30 = 100.0%</code></pre>
 </div>
@@ -1263,15 +1323,15 @@ Converged at iteration 7105  (loss=0.01625)</code></pre>
 <section id="prediction-scores" class="slide level2">
 <h2>Prediction Scores</h2>
 
-<img data-src="DNN-intro_files/figure-revealjs/cell-14-output-1.svg" class="quarto-figure quarto-figure-center r-stretch"></section>
+<img data-src="DNN-intro_files/figure-revealjs/cell-20-output-1.svg" class="quarto-figure quarto-figure-center r-stretch"></section>
 <section id="predicted-scores" class="slide level2">
 <h2>Predicted Scores</h2>
 <ul>
 <li>Great!</li>
 <li>Notice though:</li>
 </ul>
-<div id="28" class="cell" data-execution_count="1">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource julia number-lines code-with-copy"><code class="sourceCode julia"><span id="cb27-1"><a></a>sorted_scores[<span class="fl">1</span><span class="op">:</span><span class="fl">5</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">5</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="40" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource julia number-lines code-with-copy"><code class="sourceCode julia"><span id="cb30-1"><a></a>sorted_scores[<span class="fl">1</span><span class="op">:</span><span class="fl">5</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">5</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
 <pre><code>5×5 Matrix{Float64}:
   1.0258       0.0427252  -0.0887751   0.168204   -0.0178768
@@ -1293,7 +1353,7 @@ Converged at iteration 7105  (loss=0.01625)</code></pre>
 <h2>Learned Weights</h2>
 <p>Each row of <span class="math inline">\(W\)</span> is a 25-dim vector: <strong>red</strong> = positive weight (pixel ON → higher score), <strong>blue</strong> = negative.</p>
 
-<img data-src="DNN-intro_files/figure-revealjs/cell-16-output-1.svg" class="quarto-figure quarto-figure-center r-stretch"></section></section>
+<img data-src="DNN-intro_files/figure-revealjs/cell-22-output-1.svg" class="quarto-figure quarto-figure-center r-stretch"></section></section>
 <section id="end" class="title-slide slide level1 center">
 <h1>END</h1>
 
