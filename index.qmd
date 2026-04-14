@@ -53,8 +53,8 @@ Section | Topic
 [11](lectures/lecture5.qmd)     | Dynamic Programming
 [12](lectures/lecture7.qmd)     | Parallel Computing
 [13](lectures/lecture8.qmd)     | Function Approximation
-[14](lectures/lecture9.qmd)     | Numerical Integration
-[15](lectures/lecture10.qmd)     | Dynamic Discrete Choice Models
+[14](lectures/lecture10.qmd)     | Dynamic Discrete Choice Models
+[15](slides/DNN-intro.qmd)     | Intro to Deep Learning
 
 
 

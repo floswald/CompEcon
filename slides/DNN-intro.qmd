@@ -1,5 +1,5 @@
 ---
-title: Very Short Intro Deep Learning
+title: Very Short Intro To Deep Learning
 format:
   revealjs:
     theme: _extensions/clean/clean.scss
@@ -749,12 +749,15 @@ const PIXELS = Float64[
 ]
 const LABELS = [0,1,2,3,4,5,6,7,8,9, 0,1,2,3,4,5,6,7,8,9, 0,1,2,3,4,5,6,7,8,9]
 
-fig = Figure(size=(700, 240))
-for i in 1:30
-    row, col = divrem(i - 1, 10) .+ (1, 1)
-    ax = Axis(fig[row, col], title=string(LABELS[i]), titlesize=11,
+function pixplotter!(fig,grid,i,j;label = nothing)
+    if isnothing(label)
+        ax = Axis(fig[i,j], 
               aspect=DataAspect(), yreversed=true)
-    grid = reshape(PIXELS[i,:], 5, 5)  # col-major: M[col,row]=pixel(row,col) ✓ for Makie
+    else
+        ax = Axis(fig[i,j], title=string(label), titlesize=11,
+              aspect=DataAspect(), yreversed=true)
+    end
+
     heatmap!(ax, grid, colormap=:grays, colorrange=(0,1))
     
     # draw pixel grid lines
@@ -764,49 +767,34 @@ for i in 1:30
     hidedecorations!(ax)
     hidespines!(ax)
 end
+
+fig = Figure(size=(700, 240))
+for i in 1:30
+    row, col = divrem(i - 1, 10) .+ (1, 1)
+    grid = reshape(PIXELS[i,:], 5, 5)  # col-major: M[col,row]=pixel(row,col) ✓ for Makie
+    pixplotter!(fig,grid,row,col,label = string(LABELS[i]))
+end
 rowgap!(fig.layout, 2); colgap!(fig.layout, 2)
 fig
 ```
+
 
 ## Input Encoding
 
 Each 5×5 grid is read **row by row** into $x = (x_1, \ldots, x_{25}) \in \{0,1\}^{25}$:
 
-<table style="table-layout: fixed!important;width:700px;">
-<tr style="border: 0;border-style:hidden;">
-<td style="vertical-align: middle;padding:10px;">
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="120" height="120">
-<rect x="0"  y="0"  width="20" height="20" fill="black" stroke="gray" stroke-width="1"/>
-<rect x="20" y="0"  width="20" height="20" fill="black" stroke="gray" stroke-width="1"/>
-<rect x="40" y="0"  width="20" height="20" fill="white" stroke="gray" stroke-width="1"/>
-<rect x="60" y="0"  width="20" height="20" fill="black" stroke="gray" stroke-width="1"/>
-<rect x="80" y="0"  width="20" height="20" fill="black" stroke="gray" stroke-width="1"/>
-<rect x="0"  y="20" width="20" height="20" fill="black" stroke="gray" stroke-width="1"/>
-<rect x="20" y="20" width="20" height="20" fill="white" stroke="gray" stroke-width="1"/>
-<rect x="40" y="20" width="20" height="20" fill="white" stroke="gray" stroke-width="1"/>
-<rect x="60" y="20" width="20" height="20" fill="black" stroke="gray" stroke-width="1"/>
-<rect x="80" y="20" width="20" height="20" fill="black" stroke="gray" stroke-width="1"/>
-<rect x="0"  y="40" width="20" height="20" fill="black" stroke="gray" stroke-width="1"/>
-<rect x="20" y="40" width="20" height="20" fill="black" stroke="gray" stroke-width="1"/>
-<rect x="40" y="40" width="20" height="20" fill="white" stroke="gray" stroke-width="1"/>
-<rect x="60" y="40" width="20" height="20" fill="black" stroke="gray" stroke-width="1"/>
-<rect x="80" y="40" width="20" height="20" fill="black" stroke="gray" stroke-width="1"/>
-<rect x="0"  y="60" width="20" height="20" fill="black" stroke="gray" stroke-width="1"/>
-<rect x="20" y="60" width="20" height="20" fill="black" stroke="gray" stroke-width="1"/>
-<rect x="40" y="60" width="20" height="20" fill="white" stroke="gray" stroke-width="1"/>
-<rect x="60" y="60" width="20" height="20" fill="black" stroke="gray" stroke-width="1"/>
-<rect x="80" y="60" width="20" height="20" fill="black" stroke="gray" stroke-width="1"/>
-<rect x="0"  y="80" width="20" height="20" fill="black" stroke="gray" stroke-width="1"/>
-<rect x="20" y="80" width="20" height="20" fill="black" stroke="gray" stroke-width="1"/>
-<rect x="40" y="80" width="20" height="20" fill="white" stroke="gray" stroke-width="1"/>
-<rect x="60" y="80" width="20" height="20" fill="black" stroke="gray" stroke-width="1"/>
-<rect x="80" y="80" width="20" height="20" fill="black" stroke="gray" stroke-width="1"/>
-</svg>
-</td>
-<td style="vertical-align: middle;padding:0;font-size:50px;width:150px!important;">
-<i style="padding:30px;"> {{< fa arrow-right >}} </i>
-</td>
-<td style="vertical-align: middle;font-size:70%;">
+:::{.columns style="display: flex; align-items: center;"}
+::: {.column width="45%"}
+```{julia}
+fig = Figure(size=(300, 300))
+pixplotter!(fig,reshape(PIXELS[2,:],5,5),1,1)
+fig
+```
+:::
+::: {.column width="5%" style="text-align: center;"}
+{{< fa arrow-right >}}
+:::
+::: {.column width="45%"}
 $$\begin{align}
 ( & 0,0,1,0,0, \\
   & 0,1,1,0,0, \\
@@ -814,44 +802,93 @@ $$\begin{align}
   & 0,0,1,0,0, \\
   & 0,0,1,0,0 )
 \end{align}$$
-</td>
-</tr>
-</table>
+:::
+:::
+<!-- end columns -->
+
+::: {.fragment}
+```{julia}
+#| echo: true
+PIXELS[2,:]'  # transpose so that you can see it
+```
+:::
+
+
+## Input encoding
+
+Each 5×5 grid is read **row by row** into $x = (x_1, \ldots, x_{25}) \in \{0,1\}^{25}$:
+
+
+:::{style="display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; height: 50vh; gap: 0em;"}
+
+::: {}
+```{julia}
+fig = Figure(size=(200,200))
+pixplotter!(fig,reshape(PIXELS[13,:],5,5),1,1)
+fig
+```
+:::
+
+::: {}
+```{julia}
+reshape(PIXELS[13,:],5,5)'
+```
+:::
+
+::: {}
+```{julia}
+fig = Figure(size=(200,200))
+pixplotter!(fig,reshape(PIXELS[9,:],5,5),1,1)
+fig
+```
+:::
+
+::: {}
+```{julia}
+reshape(PIXELS[9,:],5,5)'
+```
+:::
+
+:::
+
+
 
 ## Output Encoding
 
-10 classes → **one-hot encoding** $y = (y_0, y_1, \ldots, y_9) \in \{0,1\}^{10}$
+10 classes. **One-hot encoding** for $y = (y_0,y_1,\dots,y_9) \in \{0,1\}^{10}$
 
-<table style="table-layout: fixed!important;width:700px;">
+
+<table style="table-layout: fixed!important; width:700px">
 <tr style="border: 0;border-style:hidden;">
-<td style="vertical-align: middle;padding:0;width:150px!important;">
-<svg width="120" height="120">
-  <rect width="120" height="120" style="fill:black;" />
-  <text x="60" y="100" font-size="120" text-anchor="middle" style="fill:white;stroke:white;">1</text>
+<td style="vertical-align: middle;padding:0;width:200px!important;">
+<svg width="200" height="200">
+  <rect width="200" height="200" style="fill:black;" />
+  <text  x="100" y="175" font-size="200" text-anchor="middle"  style="fill:white;stroke:white;">1</text>
 </svg>
 </td>
-<td style="vertical-align: middle;padding:0;font-size:50px;width:150px!important;">
-<i style="padding:30px;"> {{< fa arrow-right >}} </i>
+<td style="vertical-align: middle;padding:0;width:300px!important;">
+<i class="fas fa-arrow-right" style="font-size:100px;padding:100px;"></i>
 </td>
-<td style="vertical-align: middle;font-size:70%;">
-$(0,1,0,0,0,0,0,0,0,0)$
+<td style="vertical-align: middle;padding:0;padding:0;width:200px!important;">
+$$(0,1,0,0,0,0,0,0,0,0)$$
 </td>
 </tr>
 <tr style="border: 0;border-style:hidden;">
-<td style="vertical-align: middle;padding:0;width:150px!important;">
-<svg width="120" height="120">
-  <rect width="120" height="120" style="fill:black;" />
-  <text x="60" y="100" font-size="120" text-anchor="middle" style="fill:white;stroke:white;">7</text>
+<td style="vertical-align: middle;padding:0;width:200px!important;">
+<svg width="200" height="200">
+  <rect width="200" height="200" style="fill:black;" />
+  <text  x="100" y="175" font-size="200" text-anchor="middle"  style="fill:white;stroke:white;">3</text>
 </svg>
 </td>
-<td style="vertical-align: middle;padding:0;font-size:50px;width:150px!important;">
-<i style="padding:30px;"> {{< fa arrow-right >}} </i>
+<td style="vertical-align: middle;padding:0;width:300px!important;">
+<i class="fas fa-arrow-right" style="font-size:100px;padding:100px;"></i>
 </td>
-<td style="vertical-align: middle;font-size:70%;">
-$(0,0,0,0,0,0,0,1,0,0)$
+<td style="vertical-align: middle;padding:0;padding:0;width:200px!important;">
+$$(0,0,0,1,0,0,0,0,0,0)$$
 </td>
 </tr>
 </table>
+
 
 ## Network Parameters
 
@@ -873,14 +910,14 @@ With **30 training samples**: $30 \times 10 = 300$ equations for 260 unknowns
 
 For one training pair $(x, y)$ the **sample loss** is:
 
-$$\mathcal{L}_{(x,y)}(W,b) = \sum_{i=0}^{9} \big(\hat{y}_i - y_i\big)^2 = \sum_{i=0}^{9} \bigg(\sum_{j=1}^{25} w_{ij}\, x_j + b_i - y_i\bigg)^2$$
+$$\mathbf{L}_{(x,y)}(W,b) = \sum_{i=0}^{9} \big(\hat{y}_i - y_i\big)^2 = \sum_{i=0}^{9} \bigg(\sum_{j=1}^{25} w_{ij}\, x_j + b_i - y_i\bigg)^2$$
 
 The **average loss** over the full training set $S$ is:
 
-$$\mathcal{L}(W,b) = \frac{1}{|S|} \sum_{(x,y) \in S} \mathcal{L}_{(x,y)}(W,b)$$
+$$\mathbf{L}(W,b) = \frac{1}{|S|} \sum_{(x,y) \in S} \mathbf{L}_{(x,y)}(W,b)$$
 
 ::: callout-note
-We want to find $W$, $b$ that minimize $\mathcal{L}(W,b)$.
+We want to find $W$, $b$ that minimize $\mathbf{L}(W,b)$.
 :::
 
 ## Gradients
@@ -889,11 +926,11 @@ The gradient tells us the direction of **steepest ascent** of the loss. Moving *
 
 **For weights** $w_{ij}$:
 
-$$\frac{\partial \mathcal{L}_{(x,y)}}{\partial w_{ij}} = \frac{\partial \mathcal{L}}{\partial \hat{y}_i} \cdot \frac{\partial \hat{y}_i}{\partial w_{ij}} = 2(\hat{y}_i - y_i) \cdot x_j$$
+$$\frac{\partial \mathbf{L}_{(x,y)}}{\partial w_{ij}} = \frac{\partial \mathbf{L}}{\partial \hat{y}_i} \cdot \frac{\partial \hat{y}_i}{\partial w_{ij}} = 2(\hat{y}_i - y_i) \cdot x_j$$
 
 **For biases** $b_i$:
 
-$$\frac{\partial \mathcal{L}_{(x,y)}}{\partial b_i} = \frac{\partial \mathcal{L}}{\partial \hat{y}_i} \cdot \frac{\partial \hat{y}_i}{\partial b_i} = 2(\hat{y}_i - y_i) \cdot 1$$
+$$\frac{\partial \mathbf{L}_{(x,y)}}{\partial b_i} = \frac{\partial \mathbf{L}}{\partial \hat{y}_i} \cdot \frac{\partial \hat{y}_i}{\partial b_i} = 2(\hat{y}_i - y_i) \cdot 1$$
 
 ## Gradients
 
@@ -904,8 +941,8 @@ The gradient tells us the direction of **steepest ascent** of the loss. Moving *
 ::: callout-tip
 In matrix form we have $\delta = 2(\hat{y} - y)$ - a vector of `length(y) = 10` here.
 
-* $\nabla_W \mathcal{L} = \delta\, x^\top$ : 10 by 30
-* $\nabla_b \mathcal{L} = \delta$ : 10
+* $\nabla_W \mathbf{L} = \delta\, x^\top$ : 10 by 30
+* $\nabla_b \mathbf{L} = \delta$ : 10
   
 :::
 
@@ -1010,7 +1047,7 @@ end
 #| echo: true
 using Random
 Random.seed!(42)
-W_opt, b_opt, loss_history = gradient_descent(X_train, Y_train)
+W_opt, b_opt, loss_history = gradient_descent(X_train, Y_train);
 ```
 
 ## Loss over Iterations

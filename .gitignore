@@ -3,3 +3,4 @@
 /_freeze/
 Manifest.toml
 **/*.quarto_ipynb
+*/.cache
